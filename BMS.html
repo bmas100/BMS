@@ -232,6 +232,15 @@
             display: block;
         }
     </style>
+
+<!-- کدهای مربوط به PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e3a8a">
+    <!-- تنظیمات مخصوص دستگاه‌های اپل (iOS) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="BonyadLogo.png">
+
 </head>
 <body>
     <div class="app-container">
@@ -317,5 +326,18 @@
         <img src="Footer.png" alt="فوتر سامانه" class="footer-img">
 
     </div>
+<!-- ثبت سرویس ورکر -->
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('sw.js').then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    }, function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        </script>
+
 </body>
 </html>
