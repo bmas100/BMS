@@ -44,7 +44,7 @@
             background: linear-gradient(-45deg, #1e3a8a, #2563eb, #0f172a, #0284c7);
             background-size: 400% 400%;
             animation: gradientBG 12s ease infinite;
-            padding: 30px 15px 20px 15px; /* اعمال پدینگ جدید طبق درخواست شما */
+            padding: 30px 15px 20px 15px; 
             border-bottom-left-radius: 30px;
             border-bottom-right-radius: 30px;
             display: flex;
@@ -80,15 +80,15 @@
         .badge-demo {
             position: absolute;
             top: 7px;
-            Right: 10px;
+            right: 10px; /* تصحیح Right به right */
             font-size: 0.65rem;
             background: rgba(255, 255, 255, 0.40);
-            padding: 1px 8px;
+            padding: 2px 8px;
             border-radius: 12px;
             backdrop-filter: blur(5px);
-            color: rgba(255, 255, 255, 1);
+            color: #000000; /* رنگ به مشکی تغییر یافت */
             z-index: 2;
-            font-weight: 500;
+            font-weight: 700; /* کمی ضخیم‌تر برای خوانایی بهتر */
         }
 
         .titles {
@@ -117,12 +117,14 @@
         }
 
         .titles small {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             background: rgba(255,255,255,0.2);
             padding: 3px 10px;
             border-radius: 20px;
             backdrop-filter: blur(5px);
-            font-weight: 500;
+            font-weight: 700;
+            color: #fef08a; /* رنگ کرم اضافه شد */
+            display: inline-block;
         }
 
         .img-bonyad {
@@ -148,32 +150,29 @@
             margin-bottom: -10px;
         }
 
-        /* --- تغییرات برای جمع‌وجور شدن کارت‌ها --- */
         .grid-container {
-            padding: 20px 10px 10px 10px; /* کاهش پدینگ برای جا شدن در صفحه */
+            padding: 20px 10px 10px 10px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px; /* کاهش فاصله بین کارت‌ها */
-            margin-top: -15px; /* کمی بالاتر آمدن کارت‌ها */
+            gap: 10px; 
+            margin-top: 15px; /* ایجاد فاصله بین بنر و اولین کارت */
         }
 
         /* استایل کارت‌ها با بک‌گراند متحرک و خط بالای نازک */
         .card {
-            text-decoration: none; /* برای تگ a */
+            text-decoration: none; 
             color: inherit;
             border-radius: 18px;
-            padding: 10px 8px; /* کاهش پدینگ داخلی کارت */
+            padding: 10px 8px; 
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
             
-            /* بردر نازک بالا */
             border: 1px solid rgba(226, 232, 240, 0.5);
             border-top: 2.5px solid #0a004e;
             
-            /* بک‌گراند متحرک ملایم */
             background: linear-gradient(120deg, #707070, #f0f9ff, #e0f2fe, #707070);
             background-size: 200% 200%;
             animation: cardBg 5s ease-in-out infinite alternate;
@@ -196,16 +195,16 @@
         }
 
         .icon-wrapper {
-            width: 42px; /* کمی کوچکتر برای جا شدن بهتر */
-            height: 42px; /* کمی کوچکتر */
+            width: 42px; 
+            height: 42px; 
             background: #ffffff;
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 6px; /* کاهش فاصله با متن */
+            margin-bottom: 6px; 
             color: var(--primary);
-            font-size: 1.5rem; /* تنظیم سایز آیکون */
+            font-size: 1.5rem; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
         }
@@ -218,18 +217,18 @@
 
         .card p {
             margin: 0;
-            font-size: 0.8rem; /* فونت کمی کوچکتر */
+            font-size: 0.8rem; 
             font-weight: 700;
             color: var(--text-main);
             text-align: center;
             line-height: 1.3;
         }
 
-        /* --- استایل تصویر فوتر --- */
+        /* --- استایل جدید تصویر فوتر --- */
         .footer-img {
-            width: 100%;
+            width: 90%; /* عرض ۹۰ درصد */
             height: auto;
-            margin-top: auto; /* این ویژگی تصویر را همیشه به پایین‌ترین قسمت هل می‌دهد */
+            margin: 7px auto 20px auto; /* 7 پیکسل فاصله از بالا، وسط‌چین از طرفین */
             display: block;
         }
     </style>
@@ -263,7 +262,7 @@
                 <p>بازسازی جنگ رمضان</p>
             </a>
             
-            <!-- ردیف 2 (کارت‌های جدید) -->
+            <!-- ردیف 2 -->
             <a href="#" target="_blank" class="card">
                 <div class="icon-wrapper"><i class="fa-solid fa-map-location-dot"></i></div>
                 <p>امور استان‌ها</p>
@@ -288,7 +287,6 @@
                 <div class="icon-wrapper"><i class="fa-solid fa-house-chimney-window"></i></div>
                 <p>مسکن محرومین</p>
             </a>
-            <!-- کارت جدید -->
             <a href="#" target="_blank" class="card">
                 <div class="icon-wrapper"><i class="fa-solid fa-scale-balanced"></i></div>
                 <p>امور حقوقی و املاک</p>
@@ -309,7 +307,6 @@
                 <div class="icon-wrapper"><i class="fa-solid fa-comments"></i></div>
                 <p>ارتباط با ریاست</p>
             </a>
-            <!-- کارت جدید -->
             <a href="#" target="_blank" class="card">
                 <div class="icon-wrapper"><i class="fa-solid fa-share-nodes"></i></div>
                 <p>رسانه‌ها و فضای مجازی</p>
