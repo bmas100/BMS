@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد مدیریتی هلدینگ توسعه مسکن ایران</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Chart.js -->
+    <script src="./chart.min.js"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Vazirmatn Font -->
+    <link href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f1f5f9;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased font-light pb-6">
+
+    <!-- Top Navigation / Header (More Compact) -->
+    <header class="gradient-bg text-white p-4 shadow-md mb-4">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-3">
+                <div class="bg-white/10 p-2 rounded-lg backdrop-blur-sm">
+                    <i class="fa-solid fa-city text-xl text-blue-200"></i>
+                </div>
+                <div>
+                    <h1 class="text-blue-200 text-l font-bold tracking-tight">سامانه هوشمند مدیریتی ریاست بنیاد مسکن</h1>
+                    <p class="text-white-200 font-bold text-s mt-1">شرکت سازمان توسعه مسکن ایران - داشبورد جامع سرمایه انسانی و مشتریان</p>
+                </div>
+            </div>
+            <div class="bg-white/10 px-3 py-1 rounded-md backdrop-blur-sm">
+                <img src="./LogoWhite.png" alt="توسعه مسکن" style="height:60px; width:auto;">
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 space-y-4">
+
+        <!-- SECTION 1: KPI CARDS (More Compact) -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Card 1 -->
+            <div class="bg-white p-4 rounded-xl card-shadow border border-slate-200/60 flex items-center justify-between">
+                <div>
+                    <p class="text-slate-500 text-xs font-medium">کل سرمایه انسانی</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-0.5">۷۵۹ <span class="text-xs font-normal text-slate-500">نفر</span></h3>
+                    <p class="text-[11px] text-blue-600 mt-1 font-medium"><i class="fa-solid fa-users-gear ml-1"></i> توزیع در هلدینگ و  12 شرکت تابعه</p>
+                </div>
+                <div class="bg-blue-50 p-3 rounded-lg text-blue-600 text-xl">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-white p-4 rounded-xl card-shadow border border-slate-200/60 flex items-center justify-between">
+                <div>
+                    <p class="text-slate-500 text-xs font-medium">تحصیلات دانشگاهی</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-0.5">۶۳٪</h3>
+                    <p class="text-[11px] text-emerald-600 mt-1 font-medium"><i class="fa-solid fa-graduation-cap ml-1"></i> ۴۷۵ نفر کارشناسی و بالاتر</p>
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-lg text-emerald-600 text-xl">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-white p-4 rounded-xl card-shadow border border-slate-200/60 flex items-center justify-between">
+                <div>
+                    <p class="text-slate-500 text-xs font-medium">تمرکز هرم سنی</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-0.5">۳۰-۵۰ <span class="text-xs font-normal text-slate-500">سال</span></h3>
+                    <p class="text-[11px] text-amber-600 mt-1 font-medium"><i class="fa-solid fa-business-time ml-1"></i> ۵۵۰ نفر در اوج تجربه کاری</p>
+                </div>
+                <div class="bg-amber-50 p-3 rounded-lg text-amber-600 text-xl">
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="bg-white p-4 rounded-xl card-shadow border border-slate-200/60 flex items-center justify-between">
+                <div>
+                    <p class="text-slate-500 text-xs font-medium">کانال اصلی جذب مشتری</p>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">معرفی آشنایان</h3>
+                    <p class="text-[11px] text-rose-600 mt-1 font-medium"><i class="fa-solid fa-heart ml-1"></i> ۱۳۵ مورد بر پایه اعتماد برند</p>
+                </div>
+                <div class="bg-rose-50 p-3 rounded-lg text-rose-600 text-xl">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: CHARTS GRID (More Compact) -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <!-- Chart 1: Company Distribution -->
+            <div class="bg-white p-4 rounded-xl card-shadow border border-slate-200/60">
+                <div class="mb-2">
+                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-chart-bar text-blue-600"></i> ترکیب نیروی انسانی شرکت‌های تابعه
+                    </h3>
+                </div>
+                <div class="relative h-64">
+                    <canvas id="companyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 2: Education Level with Guidelines -->
+            <div class="bg-white p-4 rounded-xl card-shadow border border-slate-200/60">
+                <div class="mb-2">
+                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-chart-pie text-emerald-600"></i> توزیع سطوح تحصیلات در کل هلدینگ
+                    </h3>
+                </div>
+                <div class="relative h-64 flex justify-center">
+                    <canvas id="educationChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 3: Age Groups -->
+            <div class="bg-white p-4 rounded-xl card-shadow border border-slate-200/60">
+                <div class="mb-2">
+                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-chart-line text-amber-600"></i> هرم و محدوده سنی کارکنان هلدینگ
+                    </h3>
+                </div>
+                <div class="relative h-64">
+                    <canvas id="ageChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 4: Customer Acquisition -->
+            <div class="bg-white p-4 rounded-xl card-shadow border border-slate-200/60">
+                <div class="mb-2">
+                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-bullhorn text-rose-600"></i> کانال‌های آشنایی و جذب مشتریان
+                    </h3>
+                </div>
+                <div class="relative h-64">
+                    <canvas id="customerChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: DETAILED TABLES -->
+        <section class="space-y-4">
+            <!-- Table 1: Matrix Table -->
+            <div class="bg-white rounded-xl card-shadow border border-slate-200/60 overflow-hidden">
+                <div class="p-4 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                            <i class="fa-solid fa-table text-blue-600"></i> ماتریس توزیع سطح تحصیلات به تفکیک شرکت‌های تابعه
+                        </h3>
+                    </div>
+                    <span class="bg-blue-100 text-blue-800 text-[11px] px-2.5 py-1 font-bold rounded-full">جمع کل: ۷۵۹ نفر</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right border-collapse">
+                        <thead>
+                            <tr class="bg-slate-800 text-white text-xs font-bold border-b border-slate-700">
+                                <th class="p-2.5">نام شرکت / واحد تابعه</th>
+                                <th class="p-2.5 text-center">ابتدائی</th>
+                                <th class="p-2.5 text-center">سیکل</th>
+                                <th class="p-2.5 text-center">دیپلم</th>
+                                <th class="p-2.5 text-center">کاردانی</th>
+                                <th class="p-2.5 text-center">کارشناسی</th>
+                                <th class="p-2.5 text-center">کارشناسی ارشد</th>
+                                <th class="p-2.5 text-center">دکتری</th>
+                                <th class="p-2.5 text-center bg-blue-900 text-white font-extrabold">جمع کل</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 text-xs text-slate-700">
+                            <tr class="odd:bg-white even:bg-slate-50/80 hover:bg-blue-50/40 transition-colors">
+                                <td class="p-2 font-medium text-slate-900">توسعه مسکن تهران</td>
+                                <td class="p-2 text-center">-</td><td class="p-2 text-center">۱۳</td><td class="p-2 text-center">۱۹</td><td class="p-2 text-center">-</td><td class="p-2 text-center">۵۳</td><td class="p-2 text-center">۹</td><td class="p-2 text-center">-</td>
+                                <td class="p-2 text-center bg-blue-50 font-bold text-blue-700">۱۰۳</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 hover:bg-blue-50/40 transition-colors">
+                                <td class="p-2 font-medium text-slate-900">توسعه مسکن آذربایجان</td>
+                                <td class="p-2 text-center">۱۱</td><td class="p-2 text-center">۱۲</td><td class="p-2 text-center">۱۴</td><td class="p-2 text-center">-</td><td class="p-2 text-center">۴۸</td><td class="p-2 text-center">۸</td><td class="p-2 text-center">۱</td>
+                                <td class="p-2 text-center bg-blue-50 font-bold text-blue-700">۹۸</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 hover:bg-blue-50/40 transition-colors">
+                                <td class="p-2 font-medium text-slate-900">توسعه مسکن کویر</td>
+                                <td class="p-2 text-center">۱</td><td class="p-2 text-center">۴</td><td class="p-2 text-center">۲۲</td><td class="p-2 text-center">۸</td><td class="p-2 text-center">۲۴</td><td class="p-2 text-center">۱۷</td><td class="p-2 text-center">۱</td>
+                                <td class="p-2 text-center bg-blue-50 font-bold text-blue-700">۷۷</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 hover:bg-blue-50/40 transition-colors">
+                                <td class="p-2 font-medium text-slate-900">توسعه مسکن آبادگران زاگرس</td>
+                                <td class="p-2 text-center">-</td><td class="p-2 text-center">-</td><td class="p-2 text-center">۶</td><td class="p-2 text-center">۷</td><td class="p-2 text-center">۳۲</td><td class="p-2 text-center">۱۲</td><td class="p-2 text-center">-</td>
+                                <td class="p-2 text-center bg-blue-50 font-bold text-blue-700">۶۰</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 hover:bg-blue-50/40 transition-colors">
+                                <td class="p-2 font-medium text-slate-900">توسعه مسکن اصفهان</td>
+                                <td class="p-2 text-center">۳</td><td class="p-2 text-center">۹</td><td class="p-2 text-center">۴</td><td class="p-2 text-center">-</td><td class="p-2 text-center">۴۰</td><td class="p-2 text-center">۲</td><td class="p-2 text-center">-</td>
+                                <td class="p-2 text-center bg-blue-50 font-bold text-blue-700">۵۸</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 hover:bg-blue-50/40 transition-colors">
+                                <td class="p-2 font-medium text-slate-900">توسعه مسکن اردبیل</td>
+                                <td class="p-2 text-center">-</td><td class="p-2 text-center">-</td><td class="p-2 text-center">۱۱</td><td class="p-2 text-center">۲</td><td class="p-2 text-center">۲۸</td><td class="p-2 text-center">۱۵</td><td class="p-2 text-center">-</td>
+                                <td class="p-2 text-center bg-blue-50 font-bold text-blue-700">۵۶</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 hover:bg-blue-50/40 transition-colors">
+                                <td class="p-2 font-medium text-slate-900">توسعه مسکن خوزستان</td>
+                                <td class="p-2 text-center">۵</td><td class="p-2 text-center">۴</td><td class="p-2 text-center">۱۱</td><td class="p-2 text-center">۶</td><td class="p-2 text-center">۲۲</td><td class="p-2 text-center">۵</td><td class="p-2 text-center">-</td>
+                                <td class="p-2 text-center bg-blue-50 font-bold text-blue-700">۵۳</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 hover:bg-blue-50/40 transition-colors">
+                                <td class="p-2 font-medium text-slate-900">توسعه مسکن خاوران</td>
+                                <td class="p-2 text-center">-</td><td class="p-2 text-center">-</td><td class="p-2 text-center">۶</td><td class="p-2 text-center">-</td><td class="p-2 text-center">۲۳</td><td class="p-2 text-center">۹</td><td class="p-2 text-center">-</td>
+                                <td class="p-2 text-center bg-blue-50 font-bold text-blue-700">۴۹</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 hover:bg-blue-50/40 transition-colors">
+                                <td class="p-2 font-medium text-slate-900">توسعه مسکن ایران (مرکزی)</td>
+                                <td class="p-2 text-center">۳</td><td class="p-2 text-center">-</td><td class="p-2 text-center">۸</td><td class="p-2 text-center">-</td><td class="p-2 text-center">۱۹</td><td class="p-2 text-center">۱۵</td><td class="p-2 text-center">-</td>
+                                <td class="p-2 text-center bg-blue-50 font-bold text-blue-700">۴۷</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 hover:bg-blue-50/40 transition-colors">
+                                <td class="p-2 font-medium text-slate-900">ارگ مسکن جنوب</td>
+                                <td class="p-2 text-center">-</td><td class="p-2 text-center">-</td><td class="p-2 text-center">۸</td><td class="p-2 text-center">۱</td><td class="p-2 text-center">۲۴</td><td class="p-2 text-center">۱۲</td><td class="p-2 text-center">-</td>
+                                <td class="p-2 text-center bg-blue-50 font-bold text-blue-700">۴۵</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 hover:bg-blue-50/40 transition-colors">
+                                <td class="p-2 font-medium text-slate-900">توسعه مسکن سمنان</td>
+                                <td class="p-2 text-center">-</td><td class="p-2 text-center">-</td><td class="p-2 text-center">۱۰</td><td class="p-2 text-center">۴</td><td class="p-2 text-center">۲۱</td><td class="p-2 text-center">۶</td><td class="p-2 text-center">۱</td>
+                                <td class="p-2 text-center bg-blue-50 font-bold text-blue-700">۴۲</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 hover:bg-blue-50/40 transition-colors">
+                                <td class="p-2 font-medium text-slate-900">توسعه مسکن آبادگران یکم</td>
+                                <td class="p-2 text-center">-</td><td class="p-2 text-center">۳</td><td class="p-2 text-center">-</td><td class="p-2 text-center">۱</td><td class="p-2 text-center">۲۲</td><td class="p-2 text-center">۵</td><td class="p-2 text-center">-</td>
+                                <td class="p-2 text-center bg-blue-50 font-bold text-blue-700">۴۱</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 hover:bg-blue-50/40 transition-colors">
+                                <td class="p-2 font-medium text-slate-900">توسعه مسکن هرمزگان</td>
+                                <td class="p-2 text-center">۲</td><td class="p-2 text-center">۳</td><td class="p-2 text-center">۱۱</td><td class="p-2 text-center">۱</td><td class="p-2 text-center">۹</td><td class="p-2 text-center">۴</td><td class="p-2 text-center">-</td>
+                                <td class="p-2 text-center bg-blue-50 font-bold text-blue-700">۳۰</td>
+                            </tr>
+                            <tr class="bg-slate-900 text-white font-bold text-xs">
+                                <td class="p-2.5">جمع کل هلدینگ</td>
+                                <td class="p-2.5 text-center">۳۱</td>
+                                <td class="p-2.5 text-center">۶۷</td>
+                                <td class="p-2.5 text-center">۱۳۹</td>
+                                <td class="p-2.5 text-center">۴۷</td>
+                                <td class="p-2.5 text-center">۳۵۵</td>
+                                <td class="p-2.5 text-center">۱۱۴</td>
+                                <td class="p-2.5 text-center">۶</td>
+                                <td class="p-2.5 text-center bg-blue-600 font-extrabold text-white">۷۵۹</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Two Columns for Other Tables -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Age Groups Table (Styled) -->
+                <div class="bg-white rounded-xl card-shadow border border-slate-200/60 overflow-hidden">
+                    <div class="p-3 bg-slate-50 border-b border-slate-200 font-bold text-xs text-slate-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-hourglass text-amber-500"></i> جدول توزیع سنی کارکنان
+                    </div>
+                    <table class="w-full text-right border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-800 text-white font-bold border-b border-slate-700">
+                                <th class="p-2.5">محدوده سنی</th>
+                                <th class="p-2.5 text-center">تعداد (نفر)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 text-slate-700">
+                            <tr class="odd:bg-white even:bg-slate-50/80">
+                                <td class="p-2">۲۰ تا ۳۰ سال</td>
+                                <td class="p-2 text-center font-bold">۵۳</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 bg-amber-50/20">
+                                <td class="p-2 font-semibold text-amber-900">۳۰ تا ۴۰ سال</td>
+                                <td class="p-2 text-center font-bold text-amber-700">۲۵۸</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80 bg-amber-50/20">
+                                <td class="p-2 font-semibold text-amber-900">۴۰ تا ۵۰ سال</td>
+                                <td class="p-2 text-center font-bold text-amber-700">۲۲</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80">
+                                <td class="p-2">۵۰ تا ۶۰ سال</td>
+                                <td class="p-2 text-center font-bold">۱۴۸</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80">
+                                <td class="p-2">۶۰ تا ۷۰ سال</td>
+                                <td class="p-2 text-center font-bold">۱۵</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80">
+                                <td class="p-2">۷۰ تا ۸۰ سال</td>
+                                <td class="p-2 text-center font-bold">۵</td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50/80">
+                                <td class="p-2">۸۰ تا ۹۰ سال</td>
+                                <td class="p-2 text-center font-bold">۱</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Marital Status Pie Chart Component -->
+                <div class="bg-white rounded-xl card-shadow border border-slate-200/60 overflow-hidden flex flex-col">
+                    <div class="p-3 bg-slate-50 border-b border-slate-200 font-bold text-xs text-slate-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-heart text-rose-500"></i> وضعیت تاهل کارکنان هلدینگ
+                    </div>
+                    <div class="p-4 flex-1 flex justify-center items-center relative h-52">
+                        <canvas id="maritalChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: STRATEGIC STRATEGIC REPORT AND ANALYSIS -->
+        <section class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Strategic Card 1 -->
+                <div class="bg-emerald-50/30 p-4 rounded-xl card-shadow border border-slate-200/60 border-t-4 border-t-emerald-600 space-y-2">
+                    <div class="flex items-center gap-2">
+                        <div class="bg-emerald-600 text-white p-2 rounded-lg text-lg">
+                            <i class="fa-solid fa-check-circle"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-sm">نقاط قوت کلان سازمان</h4>
+                    </div>
+                    <ul class="list-disc list-inside text-xs text-slate-600 space-y-1.5 pr-1">
+                        <li><strong>نیروی انسانی متخصص:</strong> بیش از ۶۳٪ کل کارکنان دارای تحصیلات دانشگاهی هستند که بستری عالی برای توسعه مدیریت دانش، تحول دیجیتال و نظام ارزیابی عملکرد متوازن فراهم می‌آورد.</li>
+                        <li><strong>پختگی بدنه اجرایی:</strong> تمرکز عالی نیروها در بازه سنی ۳۰ تا ۵۰ سال (۵۵۰ نفر) نشان‌دهنده تعادل ایده آل میان تجربه عملیاتی و پویایی کاری است.</li>
+                        <li><strong>اعتبار و اصالت برند:</strong> جذب ۱۳۵ مشتری از طریق معرفی دوستان نشان می‌دهد وفاداری و رضایت مشتریان قبلی مهم‌ترین تکیه‌گاه برندینگ سازمان است.</li>
+                        <li><strong>ثبات دموگرافیک بالا:</strong> متأهل بودن ۸۲٪ سازمان پایداری بالایی در ماندگاری نیروها و پایداری سازمانی ایجاد کرده است.</li>
+                    </ul>
+                </div>
+
+                <!-- Strategic Card 2 -->
+                <div class="bg-amber-50/30 p-4 rounded-xl card-shadow border border-slate-200/60 border-t-4 border-t-amber-500 space-y-2">
+                    <div class="flex items-center gap-2">
+                        <div class="bg-amber-500 text-white p-2 rounded-lg text-lg">
+                            <i class="fa-solid fa-exclamation-triangle"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-sm">چالش‌ها و تهدیدهای پیش‌رو</h4>
+                    </div>
+                    <ul class="list-disc list-inside text-xs text-slate-600 space-y-1.5 pr-1">
+                        <li><strong>ریسک خروج تجربه (سونامی بازنشستگی):</strong> ورود حجم عظیمی از نیروهای باسابقه به سن بازنشستگی در ۱۰ سال آینده، خلأ مهارتی جدی پدید می‌آورد؛ لزوم طراحی سریع نظام جانشین‌پروری و بانک دانش سازمانی شدیداً احساس می‌شود.</li>
+                        <li><strong>عقب‌ماندگی در جذب دیجیتال:</strong> سهم ناچیز وب‌سایت و شبکه‌های اجتماعی در جذب مشتری (مجموعاً ۴۸ مورد) نشان‌دهنده ضرورت استقرار سیستم‌های مدرن CRM و بازاریابی دیجیتال است.</li>
+                        <li><strong>شکاف مهارتی سطوح پایه:</strong> وجود ۲۳۷ نیروی دیپلم و پایین‌تر، برنامه‌های جدی توسعه مهارت‌های حرفه‌ای و مهارتی را می‌طلبد.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Dashboard Architecture Proposal -->
+            <div class="bg-blue-50/40 p-4 rounded-xl card-shadow border border-slate-200/60 border-t-4 border-t-blue-600">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="bg-blue-600 text-white p-2 rounded-lg text-lg">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <h4 class="font-bold text-blue-900 text-sm">ساختار پیشنهادی برای داشبورد مدیریتی هوش تجاری (BI)</h4>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs mt-1">
+                    <div class="bg-white p-3 rounded-lg border border-blue-100">
+                        <span class="font-bold text-blue-800 block mb-0.5">۱. سرمایه انسانی</span>
+                        تعداد به تفکیک شرکت، هرم سنی لحظه‌ای، پایش ریسک بازنشستگی و خروج دانش.
+                    </div>
+                    <div class="bg-white p-3 rounded-lg border border-blue-100">
+                        <span class="font-bold text-blue-800 block mb-0.5">۲. توسعه سازمانی</span>
+                        شاخص بلوغ منابع انسانی، درصد پیشرفت جانشین‌پروری، ساعات آموزش مهارتی سطوح پایه.
+                    </div>
+                    <div class="bg-white p-3 rounded-lg border border-blue-100">
+                        <span class="font-bold text-blue-800 block mb-0.5">۳. مهندسی مشتری</span>
+                        پایش نرخ بازدهی کانال‌های جذب، شاخص وفاداری مشتریان (NPS) و اثربخشی بودجه تبلیغاتی.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Chart Implementations with Plugins for values -->
+    <script>
+        // Custom Plugin to Draw Value Labels Above Bars
+        const barLabelsPlugin = {
+            id: 'barLabelsPlugin',
+            afterDatasetsDraw(chart, args, options) {
+                const { ctx } = chart;
+                ctx.save();
+                ctx.font = 'bold 10px Vazirmatn';
+                ctx.fillStyle = '#1e293b';
+                
+                chart.data.datasets.forEach((dataset, i) => {
+                    chart.getDatasetMeta(i).data.forEach((bar, index) => {
+                        const value = dataset.data[index];
+                        if (chart.config.options.indexAxis === 'y') {
+                            ctx.textAlign = 'left';
+                            ctx.textBaseline = 'middle';
+                            ctx.fillText(value, bar.x + 4, bar.y);
+                        } else {
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'bottom';
+                            ctx.fillText(value, bar.x, bar.y - 4);
+                        }
+                    });
+                });
+                ctx.restore();
+            }
+        };
+
+        // Custom Plugin to draw text inside Pie/Doughnut slices
+        const insidePieLabelsPlugin = {
+            id: 'insidePieLabelsPlugin',
+            afterDatasetsDraw(chart, args, options) {
+                const { ctx } = chart;
+                ctx.save();
+                ctx.font = 'bold 11px Vazirmatn';
+                ctx.fillStyle = '#ffffff';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                chart.data.datasets.forEach((dataset, i) => {
+                    const meta = chart.getDatasetMeta(i);
+                    meta.data.forEach((element, index) => {
+                        if (meta.hidden) return;
+                        const value = dataset.data[index];
+                        // Get center of slice
+                        const center = element.getCenterPoint();
+                        // Only draw if angle is big enough
+                        if (element.circumference > 0.15) {
+                            ctx.fillText(value, center.x, center.y);
+                        }
+                    });
+                });
+                ctx.restore();
+            }
+        };
+
+        // Custom Plugin for Education Doughnut Chart - Guidelines Pointer
+        const doughnutGuidelinesPlugin = {
+            id: 'doughnutGuidelinesPlugin',
+            afterDraw(chart) {
+                const { ctx, data } = chart;
+                ctx.save();
+                const chartMeta = chart.getDatasetMeta(0);
+                
+                chartMeta.data.forEach((element, index) => {
+                    const value = data.datasets[0].data[index];
+                    const label = data.labels[index];
+                    if (element.circumference < 0.05) return; // skip tiny slices
+
+                    const centerPoint = element.getCenterPoint();
+                    const angle = element.startAngle + (element.endAngle - element.startAngle) / 2;
+                    
+                    // Outward pointer lines coordinates
+                    const outerRadius = element.outerRadius;
+                    const startX = element.x + Math.cos(angle) * (outerRadius - 5);
+                    const startY = element.y + Math.sin(angle) * (outerRadius - 5);
+                    const endX = element.x + Math.cos(angle) * (outerRadius + 15);
+                    const endY = element.y + Math.sin(angle) * (outerRadius + 15);
+                    
+                    // Draw line
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                    ctx.lineTo(endX, endY);
+                    ctx.strokeStyle = '#475569';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                    
+                    // Draw text label next to guideline
+                    ctx.font = '9px Vazirmatn';
+                    ctx.fillStyle = '#334155';
+                    if (endX > element.x) {
+                        ctx.textAlign = 'left';
+                        ctx.fillText(`${label}: ${value}`, endX + 3, endY);
+                    } else {
+                        ctx.textAlign = 'right';
+                        ctx.fillText(`${label}: ${value}`, endX - 3, endY);
+                    }
+                });
+                ctx.restore();
+            }
+        };
+
+        // 1. Company Distribution Chart
+        const ctxCompany = document.getElementById('companyChart').getContext('2d');
+        new Chart(ctxCompany, {
+            type: 'bar',
+            data: {
+                labels: ['تهران', 'آذربایجان', 'کویر', 'زاگرس', 'اصفهان', 'اردبیل', 'خوزستان', 'خاوران', 'ایران', 'جنوب', 'سمنان', 'یکم', 'هرمزگان'],
+                datasets: [{
+                    label: 'تعداد کارکنان',
+                    data: [103, 98, 77, 60, 58, 56, 53, 49, 47, 45, 42, 41, 30],
+                    backgroundColor: '#2563eb',
+                    borderColor: '#1d4ed8',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { 
+                    y: { beginAtZero: true, grid: { display: false } },
+                    x: { grid: { display: false }, ticks: { font: { size: 9 } } }
+                }
+            },
+            plugins: [barLabelsPlugin]
+        });
+
+        // 2. Education Chart with pointer lines
+        const ctxEdu = document.getElementById('educationChart').getContext('2d');
+        new Chart(ctxEdu, {
+            type: 'doughnut',
+            data: {
+                labels: ['دکتری', 'ارشد', 'کارشناسی', 'کاردانی', 'دیپلم', 'سیکل', 'ابتدایی'],
+                datasets: [{
+                    data: [6, 114, 355, 47, 139, 67, 31],
+                    backgroundColor: [
+                        '#0f172a', '#1e3a8a', '#3b82f6', '#60a5fa', '#93c5fd', '#cbd5e1', '#e2e8f0'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: { padding: 25 },
+                plugins: {
+                    legend: { display: false } // Hidden because guidelines show the label
+                }
+            },
+            plugins: [doughnutGuidelinesPlugin]
+        });
+
+        // 3. Age Groups Chart
+        const ctxAge = document.getElementById('ageChart').getContext('2d');
+        new Chart(ctxAge, {
+            type: 'line',
+            data: {
+                labels: ['۲۰-۳۰', '۳۰-۴۰', '۴۰-۵۰', '۵۰-۶۰', '۶۰-۷۰', '۷۰-۸۰', '۸۰-۹۰'],
+                datasets: [{
+                    label: 'تعداد افراد',
+                    data: [53, 258, 22, 148, 15, 5, 1],
+                    fill: true,
+                    backgroundColor: 'rgba(245, 158, 11, 0.15)',
+                    borderColor: '#d97706',
+                    tension: 0.25,
+                    pointBackgroundColor: '#b45309'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { 
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 4. Customer Acquisition Chart (Horizontal)
+        const ctxCustomer = document.getElementById('customerChart').getContext('2d');
+        new Chart(ctxCustomer, {
+            type: 'bar',
+            indexAxis: 'y',
+            data: {
+                labels: ['معرفی آشنایان', 'شبکه‌های اجتماعی', 'مراجعه حضوری', 'معرفی دولتی', 'تبلیغات محیطی', 'وب‌سایت'],
+                datasets: [{
+                    data: [135, 44, 13, 11, 6, 4],
+                    backgroundColor: '#e11d48',
+                    borderRadius: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { 
+                    x: { beginAtZero: true, grid: { display: false } },
+                    y: { grid: { display: false } }
+                }
+            },
+            plugins: [barLabelsPlugin]
+        });
+
+        // 5. Marital Status Pie Chart (New requested component)
+        const ctxMarital = document.getElementById('maritalChart').getContext('2d');
+        new Chart(ctxMarital, {
+            type: 'pie',
+            data: {
+                labels: ['متأهل', 'مجرد'],
+                datasets: [{
+                    data: [593, 129],
+                    backgroundColor: ['#4f46e5', '#f43f5e'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { font: { family: 'Vazirmatn', size: 11 } } }
+                }
+            },
+            plugins: [insidePieLabelsPlugin]
+        });
+    </script>
+</body>
+</html>

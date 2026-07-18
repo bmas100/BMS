@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد هوشمند مدیریتی شرکت سازمان توسعه مسکن ایران</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#001b69', 
+                        secondary: '#0052cc',
+                        accent: '#f59e0b',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('Vazirmatn-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body { 
+            font-family: 'Vazirmatn', sans-serif; 
+            background-color: #f3f4f6; 
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            border-radius: 1rem;
+        }
+        .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        
+        /* ساعت آنالوگ با ابعاد 80x80 */
+        .clock {
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(255,255,255,0.9);
+            border-radius: 50%;
+            position: relative;
+            background: rgba(0,0,0,0.15);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.2);
+        }
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            transform-origin: 50% 100%;
+            border-radius: 4px;
+        }
+        .hour-hand { width: 4px; height: 20px; left: calc(50% - 2px); background: white; }
+        .min-hand { width: 3px; height: 30px; left: calc(50% - 1.5px); background: #e2e8f0; }
+        .sec-hand { width: 2px; height: 35px; left: calc(50% - 1px); background: #f87171; }
+        .center-dot { width: 8px; height: 8px; background: white; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; }
+
+        /* انیمیشن و افکت نور لوگو */
+        .floating-logo {
+            animation: floatLogo 4s ease-in-out infinite;
+            filter: drop-shadow(0px 0px 20px rgba(255, 255, 255, 0.8));
+        }
+        @keyframes floatLogo {
+            0% { transform: translateY(0px); filter: drop-shadow(0px 0px 15px rgba(255, 255, 255, 0.6)); }
+            50% { transform: translateY(-8px); filter: drop-shadow(0px 0px 30px rgba(255, 255, 255, 1)); }
+            100% { transform: translateY(0px); filter: drop-shadow(0px 0px 15px rgba(255, 255, 255, 0.6)); }
+        }
+
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+    <header class="bg-gradient-to-l from-primary to-secondary text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 grid grid-cols-1 md:grid-cols-3 items-center gap-4">
+            
+            <div class="text-right">
+                <h2 class="text-xs md:text-sm font-bold text-blue-200">داشبورد هوشمند مدیریتی ریاست بنیاد مسکن</h2>
+                <h1 class="text-2xl md:text-2.5xl font-bold tracking-tight mt-1 text-white">شرکت سازمان توسعه مسکن ایران</h1>
+            </div>
+
+            <div class="flex justify-center items-center">
+                <div class="bg-white w-24 h-24 rounded-full flex items-center justify-center floating-logo shadow-xl border-4 border-blue-200">
+                    <img src="ToseMaskan.png" alt="لوگو سازمان توسعه مسکن" class="h-16 w-auto object-contain" onerror="this.src='https://via.placeholder.com/60x60?text=Logo'">
+                </div>
+            </div>
+
+            <div class="flex justify-end items-center space-x-6 space-x-reverse">
+                <div class="text-left flex flex-col items-end">
+                    <span class="text-base font-bold tracking-wide" id="currentDate">--</span>
+                    <span class="text-lg font-bold text-blue-100 mt-1" id="currentTime" style="letter-spacing: 2px;">--:--:--</span>
+                </div>
+                <div class="clock">
+                    <div id="hourHand" class="hand hour-hand"></div>
+                    <div id="minHand" class="hand min-hand"></div>
+                    <div id="secHand" class="hand sec-hand"></div>
+                    <div class="center-dot"></div>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <main class="container mx-auto px-0 py-0 space-y-5">
+
+
+        <section class="glass-card p-3">
+
+           
+            <div class="relative w-full h-80 rounded-xl overflow-hidden shadow-lg bg-gray-900" id="sliderContainer">
+                
+                <div class="project-slide absolute inset-0 transition-opacity duration-1000 opacity-100 z-10">
+                    <img src="Ghazvin.jpg" alt="برج تجارت قزوین" class="w-full h-full object-cover opacity-70">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-white text-right">
+                        <h4 class="text-2xl font-bold mb-2">برج تجارت قزوین</h4>
+                        <div class="flex items-center gap-4">
+                            <span class="text-sm bg-blue-600 px-3 py-1 rounded-full">پیشرفت: ۸۵٪</span>
+                            <span class="text-sm text-gray-300">پروژه تجاری - اداری</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="project-slide absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
+                    <img src="Afrika.jpg" alt="مجتمع تجاری آفریقا" class="w-full h-full object-cover opacity-70">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-white text-right">
+                        <h4 class="text-2xl font-bold mb-2">مجتمع تجاری آفریقا</h4>
+                        <div class="flex items-center gap-4">
+                            <span class="text-sm bg-red-600 px-3 py-1 rounded-full">طراحی و کلنگ‌زنی</span>
+                            <span class="text-sm text-gray-300">مرکز خرید و اداری</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="project-slide absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
+                    <img src="Sangachin.jpg" alt="سنگاچین بندرانزلی" class="w-full h-full object-cover opacity-70">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-white text-right">
+                        <h4 class="text-2xl font-bold mb-2">مجتمع سنگاچین بندرانزلی</h4>
+                        <div class="flex items-center gap-4">
+                            <span class="text-sm bg-yellow-600 px-3 py-1 rounded-full text-black">پیشرفت: ۹۵٪</span>
+                            <span class="text-sm text-gray-300">پروژه تفریحی - مسکونی</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-slide absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
+                    <img src="Haraz.jpg" alt="هراز" class="w-full h-full object-cover opacity-70">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-white text-right">
+                        <h4 class="text-2xl font-bold mb-2">پروژه هراز</h4>
+                        <div class="flex items-center gap-4">
+                            <span class="text-sm bg-purple-600 px-3 py-1 rounded-full">در حال اجرا</span>
+                            <span class="text-sm text-gray-300">مجتمع مسکونی مدرن</span>
+                        </div>
+                    </div>
+                </div>
+
+<div class="project-slide absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
+    
+    <video
+        class="w-full h-full object-cover opacity-70"
+        autoplay
+        muted
+        loop
+        playsinline>
+        <source src="IvanSofeh.mp4" type="video/mp4">
+        مرورگر شما از نمایش ویدئو پشتیبانی نمی‌کند.
+    </video>
+
+    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-white text-right">
+        <h4 class="text-2xl font-bold mb-2">پروژه ایوان صفه (اصفهان)</h4>
+        <div class="flex items-center gap-4">
+            <span class="text-sm bg-indigo-600 px-3 py-1 rounded-full">فاز تکمیلی</span>
+            <span class="text-sm text-gray-300">طرح و معماری ایرانی-اسلامی</span>
+        </div>
+    </div>
+
+</div>
+
+                <div class="project-slide absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
+                    <img src="Sanandaj.jpg" alt="مسکونی لاوان سنندج" class="w-full h-full object-cover opacity-70">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-white text-right">
+                        <h4 class="text-2xl font-bold mb-2">مسکونی لاوان سنندج</h4>
+                        <div class="flex items-center gap-4">
+                            <span class="text-sm bg-green-600 px-3 py-1 rounded-full">پیشرفت: ۴۰٪</span>
+                            <span class="text-sm text-gray-300">انبوه‌سازی مسکن</span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </section>
+
+
+
+        <section class="glass-card p-6 border-t-4 border-primary">
+            <h3 class="text-xl font-bold text-primary mb-4 border-b pb-2"><i class="fas fa-info-circle ml-2"></i>معرفی شرکت سازمان توسعه مسکن ایران</h3>
+
+
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+
+    <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 text-center">
+        <i class="fas fa-building text-3xl text-blue-600 mb-2"></i>
+        <div class="text-2xl font-extrabold text-blue-800">۲۵۳۱</div>
+        <div class="text-sm text-gray-700">واحدهای ساخته‌شده تاکنون</div>
+    </div>
+
+    <div class="bg-green-50 border border-green-100 rounded-xl p-4 text-center">
+        <i class="fas fa-home text-3xl text-green-600 mb-2"></i>
+        <div class="text-2xl font-extrabold text-green-800">۱۲۰۲</div>
+        <div class="text-sm text-gray-700">واحدهای ساخته‌شده در سال ۱۴۰۴</div>
+    </div>
+
+    <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 text-center">
+        <i class="fas fa-wallet text-3xl text-indigo-600 mb-2"></i>
+        <div class="text-xl font-extrabold text-indigo-800">۵۶٬۱۷۰٬۶۱۱</div>
+        <div class="text-sm text-gray-700">بودجه مصوب ۱۴۰۴ (میلیون ریال)</div>
+    </div>
+
+    <div class="bg-cyan-50 border border-cyan-100 rounded-xl p-4 text-center">
+        <i class="fas fa-chart-line text-3xl text-cyan-600 mb-2"></i>
+        <div class="text-xl font-extrabold text-cyan-800">۴۵٬۶۴۰٬۶۲۶</div>
+        <div class="text-sm text-gray-700">عملکرد قطعی ۱۴۰۴ (میلیون ریال)</div>
+    </div>
+
+    <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-4 text-center">
+        <i class="fas fa-coins text-3xl text-emerald-600 mb-2"></i>
+        <div class="text-xl font-extrabold text-emerald-800">۱۳٬۹۷۴٬۸۰۸</div>
+        <div class="text-sm text-gray-700">سود خالص تحقق‌یافته</div>
+    </div>
+
+    <div class="bg-purple-50 border border-purple-100 rounded-xl p-4 text-center">
+        <i class="fas fa-sack-dollar text-3xl text-purple-600 mb-2"></i>
+        <div class="text-xl font-extrabold text-purple-800">۷۵٬۰۸۵٬۰۱۰</div>
+        <div class="text-sm text-gray-700">بودجه پیش‌بینی ۱۴۰۵ (میلیون ریال)</div>
+    </div>
+
+    <div class="bg-orange-50 border border-orange-100 rounded-xl p-4 text-center">
+        <i class="fas fa-user-tie text-3xl text-orange-600 mb-2"></i>
+        <div class="text-2xl font-extrabold text-orange-800">۴۵</div>
+        <div class="text-sm text-gray-700">نیروی انسانی هلدینگ</div>
+    </div>
+
+    <div class="bg-amber-50 border border-amber-100 rounded-xl p-4 text-center">
+        <i class="fas fa-users text-3xl text-amber-600 mb-2"></i>
+        <div class="text-2xl font-extrabold text-amber-800">۶۳۰</div>
+        <div class="text-sm text-gray-700">نیروی انسانی شرکت‌های تابعه</div>
+    </div>
+
+    <div class="bg-teal-50 border border-teal-100 rounded-xl p-4 text-center">
+        <i class="fas fa-face-smile text-3xl text-teal-600 mb-2"></i>
+        <div class="text-2xl font-extrabold text-teal-800">۸۳٪</div>
+        <div class="text-sm text-gray-700">رضایت مشتریان</div>
+    </div>
+
+    <div class="bg-pink-50 border border-pink-100 rounded-xl p-4 text-center">
+        <i class="fas fa-heart text-3xl text-pink-600 mb-2"></i>
+        <div class="text-2xl font-extrabold text-pink-800">۷۸٪</div>
+        <div class="text-sm text-gray-700">رضایت کارکنان</div>
+    </div>
+
+</div>            <h4 class="text-lg font-bold text-gray-700 mb-6"><i class="fas fa-users-tie ml-2 text-secondary"></i>اعضای هیئت مدیره هلدینگ</h4>
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 items-center">
+                <div class="bg-white border rounded-xl p-4 text-center hover-lift shadow-sm">
+                    <img src="Kaari.jpg" alt="حسن کاری" class="w-20 h-20 rounded-full mx-auto mb-3 object-cover shadow border-2 border-gray-100" onerror="this.src='https://ui-avatars.com/api/?name=حسن+کاری&background=001b69&color=fff'">
+                    <h5 class="font-bold text-sm text-gray-800">حسن کاری</h5>
+                    <p class="text-xs text-gray-500 mt-1">عضو هیئت مدیره</p>
+                </div>
+
+                <div class="bg-white border rounded-xl p-4 text-center hover-lift shadow-sm border-blue-200">
+                    <img src="GholiNavaz.jpg" alt="حسن قلی نواز هریس" class="w-20 h-20 rounded-full mx-auto mb-3 object-cover shadow border-2 border-gray-100" onerror="this.src='https://ui-avatars.com/api/?name=حسن+قلی+نواز&background=f59e0b&color=fff'">
+                    <h5 class="font-bold text-sm text-gray-800">حسن قلی نواز هریس</h5>
+                    <p class="text-xs text-accent font-bold mt-1">مدیرعامل و عضو</p>
+                </div>
+
+                <div class="bg-gradient-to-b from-blue-50 to-white border-2 border-primary rounded-xl p-5 text-center shadow-md transform scale-105 z-10">
+                    <img src="SaeeidiKia.jpg" alt="محمد سعیدی کیا" class="w-24 h-24 rounded-full mx-auto mb-3 object-cover shadow-lg border-4 border-white" onerror="this.src='https://ui-avatars.com/api/?name=محمد+سعیدی+کیا&background=001b69&color=fff'">
+                    <h5 class="font-bold text-base text-primary">محمد سعیدی کیا</h5>
+                    <p class="text-xs font-bold bg-primary text-white py-1 px-2 rounded-full inline-block mt-2">رئیس هیئت مدیره</p>
+                </div>
+
+                <div class="bg-white border rounded-xl p-4 text-center hover-lift shadow-sm border-blue-200">
+                    <img src="Joudi.jpg" alt="مجید جودی" class="w-20 h-20 rounded-full mx-auto mb-3 object-cover shadow border-2 border-gray-100" onerror="this.src='https://ui-avatars.com/api/?name=مجید+جودی&background=001b69&color=fff'">
+                    <h5 class="font-bold text-sm text-gray-800">مجید جودی</h5>
+                    <p class="text-xs text-gray-500 mt-1">نایب رئیس هیئت مدیره</p>
+                </div>
+
+                <div class="bg-white border rounded-xl p-4 text-center hover-lift shadow-sm">
+                    <img src="FeyzianFar.jpg" alt="روح اله فیضیانفر" class="w-20 h-20 rounded-full mx-auto mb-3 object-cover shadow border-2 border-gray-100" onerror="this.src='https://ui-avatars.com/api/?name=روح+اله+فیضیانفر&background=001b69&color=fff'">
+                    <h5 class="font-bold text-sm text-gray-800">روح اله فیضیانفر</h5>
+                    <p class="text-xs text-gray-500 mt-1">عضو هیئت مدیره</p>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="glass-card p-6 border-t-4 border-green-500">
+            <h3 class="text-lg font-bold text-primary mb-6 border-b pb-2"><i class="fas fa-chart-line ml-2"></i>گزارش وضعیت بودجه و عملکرد مالی شرکت</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-5 rounded-xl border border-blue-200 shadow-sm text-center">
+                    <span class="block text-sm font-bold text-blue-800 mb-2">بودجه مصوب ۱۴۰۴</span>
+                    <span class="block text-xl font-black text-blue-900">۵۶٬۱۷۰٬۶۱۱ <small class="text-xs font-normal">م.ر</small></span>
+                </div>
+                <div class="bg-gradient-to-r from-teal-50 to-teal-100 p-5 rounded-xl border border-teal-200 shadow-sm text-center">
+                    <span class="block text-sm font-bold text-teal-800 mb-2">عملکرد قطعی ۱۴۰۴</span>
+                    <span class="block text-xl font-black text-teal-900">۴۵٬۶۴۰٬۶۲۶ <small class="text-xs font-normal">م.ر</small></span>
+                </div>
+                <div class="bg-gradient-to-r from-green-50 to-green-100 p-5 rounded-xl border border-green-200 shadow-sm text-center transform scale-105 z-10 shadow-md">
+                    <span class="block text-sm font-bold text-green-800 mb-2">سود خالص محقق شده</span>
+                    <span class="block text-xl font-black text-green-700">۱۳٬۹۷۴٬۸۰۸ <small class="text-xs font-normal">م.ر</small></span>
+                </div>
+                <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-5 rounded-xl border border-purple-200 shadow-sm text-center">
+                    <span class="block text-sm font-bold text-purple-800 mb-2">بودجه پیش‌بینی ۱۴۰۵</span>
+                    <span class="block text-xl font-black text-purple-900">۷۵٬۰۸۵٬۰۱۰ <small class="text-xs font-normal">م.ر</small></span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <div class="bg-white p-4 rounded-xl shadow border">
+                    <h4 class="text-sm font-bold mb-4 text-gray-600 text-center">مقایسه بودجه، عملکرد و سود (م.ر)</h4>
+                    <div style="position: relative; height: 250px; width: 100%;">
+                        <canvas id="financialChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl shadow border">
+                    <h4 class="text-sm font-bold mb-4 text-gray-600 text-center">روند فروش و پیش‌فروش (م.ر)</h4>
+                    <div style="position: relative; height: 250px; width: 100%;">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl shadow border flex flex-col items-center justify-center">
+                    <h4 class="text-sm font-bold mb-4 text-gray-600 text-center">ترکیب سرمایه‌گذاری‌ها</h4>
+                    <div style="position: relative; height: 200px; width: 200px;">
+                        <canvas id="investmentChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section class="glass-card p-6 border-t-4 border-gray-400">
+            <h3 class="text-lg font-bold text-primary mb-6 border-b pb-2"><i class="fas fa-th-large ml-2"></i>دپارتمان‌ها و دسترسی‌های سریع</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                
+                <a href="#" class="bg-gradient-to-br from-indigo-500 to-primary text-white p-5 rounded-xl shadow-md hover-lift flex flex-col justify-between h-28 group">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-sm">هیئت مدیره</h4>
+                        <i class="fas fa-gavel text-white/70 text-2xl group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <p class="text-[10px] text-blue-100 mt-2">مصوبات و اسناد بالادستی</p>
+                </a>
+
+                <a href="#" class="bg-gradient-to-br from-rose-50 to-rose-100 border border-rose-200 p-5 rounded-xl shadow-sm hover-lift flex flex-col justify-between h-28 group">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-sm text-rose-800">منابع انسانی</h4>
+                        <i class="fas fa-users text-rose-500 text-2xl group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <p class="text-[10px] text-rose-600 mt-2">تعداد کل پرسنل: ۱,۲۴۰ نفر</p>
+                </a>
+
+                <a href="#" class="bg-gradient-to-br from-teal-50 to-teal-100 border border-teal-200 p-5 rounded-xl shadow-sm hover-lift flex flex-col justify-between h-28 group">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-sm text-teal-800">کمیته‌های تخصصی</h4>
+                        <i class="fas fa-users-cog text-teal-500 text-2xl group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <p class="text-[10px] text-teal-600 mt-2">کارگروه‌های فنی و مالی</p>
+                </a>
+
+                <a href="#" class="bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200 p-5 rounded-xl shadow-sm hover-lift flex flex-col justify-between h-28 group">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-sm text-amber-800">افتخارات کسب شده</h4>
+                        <i class="fas fa-medal text-amber-500 text-2xl group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <p class="text-[10px] text-amber-600 mt-2">جوایز و گواهینامه‌های ملی</p>
+                </a>
+
+                <a href="#" class="bg-gradient-to-br from-orange-50 to-orange-100 border border-orange-200 p-5 rounded-xl shadow-sm hover-lift flex flex-col justify-between h-28 group">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-sm text-orange-800">طرح و تجربه</h4>
+                        <i class="fas fa-lightbulb text-orange-500 text-2xl group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <p class="text-[10px] text-orange-600 mt-2">ایده‌های نوین ساخت و ساز</p>
+                </a>
+
+                <a href="#" class="bg-gradient-to-br from-blue-50 to-cyan-100 border border-cyan-200 p-5 rounded-xl shadow-sm hover-lift flex flex-col justify-between h-28 group">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-sm text-cyan-800">مدیریت دانش</h4>
+                        <i class="fas fa-book-reader text-cyan-600 text-2xl group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <p class="text-[10px] text-cyan-600 mt-2">آرشیو مستندات پروژه‌ها</p>
+                </a>
+
+                <a href="#" class="bg-gradient-to-br from-fuchsia-50 to-fuchsia-100 border border-fuchsia-200 p-5 rounded-xl shadow-sm hover-lift flex flex-col justify-between h-28 group">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-sm text-fuchsia-800">رضایت‌سنجی ذینفعان</h4>
+                        <i class="fas fa-smile-beam text-fuchsia-500 text-2xl group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <p class="text-[10px] text-fuchsia-600 mt-2">شاخص رضایت کارفرمایان</p>
+                </a>
+
+                <a href="#" class="bg-gradient-to-br from-sky-50 to-sky-100 border border-sky-200 p-5 rounded-xl shadow-sm hover-lift flex flex-col justify-between h-28 group">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-sm text-sky-800">معرفی پروژه‌ها</h4>
+                        <i class="fas fa-cubes text-sky-500 text-2xl group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <p class="text-[10px] text-sky-600 mt-2">کاتالوگ جامع طرح‌های عمرانی</p>
+                </a>
+
+                <a href="#" class="bg-gradient-to-br from-red-500 to-red-700 text-white p-5 rounded-xl shadow-md hover-lift flex flex-col justify-between h-28 group">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-sm">ارتباط با مدیرعامل</h4>
+                        <i class="fas fa-envelope-open-text text-white/70 text-2xl group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <p class="text-[10px] text-red-100 mt-2">سامانه ارتباط مستقیم و محرمانه</p>
+                </a>
+
+                <a href="#" class="bg-gradient-to-br from-violet-50 to-violet-100 border border-violet-200 p-5 rounded-xl shadow-sm hover-lift flex flex-col justify-between h-28 group">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-sm text-violet-800">فناوری اطلاعات</h4>
+                        <i class="fas fa-laptop-code text-violet-500 text-2xl group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <p class="text-[10px] text-violet-600 mt-2">وضعیت سامانه یکپارچه ERP</p>
+                </a>
+
+                <a href="#" class="bg-gradient-to-br from-green-50 to-green-100 border border-green-200 p-5 rounded-xl shadow-sm hover-lift flex flex-col justify-between h-28 group">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-sm text-green-800">توسعه و تعالی</h4>
+                        <i class="fas fa-seedling text-green-600 text-2xl group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <p class="text-[10px] text-green-600 mt-2">شاخص‌های کیفی و ایزو</p>
+                </a>
+
+                <a href="#" class="bg-gradient-to-br from-slate-100 to-slate-200 border border-slate-300 p-5 rounded-xl shadow-sm hover-lift flex flex-col justify-between h-28 group">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-sm text-slate-800">ارزیابی عملکرد</h4>
+                        <i class="fas fa-clipboard-check text-slate-600 text-2xl group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mt-2">داشبورد شاخص‌های کلیدی</p>
+                </a>
+
+                <a href="#" class="bg-gradient-to-br from-yellow-50 to-yellow-100 border border-yellow-200 p-5 rounded-xl shadow-sm hover-lift flex flex-col justify-between h-28 group">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-sm text-yellow-800">برندینگ و بازاریابی</h4>
+                        <i class="fas fa-bullhorn text-yellow-600 text-2xl group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <p class="text-[10px] text-yellow-600 mt-2">گزارش کمپین‌های فروش</p>
+                </a>
+
+            </div>
+        </section>
+
+
+        <section class="glass-card p-6 border-t-4 border-accent">
+            <h3 class="text-lg font-bold text-primary mb-6 border-b pb-2"><i class="fas fa-network-wired ml-2"></i>شرکت‌های تابعه (۱۲ شرکت)</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                
+                <a href="#" class="flex flex-col items-center justify-center p-4 bg-white rounded-xl shadow border hover-lift text-center group">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-city text-xl text-primary group-hover:text-white"></i>
+                    </div>
+                    <span class="text-xs font-bold text-gray-700">توسعه مسکن اردبیل</span>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center justify-center p-4 bg-white rounded-xl shadow border hover-lift text-center group">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-building text-xl text-primary group-hover:text-white"></i>
+                    </div>
+                    <span class="text-xs font-bold text-gray-700">آبادگران یکم</span>
+                </a>
+
+                <a href="#" class="flex flex-col items-center justify-center p-4 bg-white rounded-xl shadow border hover-lift text-center group">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-home text-xl text-primary group-hover:text-white"></i>
+                    </div>
+                    <span class="text-xs font-bold text-gray-700">توسعه مسکن خاوران</span>
+                </a>
+
+                <a href="#" class="flex flex-col items-center justify-center p-4 bg-white rounded-xl shadow border hover-lift text-center group">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-industry text-xl text-primary group-hover:text-white"></i>
+                    </div>
+                    <span class="text-xs font-bold text-gray-700">توسعه مسکن سمنان</span>
+                </a>
+
+                <a href="#" class="flex flex-col items-center justify-center p-4 bg-white rounded-xl shadow border hover-lift text-center group">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-building-user text-xl text-primary group-hover:text-white"></i>
+                    </div>
+                    <span class="text-xs font-bold text-gray-700">توسعه مسکن تهران</span>
+                </a>
+
+                <a href="#" class="flex flex-col items-center justify-center p-4 bg-white rounded-xl shadow border hover-lift text-center group">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-hotel text-xl text-primary group-hover:text-white"></i>
+                    </div>
+                    <span class="text-xs font-bold text-gray-700">توسعه مسکن کویر (یزد)</span>
+                </a>
+
+                <a href="#" class="flex flex-col items-center justify-center p-4 bg-white rounded-xl shadow border hover-lift text-center group">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-ship text-xl text-primary group-hover:text-white"></i>
+                    </div>
+                    <span class="text-xs font-bold text-gray-700">توسعه مسکن هرمزگان</span>
+                </a>
+
+                <a href="#" class="flex flex-col items-center justify-center p-4 bg-white rounded-xl shadow border hover-lift text-center group">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-landmark text-xl text-primary group-hover:text-white"></i>
+                    </div>
+                    <span class="text-xs font-bold text-gray-700">ارگ مسکن جنوب (شیراز)</span>
+                </a>
+
+                <a href="#" class="flex flex-col items-center justify-center p-4 bg-white rounded-xl shadow border hover-lift text-center group">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-archway text-xl text-primary group-hover:text-white"></i>
+                    </div>
+                    <span class="text-xs font-bold text-gray-700">توسعه مسکن اصفهان</span>
+                </a>
+
+                <a href="#" class="flex flex-col items-center justify-center p-4 bg-white rounded-xl shadow border hover-lift text-center group">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-water text-xl text-primary group-hover:text-white"></i>
+                    </div>
+                    <span class="text-xs font-bold text-gray-700">توسعه مسکن خوزستان</span>
+                </a>
+
+                <a href="#" class="flex flex-col items-center justify-center p-4 bg-white rounded-xl shadow border hover-lift text-center group">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-mountain text-xl text-primary group-hover:text-white"></i>
+                    </div>
+                    <span class="text-xs font-bold text-gray-700">آبادگران زاگرس</span>
+                </a>
+
+                <a href="#" class="flex flex-col items-center justify-center p-4 bg-white rounded-xl shadow border hover-lift text-center group">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-map-marked-alt text-xl text-primary group-hover:text-white"></i>
+                    </div>
+                    <span class="text-xs font-bold text-gray-700">توسعه مسکن آذربایجان</span>
+                </a>
+
+            </div>
+        </section>
+
+
+    </main>
+
+    <footer class="text-center py-6 text-gray-500 text-sm mt-8 border-t">
+        طراحی شده برای داشبورد مدیریتی ریاست بنیاد مسکن ©
+    </footer>
+
+    <script>
+        // === Clock & Date Logic ===
+        function updateClock() {
+            const now = new Date();
+            
+            // Analog Clock
+            const second = now.getSeconds();
+            const minute = now.getMinutes();
+            const hour = now.getHours();
+
+            const secDeg = (second / 60) * 360;
+            const minDeg = ((minute + second / 60) / 60) * 360;
+            const hourDeg = ((hour % 12 + minute / 60) / 12) * 360;
+
+            document.getElementById('secHand').style.transform = `rotate(${secDeg}deg)`;
+            document.getElementById('minHand').style.transform = `rotate(${minDeg}deg)`;
+            document.getElementById('hourHand').style.transform = `rotate(${hourDeg}deg)`;
+
+            // Digital Time Display
+            document.getElementById('currentTime').innerText = now.toLocaleTimeString('fa-IR');
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Custom Date Formatting (e.g. یکشنبه 31 خرداد 1405)
+        const d = new Date();
+        const weekDay = new Intl.DateTimeFormat('fa-IR', { weekday: 'long' }).format(d);
+        const dayNum = new Intl.DateTimeFormat('fa-IR', { day: 'numeric' }).format(d);
+        const month = new Intl.DateTimeFormat('fa-IR', { month: 'long' }).format(d);
+        const year = new Intl.DateTimeFormat('fa-IR', { year: 'numeric' }).format(d);
+        document.getElementById('currentDate').innerText = `${weekDay} ${dayNum} ${month} ${year}`;
+
+
+        // === Slider Logic ===
+        const slides = document.querySelectorAll('.project-slide');
+        let currentSlide = 0;
+        if(slides.length > 0) {
+            setInterval(() => {
+                slides[currentSlide].classList.remove('opacity-100', 'z-10');
+                slides[currentSlide].classList.add('opacity-0', 'z-0');
+                
+                currentSlide = (currentSlide + 1) % slides.length;
+                
+                slides[currentSlide].classList.remove('opacity-0', 'z-0');
+                slides[currentSlide].classList.add('opacity-100', 'z-10');
+            }, 4000); 
+        }
+
+
+        // === Chart 1: Financial Chart ===
+        const ctxFin = document.getElementById('financialChart').getContext('2d');
+        new Chart(ctxFin, {
+            type: 'bar',
+            data: {
+                labels: ['بودجه ۱۴۰۴', 'عملکرد ۱۴۰۴', 'سود خالص', 'بودجه ۱۴۰۵'],
+                datasets: [
+                    {
+                        label: 'مبلغ (میلیون ریال)',
+                        data: [56170611, 45640626, 13974808, 75085010],
+                        backgroundColor: [
+                            'rgba(37, 99, 235, 0.8)', // Blue
+                            'rgba(13, 148, 136, 0.8)', // Teal
+                            'rgba(22, 163, 74, 0.8)',  // Green
+                            'rgba(147, 51, 234, 0.8)'  // Purple
+                        ],
+                        borderColor: ['#1d4ed8', '#0f766e', '#15803d', '#7e22ce'],
+                        borderWidth: 1,
+                        borderRadius: 6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { titleFont: { family: 'Vazirmatn' }, bodyFont: { family: 'Vazirmatn' } } },
+                scales: {
+                    x: { ticks: { font: { family: 'Vazirmatn' } } },
+                    y: { ticks: { font: { family: 'Vazirmatn' }, callback: function(value) { return value.toLocaleString('fa-IR'); } } }
+                }
+            }
+        });
+
+        // === Chart 2: Sales (Bar Chart) ===
+        const ctxSales = document.getElementById('salesChart').getContext('2d');
+        new Chart(ctxSales, {
+            type: 'bar',
+            data: {
+                labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور'],
+                datasets: [
+                    {
+                        label: 'فروش قطعی',
+                        data: [12000, 19000, 15000, 22000, 18000, 25000],
+                        backgroundColor: '#0052cc',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'پیش فروش',
+                        data: [8000, 11000, 9000, 14000, 12000, 16000],
+                        backgroundColor: '#10b981',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top', labels: { font: { family: 'Vazirmatn' } } }, tooltip: { titleFont: { family: 'Vazirmatn' }, bodyFont: { family: 'Vazirmatn' } } },
+                scales: {
+                    x: { ticks: { font: { family: 'Vazirmatn' } } },
+                    y: { ticks: { font: { family: 'Vazirmatn' }, callback: function(value) { return value.toLocaleString('fa-IR'); } } }
+                }
+            }
+        });
+
+        // === Chart 3: Investment (Doughnut Chart) ===
+        const ctxInv = document.getElementById('investmentChart').getContext('2d');
+        new Chart(ctxInv, {
+            type: 'doughnut',
+            data: {
+                labels: ['مسکونی', 'تجاری', 'مشارکتی', 'زیربنایی'],
+                datasets: [{
+                    data: [55, 20, 15, 10],
+                    backgroundColor: ['#001b69', '#3b82f6', '#f59e0b', '#10b981'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom', labels: { font: { family: 'Vazirmatn' }, boxWidth: 12 } }, tooltip: { titleFont: { family: 'Vazirmatn' }, bodyFont: { family: 'Vazirmatn' } } },
+                cutout: '70%'
+            }
+        });
+    </script>
+</body>
+</html>
