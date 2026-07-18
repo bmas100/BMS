@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>سامانه هوشمند مدیریتی ریاست</title>
+    <!-- فونت وزیرمتن -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-Variable-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- آیکون‌های حرفه‌ای FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-dark: #0f172a;
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --accent: #f59e0b;
+            --bg-color: #f1f5f9;
+            --text-main: #1e293b;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 420px;
+            background-color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* استایل بنر متحرک */
+        .banner {
+            background: linear-gradient(-45deg, #1e3a8a, #2563eb, #0f172a, #0284c7);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            padding: 30px 15px 20px 15px; /* اعمال پدینگ جدید طبق درخواست شما */
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 20px rgba(30, 58, 138, 0.2);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .banner::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: rotateBg 20s linear infinite;
+        }
+
+        @keyframes rotateBg {
+            100% { transform: rotate(360deg); }
+        }
+
+        .badge-demo {
+            position: absolute;
+            top: 7px;
+            Right: 10px;
+            font-size: 0.65rem;
+            background: rgba(255, 255, 255, 0.40);
+            padding: 1px 8px;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+            color: rgba(255, 255, 255, 1);
+            z-index: 2;
+            font-weight: 500;
+        }
+
+        .titles {
+            text-align: center;
+            z-index: 1;
+            flex-grow: 1;
+            padding: 0 10px;
+        }
+
+        .titles h1 {
+            font-size: 0.85rem;
+            margin: 0 0 2px 0;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-top: -12px;
+        }
+
+        .titles h2 {
+            font-size: 1.1rem;
+            margin: 0 0 8px 0;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.4;
+            margin-bottom: 15px;
+            margin-top: 3px;
+        }
+
+        .titles small {
+            font-size: 0.75rem;
+            background: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            font-weight: 500;
+        }
+
+        .img-bonyad {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(0, 0, 0, 0.8);
+            background: white;
+            z-index: 1;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin-bottom: -10px;
+        }
+
+        .img-boss {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+            z-index: 1;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin-bottom: -10px;
+        }
+
+        /* --- تغییرات برای جمع‌وجور شدن کارت‌ها --- */
+        .grid-container {
+            padding: 20px 10px 10px 10px; /* کاهش پدینگ برای جا شدن در صفحه */
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px; /* کاهش فاصله بین کارت‌ها */
+            margin-top: -15px; /* کمی بالاتر آمدن کارت‌ها */
+        }
+
+        /* استایل کارت‌ها با بک‌گراند متحرک و خط بالای نازک */
+        .card {
+            text-decoration: none; /* برای تگ a */
+            color: inherit;
+            border-radius: 18px;
+            padding: 10px 8px; /* کاهش پدینگ داخلی کارت */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            
+            /* بردر نازک بالا */
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            border-top: 2.5px solid #0a004e;
+            
+            /* بک‌گراند متحرک ملایم */
+            background: linear-gradient(120deg, #707070, #f0f9ff, #e0f2fe, #707070);
+            background-size: 200% 200%;
+            animation: cardBg 5s ease-in-out infinite alternate;
+            
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes cardBg {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .card:hover, .card:active {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.12);
+            border-top-color: var(--accent);
+        }
+
+        .icon-wrapper {
+            width: 42px; /* کمی کوچکتر برای جا شدن بهتر */
+            height: 42px; /* کمی کوچکتر */
+            background: #ffffff;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px; /* کاهش فاصله با متن */
+            color: var(--primary);
+            font-size: 1.5rem; /* تنظیم سایز آیکون */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .icon-wrapper, .card:active .icon-wrapper {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.08);
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 0.8rem; /* فونت کمی کوچکتر */
+            font-weight: 700;
+            color: var(--text-main);
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        /* --- استایل تصویر فوتر --- */
+        .footer-img {
+            width: 100%;
+            height: auto;
+            margin-top: auto; /* این ویژگی تصویر را همیشه به پایین‌ترین قسمت هل می‌دهد */
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="banner">
+
+            <span class="badge-demo">نسخه آزمایشی</span>
+
+            <img src="BonyadLogo.png" alt="لوگو بنیاد" class="img-bonyad">
+            
+            <div class="titles">
+                <h1>بنیاد مسکن انقلاب اسلامی</h1>
+                <h2>سامانه هوشمند مدیریتی ریاست</h2>
+                <small>اداره‌کل حوزه ریاست</small>
+            </div>
+            
+            <img src="Boss.png" alt="ریاست بنیاد" class="img-boss">
+        </header>
+        
+        <div class="grid-container">
+            <!-- ردیف 1 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-sitemap"></i></div>
+                <p>شورای مرکزی</p>
+            </a>
+            <a href="https://bmas100.github.io/War/War.html" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-person-digging"></i></div>
+                <p>بازسازی جنگ رمضان</p>
+            </a>
+            
+            <!-- ردیف 2 (کارت‌های جدید) -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-map-location-dot"></i></div>
+                <p>امور استان‌ها</p>
+            </a>
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-building"></i></div>
+                <p>شرکت‌های تابعه</p>
+            </a>
+            
+            <!-- ردیف 3 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-chart-line"></i></div>
+                <p>ارزیابی عملکرد</p>
+            </a>
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-user-tie"></i></div>
+                <p>ارزیابی مدیران</p>
+            </a>
+            
+            <!-- ردیف 4 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-house-chimney-window"></i></div>
+                <p>مسکن محرومین</p>
+            </a>
+            <!-- کارت جدید -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-scale-balanced"></i></div>
+                <p>امور حقوقی و املاک</p>
+            </a>
+            
+            <!-- ردیف 5 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-users-gear"></i></div>
+                <p>منابع انسانی</p>
+            </a>
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-server"></i></div>
+                <p>وضعیت سامانه‌ها</p>
+            </a>
+
+            <!-- ردیف 6 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-comments"></i></div>
+                <p>ارتباط با ریاست</p>
+            </a>
+            <!-- کارت جدید -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-share-nodes"></i></div>
+                <p>رسانه‌ها و فضای مجازی</p>
+            </a>
+        </div>
+
+        <!-- تصویر فوتر -->
+        <img src="Footer.png" alt="فوتر سامانه" class="footer-img">
+
+    </div>
+</body>
+</html>
