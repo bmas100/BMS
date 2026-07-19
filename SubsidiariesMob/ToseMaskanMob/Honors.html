@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوح افتخارات سازمان توسعه مسکن ایران</title>
+    
+    <style>
+        /* اتصال فونت وزیرمتن به صورت آفلاین */
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('Vazirmatn.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* تعریف متغیرهای رنگی پیشرفته */
+        :root {
+            --primary-dark: #0f172a; /* سرمه ای خیلی تیره برای بنر */
+            --primary: #1e3a8a; /* سرمه ای سازمانی */
+            --accent: #d97706; /* طلایی افتخارات */
+            --accent-light: #f59e0b; /* طلایی روشن */
+            --bg-light: #f8fafc; /* پس زمینه روشن و مدرن */
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        /* تنظیمات پایه */
+        body {
+            font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* بنر ارتقا یافته، تیره تر و با ارتفاع کمتر */
+        .header-banner {
+            background: linear-gradient(135deg, #090d16 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.2rem 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            border-bottom: 4px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        /* بخش راست بنر شامل لوگو و عنوان */
+        .banner-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .organization-logo {
+            height: 60px; /* تنظیم ابعاد مناسب برای لوگو */
+            width: auto;
+            object-fit: contain;
+        }
+
+        .banner-titles h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fef08a; /* طلایی ملایم برای هماهنگی با تم تیره */
+            letter-spacing: -0.5px;
+        }
+
+        .banner-titles p {
+            margin: 4px 0 0 0;
+            font-size: 1rem;
+            color: #94a3b8;
+        }
+
+        /* نگهدارنده اصلی محتوا */
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto 4rem auto;
+            padding: 0 20px;
+        }
+
+        /* کارت توضیحات */
+        .info-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2.5rem;
+            border-right: 6px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(30,58,138,0.03) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .info-card h2 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .info-card p {
+            font-size: 1.05rem;
+            text-align: justify;
+            color: #334155;
+            margin-bottom: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ویترین اصلی اسلایدشو و شست‌بندها */
+        .showcase-wrapper {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.08);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* ردیف تصاویر کوچک (Thumbnails) بالای اسلایدشو */
+        .thumbnail-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .thumb {
+            width: 112px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .thumb:hover {
+            opacity: 0.9;
+        }
+
+        .thumb.active-thumb {
+            opacity: 1;
+            border-color: var(--accent);
+            box-shadow: 0 4px 10px rgba(217, 119, 6, 0.3);
+            transform: scale(1.03);
+        }
+
+        /* قاب اسلایدشو اصلی */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 680px; /* بهینه‌سازی شده برای تصاویر عمودی لوح */
+            overflow: hidden;
+            border-radius: 12px;
+            background-color: #f1f5f9;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* محافظت از ابعاد اصلی لوح عمودی */
+        }
+
+        /* دکمه‌های ناوبری چپ و راست */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 45px;
+            background-color: rgba(15, 23, 42, 0.75);
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            z-index: 10;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .next { left: 15px; }
+        .prev { right: 15px; }
+
+        .prev:hover, .next:hover {
+            background-color: var(--accent);
+            color: white;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
+        }
+
+        /* انیمیشن تغییر اسلاید */
+        .fade {
+            animation-name: fadeAnim;
+            animation-duration: 0.6s;
+        }
+
+        @keyframes fadeAnim {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+
+        /* واکنش‌گرایی صفحه */
+        @media (max-width: 768px) {
+            .header-banner { flex-direction: column; text-align: center; gap: 12px; }
+            .banner-right { flex-direction: column; gap: 10px; }
+            .slideshow-container { height: 480px; }
+            .thumb { width: 84px; height: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-banner">
+        <div class="banner-right">
+            <img src="LogoWhite.png" alt="آرم توسعه مسکن" class="organization-logo">
+            <div class="banner-titles">
+                <h1>لوح افتخارات</h1>
+                <p>سازمان توسعه مسکن ایران</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="info-card">
+            <h2>دستاوردها و افتخارات سازمان</h2>
+            <p>
+                سازمان توسعه مسکن ایران در راستای تحقق اهداف کلان خود و ارتقای کیفیت ساخت و ساز در کشور، همواره تلاش نموده تا با بهره‌گیری از دانش روز و متخصصان کارآمد، پروژه‌های ملی را با بالاترین استانداردها به انجام برساند. لوح‌ها و تقدیرنامه‌های پیش رو، تنها بخشی از کارنامه درخشان و گواهی بر تعهد، کیفیت و نوآوری این سازمان در مسیر آبادانی ایران اسلامی می‌باشد.
+            </p>
+        </section>
+
+        <div class="showcase-wrapper">
+            
+            <section class="thumbnail-container">
+                <img class="thumb" src="Eftekhar(1).jpg" alt="کوچک ۱" onclick="currentSlide(1)">
+                <img class="thumb" src="Eftekhar(2).jpg" alt="کوچک ۲" onclick="currentSlide(2)">
+                <img class="thumb" src="Eftekhar(3).jpg" alt="کوچک ۳" onclick="currentSlide(3)">
+                <img class="thumb" src="Eftekhar(4).jpg" alt="کوچک ۴" onclick="currentSlide(4)">
+                <img class="thumb" src="Eftekhar(5).jpg" alt="کوچک ۵" onclick="currentSlide(5)">
+                <img class="thumb" src="Eftekhar(6).jpg" alt="کوچک ۶" onclick="currentSlide(6)">
+            </section>
+
+            <section class="slideshow-container">
+                <div class="slide fade"><img src="Eftekhar(1).jpg" alt="لوح افتخار ۱"></div>
+                <div class="slide fade"><img src="Eftekhar(2).jpg" alt="لوح افتخار ۲"></div>
+                <div class="slide fade"><img src="Eftekhar(3).jpg" alt="لوح افتخار ۳"></div>
+                <div class="slide fade"><img src="Eftekhar(4).jpg" alt="لوح افتخار ۴"></div>
+                <div class="slide fade"><img src="Eftekhar(5).jpg" alt="لوح افتخار ۵"></div>
+                <div class="slide fade"><img src="Eftekhar(6).jpg" alt="لوح افتخار ۶"></div>
+
+                <a class="prev" onclick="changeSlide(-1)">&#10095;</a>
+                <a class="next" onclick="changeSlide(1)">&#10094;</a>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        let slideIndex = 1;
+        let slideInterval;
+
+        // اجرای اولیه
+        showSlides(slideIndex);
+        startAutoPlay();
+
+        function changeSlide(n) {
+            showSlides(slideIndex += n);
+            resetAutoPlay();
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+            resetAutoPlay();
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slide");
+            let thumbs = document.getElementsByClassName("thumb");
+            
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            
+            // مخفی کردن تمام اسلایدهای بزرگ
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            
+            // غیرفعال کردن استایل تمام تصاویر کوچک
+            for (i = 0; i < thumbs.length; i++) {
+                thumbs[i].className = thumbs[i].className.replace(" active-thumb", "");
+            }
+            
+            // نمایش اسلاید فعلی و هایلایت کردن تصویر کوچک مربوطه
+            slides[slideIndex - 1].style.display = "block";
+            if(thumbs[slideIndex - 1]) {
+                thumbs[slideIndex - 1].className += " active-thumb";
+            }
+        }
+
+        // سیستم تعویض خودکار (هر ۵ ثانیه)
+        function startAutoPlay() {
+            slideInterval = setInterval(function() {
+                showSlides(slideIndex += 1);
+            }, 5000);
+        }
+
+        function resetAutoPlay() {
+            clearInterval(slideInterval);
+            startAutoPlay();
+        }
+    </script>
+</body>
+</html>
