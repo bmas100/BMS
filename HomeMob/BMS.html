@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>سامانه هوشمند مدیریتی ریاست</title>
+    
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-Variable-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="banner.css">
+
+    <!-- ================= PWA Code================= -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e3a8a">
+    <!-- تنظیمات مخصوص دستگاه‌های اپل (iOS) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="BonyadLogo.png">
+    <!-- ====================================================== -->
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="banner">
+            <span class="badge-demo">نسخه آزمایشی</span>
+            <img src="BonyadLogo.png" alt="لوگو بنیاد" class="img-bonyad">
+            
+            <div class="titles">
+                <h1>بنیاد مسکن انقلاب اسلامی</h1>
+                <h2>سامانه هوشمند مدیریتی ریاست</h2>
+                <small>اداره‌کل حوزه ریاست</small>
+            </div>
+            
+            <img src="Boss.png" alt="ریاست بنیاد" class="img-boss">
+        </header>
+        
+        <div class="grid-container">
+            <!-- ردیف 1 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-sitemap"></i></div>
+                <p>شورای مرکزی</p>
+            </a>
+            <a href="https://bmas100.github.io/War/War.html" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-person-digging"></i></div>
+                <p>بازسازی جنگ رمضان</p>
+            </a>
+            
+            <!-- ردیف 2 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-map-location-dot"></i></div>
+                <p>امور استان‌ها</p>
+            </a>
+            <a href="../SubsidiariesMob/SubsidiariesMob.html" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-building"></i></div>
+                <p>شرکت‌های تابعه</p>
+            </a>
+            
+            <!-- ردیف 3 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-chart-line"></i></div>
+                <p>ارزیابی عملکرد</p>
+            </a>
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-user-tie"></i></div>
+                <p>ارزیابی مدیران</p>
+            </a>
+            
+            <!-- ردیف 4 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-house-chimney-window"></i></div>
+                <p>مسکن محرومین</p>
+            </a>
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-scale-balanced"></i></div>
+                <p>امور حقوقی و املاک</p>
+            </a>
+            
+            <!-- ردیف 5 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-users-gear"></i></div>
+                <p>منابع انسانی</p>
+            </a>
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-server"></i></div>
+                <p>وضعیت سامانه‌ها</p>
+            </a>
+
+            <!-- ردیف 6 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-comments"></i></div>
+                <p>ارتباط با ریاست</p>
+            </a>
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-share-nodes"></i></div>
+                <p>رسانه‌ها و فضای مجازی</p>
+            </a>
+        </div>
+
+        <img src="Footer.png" alt="Footer" class="footer-img">
+
+        <!-- =================  (PWA) ================= -->
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('sw.js').then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    }, function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        </script>
+        <!-- ======================================================== -->
+
+    </div>
+</body>
+</html>
