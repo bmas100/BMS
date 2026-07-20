@@ -1,726 +1,993 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>داشبورد مدیریتی منابع انسانی | ریاست بنیاد مسکن انقلاب اسلامی</title>
-    <style>
-        /* تعریف فونت‌های محلی و آفلاین */
-        @font-face {
-            font-family: 'Vazirmatn';
-            src: url('Vazirmatn-Regular.woff2') format('woff2');
-            font-weight: normal;
-        }
-        @font-face {
-            font-family: 'Vazirmatn';
-            src: url('Vazirmatn-Bold.woff2') format('woff2');
-            font-weight: bold;
-        }
+<meta charset="UTF-8">
+<!-- زوم دو انگشتی با برداشتن maximum-scale و user-scalable=no باز شد -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1a30">
+<title>داشبورد مدیریت سرمایه‌های انسانی</title>
+<style>
+  /* =========================================================
+     ۱) توکن‌های طراحی (Design Tokens)
+     ========================================================= */
+  :root{
+    --navy-950:#060d1a;
+    --navy-900:#0b1a30;
+    --navy-800:#132d54;
+    --navy-700:#1e457e;
+    --navy-600:#2c5f9e;
+    --gold-300:#e9d192;
+    --gold-500:#c5a85c;
+    --gold-600:#a8874a;
+    --bg:#f4f7fb;
+    --surface:#ffffff;
+    --surface-2:#eef2f7;
+    --ink-900:#0b1a30;
+    --ink-700:#334155;
+    --ink-500:#64748b;
+    --line:#e2e8f0;
+    --green:#0ea36f;
+    --blue:#0ea5e9;
+    --amber:#b45309;
+    --rose:#e11d48;
+    --radius-lg:22px;
+    --radius-md:16px;
+    --radius-sm:10px;
+    --ease:cubic-bezier(.16,.84,.32,1);
+    --shadow-soft:0 10px 30px rgba(11,26,48,.08);
+    --shadow-lift:0 22px 45px rgba(11,26,48,.16);
+  }
 
-        /* استایل‌های عمومی و پایه */
-        body {
-            font-family: 'Vazirmatn', Tahoma, sans-serif;
-            background-color: #f4f7fa;
-            margin: 0;
-            padding: 0;
-            color: #1e293b;
-            scroll-behavior: smooth;
-        }
+  /* =========================================================
+     ۲) فونت‌ها — نسخه محلی/آفلاین + پشتیبان سیستمی
+     ========================================================= */
+  @font-face{
+    font-family:'Vazirmatn';
+    src:url('Vazirmatn-Regular.woff2') format('woff2');
+    font-weight:400;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:'Vazirmatn';
+    src:url('Vazirmatn-Medium.woff2') format('woff2');
+    font-weight:500;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:'Vazirmatn';
+    src:url('Vazirmatn-Bold.woff2') format('woff2');
+    font-weight:700;
+    font-display:swap;
+  }
 
-        /* بنر مجلل مدیریتی */
-        .premium-banner {
-            background: linear-gradient(135deg, #0b1a30 0%, #132d54 50%, #1e457e 100%);
-            color: #ffffff;
-            padding: 60px 40px 120px 40px;
-            text-align: right;
-            position: relative;
-            border-bottom: 6px solid #c5a85c;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        
-        .banner-bg-pattern {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            opacity: 0.05;
-            background-image: radial-gradient(#ffffff 1px, transparent 1px);
-            background-size: 20px 20px;
-            pointer-events: none;
-        }
+  /* =========================================================
+     ۳) پایه
+     ========================================================= */
+  *{box-sizing:border-box;}
+  html{-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:'Vazirmatn','Segoe UI',Tahoma,sans-serif;
+    background:var(--bg);
+    margin:0;
+    padding:0;
+    color:var(--ink-900);
+    scroll-behavior:smooth;
+    overflow-x:hidden;
+    opacity:0;
+    animation:page-in .6s var(--ease) forwards;
+  }
+  @keyframes page-in{ to{ opacity:1; } }
 
-        .banner-text {
-            position: relative;
-            z-index: 2;
-        }
+  a{color:inherit;}
+  ::selection{background:var(--gold-500);color:#fff;}
 
-        .banner-text h1 {
-            margin: 0;
-            font-size: 2.8rem;
-            font-weight: bold;
-            letter-spacing: -0.5px;
-            text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
-        }
-        .banner-text p {
-            font-size: 1.3rem;
-            margin: 15px 0 0 0;
-            color: #94a3b8;
-            font-weight: 300;
-        }
-        .banner-badge {
-            position: relative;
-            z-index: 2;
-            background: linear-gradient(135deg, rgba(197, 168, 92, 0.2), rgba(197, 168, 92, 0.4));
-            border: 1px solid rgba(197, 168, 92, 0.6);
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-size: 1.05rem;
-            color: #fef08a;
-            font-weight: bold;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .banner-badge::before {
-            content: "●";
-            color: #22c55e;
-            font-size: 1.2rem;
-            animation: pulse 2s infinite;
-        }
+  :focus-visible{
+    outline:2px solid var(--gold-500);
+    outline-offset:3px;
+    border-radius:6px;
+  }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
-        }
+  /* اسکرول‌بار سفارشی */
+  ::-webkit-scrollbar{width:9px;height:9px;}
+  ::-webkit-scrollbar-track{background:var(--surface-2);}
+  ::-webkit-scrollbar-thumb{background:var(--navy-700);border-radius:10px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--gold-500);}
 
-        /* شبکه کارت‌های شاخص کلیدی (KPI) */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 0 40px;
-            margin-top: -70px;
-            position: relative;
-            z-index: 10;
-        }
-        .kpi-card {
-            background: linear-gradient(180deg, #ffffff 0%, #fcfdfd 100%);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05), 0 2px 10px rgba(0,0,0,0.02);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-        .kpi-card::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0; left: 0; height: 5px;
-            background: linear-gradient(90deg, #132d54, #c5a85c);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.4s ease;
-        }
-        .kpi-card:hover::before {
-            transform: scaleX(1);
-        }
-        .kpi-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(19, 45, 84, 0.12);
-            border-color: #cbd5e1;
-        }
-        .kpi-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .kpi-title {
-            font-size: 1.1rem;
-            color: #64748b;
-            font-weight: bold;
-        }
-        .kpi-icon-container {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 2px 4px rgba(255,255,255,1), 0 4px 8px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-        .kpi-card:hover .kpi-icon-container {
-            background: linear-gradient(135deg, #132d54, #1e457e);
-            transform: rotate(5deg) scale(1.1);
-        }
-        .kpi-icon {
-            width: 26px;
-            height: 26px;
-            fill: #132d54;
-            transition: fill 0.3s ease;
-        }
-        .kpi-card:hover .kpi-icon {
-            fill: #ffffff;
-        }
-        .kpi-value {
-            font-size: 2.8rem;
-            font-weight: 900;
-            color: #0b1a30;
-            line-height: 1.1;
-            margin-bottom: 12px;
-            background: linear-gradient(45deg, #0b1a30, #1e457e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .kpi-footer {
-            font-size: 0.95rem;
-            color: #059669;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: #f8fafc;
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px dashed #cbd5e1;
-            margin-top: 5px;
-        }
+  /* ابزار ورود تدریجی هنگام اسکرول */
+  .reveal{
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity .7s var(--ease), transform .7s var(--ease);
+  }
+  .reveal.is-visible{opacity:1;transform:translateY(0);}
 
-        /* ساختار بخش نمودارها */
-        .charts-section-title {
-            font-size: 1.7rem;
-            font-weight: bold;
-            color: #0b1a30;
-            margin: 60px 40px 25px 40px;
-            border-right: 6px solid #c5a85c;
-            padding-right: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .dashboard-main-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 30px;
-            padding: 0 40px 40px 40px;
-        }
-        .full-width-chart {
-            grid-column: 1 / -1;
-        }
-        .chart-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-        .chart-card:hover {
-            border-color: #cbd5e1;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-        }
-        .chart-card-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #132d54;
-            margin-bottom: 25px;
-            text-align: center;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 12px;
-        }
-        .chart-box {
-            position: relative;
-            height: 350px;
-            width: 100%;
-        }
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}
+    .reveal{opacity:1;transform:none;}
+  }
 
-        /* بخش کارت‌های تحلیلی و راهبردی */
-        .insights-section {
-            background: #0b1a30;
-            color: #ffffff;
-            padding: 60px 40px;
-            margin-top: 40px;
-            border-top: 6px solid #c5a85c;
-        }
-        .insights-main-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #ffffff;
-            margin-bottom: 35px;
-            border-right: 6px solid #c5a85c;
-            padding-right: 15px;
-        }
-        .insights-box-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 30px;
-        }
-        .insight-premium-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 30px;
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .insight-premium-card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at top right, rgba(197, 168, 92, 0.1), transparent 50%);
-            pointer-events: none;
-        }
-        .insight-premium-card:hover {
-            background: rgba(255, 255, 255, 0.09);
-            border-color: #c5a85c;
-            transform: translateY(-4px);
-        }
-        .insight-large-icon {
-            width: 55px;
-            height: 55px;
-            fill: #c5a85c;
-            background: rgba(197, 168, 92, 0.15);
-            border-radius: 14px;
-            padding: 12px;
-            flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-        .insight-info h3 {
-            margin: 0 0 12px 0;
-            font-size: 1.25rem;
-            color: #c5a85c;
-            font-weight: bold;
-        }
-        .insight-info p {
-            margin: 0;
-            font-size: 1rem;
-            color: #cbd5e1;
-            line-height: 1.8;
-            text-align: justify;
-        }
+  /* =========================================================
+     ۴) بنر مدیریتی
+     ========================================================= */
+  .premium-banner{
+    position:relative;
+    background:
+      radial-gradient(600px 260px at 12% -10%, rgba(197,168,92,.22), transparent 60%),
+      radial-gradient(700px 320px at 105% 10%, rgba(30,69,126,.55), transparent 55%),
+      linear-gradient(135deg, var(--navy-950) 0%, var(--navy-800) 52%, var(--navy-700) 100%);
+    color:#fff;
+    padding:34px 40px 76px 40px;
+    text-align:right;
+    overflow:hidden;
+    border-bottom:6px solid var(--gold-500);
+    box-shadow:0 14px 34px rgba(6,13,26,.25);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
 
-        /* رسپانسیو و سازگاری با موبایل (Mobile Responsiveness) */
-        @media (max-width: 992px) {
-            .dashboard-main-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .premium-banner {
-                padding: 40px 20px 100px 20px;
-                text-align: center;
-                justify-content: center;
-                flex-direction: column;
-                gap: 15px;
-            }
-            .banner-text h1 { 
-                font-size: 1.9rem; 
-                line-height: 1.4; 
-            }
-            .banner-text p { 
-                font-size: 1.05rem; 
-            }
-            .kpi-grid {
-                padding: 0 15px;
-                gap: 15px;
-                grid-template-columns: 1fr;
-                margin-top: -50px;
-            }
-            .kpi-card {
-                padding: 20px;
-            }
-            .charts-section-title {
-                margin: 40px 15px 20px 15px;
-                font-size: 1.4rem;
-            }
-            .dashboard-main-grid {
-                padding: 0 15px 30px 15px;
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .chart-card {
-                padding: 15px;
-            }
-            .chart-box { 
-                height: 300px; 
-            }
-            .insights-section { 
-                padding: 40px 15px; 
-            }
-            .insights-main-title { 
-                font-size: 1.4rem; 
-            }
-            .insights-box-grid { 
-                grid-template-columns: 1fr; 
-                gap: 20px;
-            }
-            .insight-premium-card { 
-                flex-direction: column; 
-                align-items: center; 
-                text-align: center; 
-                padding: 20px;
-            }
-            .insight-large-icon { 
-                margin-bottom: 10px; 
-            }
-            .insight-info p {
-                text-align: center;
-                text-align-last: center;
-            }
-        }
-    </style>
+  .banner-orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(50px);
+    pointer-events:none;
+    opacity:.35;
+  }
+  .banner-orb.o1{width:280px;height:280px;background:var(--gold-500);top:-120px;left:-60px;animation:drift-a 14s ease-in-out infinite;}
+  .banner-orb.o2{width:220px;height:220px;background:var(--navy-600);bottom:-100px;right:10%;animation:drift-b 16s ease-in-out infinite;}
+  @keyframes drift-a{0%,100%{transform:translate(0,0);}50%{transform:translate(30px,20px);}}
+  @keyframes drift-b{0%,100%{transform:translate(0,0);}50%{transform:translate(-24px,-16px);}}
+
+  .banner-bg-pattern{
+    position:absolute;inset:0;
+    opacity:.06;
+    background-image:radial-gradient(#ffffff 1px, transparent 1px);
+    background-size:20px 20px;
+    pointer-events:none;
+  }
+
+  .banner-crest{
+    position:relative;z-index:2;
+    width:56px;height:56px;
+    border-radius:16px;
+    background:linear-gradient(135deg, rgba(197,168,92,.28), rgba(197,168,92,.08));
+    border:1px solid rgba(197,168,92,.5);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.15), 0 8px 18px rgba(0,0,0,.25);
+    margin-bottom:14px;
+  }
+  .banner-crest svg{width:28px;height:28px;fill:var(--gold-300);}
+
+  .banner-text{position:relative;z-index:2;}
+  .banner-text h1{
+    margin:0;
+    font-size:2.15rem;
+    font-weight:700;
+    letter-spacing:-.5px;
+    text-shadow:2px 4px 10px rgba(0,0,0,.35);
+  }
+  .banner-text p{
+    font-size:1.08rem;
+    margin:10px 0 0 0;
+    color:#a9b7c9;
+    font-weight:300;
+  }
+  .banner-badge{
+    position:relative;z-index:2;
+    background:linear-gradient(135deg, rgba(197,168,92,.2), rgba(197,168,92,.38));
+    border:1px solid rgba(197,168,92,.6);
+    padding:10px 20px;
+    border-radius:50px;
+    font-size:1rem;
+    color:#fef3c7;
+    font-weight:700;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    box-shadow:0 6px 18px rgba(0,0,0,.22);
+    display:flex;align-items:center;gap:8px;
+  }
+  .banner-badge::before{
+    content:"";
+    width:9px;height:9px;border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 0 rgba(34,197,94,.6);
+    animation:pulse-dot 2s infinite;
+  }
+  @keyframes pulse-dot{
+    0%{box-shadow:0 0 0 0 rgba(34,197,94,.55);}
+    70%{box-shadow:0 0 0 9px rgba(34,197,94,0);}
+    100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
+  }
+
+  /* =========================================================
+     ۵) شبکه کارت‌های شاخص کلیدی (KPI)
+     ========================================================= */
+  .kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:25px;
+    padding:0 40px;
+    margin-top:-46px;
+    position:relative;
+    z-index:10;
+  }
+  .kpi-card{
+    background:linear-gradient(155deg, #ffffff 0%, var(--surface-2) 100%);
+    border-radius:var(--radius-lg);
+    padding:24px;
+    box-shadow:var(--shadow-soft), inset 0 2px 5px rgba(255,255,255,1);
+    border:1px solid #e3eaf3;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition:transform .45s var(--ease), box-shadow .45s var(--ease), border-color .45s var(--ease), background .45s var(--ease);
+    position:relative;
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .kpi-card::before{
+    content:'';
+    position:absolute;top:0;right:0;left:0;height:4px;
+    background:linear-gradient(90deg, var(--navy-800), var(--gold-500));
+    transform:scaleX(0);
+    transform-origin:right;
+    transition:transform .45s var(--ease);
+  }
+  .kpi-card::after{
+    content:'';
+    position:absolute; inset:-40% -10% auto auto; width:140px; height:140px;
+    background:radial-gradient(circle, rgba(197,168,92,.14), transparent 70%);
+    z-index:-1;
+    opacity:0;
+    transition:opacity .45s var(--ease);
+  }
+  .kpi-card:hover::before{transform:scaleX(1);}
+  .kpi-card:hover::after{opacity:1;}
+  .kpi-card:hover{
+    transform:translateY(-8px);
+    box-shadow:var(--shadow-lift);
+    border-color:#cbd5e1;
+  }
+  .kpi-header{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:18px;
+  }
+  .kpi-title{font-size:1.05rem;color:var(--ink-700);font-weight:700;}
+  .kpi-icon-container{
+    width:48px;height:48px;
+    background:linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    border-radius:13px;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:inset 0 2px 4px rgba(255,255,255,1), 0 4px 8px rgba(0,0,0,.05);
+    transition:all .35s var(--ease);
+  }
+  .kpi-card:hover .kpi-icon-container{
+    background:linear-gradient(135deg, var(--navy-800), var(--navy-600));
+    transform:rotate(6deg) scale(1.1);
+    box-shadow:0 8px 20px rgba(19,45,84,.35);
+  }
+  .kpi-icon{width:24px;height:24px;fill:var(--navy-800);transition:fill .3s ease;}
+  .kpi-card:hover .kpi-icon{fill:#fff;}
+  .kpi-value{
+    font-size:2.5rem;
+    font-weight:900;
+    line-height:1.1;
+    margin-bottom:12px;
+    background:linear-gradient(45deg, var(--navy-950), var(--navy-600));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    font-variant-numeric:tabular-nums;
+  }
+  .kpi-footer{
+    font-size:.92rem;
+    color:var(--green);
+    display:flex;align-items:center;gap:6px;
+    background:rgba(255,255,255,.7);
+    padding:8px 12px;
+    border-radius:9px;
+    border:1px dashed #cbd5e1;
+    margin-top:5px;
+    width:fit-content;
+  }
+
+  /* =========================================================
+     ۶) عنوان بخش‌ها
+     ========================================================= */
+  .charts-section-title{
+    font-size:1.6rem;
+    font-weight:700;
+    color:var(--navy-900);
+    margin:60px 40px 25px 40px;
+    position:relative;
+    padding-right:18px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .charts-section-title::before{
+    content:'';
+    position:absolute;right:0;top:2px;bottom:2px;width:6px;
+    border-radius:4px;
+    background:linear-gradient(180deg, var(--gold-500), var(--navy-700));
+  }
+  .charts-section-title .title-icon{width:26px;height:26px;fill:var(--navy-800);flex-shrink:0;}
+
+  /* =========================================================
+     ۷) شبکه اصلی نمودارها
+     ========================================================= */
+  .dashboard-main-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(450px, 1fr));
+    gap:28px;
+    padding:0 40px 40px 40px;
+  }
+  .chart-card{
+    background:var(--surface);
+    border-radius:var(--radius-lg);
+    padding:24px;
+    box-shadow:0 6px 22px rgba(11,26,48,.05);
+    border:1px solid var(--line);
+    border-top:4px solid var(--navy-800);
+    transition:border-color .35s ease, box-shadow .35s ease, border-top-color .35s ease, transform .35s ease;
+    position:relative;
+  }
+  .chart-card:hover{
+    border-color:#cbd5e1;
+    box-shadow:0 14px 32px rgba(11,26,48,.09);
+    border-top-color:var(--gold-500);
+    transform:translateY(-4px);
+  }
+  .chart-card-title{
+    font-size:1.18rem;
+    font-weight:700;
+    color:var(--navy-800);
+    margin-bottom:22px;
+    text-align:center;
+    padding-bottom:12px;
+    position:relative;
+  }
+  .chart-card-title::after{
+    content:'';
+    position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+    width:46px;height:3px;border-radius:3px;
+    background:linear-gradient(90deg, var(--gold-500), var(--navy-700));
+  }
+  .chart-box{position:relative;height:340px;width:100%;}
+
+  /* =========================================================
+     ۸) بخش تحلیل‌های راهبردی
+     ========================================================= */
+  .insights-section{
+    position:relative;
+    background:
+      radial-gradient(520px 260px at 90% 0%, rgba(197,168,92,.10), transparent 60%),
+      radial-gradient(520px 260px at 0% 100%, rgba(30,69,126,.35), transparent 55%),
+      var(--navy-950);
+    color:#fff;
+    padding:64px 40px;
+    margin-top:44px;
+    border-top:6px solid var(--gold-500);
+    overflow:hidden;
+  }
+  .insights-main-title{
+    font-size:1.75rem;
+    font-weight:700;
+    color:#fff;
+    margin-bottom:36px;
+    position:relative;
+    padding-right:18px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .insights-main-title::before{
+    content:'';
+    position:absolute;right:0;top:0;bottom:0;width:6px;border-radius:4px;
+    background:linear-gradient(180deg, var(--gold-500), var(--navy-600));
+  }
+  .insights-main-title .ai-pill{
+    font-size:.7rem;
+    font-weight:700;
+    color:var(--navy-950);
+    background:linear-gradient(135deg, var(--gold-300), var(--gold-500));
+    padding:4px 10px;
+    border-radius:20px;
+    letter-spacing:.5px;
+  }
+  .insights-box-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(360px, 1fr));
+    gap:28px;
+  }
+  .insight-premium-card{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:var(--radius-md);
+    padding:28px;
+    display:flex;gap:20px;align-items:flex-start;
+    transition:background .35s ease, border-color .35s ease, transform .35s ease, box-shadow .35s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .insight-premium-card::before{
+    content:'';
+    position:absolute;inset:0;
+    background:linear-gradient(120deg, transparent, rgba(197,168,92,.08), transparent);
+    transform:translateX(-100%);
+    transition:transform .7s ease;
+  }
+  .insight-premium-card:hover::before{transform:translateX(100%);}
+  .insight-premium-card:hover{
+    background:rgba(255,255,255,.07);
+    border-color:var(--gold-500);
+    transform:translateY(-5px);
+    box-shadow:0 18px 34px rgba(0,0,0,.28);
+  }
+  .insight-large-icon{
+    width:52px;height:52px;
+    fill:var(--gold-500);
+    background:rgba(197,168,92,.14);
+    border-radius:14px;
+    padding:12px;
+    flex-shrink:0;
+    box-shadow:0 4px 12px rgba(0,0,0,.22);
+  }
+  .insight-info h3{margin:0 0 12px 0;font-size:1.2rem;color:var(--gold-300);font-weight:700;}
+  .insight-info p{margin:0;font-size:.98rem;color:#cbd5e1;line-height:1.85;text-align:justify;}
+
+  .page-footer{
+    text-align:center;
+    padding:24px 20px 90px 20px;
+    color:var(--ink-500);
+    font-size:.85rem;
+    background:var(--bg);
+  }
+  .back-to-top{
+    position:fixed;
+    left:20px;bottom:20px;
+    width:48px;height:48px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--navy-800), var(--navy-600));
+    border:1px solid rgba(197,168,92,.5);
+    box-shadow:0 10px 24px rgba(11,26,48,.35);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    opacity:0;
+    transform:translateY(12px) scale(.9);
+    pointer-events:none;
+    transition:opacity .3s var(--ease), transform .3s var(--ease);
+    z-index:60;
+  }
+  .back-to-top.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
+  .back-to-top svg{width:20px;height:20px;fill:var(--gold-300);}
+  .back-to-top:active{transform:scale(.92);}
+
+  /* نوار پیشرفت اسکرول */
+  .scroll-progress{
+    position:fixed;top:0;right:0;left:0;height:3px;
+    background:linear-gradient(90deg, var(--gold-500), var(--navy-600));
+    transform-origin:right;
+    transform:scaleX(0);
+    z-index:80;
+  }
+
+  /* =========================================================
+     ۱۰) رسپانسیو / موبایل
+     ========================================================= */
+  @media (max-width: 992px){
+    .dashboard-main-grid{grid-template-columns:1fr;}
+  }
+
+  @media (max-width: 768px){
+    .premium-banner{
+      padding:28px 20px 58px 20px;
+      text-align:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:14px;
+    }
+    .banner-crest{margin:0 auto 6px auto;}
+    .banner-text h1{font-size:1.6rem;line-height:1.4;}
+    .banner-text p{font-size:.98rem;}
+
+    .kpi-grid{
+      grid-template-columns:repeat(2, 1fr);
+      gap:12px;
+      padding:0 15px;
+      margin-top:-32px;
+    }
+    .kpi-card{padding:15px 12px;border-radius:16px;}
+    .kpi-icon-container{width:34px;height:34px;border-radius:10px;}
+    .kpi-icon{width:17px;height:17px;}
+    .kpi-title{font-size:.82rem;}
+    .kpi-value{font-size:1.55rem;margin-bottom:8px;}
+    .kpi-footer{font-size:.72rem;padding:5px 8px;}
+
+    .charts-section-title{margin:44px 15px 18px 15px;font-size:1.32rem;}
+    .dashboard-main-grid{padding:0 15px 30px 15px;gap:18px;}
+    .chart-card{padding:16px;border-radius:16px;}
+    .chart-box{height:280px;}
+
+    .insights-section{padding:44px 15px;}
+    .insights-main-title{font-size:1.32rem;}
+    .insights-box-grid{grid-template-columns:1fr;gap:18px;}
+    .insight-premium-card{
+      flex-direction:column;align-items:center;text-align:center;padding:22px;
+      border-radius:16px;
+    }
+    .back-to-top{left:14px;bottom:14px;width:44px;height:44px;}
+  }
+</style>
 </head>
 <body>
 
-    <div class="premium-banner">
-        <div class="banner-bg-pattern"></div>
-        <div class="banner-text">
-            <h1>داشبورد راهبردی و مدیریت هوشمند سرمایه‌های انسانی</h1>
-            <p>گزارش یکپارچه عملکرد و شاخص‌های پرسنلی ویژه ریاست بنیاد مسکن انقلاب اسلامی</p>
-        </div>
-        <div class="banner-badge">آخرین بروزرسانی: ۱۴۰۵/۰۳/۰۵</div>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <div class="premium-banner">
+    <div class="banner-orb o1"></div>
+    <div class="banner-orb o2"></div>
+    <div class="banner-bg-pattern"></div>
+    <div class="banner-text">
+      <div class="banner-crest">
+        <svg viewBox="0 0 24 24"><path d="M12 2 2 8v2h20V8L12 2zm-8 9v9h4v-6h2v6h4v-6h2v6h4v-9H4z"/></svg>
+      </div>
+      <h1>داشبورد مدیریت سرمایه‌های انسانی</h1>
+      <p>گزارش یکپارچه عملکرد و شاخص‌های پرسنلی ویژه ریاست بنیاد مسکن انقلاب اسلامی</p>
+    </div>
+    <div class="banner-badge">بروزرسانی: ۱۴۰۵/۰۳/۰۵</div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card reveal">
+      <div class="kpi-header">
+        <span class="kpi-title">کل سرمایه انسانی</span>
+        <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
+      </div>
+      <div class="kpi-value" data-count="10865">۰</div>
+      <div class="kpi-footer" style="color:#0284c7;">سراسر کشور</div>
     </div>
 
-    <div class="kpi-grid">
-        <div class="kpi-card">
-            <div class="kpi-header">
-                <span class="kpi-title">کل سرمایه انسانی شاغل</span>
-                <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
-            </div>
-            <div class="kpi-value">10,865</div>
-            <div class="kpi-footer" style="color: #0284c7;">توزیع شده در سراسر کشور</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-header">
-                <span class="kpi-title">پایداری استخدامی (رسمی/ثابت)</span>
-                <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
-            </div>
-            <div class="kpi-value">3,084</div>
-            <div class="kpi-footer">هسته مرکزی و پایدار سازمان</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-header">
-                <span class="kpi-title">جذب سرمایه جوان (<5 سال)</span>
-                <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></div>
-            </div>
-            <div class="kpi-value">4,297</div>
-            <div class="kpi-footer" style="color: #b45309;">نیاز مبرم به جانشین‌پروری</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-header">
-                <span class="kpi-title">شاخص توسعه تحصیلات (لیسانس+)</span>
-                <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5.49 12c.66.36 1.44.57 2.28.67C9.13 12.82 10.53 13 12 13s2.87-.18 4.23-.33c.84-.1 1.62-.31 2.28-.67V15c0 1.66-3.58 3-8 3s-8-1.34-8-3v-3z"/></svg></div>
-            </div>
-            <div class="kpi-value">6,745</div>
-            <div class="kpi-footer">۶۹.۸ درصد کل منابع انسانی</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-header">
-                <span class="kpi-title">نیروهای ارشد تخصصی (فوق‌لیسانس+)</span>
-                <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg></div>
-            </div>
-            <div class="kpi-value">2,191</div>
-            <div class="kpi-footer" style="color: #049669;">۲,۱۴۰ ارشد و ۵۱ دکتری تخصصی</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-header">
-                <span class="kpi-title">نرخ ثبات خانواده (متاهلین)</span>
-                <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.5 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
-            </div>
-            <div class="kpi-value">7,665</div>
-            <div class="kpi-footer">۷۰.۵ درصد ضریب پایداری خانوادگی</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-header">
-                <span class="kpi-title">بدنه فعال و عملیاتی</span>
-                <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg></div>
-            </div>
-            <div class="kpi-value">8,842</div>
-            <div class="kpi-footer">نیروهای مشمول احکام جاری کاری</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-header">
-                <span class="kpi-title">گستره آمایش (استان‌ها)</span>
-                <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
-            </div>
-            <div class="kpi-value">31</div>
-            <div class="kpi-footer" style="color: #0284c7;">به انضمام ستاد مرکزی تهران</div>
-        </div>
+    <div class="kpi-card reveal">
+      <div class="kpi-header">
+        <span class="kpi-title">پایداری استخدامی</span>
+        <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
+      </div>
+      <div class="kpi-value" data-count="3084">۰</div>
+      <div class="kpi-footer">هسته مرکزی</div>
     </div>
 
-    <div class="charts-section-title">
-        <svg style="width: 28px; height: 28px; fill: #132d54;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
-        بررسی نموداری و آماری شاخص‌های سرمایه انسانی
+    <div class="kpi-card reveal">
+      <div class="kpi-header">
+        <span class="kpi-title">بازنشستگی تا ۵ سال آینده</span>
+        <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></div>
+      </div>
+      <div class="kpi-value" data-count="4297">۰</div>
+      <div class="kpi-footer" style="color:#b45309;">جانشین‌پروری</div>
     </div>
 
-    <div class="dashboard-main-grid">
-
-        <div class="chart-card">
-            <div class="chart-card-title">توزیع پرسنل بر اساس بازه‌های سنی</div>
-            <div class="chart-box"><canvas id="ageChart"></canvas></div>
-        </div>
-
-        <div class="chart-card">
-            <div class="chart-card-title">وضعیت ماندگاری و سنوات خدمت</div>
-            <div class="chart-box"><canvas id="expChart"></canvas></div>
-        </div>
-
-        <div class="chart-card">
-            <div class="chart-card-title">هرم تحصیلات دانشگاهی و عمومی کارکنان</div>
-            <div class="chart-box"><canvas id="eduChart"></canvas></div>
-        </div>
-
-        <div class="chart-card">
-            <div class="chart-card-title">توزیع ساختار قراردادهای استخدامی (تفکیکی)</div>
-            <div class="chart-box"><canvas id="empTypeChart"></canvas></div>
-        </div>
-
-        <div class="chart-card">
-            <div class="chart-card-title">توزیع جمعیتی ۱۰ استان کلیدی بنیاد مسکن</div>
-            <div class="chart-box"><canvas id="provinceChart"></canvas></div>
-        </div>
-
-        <div class="chart-card">
-            <div class="chart-card-title">وضعیت تاهل و پایداری خانوادگی پرسنل</div>
-            <div class="chart-box"><canvas id="maritalChart"></canvas></div>
-        </div>
-
+    <div class="kpi-card reveal">
+      <div class="kpi-header">
+        <span class="kpi-title">توسعه تحصیلات</span>
+        <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5.49 12c.66.36 1.44.57 2.28.67C9.13 12.82 10.53 13 12 13s2.87-.18 4.23-.33c.84-.1 1.62-.31 2.28-.67V15c0 1.66-3.58 3-8 3s-8-1.34-8-3v-3z"/></svg></div>
+      </div>
+      <div class="kpi-value" data-count="6745">۰</div>
+      <div class="kpi-footer">۶۹.۸ درصد پرسنل</div>
     </div>
 
-    <div class="insights-section">
-        <div class="insights-main-title">تحلیل‌های راهبردی سرمایه انسانی (ویژه ریاست عالی بنیاد)</div>
-        <div class="insights-box-grid">
-            
-            <div class="insight-premium-card">
-                <svg class="insight-large-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                <div class="insight-info">
-                    <h3>تمرکز بر هرم جانشین‌پروری</h3>
-                    <p>بیشترین انباشت سنی نیروها در محدوده ۴۰ تا ۵۰ سال (۴,۴۵۴ نفر) قرار دارد. این موضوع، بلوغ تجربی بالایی را برای پروژه‌های جاری فراهم می‌کند اما زنگ خطری جدی برای بازنشستگی‌های دسته‌جمعی در دهه پیش‌رو است. لزوم هدایت لایه‌های باسابقه به سمت مربی‌گری نیروهای جوان توصیه می‌شود.</p>
-                </div>
-            </div>
-
-            <div class="insight-premium-card">
-                <svg class="insight-large-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6h-6z"/></svg>
-                <div class="insight-info">
-                    <h3>ساماندهی تنوع قراردادی</h3>
-                    <p>وجود تنوع گسترده در مدل‌های قراردادی (شرکتی، پروژه‌ای، غیرمصوب) انعطاف‌پذیری مالی خوبی ایجاد کرده است، اما تعدد ۱,۷۶۹ نیروی قراردادی پروژه‌ای می‌تواند بر وفاداری سازمانی در پروژه‌های ملی مسکن اثرگذار باشد. یکپارچه‌سازی فرآیندهای رفاهی و انگیزشی امری گریزناپذیر است.</p>
-                </div>
-            </div>
-
-            <div class="insight-premium-card">
-                <svg class="insight-large-icon" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-                <div class="insight-info">
-                    <h3>توازن در آمایش استانی</h3>
-                    <p>تمرکز بالای نیروی انسانی در ستاد مرکزی (۶۳۰ نفر)، تهران (۱,۰۱۳ نفر) و خراسان رضوی (۶۵۹ نفر) نشان‌دهنده نیاز به بازنگری ساختاری است. پیشنهاد می‌شود اختیارات و به تبع آن چگالی توزیع کارشناسان زبده به سمت استان‌های با نیازهای عمرانی شدیدتر و مناطق محروم سوق پیدا کند.</p>
-                </div>
-            </div>
-
-            <div class="insight-premium-card">
-                <svg class="insight-large-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
-                <div class="insight-info">
-                    <h3>بهره‌وری بدنه تحصیل‌کرده</h3>
-                    <p>سهم نزدیک به ۷۰ درصدی کارشناسی و بالاتر، غنای علمی بنیاد مسکن را اثبات می‌کند. با وجود ۴,۵۵۴ کارشناس و ۲,۱۴۰ کارشناس ارشد، طراحی مکانیزم‌های خودکار ارزیابی عملکرد و اتصال آن به نظام کارانه می‌تواند جهش بهره‌وری کلانی در تحویل پروژه‌های عمرانی ایجاد کند.</p>
-                </div>
-            </div>
-
-            <div class="insight-premium-card">
-                <svg class="insight-large-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.5 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                <div class="insight-info">
-                    <h3>ثبات اجتماعی و خانوادگی کارکنان</h3>
-                    <p>بالا بودن نرخ تاهل (۷,۶۶۵ نفر مـتاهل) بیانگر ثبات بالای زیست‌محیطی پرسنل است. این مزیت، ریسک جابجایی‌های بی‌مورد و ترک خدمت را به شدت کاهش داده و بستر بسیار مناسبی را برای پیاده‌سازی پکیج‌های حمایتی خانواده‌محور به منظور ارتقای دلبستگی سازمانی مهیا می‌سازد.</p>
-                </div>
-            </div>
-
-        </div>
+    <div class="kpi-card reveal">
+      <div class="kpi-header">
+        <span class="kpi-title">نیروهای ارشد</span>
+        <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg></div>
+      </div>
+      <div class="kpi-value" data-count="2191">۰</div>
+      <div class="kpi-footer" style="color:#049669;">تخصصی و دکتری</div>
     </div>
 
-    <!-- اسکریپت‌ها (در نسخه واقعی باید از CDN یا مسیر معتبر فراخوانی شوند) -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <div class="kpi-card reveal">
+      <div class="kpi-header">
+        <span class="kpi-title">ثبات خانواده</span>
+        <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.5 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+      </div>
+      <div class="kpi-value" data-count="7665">۰</div>
+      <div class="kpi-footer">۷۰.۵ درصد ضریب</div>
+    </div>
 
-    <script>
-        // فعال‌سازی پلاگین نمایش دقیق ارقام روی چارت‌ها
-        Chart.register(ChartDataLabels);
+    <div class="kpi-card reveal">
+      <div class="kpi-header">
+        <span class="kpi-title">بدنه فعال</span>
+        <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg></div>
+      </div>
+      <div class="kpi-value" data-count="8842">۰</div>
+      <div class="kpi-footer">احکام جاری</div>
+    </div>
 
-        // تنطیمات سراسری استاندارد ظاهر چارت‌ها
-        Chart.defaults.font.family = 'Vazirmatn, Tahoma';
-        Chart.defaults.font.size = window.innerWidth < 768 ? 10 : 12;
-        Chart.defaults.color = '#334155';
-        Chart.defaults.rtl = true;
+    <div class="kpi-card reveal">
+      <div class="kpi-header">
+        <span class="kpi-title">گستره آمایش</span>
+        <div class="kpi-icon-container"><svg class="kpi-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+      </div>
+      <div class="kpi-value" data-count="31">۰</div>
+      <div class="kpi-footer" style="color:#0284c7;">استان فعال</div>
+    </div>
+  </div>
 
-        // تنظیمات عمومی دیتالیبل برای موقعیت‌یابی صحیح و عدم تداخل ارقام
-        const globalDatalabelsConfig = {
-            color: '#0f172a',
+  <div class="charts-section-title reveal">
+    <svg class="title-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+    بررسی نموداری و آماری شاخص‌های سرمایه انسانی
+  </div>
+
+  <div class="dashboard-main-grid">
+    <div class="chart-card reveal">
+      <div class="chart-card-title">توزیع پرسنل بر اساس بازه‌های سنی</div>
+      <div class="chart-box"><canvas id="ageChart"></canvas></div>
+    </div>
+
+    <div class="chart-card reveal">
+      <div class="chart-card-title">وضعیت ماندگاری و سنوات خدمت</div>
+      <div class="chart-box"><canvas id="expChart"></canvas></div>
+    </div>
+
+    <div class="chart-card reveal">
+      <div class="chart-card-title">هرم تحصیلات دانشگاهی و عمومی کارکنان</div>
+      <div class="chart-box"><canvas id="eduChart"></canvas></div>
+    </div>
+
+    <div class="chart-card reveal">
+      <div class="chart-card-title">توزیع ساختار قراردادهای استخدامی (تفکیکی)</div>
+      <div class="chart-box"><canvas id="empTypeChart"></canvas></div>
+    </div>
+
+    <div class="chart-card reveal">
+      <div class="chart-card-title">توزیع جمعیتی ۱۰ استان کلیدی</div>
+      <div class="chart-box"><canvas id="provinceChart"></canvas></div>
+    </div>
+
+    <div class="chart-card reveal">
+      <div class="chart-card-title">وضعیت تاهل و پایداری خانوادگی پرسنل</div>
+      <div class="chart-box"><canvas id="maritalChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="insights-section">
+    <div class="insights-main-title">
+      تحلیل‌های راهبردی سرمایه انسانی
+      <span class="ai-pill">AI</span>
+    </div>
+    <div class="insights-box-grid">
+
+      <div class="insight-premium-card reveal">
+        <svg class="insight-large-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        <div class="insight-info">
+          <h3>تمرکز بر هرم جانشین‌پروری</h3>
+          <p>بیشترین انباشت سنی نیروها در محدوده ۴۰ تا ۵۰ سال (۴,۴۵۴ نفر) قرار دارد. این موضوع، بلوغ تجربی بالایی را برای پروژه‌های جاری فراهم می‌کند اما زنگ خطری جدی برای بازنشستگی‌های دسته‌جمعی در دهه پیش‌رو است. لزوم هدایت لایه‌های باسابقه به سمت مربی‌گری نیروهای جوان توصیه می‌شود.</p>
+        </div>
+      </div>
+
+      <div class="insight-premium-card reveal">
+        <svg class="insight-large-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6h-6z"/></svg>
+        <div class="insight-info">
+          <h3>ساماندهی تنوع قراردادی</h3>
+          <p>وجود تنوع گسترده در مدل‌های قراردادی (شرکتی، پروژه‌ای، غیرمصوب) انعطاف‌پذیری مالی خوبی ایجاد کرده است، اما تعدد ۱,۷۶۹ نیروی قراردادی پروژه‌ای می‌تواند بر وفاداری سازمانی در پروژه‌های ملی مسکن اثرگذار باشد. یکپارچه‌سازی فرآیندهای رفاهی و انگیزشی امری گریزناپذیر است.</p>
+        </div>
+      </div>
+
+      <div class="insight-premium-card reveal">
+        <svg class="insight-large-icon" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+        <div class="insight-info">
+          <h3>توازن در آمایش استانی</h3>
+          <p>تمرکز بالای نیروی انسانی در ستاد مرکزی (۶۳۰ نفر)، تهران (۱,۰۱۳ نفر) و خراسان رضوی (۶۵۹ نفر) نشان‌دهنده نیاز به بازنگری ساختاری است. پیشنهاد می‌شود اختیارات و به تبع آن چگالی توزیع کارشناسان زبده به سمت استان‌های با نیازهای عمرانی شدیدتر و مناطق محروم سوق پیدا کند.</p>
+        </div>
+      </div>
+
+      <div class="insight-premium-card reveal">
+        <svg class="insight-large-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+        <div class="insight-info">
+          <h3>بهره‌وری بدنه تحصیل‌کرده</h3>
+          <p>سهم نزدیک به ۷۰ درصدی کارشناسی و بالاتر، غنای علمی را اثبات می‌کند. با وجود ۴,۵۵۴ کارشناس و ۲,۱۴۰ کارشناس ارشد، طراحی مکانیزم‌های خودکار ارزیابی عملکرد و اتصال آن به نظام کارانه می‌تواند جهش بهره‌وری کلانی در تحویل پروژه‌های عمرانی ایجاد کند.</p>
+        </div>
+      </div>
+
+      <div class="insight-premium-card reveal">
+        <svg class="insight-large-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.5 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <div class="insight-info">
+          <h3>ثبات اجتماعی و خانوادگی کارکنان</h3>
+          <p>بالا بودن نرخ تاهل (۷,۶۶۵ نفر مـتاهل) بیانگر ثبات بالای زیست‌محیطی پرسنل است. این مزیت، ریسک جابجایی‌های بی‌مورد و ترک خدمت را به شدت کاهش داده و بستر بسیار مناسبی را برای پیاده‌سازی پکیج‌های حمایتی خانواده‌محور به منظور ارتقای دلبستگی سازمانی مهیا می‌سازد.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="page-footer">سامانه مدیریتی ریاست بنیاد مسکن انقلاب اسلامی &middot; بخش سرمایه انسانی</div>
+
+  <button class="back-to-top" id="backToTop" aria-label="بازگشت به بالای صفحه">
+    <svg viewBox="0 0 24 24"><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
+  </button>
+
+  <!-- اسکریپت‌ها -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+  <script>
+    Chart.register(ChartDataLabels);
+
+    Chart.defaults.font.family = 'Vazirmatn, Tahoma';
+    Chart.defaults.font.size = window.innerWidth < 768 ? 10 : 12;
+    Chart.defaults.color = '#334155';
+    Chart.defaults.rtl = true;
+
+    const fa = new Intl.NumberFormat('fa-IR');
+
+    // تنظیمات مشترک تولتیپ برای ظاهر یکپارچه و شیک‌تر
+    const tooltipStyle = {
+      rtl: true,
+      backgroundColor: '#0b1a30',
+      titleColor: '#e9d192',
+      bodyColor: '#ffffff',
+      padding: 10,
+      cornerRadius: 8,
+      displayColors: false,
+      titleFont: { weight: 'bold' }
+    };
+
+    // تنظیمات اعداد برای قرارگیری دقیق در بالای میله‌ها
+    const globalDatalabelsConfig = {
+      color: '#0f172a',
+      font: { weight: 'bold', size: window.innerWidth < 768 ? 9 : 11 },
+      formatter: (val) => fa.format(val),
+      align: 'top',
+      anchor: 'end',
+      offset: 4
+    };
+
+    // ابزار ساخت گرادیان عمودی برای میله‌ها
+    function verticalGradient(ctx, chartArea, colorTop, colorBottom) {
+      if (!chartArea) return colorTop;
+      const g = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+      g.addColorStop(0, colorTop);
+      g.addColorStop(1, colorBottom);
+      return g;
+    }
+    function horizontalGradient(ctx, chartArea, colorLeft, colorRight) {
+      if (!chartArea) return colorLeft;
+      const g = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+      g.addColorStop(0, colorLeft);
+      g.addColorStop(1, colorRight);
+      return g;
+    }
+
+    // ۱. نمودار توزیع سنی
+    new Chart(document.getElementById('ageChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['زیر ۲۰', '۲۰ تا ۳۰', '۳۰ تا ۴۰', '۴۰ تا ۵۰', '۵۰ تا ۶۰', 'بالای ۶۰'],
+        datasets: [{
+          data: [375, 1152, 2897, 4454, 1758, 229],
+          backgroundColor: (c) => verticalGradient(c.chart.ctx, c.chart.chartArea, '#2c5f9e', '#132d54'),
+          borderRadius: 8,
+          borderSkipped: false,
+          maxBarThickness: 46
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 1100, easing: 'easeOutQuart' },
+        layout: { padding: { top: 30 } },
+        plugins: { legend: { display: false }, datalabels: globalDatalabelsConfig, tooltip: tooltipStyle },
+        scales: { y: { beginAtZero: true, grid: { borderDash: [4, 4] } }, x: { grid: { display: false } } }
+      }
+    });
+
+    // ۲. نمودار سابقه خدمت
+    new Chart(document.getElementById('expChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['زیر ۵', '۵ تا ۱۰', '۱۰ تا ۱۵', '۱۵ تا ۲۰', '۲۰ تا ۲۵', '۲۵ تا ۳۰', 'بالای ۳۰'],
+        datasets: [{
+          data: [4297, 969, 1032, 2172, 1406, 727, 84],
+          backgroundColor: (c) => horizontalGradient(c.chart.ctx, c.chart.chartArea, '#e9d192', '#a8874a'),
+          borderRadius: 8,
+          borderSkipped: false,
+          maxBarThickness: 26
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 1100, easing: 'easeOutQuart' },
+        layout: { padding: { left: 40, right: 40 } },
+        plugins: {
+          legend: { display: false },
+          datalabels: { ...globalDatalabelsConfig, align: 'start', anchor: 'end' },
+          tooltip: tooltipStyle
+        },
+        scales: { x: { beginAtZero: true, grid: { borderDash: [4, 4] } }, y: { grid: { display: false } } }
+      }
+    });
+
+    // ۳. نمودار مدرک تحصیلی
+    new Chart(document.getElementById('eduChart').getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: ['زیر دیپلم', 'دیپلم', 'کاردانی', 'کارشناسی', 'ارشد', 'دکتری'],
+        datasets: [{
+          data: [706, 1651, 560, 4554, 2140, 51],
+          backgroundColor: ['#94a3b8', '#64748b', '#0ea5e9', '#1e457e', '#c5a85c', '#10b981'],
+          borderColor: '#ffffff',
+          borderWidth: 3,
+          hoverOffset: 10
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '62%',
+        animation: { duration: 1100, easing: 'easeOutQuart' },
+        plugins: {
+          legend: { position: window.innerWidth < 768 ? 'bottom' : 'right' },
+          tooltip: tooltipStyle,
+          datalabels: {
+            color: '#ffffff',
+            font: { weight: 'bold', size: 11 },
+            formatter: (val, ctx) => {
+              let sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
+              let percentage = ((val / sum) * 100).toFixed(1);
+              return percentage > 3 ? percentage + '٪' : '';
+            }
+          }
+        }
+      }
+    });
+
+    // ۴. نمودار نوع استخدام
+    new Chart(document.getElementById('empTypeChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['ثابت', 'پروژه‌ای', 'مصوب', 'شرکتی', 'غیرمصوب', 'آزمایشی', 'سایر'],
+        datasets: [{
+          data: [3084, 1769, 1325, 1045, 943, 536, 561],
+          backgroundColor: (c) => horizontalGradient(c.chart.ctx, c.chart.chartArea, '#475569', '#0b1a30'),
+          borderRadius: 7,
+          borderSkipped: false,
+          maxBarThickness: 26
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 1100, easing: 'easeOutQuart' },
+        plugins: {
+          legend: { display: false },
+          tooltip: tooltipStyle,
+          datalabels: {
+            color: '#ffffff',
+            align: 'center',
+            anchor: 'center',
             font: { weight: 'bold', size: window.innerWidth < 768 ? 9 : 11 },
-            formatter: (val) => new Intl.NumberFormat('fa-IR').format(val),
-            padding: 2,
-            align: 'top',
-            anchor: 'end'
-        };
+            formatter: (val) => fa.format(val)
+          }
+        },
+        scales: { x: { beginAtZero: true }, y: { grid: { display: false } } }
+      }
+    });
 
-        // ۱. نمودار توزیع سنی (Bar Chart)
-        new Chart(document.getElementById('ageChart').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ['زیر ۲۰', '۲۰ تا ۳۰', '۳۰ تا ۴۰', '۴۰ تا ۵۰', '۵۰ تا ۶۰', 'بالای ۶۰'],
-                datasets: [{
-                    data: [375, 1152, 2897, 4454, 1758, 229],
-                    backgroundColor: '#1e457e',
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false }, datalabels: globalDatalabelsConfig },
-                scales: { y: { beginAtZero: true, grid: { borderDash: [4, 4] } }, x: { grid: { display: false } } }
+    // ۵. توزیع جمعیتی ۱۰ استان
+    new Chart(document.getElementById('provinceChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['تهران', 'خراسان ر.', 'فارس', 'اصفهان', 'خوزستان', 'سیستان', 'کرمان', 'بوشهر', 'آذربایجان ش.', 'قم'],
+        datasets: [{
+          data: [1013, 659, 643, 533, 470, 425, 402, 380, 380, 362],
+          backgroundColor: (c) => verticalGradient(c.chart.ctx, c.chart.chartArea, '#38bdf8', '#0369a1'),
+          borderRadius: 7,
+          borderSkipped: false,
+          maxBarThickness: 40
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 1100, easing: 'easeOutQuart' },
+        layout: { padding: { top: 30 } },
+        plugins: { legend: { display: false }, datalabels: globalDatalabelsConfig, tooltip: tooltipStyle },
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+
+    // ۶. وضعیت تاهل
+    new Chart(document.getElementById('maritalChart').getContext('2d'), {
+      type: 'pie',
+      data: {
+        labels: ['متاهل', 'مجرد', 'معیل'],
+        datasets: [{
+          data: [7665, 3143, 51],
+          backgroundColor: ['#10b981', '#f43f5e', '#f59e0b'],
+          borderColor: '#ffffff',
+          borderWidth: 3,
+          hoverOffset: 10
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 1100, easing: 'easeOutQuart' },
+        plugins: {
+          legend: { position: window.innerWidth < 768 ? 'bottom' : 'left' },
+          tooltip: tooltipStyle,
+          datalabels: {
+            color: '#fff',
+            font: { weight: 'bold' },
+            formatter: (val, ctx) => {
+              let sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
+              let percentage = ((val / sum) * 100).toFixed(1);
+              return percentage > 2 ? percentage + '٪' : '';
             }
-        });
+          }
+        }
+      }
+    });
 
-        // ۲. نمودار سابقه خدمت (Horizontal Bar)
-        new Chart(document.getElementById('expChart').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ['زیر ۵', '۵ تا ۱۰', '۱۰ تا ۱۵', '۱۵ تا ۲۰', '۲۰ تا ۲۵', '۲۵ تا ۳۰', 'بالای ۳۰'],
-                datasets: [{
-                    data: [4297, 969, 1032, 2172, 1406, 727, 84],
-                    backgroundColor: '#c5a85c',
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { 
-                    legend: { display: false }, 
-                    datalabels: { ...globalDatalabelsConfig, align: 'left', anchor: 'end', color: '#1e293b' } 
-                },
-                scales: { x: { beginAtZero: true, grid: { borderDash: [4, 4] } }, y: { grid: { display: false } } }
-            }
-        });
+    window.addEventListener('resize', () => {
+      Chart.instances.forEach(chart => {
+        if (chart.options.plugins.datalabels && chart.options.plugins.datalabels.font) {
+          chart.options.plugins.datalabels.font.size = window.innerWidth < 768 ? 9 : 11;
+        }
+        if (chart.config.type === 'pie' || chart.config.type === 'doughnut') {
+          chart.options.plugins.legend.position = window.innerWidth < 768 ? 'bottom' : (chart.canvas.id === 'maritalChart' ? 'left' : 'right');
+        }
+        chart.update();
+      });
+    });
 
-        // ۳. نمودار مدرک تحصیلی (Doughnut)
-        new Chart(document.getElementById('eduChart').getContext('2d'), {
-            type: 'doughnut',
-            data: {
-                labels: ['زیر دیپلم', 'دیپلم', 'کاردانی', 'کارشناسی', 'ارشد', 'دکتری'],
-                datasets: [{
-                    data: [706, 1651, 560, 4554, 2140, 51],
-                    backgroundColor: ['#94a3b8', '#64748b', '#0ea5e9', '#1e457e', '#c5a85c', '#10b981']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: window.innerWidth < 768 ? 'bottom' : 'right' },
-                    datalabels: {
-                        color: '#ffffff',
-                        font: { weight: 'bold', size: 11 },
-                        formatter: (val, ctx) => {
-                            let sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
-                            let percentage = ((val / sum) * 100).toFixed(1);
-                            return percentage > 3 ? percentage + '٪' : ''; // Hide labels for very small slices
-                        }
-                    }
-                }
-            }
-        });
+    /* ============ جلوه‌های ورودی هنگام اسکرول ============ */
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('is-visible'), i * 60);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => io.observe(el));
 
-        // ۴. نمودار نوع استخدام (Horizontal Bar)
-        new Chart(document.getElementById('empTypeChart').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ['ثابت', 'پروژه‌ای', 'مصوب', 'شرکتی', 'غیرمصوب', 'آزمایشی', 'سایر'],
-                datasets: [{
-                    data: [3084, 1769, 1325, 1045, 943, 536, 561],
-                    backgroundColor: '#334155',
-                    borderRadius: 5
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false }, datalabels: { ...globalDatalabelsConfig, align: 'left' } },
-                scales: { x: { beginAtZero: true }, y: { grid: { display: false } } }
-            }
-        });
+    /* ============ شمارنده صعودی برای مقادیر شاخص کلیدی ============ */
+    function animateCount(el) {
+      const target = parseInt(el.getAttribute('data-count'), 10);
+      const duration = 1400;
+      const start = performance.now();
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(target * eased);
+        el.textContent = fa.format(current);
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    const kpiValues = document.querySelectorAll('.kpi-value[data-count]');
+    const countIo = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCount(entry.target);
+          countIo.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    kpiValues.forEach(el => countIo.observe(el));
 
-        // ۵. توزیع جمعیتی ۱۰ استان برتر
-        new Chart(document.getElementById('provinceChart').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ['تهران', 'خراسان ر.', 'فارس', 'اصفهان', 'خوزستان', 'سیستان', 'کرمان', 'بوشهر', 'آذربایجان ش.', 'قم'],
-                datasets: [{
-                    data: [1013, 659, 643, 533, 470, 425, 402, 380, 380, 362],
-                    backgroundColor: 'rgba(14, 165, 233, 0.85)',
-                    borderRadius: 5
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false }, datalabels: globalDatalabelsConfig },
-                scales: { y: { beginAtZero: true } }
-            }
-        });
-
-        // ۶. وضعیت تاهل (Pie)
-        new Chart(document.getElementById('maritalChart').getContext('2d'), {
-            type: 'pie',
-            data: {
-                labels: ['متاهل', 'مجرد', 'معیل'],
-                datasets: [{
-                    data: [7665, 3143, 51],
-                    backgroundColor: ['#10b981', '#f43f5e', '#f59e0b']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: window.innerWidth < 768 ? 'bottom' : 'left' },
-                    datalabels: {
-                        color: '#fff',
-                        font: { weight: 'bold' },
-                        formatter: (val, ctx) => {
-                            let sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
-                            let percentage = ((val / sum) * 100).toFixed(1);
-                            return percentage > 2 ? percentage + '٪' : ''; 
-                        }
-                    }
-                }
-            }
-        });
-
-        // آپدیت کردن سایز فونت‌ها موقع تغییر اندازه صفحه (اختیاری)
-        window.addEventListener('resize', () => {
-            Chart.instances.forEach(chart => {
-                chart.options.plugins.datalabels.font.size = window.innerWidth < 768 ? 9 : 11;
-                if(chart.config.type === 'pie' || chart.config.type === 'doughnut') {
-                    chart.options.plugins.legend.position = window.innerWidth < 768 ? 'bottom' : 'right';
-                }
-                chart.update();
-            });
-        });
-    </script>
+    /* ============ نوار پیشرفت اسکرول + دکمه بازگشت به بالا ============ */
+    const scrollProgress = document.getElementById('scrollProgress');
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+      scrollProgress.style.transform = `scaleX(${scrolled})`;
+      backToTop.classList.toggle('show', h.scrollTop > 400);
+    }, { passive: true });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
 </body>
 </html>
