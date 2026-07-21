@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گزارش تجمیعی و تحلیلی سامانه‌های ارتباطی و مکاتباتی بنیاد مسکن</title>
+
+    <!-- فراخوانی اسکریپت‌های آفلاین رسم نمودار -->
+    <script src="chart.umd.js"></script>
+    <script src="chartjs-plugin-datalabels.js"></script>
+    <script src="apexcharts.min.js"></script>
+
+    <style>
+        /* تعریف فونت‌های محلی */
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('Vazirmatn-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('Vazirmatn-Medium.woff2') format('woff2');
+            font-weight: 500;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('Vazirmatn-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: #f4f6f8;
+            color: #2d3748;
+            margin: 0;
+            padding: 15px;
+            line-height: 1.5;
+            font-size: 13px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* بنر فشرده‌تر */
+        header {
+            background: linear-gradient(135deg, #1a365d, #2a4365, #2c5282);
+            color: white;
+            padding: 20px 25px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-logo {
+            width: 70px;
+            height: auto;
+            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .header-content h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .dept-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* کارت‌های آماری سریع */
+        .stat-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-right: 4px solid;
+        }
+
+        .stat-card-info h3 { margin: 0; font-size: 12px; color: #718096; font-weight: 500; }
+        .stat-card-info p { margin: 2px 0 0 0; font-size: 22px; font-weight: 700; color: #2d3748; }
+        .stat-icon { font-size: 24px; }
+
+        /* جمع‌بندی مدیریتی فشرده با آیکون‌های بندانگشتی */
+        .summary-box {
+            background: white;
+            border-right: 5px solid #3182ce;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .summary-box h2 { margin: 0 0 10px 0; color: #2b6cb0; font-size: 18px; }
+        .summary-box > p { margin: 0 0 10px 0; font-size: 14px; font-weight: 500; }
+
+        .summary-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .group-card {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+        .group-card h3 { margin: 0 0 10px 0; color: #2d3748; font-size: 15px; }
+        .group-card p { font-size: 12px; margin: 10px 0 0 0; color: #4a5568; }
+
+        .thumb-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+        .thumb-list li { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 13px; background: white; padding: 5px 8px; border-radius: 6px; border: 1px solid #edf2f7; }
+        .sys-thumb { width: 40px; height: 40px; border-radius: 10px; object-fit: contain; }
+
+        /* شبکه‌بندی اصلی کارت‌های سامانه‌ها */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border-top: 4px solid #2b6cb0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 15px;
+        }
+
+        .system-meta { display: flex; align-items: center; gap: 12px; }
+        .system-icon { width: 60px; height: 45px; object-fit: contain; background: #f7fafc; padding: 5px; border-radius: 10px; border: 1px solid #e2e8f0; }
+        .system-title h2 { margin: 0; font-size: 16px; color: #1a202c; }
+        .system-url { font-size: 12px; color: #4299e1; text-decoration: none; direction: ltr; display: inline-block; margin-top: 2px; }
+
+        /* بخش داده‌ها و نمودار فشرده */
+        .data-section {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #edf2f7;
+        }
+        .data-section h4 { margin: 0 0 10px 0; font-size: 14px; color: #2d3748; }
+
+        .chart-container {
+            width: 100%;
+            height: 220px; /* کاهش ارتفاع نمودار */
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; background: white; }
+        th, td { padding: 6px; border: 1px solid #e2e8f0; text-align: center; }
+        th { background-color: #ebf8ff; color: #2b6cb0; font-weight: 700; }
+
+        /* استایل دوستونی برای محتوا داخل کارت‌ها */
+        .card-sections-grid {
+            display: grid;
+            gap: 10px;
+        }
+        @media (min-width: 600px) { .card-sections-grid { grid-template-columns: 1fr 1fr; } }
+        .full-width { grid-column: 1 / -1; }
+
+        .section-block { padding: 12px; border-radius: 8px; font-size: 13px; }
+        
+        .badge {
+            display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; font-size: 12px; font-weight: 700; border-radius: 6px; margin-bottom: 8px;
+        }
+
+        .strengths { background: #f0fff4; border-right: 3px solid #38a169; }
+        .strengths .badge { background: #c6f6d5; color: #22543d; }
+
+        .weaknesses { background: #fff5f5; border-right: 3px solid #e53e3e; }
+        .weaknesses .badge { background: #fed7d7; color: #742a2a; }
+
+        .challenges { background: #fffaf0; border-right: 3px solid #dd6b20; }
+        .challenges .badge { background: #feebc8; color: #744210; }
+
+        .analysis { background: #faf5ff; border-right: 3px solid #805ad5; }
+        .analysis .badge { background: #e9d8fd; color: #44337a; }
+
+        .suggestions { background: #ebf8ff; border-right: 3px solid #3182ce; }
+        .suggestions .badge { background: #bee3f8; color: #2a4365; }
+
+        ul, ol { margin: 0; padding-right: 18px; color: #2d3748; }
+        li { margin-bottom: 4px; }
+
+        /* فوتر فشرده‌تر */
+        .footer-conclusion {
+            background: linear-gradient(135deg, #1a202c, #2d3748);
+            color: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-conclusion h2 { margin: 0 0 15px 0; color: #63b3ed; font-size: 20px; border-bottom: 1px solid #4a5568; padding-bottom: 10px; }
+        
+        .footer-box { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; margin-bottom: 15px; }
+        .footer-box h3 { color: #cbd5e0; font-size: 15px; margin: 0 0 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+        
+        .footer-box-accent { background: rgba(49, 130, 206, 0.15); border: 1px solid rgba(49, 130, 206, 0.4); padding: 15px; border-radius: 10px; }
+        .footer-box-accent h3 { color: #90cdf4; font-size: 15px; margin: 0 0 5px 0; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- بنر اصلی -->
+    <header>
+        <div class="header-right">
+            <img src="BonyadLogo.png" alt="لوگو" class="header-logo" onerror="this.style.display='none'">
+            <div class="header-content">
+                <h1>گزارش تجمیعی وتحلیلی سامانه‌های ارتباطی و مکاتباتی بنیاد حوزه ریاست بنیاد مسکن</h1>
+            </div>
+        </div>
+        <div class="header-left">
+            <div class="dept-card">اداره کل حوزه ریاست</div>
+        </div>
+    </header>
+
+    <!-- کارت‌های آماری سریع -->
+    <div class="stat-cards-container">
+        <div class="stat-card" style="border-color: #3182ce;">
+            <div class="stat-card-info"><h3>کل سامانه‌های راهبردی</h3><p>۶ سامانه</p></div>
+            <div class="stat-icon">⚙️</div>
+        </div>
+        <div class="stat-card" style="border-color: #38a169;">
+            <div class="stat-card-info"><h3>مکاتبات سیماد (سال ۱۴۰۴)</h3><p>۲۴,۵۱۹</p></div>
+            <div class="stat-icon">✉️</div>
+        </div>
+        <div class="stat-card" style="border-color: #d69e2e;">
+            <div class="stat-card-info"><h3>درخواست‌های سامد (۱۴۰۴)</h3><p>۴,۵۷۱</p></div>
+            <div class="stat-icon">👥</div>
+        </div>
+        <div class="stat-card" style="border-color: #e53e3e;">
+            <div class="stat-card-info"><h3>شکایات بازرسی ۱۳۶ (۱۴۰۴)</h3><p>۷۳</p></div>
+            <div class="stat-icon">⚖️</div>
+        </div>
+    </div>
+
+    <!-- جمع‌بندی مدیریتی بهینه شده -->
+    <div class="summary-box">
+        <h2>📊 جمع‌بندی مدیریتی</h2>
+        <p>در بین شش سامانه مورد بررسی، دو گروه کاملاً متفاوت وجود دارد:</p>
+        <div class="summary-groups">
+            <div class="group-card">
+                <h3>گروه اول: سامانه‌های حاکمیتی (خارج از اختیار بنیاد)</h3>
+                <ul class="thumb-list">
+                    <li><img src="Samad.png" alt="" class="sys-thumb" onerror="this.style.display='none'"> سامد</li>
+                    <li><img src="Simad.png" alt="" class="sys-thumb" onerror="this.style.display='none'"> سیماد</li>
+                    <li><img src="136.png" alt="" class="sys-thumb" onerror="this.style.display='none'"> سامانه 136</li>
+                </ul>
+                <p>در این سامانه‌ها بنیاد مسکن صرفاً بهره‌بردار است و امکان تغییرات فنی ندارد.</p>
+            </div>
+            <div class="group-card">
+                <h3>گروه دوم: سامانه‌های داخلی بنیاد (قابل توسعه)</h3>
+                <ul class="thumb-list">
+                    <li><img src="Chargoon.png" alt="" class="sys-thumb" onerror="this.style.display='none'"> اتوماسیون چارگون</li>
+                    <li><img src="Hamkaran.png" alt="" class="sys-thumb" onerror="this.style.display='none'"> همکاران سیستم</li>
+                    <li><img src="VideoCake.png" alt="" class="sys-thumb" onerror="this.style.display='none'"> جلسات مجازی</li>
+                </ul>
+                <p>در این سامانه‌ها امکان سیاستگذاری، توسعه و بهبود فرآیندها توسط بنیاد وجود دارد.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- شبکه کارت‌های سامانه‌ها -->
+    <div class="grid">
+
+        <!-- ۱. سامانه سیماد -->
+        <div class="card">
+            <div class="card-header">
+                <div class="system-meta">
+                    <img src="Simad.png" alt="سیماد" class="system-icon" onerror="this.style.display='none'">
+                    <div class="system-title">
+                        <h2>۱. سامانه یکپارچه مراسلات الکترونیکی دولت (سیماد)</h2>
+                        <a href="https://nahad.gov.ir" target="_blank" class="system-url">https://nahad.gov.ir</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="data-section">
+                <h4>نمودار و عملکرد آماری (مکاتبات ستاد مرکزی)</h4>
+                <div class="chart-container"><canvas id="simadChart"></canvas></div>
+                <table>
+                    <thead><tr><th>سال</th><th>۱۴۰۲</th><th>۱۴۰۳</th><th>۱۴۰۴</th><th>۱۴۰۵ (تا ۱۹ خرداد)</th></tr></thead>
+                    <tbody><tr><td>تعداد</td><td>۱۹,۷۰۰</td><td>۲۰,۵۱۱</td><td>۲۴,۵۱۹</td><td>۳,۵۸۵</td></tr></tbody>
+                </table>
+                <p style="margin: 5px 0 0 0; color: #4a5568;"><strong>رشد ۱۴۰۴ نسبت به ۱۴۰۲ حدود ۲۴ درصد بوده است.</strong></p>
+            </div>
+
+            <div class="card-sections-grid">
+                <div class="section-block strengths">
+                    <div class="badge">✅ نقاط قوت</div>
+                    <ul>
+                        <li>ارتباط مستقیم با دستگاه‌های اجرایی.</li>
+                        <li>حذف مکاتبات کاغذی.</li>
+                        <li>بستر استاندارد و امن شبکه دولت.</li>
+                        <li>تبادل انواع فایل‌های اداری.</li>
+                    </ul>
+                </div>
+                <div class="section-block weaknesses">
+                    <div class="badge">❌ نقاط ضعف</div>
+                    <ul>
+                        <li>عدم اتصال مؤثر به اتوماسیون داخلی.</li>
+                        <li>محدودیت دسترسی خارج از شبکه دولت.</li>
+                        <li>فقط یک کارتابل سازمانی.</li>
+                        <li>نبود قابلیت پیشرفته گردش کار.</li>
+                        <li>عدم استقبال از پروتکل ECE.</li>
+                    </ul>
+                </div>
+                <div class="section-block challenges">
+                    <div class="badge">⚠️ چالش‌ها</div>
+                    <ul>
+                        <li>وابستگی کامل به نهاد ریاست جمهوری.</li>
+                        <li>نبود یکپارچگی با فرآیندهای بنیاد.</li>
+                        <li>دوباره‌کاری در ثبت و ارجاع نامه‌ها.</li>
+                    </ul>
+                </div>
+                <div class="section-block suggestions">
+                    <div class="badge">💡 پیشنهادهای بهبود</div>
+                    <ul>
+                        <li>ایجاد داشبورد مدیریتی مکاتبات دولتی.</li>
+                        <li>پایش زمان پاسخگویی دستگاه‌ها.</li>
+                        <li>استخراج گزارش تحلیلی ماهانه.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ۲. سامانه سامد -->
+        <div class="card">
+            <div class="card-header">
+                <div class="system-meta">
+                    <img src="Samad.png" alt="سامد" class="system-icon" onerror="this.style.display='none'">
+                    <div class="system-title">
+                        <h2>۲. سامانه ارتباط مردم و دولت (سامد)</h2>
+                        <a href="https://portal.111.ir" target="_blank" class="system-url">https://portal.111.ir</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="data-section">
+                <h4>کل درخواست‌های ثبت شده</h4>
+                <div class="chart-container" id="samadChartContainer"></div>
+                <table>
+                    <thead><tr><th>سال</th><th>۱۴۰۰</th><th>۱۴۰۱</th><th>۱۴۰۲</th><th>۱۴۰۳</th><th>۱۴۰۴</th></tr></thead>
+                    <tbody><tr><td>تعداد</td><td>۱۷,۹۴۲</td><td>۲۸,۹۱۴</td><td>۲۵,۲۹۷</td><td>۹,۷۰۷</td><td>۴,۵۷۱</td></tr></tbody>
+                </table>
+                <p style="margin: 5px 0 0 0; color: #4a5568;">روند نشان می‌دهد حجم مراجعات پس از اوج سال ۱۴۰۱ کاهش چشمگیری داشته است.</p>
+            </div>
+
+            <div class="card-sections-grid">
+                <div class="section-block strengths">
+                    <div class="badge">✅ نقاط قوت</div>
+                    <ul>
+                        <li>ارتباط مستقیم مردم با بنیاد.</li>
+                        <li>پوشش سراسری و شفافیت.</li>
+                        <li>ارزیابی عملکرد استان‌ها.</li>
+                    </ul>
+                </div>
+                <div class="section-block weaknesses">
+                    <div class="badge">❌ نقاط ضعف</div>
+                    <ul>
+                        <li>تکراری بودن درخواست‌ها.</li>
+                        <li>کیفیت ناهمگون پاسخ در استان‌ها.</li>
+                        <li>بار اجرایی بالا و نبود تحلیل هوشمند.</li>
+                    </ul>
+                </div>
+                <div class="section-block challenges">
+                    <div class="badge">⚠️ چالش‌ها</div>
+                    <ul>
+                        <li>تفاوت شدید عملکرد استان‌ها.</li>
+                        <li>افزایش انتظارات مردمی.</li>
+                        <li>زمان‌بر بودن پیگیری پرونده‌ها.</li>
+                    </ul>
+                </div>
+                <div class="section-block suggestions">
+                    <div class="badge">💡 پیشنهادهای بهبود</div>
+                    <ul>
+                        <li>دسته‌بندی هوشمند با هوش مصنوعی.</li>
+                        <li>ایجاد بانک پاسخ‌های استاندارد.</li>
+                        <li>داشبورد استانی رضایت.</li>
+                        <li>تعیین SLA پاسخگویی.</li>
+                    </ul>
+                </div>
+                <div class="section-block analysis full-width">
+                    <div class="badge">📊 تحلیل مدیریتی</div>
+                    <p style="margin: 0;">در سال‌های ۱۴۰۱ و ۱۴۰۲ حجم مراجعات بالا بوده است. استان‌های: خراسان جنوبی، کرمان، گلستان، فارس و هرمزگان بیشترین مراجعات را داشته‌اند. این موضوع نشانه حجم بالای خدمات یا نارضایتی بیشتر است.<br><strong>پیشنهاد:</strong> تحلیل موضوعی مستقل این استان‌ها.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ۳. سامانه ۱۳۶ -->
+        <div class="card">
+            <div class="card-header">
+                <div class="system-meta">
+                    <img src="136.png" alt="۱۳۶" class="system-icon" onerror="this.style.display='none'">
+                    <div class="system-title">
+                        <h2>۳. سامانه رسیدگی به شکایات (136)</h2>
+                        <a href="https://136.bazresi.ir" target="_blank" class="system-url">https://136.bazresi.ir</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="data-section">
+                <h4>وضعیت عملکرد (تعداد شکایات)</h4>
+                <div class="chart-container"><canvas id="bazresiChart"></canvas></div>
+                <table>
+                    <thead><tr><th>سال</th><th>۱۴۰۱</th><th>۱۴۰۲</th><th>۱۴۰۳</th><th>۱۴۰۴</th><th>۱۴۰۵</th></tr></thead>
+                    <tbody><tr><td>تعداد</td><td>۳</td><td>۱۹</td><td>۶۴</td><td>۷۳</td><td>۲۱</td></tr></tbody>
+                </table>
+                <p style="margin: 5px 0 0 0; color: #4a5568;"><strong>رشد شکایات از ۱۴۰۱ تا ۱۴۰۴ بیش از ۲۴ برابر بوده است.</strong></p>
+            </div>
+
+            <div class="card-sections-grid">
+                <div class="section-block strengths">
+                    <div class="badge">✅ نقاط قوت</div>
+                    <ul>
+                        <li>افزایش شفافیت و پیگیری مردمی.</li>
+                        <li>نظارت مستقیم سازمان بازرسی.</li>
+                        <li>کنترل عملکرد دستگاه.</li>
+                    </ul>
+                </div>
+                <div class="section-block weaknesses">
+                    <div class="badge">❌ نقاط ضعف</div>
+                    <ul>
+                        <li>فرآیند ارجاع چند مرحله‌ای.</li>
+                        <li>وابستگی به پاسخ واحدهای مختلف.</li>
+                        <li>نبود داشبورد مدیریتی تخصصی.</li>
+                    </ul>
+                </div>
+                <div class="section-block challenges">
+                    <div class="badge">⚠️ چالش‌ها</div>
+                    <ul>
+                        <li>افزایش تدریجی حجم شکایات.</li>
+                        <li>حساسیت بالای پرونده‌ها.</li>
+                        <li>لزوم پاسخگویی سریع و مستند.</li>
+                    </ul>
+                </div>
+                <div class="section-block suggestions">
+                    <div class="badge">💡 پیشنهادهای بهبود</div>
+                    <ul>
+                        <li>تحلیل موضوعی شکایات (۱۰ علت اصلی).</li>
+                        <li>ایجاد سامانه هشدار زودهنگام.</li>
+                        <li>ارائه گزارش فصلی به مدیریت ارشد.</li>
+                    </ul>
+                </div>
+                <div class="section-block analysis full-width">
+                    <div class="badge">📊 تحلیل مدیریتی</div>
+                    <p style="margin: 0;">روند افزایشی، هشدار مدیریتی است اما الزاماً افت عملکرد نیست. ناشی از افزایش آگاهی مردم، دسترسی به سامانه و حساسیت بازرسی است. استمرار آن نیازمند آسیب‌شناسی است.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ۴. چارگون -->
+        <div class="card">
+            <div class="card-header">
+                <div class="system-meta">
+                    <img src="Chargoon.png" alt="چارگون" class="system-icon" onerror="this.style.display='none'">
+                    <div class="system-title">
+                        <h2>۴. اتوماسیون اداری (دیدگاه چارگون)</h2>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="data-section">
+                <h4>وضعیت عملکرد اتوماسیون اداری</h4>
+                <div class="chart-container"><canvas id="chargoonChart"></canvas></div>
+                <table>
+                    <thead><tr><th>نوع / سال</th><th>۱۴۰۰</th><th>۱۴۰۱</th><th>۱۴۰۲</th><th>۱۴۰۳</th><th>۱۴۰۴</th></tr></thead>
+                    <tbody>
+                        <tr><th>داخلی</th><td>۷۲,۱۵۰</td><td>۸۳,۹۷۱</td><td>۹۴,۰۱۵</td><td>۸۳,۳۰۹</td><td>۷۲,۶۱۲</td></tr>
+                        <tr><th>صادره</th><td>۱۱,۲۸۷</td><td>۱۱,۸۹۰</td><td>۹,۱۸۸</td><td>۸,۱۳۳</td><td>۷,۲۵۹</td></tr>
+                        <tr><th>وارده</th><td>۱۲,۵۲۵</td><td>۱۲,۴۱۹</td><td>۱۱,۶۸۴</td><td>۱۰,۸۸۱</td><td>۱۰,۸۲۵</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sections-grid">
+                <div class="section-block strengths">
+                    <div class="badge">✅ نقاط قوت</div>
+                    <ul>
+                        <li>بالغ‌ترین سامانه با ۱۸ سال سابقه.</li>
+                        <li>آشنایی کامل کاربران و پایداری.</li>
+                        <li>مدیریت حجم بالای مکاتبات.</li>
+                    </ul>
+                </div>
+                <div class="section-block weaknesses">
+                    <div class="badge">❌ نقاط ضعف</div>
+                    <ul>
+                        <li><strong>قطع رد پیگیری سیستمی بین ستاد و استان‌ها</strong> به دلیل ثبت مجدد نامه‌ها.</li>
+                    </ul>
+                </div>
+                <div class="section-block challenges">
+                    <div class="badge">⚠️ چالش‌ها</div>
+                    <ul>
+                        <li>چند نرم‌افزار مختلف در استان‌ها.</li>
+                        <li>عدم یکپارچگی و شماره یکتای سراسری.</li>
+                    </ul>
+                </div>
+                <div class="section-block suggestions">
+                    <div class="badge">💡 پیشنهادهای بهبود</div>
+                    <ul>
+                        <li>حفظ سیستم تا بلوغ ERP.</li>
+                        <li>پل ارتباطی بین استان‌ها و داشبورد لحظه‌ای.</li>
+                        <li>اندازه‌گیری زمان رسوب نامه‌ها.</li>
+                    </ul>
+                </div>
+                <div class="section-block analysis full-width">
+                    <div class="badge">📊 تحلیل مدیریتی</div>
+                    <p style="margin: 0;">کاهش تدریجی نامه‌های صادره و وارده می‌تواند ناشی از جایگزینی فرآیندها توسط ERP، سامانه‌های جانبی و حرکت تدریجی به سمت راهکاران باشد.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ۵. همکاران سیستم -->
+        <div class="card">
+            <div class="card-header">
+                <div class="system-meta">
+                    <img src="Hamkaran.png" alt="راهکاران" class="system-icon" onerror="this.style.display='none'">
+                    <div class="system-title">
+                        <h2>۵. اتوماسیون (ارتباطات سازمانی) همکاران سیستم</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-sections-grid">
+                <div class="section-block strengths">
+                    <div class="badge">✅ نقاط قوت</div>
+                    <ul>
+                        <li>شماره یکتای کشوری و رهگیری کامل.</li>
+                        <li>یکپارچگی با ERP راهکاران.</li>
+                        <li>حذف ثبت مجدد و قابلیت توسعه فرایند.</li>
+                    </ul>
+                </div>
+                <div class="section-block weaknesses">
+                    <div class="badge">❌ نقاط ضعف</div>
+                    <ul>
+                        <li>ضعف تطبیق با گردش مکاتبات بنیاد.</li>
+                        <li>نارضایتی در برخی امکانات.</li>
+                        <li>طولانی شدن فرآیند استقرار.</li>
+                    </ul>
+                </div>
+                <div class="section-block challenges">
+                    <div class="badge">⚠️ چالش‌ها</div>
+                    <ul>
+                        <li>مقاومت کاربران در برابر تغییر.</li>
+                        <li>مهاجرت داده‌ها و آموزش گسترده.</li>
+                    </ul>
+                </div>
+                <div class="section-block suggestions">
+                    <div class="badge">💡 پیشنهادهای بهبود</div>
+                    <ul>
+                        <li>پایلوت در چند استان و اصلاح فرآیند.</li>
+                        <li>تشکیل کمیته مشترک حوزه ریاست و فاوا.</li>
+                        <li>سنجش رضایت کاربران ماهانه.</li>
+                    </ul>
+                </div>
+                <div class="section-block analysis full-width">
+                    <div class="badge">📊 تحلیل مدیریتی</div>
+                    <p style="margin: 0;">این سامانه از منظر معماری سازمانی آینده بنیاد محسوب می‌شود اما به بلوغ چارگون نرسیده. حذف چارگون در کوتاه‌مدت ریسک بالایی دارد.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ۶. ویدئوکیک -->
+        <div class="card">
+            <div class="card-header">
+                <div class="system-meta">
+                    <img src="VideoCake.png" alt="ویدئوکیک" class="system-icon" onerror="this.style.display='none'">
+                    <div class="system-title">
+                        <h2>۶. سامانه جلسات مجازی بنیاد مسکن</h2>
+                        <a href="https://vc365.videocake.ir" target="_blank" class="system-url">https://vc365.videocake.ir</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-sections-grid">
+                <div class="section-block strengths">
+                    <div class="badge">✅ نقاط قوت</div>
+                    <ul>
+                        <li>کاهش هزینه سفرها و سرعت هماهنگی.</li>
+                        <li>برگزاری جلسات کشوری و تداوم در بحران.</li>
+                    </ul>
+                </div>
+                <div class="section-block weaknesses">
+                    <div class="badge">❌ نقاط ضعف</div>
+                    <ul>
+                        <li>وابستگی به کیفیت اینترنت.</li>
+                        <li>محدودیت جلسات ترکیبی.</li>
+                        <li>عدم استقبال بخشی از مدیران.</li>
+                    </ul>
+                </div>
+                <div class="section-block challenges">
+                    <div class="badge">⚠️ چالش‌ها</div>
+                    <ul>
+                        <li>فرهنگ سازمانی جلسات حضوری.</li>
+                        <li>زیرساخت ارتباطی استان‌ها و نیاز به آموزش.</li>
+                    </ul>
+                </div>
+                <div class="section-block suggestions">
+                    <div class="badge">💡 پیشنهادهای بهبود</div>
+                    <ul>
+                        <li>تجهیز سالن‌های ترکیبی.</li>
+                        <li>سنجش ریالی صرفه‌جویی مالی.</li>
+                        <li>اتصال سامانه به تقویم سازمانی پرسنل.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- نتیجه‌گیری نهایی -->
+    <div class="footer-conclusion">
+        <h2>راهبرد کلان و نقشه راه حوزه ریاست بنیاد مسکن</h2>
+        <p style="font-size: 14px; margin-bottom: 20px;">مهم‌ترین مسئله راهبردی حوزه ریاست در حال حاضر، یکپارچه‌سازی نظام مکاتبات سازمانی کشور و بنیاد مسکن است.</p>
+        
+        <div class="footer-box">
+            <h3>مثلث چالش‌های اساسی:</h3>
+            <ul style="color: #e2e8f0; font-size: 13px; margin-top: 5px;">
+                <li>۱- نبود رهگیری سراسری مکاتبات به دلیل تنوع سامانه‌های اتوماسیون در استان‌ها.</li>
+                <li>۲- رشد شکایات در سامانه ۱۳۶ که نیازمند تحلیل ریشه‌ای علل شکایات است.</li>
+                <li>۳- طولانی شدن استقرار سامانه ارتباطات سازمانی همکاران سیستم.</li>
+            </ul>
+        </div>
+        
+        <div class="footer-box-accent">
+            <h3>حوزه بهره‌بردار:</h3>
+            <p style="font-size: 13px; color: #e2e8f0; margin: 5px 0 0 0; line-height: 1.8;">
+            اداره‌کل حوزه ریاست
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<!-- اسکریپت رسم نمودارها -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        if(typeof Chart !== 'undefined' && typeof ChartDataLabels !== 'undefined') {
+            Chart.register(ChartDataLabels);
+            Chart.defaults.font.family = 'Vazirmatn';
+            Chart.defaults.color = '#4a5568';
+        }
+
+        // ۱. نمودار سیماد
+        if(document.getElementById('simadChart')) {
+            new Chart(document.getElementById('simadChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['۱۴۰۲', '۱۴۰۳', '۱۴۰۴', '۱۴۰۵'],
+                    datasets: [{ label: 'مکاتبات', data: [19700, 20511, 24519, 3585], backgroundColor: '#3182ce', borderRadius: 4 }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        datalabels: { color: 'white', anchor: 'center', align: 'center', font: { family: 'Vazirmatn', weight: 'bold', size: 12 } }
+                    }
+                }
+            });
+        }
+
+        // ۲. نمودار چارگون
+        if(document.getElementById('chargoonChart')) {
+            new Chart(document.getElementById('chargoonChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['۱۴۰۰', '۱۴۰۱', '۱۴۰۲', '۱۴۰۳', '۱۴۰۴'],
+                    datasets: [
+                        { label: 'داخلی', data: [72150, 83971, 94015, 83309, 72612], backgroundColor: '#3182ce', borderRadius: 3 },
+                        { label: 'صادره', data: [11287, 11890, 9188, 8133, 7259], backgroundColor: '#38a169', borderRadius: 3 },
+                        { label: 'وارده', data: [12525, 12419, 11684, 10881, 10825], backgroundColor: '#d69e2e', borderRadius: 3 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, layout: { padding: { top: 30 } },
+                    plugins: {
+                        legend: { position: 'top', labels: { boxWidth: 10, font: { family: 'Vazirmatn', size: 11 } } },
+                        datalabels: { color: '#2d3748', anchor: 'end', align: 'end', rotation: -90, offset: 4, font: { family: 'Vazirmatn', size: 10, weight: 'bold' } }
+                    }
+                }
+            });
+        }
+
+        // ۳. سامد
+        if(typeof ApexCharts !== 'undefined' && document.querySelector("#samadChartContainer")) {
+            new ApexCharts(document.querySelector("#samadChartContainer"), {
+                series: [{ name: 'درخواست‌ها', data: [17942, 28914, 25297, 9707, 4571] }],
+                chart: { type: 'area', height: 220, fontFamily: 'Vazirmatn', toolbar: { show: false } },
+                colors: ['#d69e2e'], dataLabels: { enabled: false }, stroke: { curve: 'smooth', width: 2 },
+                xaxis: { categories: ['۱۴۰۰', '۱۴۰۱', '۱۴۰۲', '۱۴۰۳', '۱۴۰۴'] },
+                fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.1, stops: [0, 90, 100] } }
+            }).render();
+        }
+
+        // ۴. ۱۳۶ بازرسی
+        if(document.getElementById('bazresiChart')) {
+            new Chart(document.getElementById('bazresiChart'), {
+                type: 'line',
+                data: {
+                    labels: ['۱۴۰۱', '۱۴۰۲', '۱۴۰۳', '۱۴۰۴', '۱۴۰۵'],
+                    datasets: [{ label: 'شکایات', data: [3, 19, 64, 73, 21], borderColor: '#e53e3e', backgroundColor: 'rgba(229, 62, 62, 0.1)', borderWidth: 2, pointBackgroundColor: '#c53030', fill: true, tension: 0.4 }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, datalabels: { display: false } }
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

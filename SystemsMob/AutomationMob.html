@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سامانه مدیریت هوشمند ریاست بنیاد مسکن - گزارش اتوماسیون اداری</title>
+    <style>
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('Vazirmatn-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('Vazirmatn-Medium.woff2') format('woff2');
+            font-weight: 500;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('Vazirmatn-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            line-height: 1.6;
+            padding-bottom: 40px;
+            font-size: 13px;
+        }
+
+        /* Banner Styling - Compact */
+        .main-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: #ffffff;
+            padding: 20px 40px;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.1);
+            border-bottom: 3px solid #3b82f6;
+            margin-bottom: 20px;
+        }
+
+        .banner-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .banner-tag {
+            background-color: rgba(59, 130, 246, 0.25);
+            color: #93c5fd;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            width: fit-content;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+
+        .main-banner h1 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* Container Layout */
+        .dashboard-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* KPI Row - Compact & 5 Cards */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .kpi-card {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border-top: 4px solid #cbd5e1;
+            transition: transform 0.2s;
+        }
+        
+        .kpi-card:hover { transform: translateY(-2px); }
+        .kpi-card.blue { border-top-color: #3b82f6; }
+        .kpi-card.emerald { border-top-color: #10b981; }
+        .kpi-card.amber { border-top-color: #f59e0b; }
+        .kpi-card.slate { border-top-color: #475569; }
+        .kpi-card.indigo { border-top-color: #6366f1; }
+
+        .kpi-title { font-size: 12px; font-weight: 500; color: #64748b; margin-bottom: 5px; }
+        .kpi-value { font-size: 22px; font-weight: 700; color: #0f172a; }
+        .kpi-desc { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+
+        /* Section Layouts */
+        .section-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .section-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 1024px) {
+            .section-grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .section-grid-2 { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .section-grid-3 { grid-template-columns: 1fr; }
+        }
+
+        .content-card {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid #3b82f6; /* Applied to all cards */
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Variation in top borders for aesthetic */
+        .content-card.border-emerald { border-top-color: #10b981; }
+        .content-card.border-amber { border-top-color: #f59e0b; }
+        .content-card.border-indigo { border-top-color: #6366f1; }
+        .content-card.border-slate { border-top-color: #64748b; }
+
+        .card-header-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-header-title::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 14px;
+            background-color: inherit;
+            border-radius: 4px;
+        }
+
+        /* Chart Wrappers */
+        .chart-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 240px;
+        }
+
+        /* Tables Customization - Compact */
+        .custom-table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 10px 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 12px;
+            color: #334155;
+        }
+
+        tr:hover td { background-color: #f8fafc; }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .badge-info { background-color: #eff6ff; color: #1e40af; }
+        .badge-success { background-color: #ecfdf5; color: #065f46; }
+        .badge-warning { background-color: #fffbeb; color: #854d0e; }
+        
+        /* Progress bars */
+        .progress-bar-container {
+            width: 100%; background-color: #e2e8f0; border-radius: 6px; height: 5px; margin-top: 4px;
+        }
+        .progress-bar-fill { height: 100%; border-radius: 6px; }
+
+        /* Platform Structure Branding Grid */
+        .brand-comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .brand-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            background: #f8fafc;
+        }
+
+        .brand-box-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .brand-logo {
+            width: 32px; height: 32px; object-fit: contain; background: #ffffff;
+            border-radius: 6px; padding: 3px; border: 1px solid #e2e8f0;
+        }
+
+        .brand-title-text { font-size: 13px; font-weight: 700; color: #0f172a; }
+
+        .brand-bullet-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+        .brand-bullet-list li { font-size: 12px; position: relative; padding-right: 12px; color: #475569; }
+        .brand-bullet-list li::before { content: '•'; position: absolute; right: 0; color: #3b82f6; font-weight: bold; }
+
+        /* Summary Footer Callout */
+        .summary-callout {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-top: 5px solid #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .summary-callout-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #0f172a;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .summary-callout-text {
+            font-size: 13px;
+            color: #334155;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .summary-list {
+            margin-top: 10px;
+            padding-right: 20px;
+        }
+        
+        .summary-list li {
+            margin-bottom: 8px;
+        }
+    </style>
+    <script src="chart.umd.js"></script>
+    <script src="chartjs-plugin-datalabels.js"></script>
+    <script src="apexcharts.min.js"></script>
+</head>
+<body>
+
+    <header class="main-banner">
+        <div class="banner-content">
+            <span class="banner-tag">سامانه مدیریت هوشمند ریاست بنیاد مسکن</span>
+            <h1>گزارش تحلیلی مقایسه‌ای وضعیت معماری اتوماسیون اداری</h1>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+
+        <!-- KPI Summary Cards (5 Items, Compact) -->
+        <section class="kpi-row">
+            <div class="kpi-card blue">
+                <div class="kpi-title">تعداد کل استان‌های بررسی شده</div>
+                <div class="kpi-value">۳۲</div>
+                <div class="kpi-desc">شامل تمامی واحدهای استانی</div>
+            </div>
+            <div class="kpi-card emerald">
+                <div class="kpi-title">سهم پلتفرم غالب (چارگون)</div>
+                <div class="kpi-value">۵۹.۴٪</div>
+                <div class="kpi-desc">۱۹ استان تحت پوشش فعال</div>
+            </div>
+            <div class="kpi-card blue">
+                <div class="kpi-title">سهم اتوماسیون همکاران</div>
+                <div class="kpi-value">۲۱.۹٪</div>
+                <div class="kpi-desc">۷ استان تحت پوشش فعال</div>
+            </div>
+            <div class="kpi-card amber">
+                <div class="kpi-title">میانگین بلوغ کل استقرار</div>
+                <div class="kpi-value">۷۲.۵٪</div>
+                <div class="kpi-desc">شاخص تجمیعی عملیاتی بودن</div>
+            </div>
+            <div class="kpi-card indigo">
+                <div class="kpi-title">ریسک تجمیعی زیرساخت موازی بالا</div>
+                <div class="kpi-value" style="font-size: 18px; color: #ef4444;">خطر سردرگمی سازمانی</div>
+                <div class="kpi-desc">نیازمند تعیین تکلیف معماری نهایی</div>
+            </div>
+        </section>
+
+        <!-- ROW 1: Three Charts Side by Side -->
+        <section class="section-grid-3">
+            <div class="content-card border-emerald">
+                <div class="card-header-title">نمودار سهم پلتفرم‌ها (کل کشور)</div>
+                <div class="chart-wrapper">
+                    <div id="chart-distribution" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <div class="content-card border-amber">
+                <div class="card-header-title">توزیع فراوانی سطح بلوغ استان‌ها</div>
+                <div class="chart-wrapper">
+                    <div id="chart-maturity-bar" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <div class="content-card border-slate">
+                <div class="card-header-title">شاخص ریسک تجمیعی (Composite Risk)</div>
+                <div class="chart-wrapper">
+                    <div id="chart-composite-radial" style="width: 100%;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROW 2: Analytical Charts -->
+        <section class="section-grid-2">
+            <div class="content-card border-indigo">
+                <div class="card-header-title">مقایسه پروفایل ریسک پلتفرم‌ها در محورهای شش‌گانه</div>
+                <div class="chart-wrapper">
+                    <div id="chart-risk-grouped-bar" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <div class="content-card border-blue">
+                <div class="card-header-title">احتمال وقوع سناریوهای استراتژیک سیستم‌ها</div>
+                <div class="chart-wrapper">
+                    <div id="chart-scenarios-bar" style="width: 100%;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROW 3: Structural Analysis & Tables -->
+        <section class="section-grid-2">
+            <div class="content-card border-slate">
+                <div class="card-header-title">تحلیل ساختاری و ماهیت سیستم‌ها (بدون سوگیری)</div>
+                <div class="brand-comparison-grid">
+                    <div class="brand-box">
+                        <div class="brand-box-header">
+                            <img src="Chargoon.png" alt="چارگون" class="brand-logo" onerror="this.style.display='none'">
+                            <div class="brand-title-text">پلتفرم چارگون (دیدگاه)</div>
+                        </div>
+                        <ul class="brand-bullet-list">
+                            <li><strong>بلوغ عملیاتی:</strong> ضریب نفوذ بسیار بالا در بدنه کارشناسی و پایداری در استفاده روزمره.</li>
+                            <li><strong>مزیت فعلی:</strong> ثبات کارکردی و کاهش مقاومت سازمانی کاربران.</li>
+                            <li><strong>چالش ساختاری:</strong> نیازمند توسعه لایه‌های یکپارچه‌سازی متمرکز و اتصال یکپارچه با سایر منابع.</li>
+                        </ul>
+                    </div>
+
+                    <div class="brand-box">
+                        <div class="brand-box-header">
+                            <img src="Hamkaran.png" alt="همکاران سیستم" class="brand-logo" onerror="this.style.display='none'">
+                            <div class="brand-title-text">همکاران سیستم (راهکاران)</div>
+                        </div>
+                        <ul class="brand-bullet-list">
+                            <li><strong>بلوغ عملیاتی:</strong> در حال رشد و استقرار در واحدهای استانی (۲۲٪ استقرار کامل).</li>
+                            <li><strong>مزیت فعلی:</strong> توسعه‌یافته بر مبنای فرآیند و قابلیت رهگیری داده‌ها.</li>
+                            <li><strong>چالش ساختاری:</strong> نیازمند زمان برای تثبیت کامل، ریسک بالای استقرار و آموزش کاربر نهایی.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card border-blue">
+                <div class="card-header-title">خلاصه وضعیت استقرار به تفکیک سیستم</div>
+                <div class="custom-table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>نام پلتفرم</th>
+                                <th>تعداد استان</th>
+                                <th>سهم از کل</th>
+                                <th>وضعیت</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>چارگون (دیدگاه)</strong></td>
+                                <td>۱۹</td>
+                                <td><span class="badge badge-info">۵۹.۴٪</span></td>
+                                <td>
+                                    <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 59.4%; background-color: #1e3a8a;"></div></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>همکاران سیستم</strong></td>
+                                <td>۷</td>
+                                <td><span class="badge badge-success">۲۱.۹٪</span></td>
+                                <td>
+                                    <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 21.9%; background-color: #3b82f6;"></div></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>فرزین</td>
+                                <td>۴</td>
+                                <td><span class="badge badge-warning">۱۲.۵٪</span></td>
+                                <td>
+                                    <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 12.5%; background-color: #10b981;"></div></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>رایورز و برید</td>
+                                <td>۳</td>
+                                <td><span class="badge" style="background: #f1f5f9; color: #475569;">۹.۴٪</span></td>
+                                <td>
+                                    <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 9.4%; background-color: #64748b;"></div></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Executive Summary Footer -->
+        <section class="summary-callout">
+            <div class="summary-callout-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                خلاصه راهبردی وضعیت گذار ارشد مدیریتی
+            </div>
+            <div class="summary-callout-text">
+                بنیاد مسکن در حال حاضر در وضعیت <strong>«سردرگمی معماری و گذار دوگانه»</strong> قرار دارد. ادامه این روند نه تنها هزینه‌های پشتیبانی و نگهداری موازی را به شدت افزایش می‌دهد، بلکه باعث گسست در یکپارچگی داده‌های تصمیم‌ساز می‌شود. سردرگمی و فشار از ناحیه بدنه سیستم با گذشت زمان بیشتر می‌شود و خطر سردرگمی در انتخاب معماری درست زیر این فشار وجود دارد. هیچ‌یک از پلتفرم‌ها مطلقا کامل نیستند؛ چارگون لزوما یک سیستم صرفا سنتی نیست و پایداری بالایی دارد، و همکاران سیستم نیز لزوما به معنای تحقق بی‌نقص ERP نیست و چالش‌های استقرار خاص خود را دارد.
+                
+                <ul class="summary-list">
+                    <li><strong>توقف رویه موازی‌کاری:</strong> حضور همزمان چندین پلتفرم (چارگون، همکاران، فرزین و...) در سطح کشور، یکپارچگی گزارشات سطح کلان ریاست را مختل می‌کند.</li>
+                    <li><strong>تعیین تکلیف معماری:</strong> فناوری اطلاعات باید بر اساس یک مدل هزینه-فایده شفاف، معماری نهایی را (چه مبتنی بر توسعه یکپارچه‌ساز چارگون و چه مبتنی بر استقرار کامل راهکاران) قطعی و ابلاغ کند.</li>
+                    <li><strong>مدیریت ریسک داده:</strong> هر تصمیمی که اتخاذ می‌شود، باید شامل برنامه دقیق برای مهاجرت امن داده‌ها و جلوگیری از از دست رفتن سوابق مکاتباتی سازمان باشد.</li>
+                    <li><strong>خروج از بلاتکلیفی:</strong> ماندگاری بیش از ۶ ماه در وضعیت فعلی (حدود ۷۰٪ استان‌ها در وضعیت استقرار ناقص یا موازی)، بازگشت‌پذیری را غیرممکن و هزینه‌های پنهان سازمان را تصاعدی خواهد کرد.</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // --- 1: SYSTEM DISTRIBUTION (ApexCharts Donut) ---
+        var optionsDist = {
+            chart: { type: 'donut', height: 260, fontFamily: 'Vazirmatn' },
+            series: [59.4, 21.9, 12.5, 6.3, 3.1],
+            labels: ['چارگون', 'همکاران', 'فرزین', 'رایورز', 'برید'],
+            colors: ['#1e3a8a', '#3b82f6', '#10b981', '#f59e0b', '#64748b'],
+            legend: { position: 'bottom', fontSize: '11px' },
+            dataLabels: { 
+                enabled: true, 
+                formatter: function (val, opts) { 
+                    // This forces ApexCharts to show exactly the value from the series array
+                    return opts.w.config.series[opts.seriesIndex] + "%"; 
+                } 
+            },
+            tooltip: {
+                y: { formatter: function(val) { return val + "%" } }
+            },
+            stroke: { width: 1 }
+        };
+        new ApexCharts(document.querySelector("#chart-distribution"), optionsDist).render();
+
+        // --- 2: MATURITY BREAKDOWN (ApexCharts Bar - Reversed Data & Inner Labels) ---
+        var optionsMaturity = {
+            chart: { type: 'bar', height: 260, fontFamily: 'Vazirmatn', toolbar: { show: false } },
+            series: [{ name: 'تعداد استان', data: [9, 3, 9, 4, 7] }],
+            xaxis: { 
+                categories: ['شروع اولیه', 'نیمه‌مهاجرت', 'میانی', 'آماده بهره‌برداری', 'عملیاتی'],
+                labels: { style: { fontSize: '10px', fontFamily: 'Vazirmatn' } }
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    dataLabels: { position: 'center' }, // Labels inside
+                    distributed: true
+                }
+            },
+            colors: ['#f87171', '#fbbf24', '#f59e0b', '#60a5fa', '#10b981'], // Red to Green progression
+            dataLabels: {
+                enabled: true,
+                style: { colors: ['#fff'], fontSize: '14px', fontWeight: 'bold' }
+            },
+            legend: { show: false }
+        };
+        new ApexCharts(document.querySelector("#chart-maturity-bar"), optionsMaturity).render();
+
+        // --- 3: COMPOSITE RISK (ApexCharts Radial Bar) ---
+        var optionsComposite = {
+            chart: { type: 'radialBar', height: 260, fontFamily: 'Vazirmatn' },
+            series: [42, 48],
+            labels: ['ریسک کل چارگون', 'ریسک کل همکاران'],
+            colors: ['#475569', '#ef4444'],
+            plotOptions: {
+                radialBar: {
+                    hollow: { margin: 5, size: '40%' },
+                    dataLabels: {
+                        name: { fontSize: '11px' },
+                        value: { fontSize: '13px', formatter: function(val) { return val + '%'; } }
+                    }
+                }
+            },
+            legend: { show: true, position: 'bottom', fontSize: '11px' }
+        };
+        new ApexCharts(document.querySelector("#chart-composite-radial"), optionsComposite).render();
+
+        // --- 4: RISK PROFILE (Grouped Bar replacing Radar) ---
+        var optionsRiskGrouped = {
+            chart: { type: 'bar', height: 280, fontFamily: 'Vazirmatn', toolbar: { show: false } },
+            series: [
+                { name: 'چارگون (دیدگاه)', data: [15, 25, 60, 20, 70, 40] },
+                { name: 'همکاران سیستم', data: [35, 55, 10, 45, 20, 65] }
+            ],
+            xaxis: { 
+                categories: ['ریسک فنی', 'ریسک اجرایی', 'مهاجرت معکوس', 'آموزش و پذیرش', 'یکپارچگی', 'تداوم تصمیم'],
+                labels: { style: { fontSize: '11px' } }
+            },
+            plotOptions: {
+                bar: { horizontal: false, columnWidth: '60%', borderRadius: 3, dataLabels: { position: 'top' } }
+            },
+            dataLabels: {
+                enabled: true,
+                offsetY: -20,
+                style: { fontSize: '10px', colors: ["#304758"] },
+                formatter: function(val) { return val + "%"; }
+            },
+            stroke: { show: true, width: 2, colors: ['transparent'] },
+            colors: ['#1e3a8a', '#3b82f6'],
+            legend: { position: 'top', fontSize: '12px' }
+        };
+        new ApexCharts(document.querySelector("#chart-risk-grouped-bar"), optionsRiskGrouped).render();
+
+        // --- 5: SCENARIOS PROBABILITIES (ApexCharts Horizontal Bar) ---
+        var optionsScenarios = {
+            chart: { type: 'bar', height: 280, fontFamily: 'Vazirmatn', toolbar: { show: false } },
+            plotOptions: {
+                bar: { horizontal: true, barHeight: '50%', borderRadius: 4, distributed: true, dataLabels: { position: 'bottom' } }
+            },
+            colors: ['#3b82f6', '#10b981', '#f59e0b'],
+            series: [{ name: 'احتمال وقوع', data: [45, 35, 20] }],
+            xaxis: {
+                categories: ['تثبیت همکاران', 'تثبیت چارگون', 'تداوم مدل دوگانه'],
+                labels: { style: { fontSize: '11px' } }, max: 100
+            },
+            legend: { show: false },
+            dataLabels: {
+                enabled: true,
+                textAnchor: 'start',
+                style: { colors: ['#fff'] },
+                formatter: function (val) { return val + "%"; },
+                offsetX: 10
+            }
+        };
+        new ApexCharts(document.querySelector("#chart-scenarios-bar"), optionsScenarios).render();
+    </script>
+</body>
+</html>
