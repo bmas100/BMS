@@ -168,12 +168,12 @@ body {
 .search-wrap input {
     width: 100%;
     font-family: inherit;
-    font-size: 14.5px;
+    font-size: 14px;
     color: var(--ink-900);
     background: rgba(255,255,255,.96);
     border: 1px solid rgba(255,255,255,.5);
     border-radius: 14px;
-    padding: 13px 44px 13px 40px;
+    padding: 8px 44px 8px 40px;
     outline: none;
     box-shadow: 0 10px 24px -10px rgba(0,0,0,.35);
     transition: box-shadow .2s ease, transform .15s ease;
@@ -223,7 +223,7 @@ body {
     font-weight: 700;
     color: var(--ink-600);
     background: #fff;
-    border: 1px solid var(--line);
+    border: 1px solid #040083;
     border-radius: 999px;
     padding: 8px 12px;
     cursor: pointer;
@@ -262,7 +262,7 @@ body {
     margin-bottom: 22px;
 }
 .stat {
-    background: var(--surface);
+    background: linear-gradient(180deg, #ffeace 0%, #faf5ff 150%);
     border: 1px solid var(--line);
     border-radius: var(--radius-md);
     padding: 14px 8px;
@@ -295,7 +295,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: var(--surface);
+    background: linear-gradient(180deg, #a07ec7 0%, #faf5ff 100%);
     border: 1px solid var(--line);
     border-radius: var(--radius-md);
     padding: 14px 16px;
@@ -317,7 +317,7 @@ body {
 .dept-name {
     font-size: 15px;
     font-weight: 700;
-    color: var(--navy-900);
+    color: #000000;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -425,7 +425,7 @@ body {
 
 .card-title {
     margin: 0;
-    font-size: 14.5px;
+    font-size: 13.5px;
     font-weight: 700;
     color: var(--navy-900);
     line-height: 1.45;
@@ -507,7 +507,7 @@ body {
     <div class="topbar-inner">
         <p class="eyebrow">سامانه هوشمند مدیریتی ریاست بنیاد مسکن</p>
         <h1>سامانه‌های بنیاد مسکن انقلاب اسلامی</h1>
-        <p class="lede">آخرین وضعیت و برنامه اجرایی سامانه‌های تخصصی به تفکیک حوزه‌های بهره‌بردار</p>
+        <p class="lede">وضعیت و برنامه اجرایی سامانه‌های تخصصی بنیاد به تفکیک حوزه‌ها</p>
 
         <div class="search-wrap">
             <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
@@ -565,8 +565,8 @@ body {
                 <h3 class="card-title">سامانه اتوماسیون اداری چارگون</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کل سازمان</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  کل سازمان</span>
             </div>
             <div class="card-foot">
                 <div class="status-note-row"><span class="note">مراحل پایانی مهاجرت به سیستم جدید</span></div>
@@ -583,8 +583,8 @@ body {
                 <h3 class="card-title">سامانه اتوماسیون اداری همکاران)</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  بنیاد مسکن</span>
             </div>
             <div class="card-foot">
                 <div class="status-note-row"><span class="note">تاریخ بهره‌برداری: ۱۴۰۵/۰۴/۰۱</span></div>
@@ -601,8 +601,8 @@ body {
                 <h3 class="card-title">سایت اینترنتی بنیاد مسکن و استان‌ها</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل روابط عمومی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  اداره کل روابط عمومی</span>
             </div>
             <div class="card-foot">
                 
@@ -619,8 +619,8 @@ body {
                 <h3 class="card-title">سایت جدید بنیاد مسکن و استان‌ها</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل روابط عمومی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  اداره کل روابط عمومی</span>
             </div>
             <div class="card-foot">
                 <div class="status-note-row"><span class="note">تاریخ بهره‌برداری: ۱۴۰۵/۰۶</span></div>
@@ -637,8 +637,8 @@ body {
                 <h3 class="card-title">سامانه ارتباط مردم و دولت (سامد)</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>نهاد ریاست حمهوری</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  نهاد ریاست حمهوری</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  بنیاد مسکن</span>
             </div>
             <div class="card-foot">
                 <div class="status-note-row"><span class="note">دارای کاربران ستاد مرکزی و استانها</span></div>
@@ -655,8 +655,8 @@ body {
                 <h3 class="card-title">سامانه یکپارچه مراسلات الکترونیکی دولت (سیماد)</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>نهاد ریاست حمهوری</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  نهاد ریاست حمهوری</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  بنیاد مسکن</span>
             </div>
             <div class="card-foot">
                 <div class="status-note-row"><span class="note">مکاتبات ستاد مرکزی</span></div>
@@ -673,8 +673,8 @@ body {
                 <h3 class="card-title">سامانه رسیدگی به شکایات (136)</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>سازمان بازرسی کل کشور</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  سازمان بازرسی کل کشور</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  بنیاد مسکن</span>
             </div>
             <div class="card-foot">
                 <div class="status-note-row"><span class="note">سازمان بازرسی کل کشور</span></div>
@@ -688,11 +688,11 @@ body {
                     <img src="vc2.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
                     <span class="card-icon-fallback">س</span>
                 </span>
-                <h3 class="card-title">سامانه مدیریت جلسات مجازی بنیاد مسکن</h3>
+                <h3 class="card-title">سامانه مدیریت جلسات مجازی</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کل سازمان</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  کل سازمان</span>
             </div>
             <div class="card-foot">
                 <div class="status-note-row"><span class="note">ستاد مرکزی - بنیاد استانها</span></div>
@@ -709,8 +709,8 @@ body {
                 <h3 class="card-title">بنیاد مهربانی</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر حساب ۱۰۰</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  دفتر حساب ۱۰۰</span>
             </div>
             <div class="card-foot">
                 
@@ -727,8 +727,8 @@ body {
                 <h3 class="card-title">سامانه تخصصی حساب ۱۰۰ امام (ره)</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر حساب ۱۰۰</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  دفتر حساب ۱۰۰</span>
             </div>
             <div class="card-foot">
                 
@@ -745,8 +745,8 @@ body {
                 <h3 class="card-title">سامانه ADLIRAN</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>قوه قضائیه</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل حقوقی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  قوه قضائیه</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  اداره کل حقوقی</span>
             </div>
             <div class="card-foot">
                 
@@ -763,8 +763,8 @@ body {
                 <h3 class="card-title">سامانه دسترسی آزاد به اطلاعات (IranFoia)</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>وزارت فرهنگ و ارشاد اسلامی</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل حقوقی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  وزارت فرهنگ و ارشاد اسلامی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  اداره کل حقوقی</span>
             </div>
             <div class="card-foot">
                 
@@ -795,8 +795,8 @@ body {
                 <h3 class="card-title">سامانه ERP منابع انسانی</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل امور اداری</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  اداره کل امور اداری</span>
             </div>
             <div class="card-foot">
                 
@@ -813,8 +813,8 @@ body {
                 <h3 class="card-title">سامانه ERP مالی</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل مالی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  اداره کل مالی</span>
             </div>
             <div class="card-foot">
                 
@@ -831,8 +831,8 @@ body {
                 <h3 class="card-title">سامانه ERP ذیحسابی</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل ذیحسابی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  اداره کل ذیحسابی</span>
             </div>
             <div class="card-foot">
                 
@@ -849,8 +849,8 @@ body {
                 <h3 class="card-title">ردیاب ناوگان ماشین‌آلات</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>پشتیبانی امور اجرایی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  پشتیبانی امور اجرایی</span>
             </div>
             <div class="card-foot">
                 
@@ -867,8 +867,8 @@ body {
                 <h3 class="card-title">رفاهی</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل امور اداری</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  اداره کل امور اداری</span>
             </div>
             <div class="card-foot">
                 
@@ -899,8 +899,8 @@ body {
                 <h3 class="card-title">سامانه احراز هویت یکپارچه (SSO)</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کلیه سامانه‌های بنیاد</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  کلیه سامانه‌های بنیاد</span>
             </div>
             <div class="card-foot">
                 
@@ -917,8 +917,8 @@ body {
                 <h3 class="card-title">پنجره واحد خدمات الکترونیک</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کلیه سامانه‌های بنیاد</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  کلیه سامانه‌های بنیاد</span>
             </div>
             <div class="card-foot">
                 <div class="status-note-row"><span class="note">تاریخ بهره‌برداری: ۱۴۰۵/۰۴/۱۳</span></div>
@@ -935,8 +935,8 @@ body {
                 <h3 class="card-title">سامانه یکپارچه نقشه و داده‌های مکانی</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>حوزه‌های نیازمند به نقشه</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  حوزه‌های نیازمند به نقشه</span>
             </div>
             <div class="card-foot">
                 
@@ -953,8 +953,8 @@ body {
                 <h3 class="card-title">سامانه آماری رصد</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کلیه سامانه‌های بنیاد</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  کلیه سامانه‌های بنیاد</span>
             </div>
             <div class="card-foot">
                 <div class="status-note-row"><span class="note">آماده دریافت نیازمندی‌ها جهت توسعه</span></div>
@@ -971,8 +971,8 @@ body {
                 <h3 class="card-title">آرشیو الکترونیک اسناد</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>حوزه‌های نیازمند به آرشیو</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  حوزه‌های نیازمند به آرشیو</span>
             </div>
             <div class="card-foot">
                 
@@ -989,8 +989,8 @@ body {
                 <h3 class="card-title">سامانه جامع پرداخت</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کلیه فرآیندهای پرداخت</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  کلیه فرآیندهای پرداخت</span>
             </div>
             <div class="card-foot">
                 
@@ -1007,8 +1007,8 @@ body {
                 <h3 class="card-title">سامانه مرورگر امن</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر مرکزی بنیاد</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  دفتر مرکزی بنیاد</span>
             </div>
             <div class="card-foot">
                 
@@ -1025,8 +1025,8 @@ body {
                 <h3 class="card-title">شبکه اجتماعی و ایمیل سازمانی</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کل سازمان</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  کل سازمان</span>
             </div>
             <div class="card-foot">
                 
@@ -1057,8 +1057,8 @@ body {
                 <h3 class="card-title">سامانه جامع عمران روستایی</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کل معاونت</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  کل معاونت</span>
             </div>
             <div class="card-foot">
                 <div class="status-note-row"><span class="note">تاریخ بهره‌برداری: ۱۴۰۵/۰۶/۰۱</span></div>
@@ -1075,8 +1075,8 @@ body {
                 <h3 class="card-title">ساخت و ساز روستایی راهبر</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر امور فنی طرح‌ها</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  دفتر امور فنی طرح‌ها</span>
             </div>
             <div class="card-foot">
                 
@@ -1093,8 +1093,8 @@ body {
                 <h3 class="card-title">خطایاب طرح‌ها</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر امور فنی طرح‌ها</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  دفتر امور فنی طرح‌ها</span>
             </div>
             <div class="card-foot">
                 
@@ -1111,8 +1111,8 @@ body {
                 <h3 class="card-title">مدیریت و کنترل اجرای پروژه (پی‌وب)</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر امور اجرایی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  دفتر امور اجرایی</span>
             </div>
             <div class="card-foot">
                 <div class="status-note-row"><span class="note">تاریخ بهره‌برداری: ۱۴۰۵/۰۴/۰۱</span></div>
@@ -1129,8 +1129,8 @@ body {
                 <h3 class="card-title">سماع</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر برنامه‌ریزی / زمین</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  دفتر برنامه‌ریزی / زمین</span>
             </div>
             <div class="card-foot">
                 
@@ -1147,8 +1147,8 @@ body {
                 <h3 class="card-title">مدیریت انتخاب مشاوران (سیما)</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر امور فنی طرح‌ها</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  دفتر امور فنی طرح‌ها</span>
             </div>
             <div class="card-foot">
                 
@@ -1165,8 +1165,8 @@ body {
                 <h3 class="card-title">مدیریت توزیع و مصرف قیر</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر امور اجرایی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  دفتر امور اجرایی</span>
             </div>
             <div class="card-foot">
                 
@@ -1197,8 +1197,8 @@ body {
                 <h3 class="card-title">سامانه بهسازی مسکن روستایی</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>مسکن روستایی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  مسکن روستایی</span>
             </div>
             <div class="card-foot">
                 
@@ -1215,8 +1215,8 @@ body {
                 <h3 class="card-title">سامانه نظام فنی روستایی</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>نظارت و ارزیابی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  نظارت و ارزیابی</span>
             </div>
             <div class="card-foot">
                 
@@ -1233,8 +1233,8 @@ body {
                 <h3 class="card-title">پایش عملکرد بازسازی و ساماندهی</h3>
             </div>
             <div class="card-meta">
-                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
-                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>بازسازی / ساماندهی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg> مالک سامانه:  بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>  بهره‌بردار:  بازسازی / ساماندهی</span>
             </div>
             <div class="card-foot">
                 
