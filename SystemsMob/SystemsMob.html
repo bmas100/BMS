@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a1630">
+<title>سامانه‌های تخصصی بنیاد مسکن انقلاب اسلامی</title>
+<style>
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('Vazirmatn-Regular.woff2') format('woff2');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('Vazirmatn-Medium.woff2') format('woff2');
+    font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('Vazirmatn-Bold.woff2') format('woff2');
+    font-weight: 700; font-style: normal; font-display: swap;
+}
+
+:root {
+    --navy-950: #070f24;
+    --navy-900: #0a1630;
+    --navy-800: #13224a;
+    --navy-700: #1b2f5c;
+    --blue-500: #3b82f6;
+    --blue-600: #2563eb;
+    --gold-400: #f2c14e;
+    --gold-300: #f7d878;
+
+    --bg: #eef1f7;
+    --surface: #ffffff;
+    --ink-900: #101828;
+    --ink-600: #46516b;
+    --ink-400: #7c869d;
+    --line: #e3e7f0;
+
+    --success: #0d9668;
+    --success-bg: #e6f7f0;
+    --warning: #c2760a;
+    --warning-bg: #fdf1de;
+    --info: #0284c7;
+    --info-bg: #e7f4fb;
+
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
+    --shadow-card: 0 1px 2px rgba(16, 24, 40, .04), 0 8px 20px -10px rgba(16, 24, 40, .12);
+    --shadow-card-hover: 0 4px 10px rgba(16, 24, 40, .06), 0 18px 30px -12px rgba(16, 24, 40, .18);
+    color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: var(--bg);
+    color: var(--ink-900);
+    margin: 0;
+    line-height: 1.55;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- decorative background pattern (geometric motif, quiet & fixed) ---------- */
+.bg-pattern {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle at 1px 1px, rgba(20, 40, 90, .05) 1px, transparent 0);
+    background-size: 26px 26px;
+    -webkit-mask-image: linear-gradient(to bottom, black, transparent 620px);
+    mask-image: linear-gradient(to bottom, black, transparent 620px);
+}
+
+/* ================= HEADER ================= */
+@keyframes animatedGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes floatGlow {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-3%, 4%) scale(1.08); }
+}
+
+.topbar {
+    position: relative;
+    background: linear-gradient(-45deg, var(--navy-950), #142a5e, #1d3fa8, var(--navy-950));
+    background-size: 400% 400%;
+    animation: animatedGradient 10s ease infinite;
+    color: #fff;
+    overflow: hidden;
+    padding: 22px 18px 26px;
+    border-radius: 0 0 28px 28px;
+    box-shadow: 0 18px 40px -20px rgba(10, 22, 48, .55);
+}
+
+.topbar::before {
+    content: '';
+    position: absolute;
+    width: 320px; height: 320px;
+    top: -140px; left: -80px;
+    background: radial-gradient(circle, rgba(242, 193, 78, .28), transparent 70%);
+    animation: floatGlow 12s ease-in-out infinite;
+    pointer-events: none;
+}
+.topbar::after {
+    content: '';
+    position: absolute;
+    width: 260px; height: 260px;
+    bottom: -140px; right: -60px;
+    background: radial-gradient(circle, rgba(59, 130, 246, .3), transparent 70%);
+    animation: floatGlow 14s ease-in-out infinite reverse;
+    pointer-events: none;
+}
+
+.topbar-inner { position: relative; max-width: 640px; margin: 0 auto; text-align: center; }
+
+.eyebrow {
+    margin: 0 0 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    color: var(--gold-300);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.eyebrow::before, .eyebrow::after {
+    content: '';
+    width: 14px; height: 1px;
+    background: rgba(247, 216, 120, .5);
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -.2px;
+}
+
+.topbar .lede {
+    margin: 8px auto 0;
+    max-width: 480px;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255,255,255,.72);
+}
+
+/* search */
+.search-wrap {
+    position: relative;
+    margin: 18px auto 0;
+    max-width: 460px;
+}
+.search-wrap input {
+    width: 100%;
+    font-family: inherit;
+    font-size: 14.5px;
+    color: var(--ink-900);
+    background: rgba(255,255,255,.96);
+    border: 1px solid rgba(255,255,255,.5);
+    border-radius: 14px;
+    padding: 13px 44px 13px 40px;
+    outline: none;
+    box-shadow: 0 10px 24px -10px rgba(0,0,0,.35);
+    transition: box-shadow .2s ease, transform .15s ease;
+}
+.search-wrap input::placeholder { color: var(--ink-400); }
+.search-wrap input:focus {
+    box-shadow: 0 0 0 3px rgba(242,193,78,.45), 0 10px 24px -10px rgba(0,0,0,.35);
+}
+.search-icon {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    width: 18px; height: 18px; fill: none; stroke: var(--ink-400); stroke-width: 2;
+}
+#clearSearch {
+    position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+    width: 28px; height: 28px; border: none; border-radius: 50%;
+    background: #eef1f7; color: var(--ink-600); font-size: 18px; line-height: 1;
+    cursor: pointer;
+}
+
+/* ================= QUICK NAV ================= */
+.quicknav {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(238, 241, 247, .88);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 0;
+}
+.quicknav-track {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0 14px;
+}
+.quicknav-track::-webkit-scrollbar { display: none; }
+
+.navchip {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-600);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform .15s ease, box-shadow .15s ease, color .15s ease, border-color .15s ease;
+}
+.navchip::before {
+    content: '';
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--dept);
+    flex: 0 0 auto;
+}
+.navchip em {
+    font-style: normal;
+    background: var(--bg);
+    color: var(--ink-400);
+    border-radius: 999px;
+    padding: 1px 6px;
+    font-size: 11px;
+}
+.navchip:active { transform: scale(.96); }
+.navchip.active {
+    color: var(--dept);
+    border-color: var(--dept);
+    box-shadow: 0 4px 10px -4px var(--dept);
+}
+
+/* ================= LAYOUT ================= */
+.container { max-width: 900px; margin: 0 auto; padding: 18px 14px 60px; }
+
+/* ---------- stats ---------- */
+.stats-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 22px;
+}
+.stat {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 14px 8px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+}
+.stat:nth-child(1) { border-bottom: 3px solid var(--navy-700); }
+.stat:nth-child(2) { border-bottom: 3px solid var(--success); }
+.stat:nth-child(3) { border-bottom: 3px solid var(--warning); }
+.stat-count {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--navy-900);
+    font-variant-numeric: tabular-nums;
+}
+.stat-label {
+    display: block;
+    margin-top: 3px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--ink-400);
+}
+
+/* ---------- section / accordion ---------- */
+.dept { margin-bottom: 12px; scroll-margin-top: 68px; }
+
+.dept-head {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: right;
+    box-shadow: var(--shadow-card);
+    transition: border-color .15s ease;
+}
+.dept[data-open] .dept-head,
+.dept-head[aria-expanded="true"] { border-color: color-mix(in srgb, var(--dept) 35%, var(--line)); }
+
+.dept-head-main { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+.dept-dot {
+    width: 10px; height: 10px; border-radius: 3px;
+    background: linear-gradient(135deg, var(--dept), var(--dept2));
+    flex: 0 0 auto;
+}
+.dept-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy-900);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.dept-count {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--dept);
+    background: color-mix(in srgb, var(--dept) 12%, white);
+    border-radius: 999px;
+    padding: 3px 9px;
+    flex: 0 0 auto;
+}
+.dept-chevron {
+    width: 18px; height: 18px; stroke: var(--ink-400); fill: none; stroke-width: 2.4;
+    stroke-linecap: round; stroke-linejoin: round;
+    transition: transform .25s ease;
+    flex: 0 0 auto;
+}
+.dept-head[aria-expanded="true"] .dept-chevron { transform: rotate(180deg); }
+
+.dept-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .32s cubic-bezier(.4,0,.2,1);
+}
+.dept-body[data-expanded="1"] { grid-template-rows: 1fr; }
+.dept-body > .grid { overflow: hidden; }
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding-top: 12px;
+}
+
+/* ---------- card ---------- */
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 15px 15px 13px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.card.reveal { animation: cardIn .5s cubic-bezier(.2,.7,.3,1) forwards; }
+@keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
+
+.card::before {
+    content: '';
+    position: absolute; inset: 0 0 auto 0; height: 4px;
+    background: linear-gradient(90deg, var(--dept), var(--dept2));
+}
+.card:active { transform: scale(.985); box-shadow: var(--shadow-card); }
+@media (hover: hover) {
+    .card:hover { box-shadow: var(--shadow-card-hover); border-color: color-mix(in srgb, var(--dept) 30%, var(--line)); }
+}
+
+.card-status {
+    position: absolute; top: 12px; left: 14px;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 700;
+    padding: 4px 9px 4px 8px;
+    border-radius: 999px;
+}
+.card-status i { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+.card-status--ok { background: var(--success-bg); color: var(--success); }
+.card-status--ok i { background: var(--success); box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 20%, transparent); }
+.card-status--dev { background: var(--warning-bg); color: var(--warning); }
+.card-status--dev i { background: var(--warning); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warning) 20%, transparent); }
+.card-status--static { background: var(--info-bg); color: var(--info); }
+.card-status--static i { background: var(--info); box-shadow: 0 0 0 3px color-mix(in srgb, var(--info) 20%, transparent); }
+
+.card-top { display: flex; align-items: center; gap: 12px; padding-top: 6px; padding-left: 78px; }
+
+.card-icon {
+    position: relative;
+    flex: 0 0 auto;
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--dept) 14%, white), color-mix(in srgb, var(--dept2) 8%, white));
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--dept) 18%, white);
+}
+.card-icon img { width: 78%; height: 78%; object-fit: contain; }
+.card-icon-fallback {
+    display: none;
+    position: absolute; inset: 0;
+    align-items: center; justify-content: center;
+    font-weight: 700; font-size: 18px; color: var(--dept);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--dept) 16%, white), color-mix(in srgb, var(--dept2) 10%, white));
+}
+.card-icon[data-fallback="1"] img { display: none; }
+.card-icon[data-fallback="1"] .card-icon-fallback { display: flex; }
+
+.card-title {
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--navy-900);
+    line-height: 1.45;
+}
+
+.card-meta { display: flex; flex-direction: column; gap: 6px; }
+.meta-row {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 500; color: var(--ink-600);
+}
+.meta-row svg { width: 14px; height: 14px; flex: 0 0 auto; fill: none; stroke: var(--ink-400); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.card-foot { margin-top: 2px; border-top: 1px dashed var(--line); padding-top: 10px; }
+.status-note-row { margin-bottom: 8px; }
+.note {
+    display: inline-block;
+    font-size: 11px; font-weight: 500;
+    background: var(--bg); color: var(--ink-600);
+    padding: 4px 9px; border-radius: 7px;
+}
+.card-link {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12.5px; font-weight: 700; color: var(--blue-600);
+    direction: ltr; text-align: left;
+}
+.card-link svg { width: 14px; height: 14px; flex: 0 0 auto; fill: none; stroke: var(--blue-600); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.card-link span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.card.is-hidden { display: none; }
+.card mark { background: color-mix(in srgb, var(--gold-400) 55%, white); color: inherit; border-radius: 3px; padding: 0 1px; }
+
+/* ---------- no results ---------- */
+.no-results {
+    text-align: center;
+    color: var(--ink-400);
+    padding: 46px 10px;
+}
+.no-results svg { width: 34px; height: 34px; stroke: var(--ink-400); fill: none; stroke-width: 2; margin-bottom: 10px; }
+.no-results p { margin: 0; font-size: 13.5px; font-weight: 600; }
+
+/* ---------- footer ---------- */
+.page-footer { text-align: center; padding: 26px 0 4px; color: var(--ink-400); font-size: 12px; }
+
+/* ---------- back to top ---------- */
+.to-top {
+    position: fixed; bottom: 18px; left: 18px; z-index: 40;
+    width: 44px; height: 44px; border-radius: 50%; border: none;
+    background: var(--navy-900); color: #fff;
+    box-shadow: 0 10px 22px -8px rgba(10,22,48,.55);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: transform .2s ease, opacity .2s ease;
+}
+.to-top svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.to-top:active { transform: scale(.9); }
+.to-top[hidden] { display: none; }
+
+/* ================= responsive scale-up ================= */
+@media (min-width: 560px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 860px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+    .container { padding-top: 26px; }
+}
+@media (max-width: 380px) {
+    .topbar h1 { font-size: 18px; }
+    .card-top { padding-left: 66px; }
+    .card-icon { width: 46px; height: 46px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="bg-pattern" aria-hidden="true"></div>
+
+<header class="topbar">
+    <div class="topbar-inner">
+        <p class="eyebrow">سامانه هوشمند مدیریتی ریاست بنیاد مسکن</p>
+        <h1>سامانه‌های بنیاد مسکن انقلاب اسلامی</h1>
+        <p class="lede">آخرین وضعیت و برنامه اجرایی سامانه‌های تخصصی به تفکیک حوزه‌های بهره‌بردار</p>
+
+        <div class="search-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <input id="searchInput" type="text" inputmode="search" placeholder="جست‌وجوی سامانه، مالک یا بهره‌بردار…" autocomplete="off">
+            <button id="clearSearch" type="button" aria-label="پاک کردن" hidden>&times;</button>
+        </div>
+    </div>
+</header>
+
+<nav class="quicknav" aria-label="پیمایش سریع حوزه‌ها">
+    <div class="quicknav-track"><button class="navchip" data-target="sec-0" style="--dept:#4f46e5"><span>حوزه ریاست</span><em>12</em></button><button class="navchip" data-target="sec-1" style="--dept:#7c3aed"><span>معاونت پشتیبانی و توسعه منابع انسانی</span><em>5</em></button><button class="navchip" data-target="sec-2" style="--dept:#059669"><span>معاونت برنامه‌ریزی</span><em>8</em></button><button class="navchip" data-target="sec-3" style="--dept:#b45309"><span>معاونت توسعه و عمران روستایی</span><em>7</em></button><button class="navchip" data-target="sec-4" style="--dept:#be123c"><span>معاونت امور بازسازی و مسکن روستایی</span><em>3</em></button></div>
+</nav>
+
+<main class="container">
+
+    <div class="stats-bar">
+        <div class="stat">
+            <span class="stat-count" data-count="35">0</span>
+            <span class="stat-label">کل سامانه‌ها</span>
+        </div>
+        <div class="stat">
+            <span class="stat-count" data-count="30">0</span>
+            <span class="stat-label">عملیاتی و فعال</span>
+        </div>
+        <div class="stat">
+            <span class="stat-count" data-count="5">0</span>
+            <span class="stat-label">در حال توسعه / استقرار</span>
+        </div>
+    </div>
+
+    <div id="noResults" class="no-results" hidden>
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <p>نتیجه‌ای برای جست‌وجوی شما یافت نشد</p>
+    </div>
+
+    
+    <section class="dept" id="sec-0" data-dept="reyasat" style="--dept:#4f46e5;--dept2:#6366f1">
+        <button class="dept-head" type="button" aria-expanded="true">
+            <span class="dept-head-main">
+                <span class="dept-dot"></span>
+                <span class="dept-name">حوزه ریاست</span>
+            </span>
+            <span class="dept-count">12</span>
+            <svg class="dept-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="dept-body" data-expanded="1">
+            <div class="grid">
+        <a href=".\AutomationMob.html" target="_blank" rel="noopener" class="card" data-status="status-operational" data-search="سامانه اتوماسیون اداری چارگون بنیاد مسکن کل سازمان http://bonyad.com" style="--dept:#4f46e5;--dept2:#6366f1">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="Chargoon.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه اتوماسیون اداری چارگون</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کل سازمان</span>
+            </div>
+            <div class="card-foot">
+                <div class="status-note-row"><span class="note">مراحل پایانی مهاجرت به سیستم جدید</span></div>
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href=".\AutomationMob.html" target="_blank" rel="noopener" class="card" data-status="status-developing" data-search="سامانه اتوماسیون اداری همکاران) بنیاد مسکن بنیاد مسکن http://bonyad.com" style="--dept:#4f46e5;--dept2:#6366f1">
+            <span class="card-status card-status--dev"><i></i>در حال توسعه</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="Hamkaran.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه اتوماسیون اداری همکاران)</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>بنیاد مسکن</span>
+            </div>
+            <div class="card-foot">
+                <div class="status-note-row"><span class="note">تاریخ بهره‌برداری: ۱۴۰۵/۰۴/۰۱</span></div>
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href="./WebSiteMob.html" target="_blank" rel="noopener" class="card" data-status="status-operational" data-search="سایت اینترنتی بنیاد مسکن و استان‌ها بنیاد مسکن اداره کل روابط عمومی https://www.bonyadmaskan.ir/" style="--dept:#4f46e5;--dept2:#6366f1">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="website.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سایت اینترنتی بنیاد مسکن و استان‌ها</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل روابط عمومی</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://www.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+        <a href="./NewWebSiteMob.html" target="_blank" rel="noopener" class="card" data-status="status-developing" data-search="سایت جدید بنیاد مسکن و استان‌ها بنیاد مسکن اداره کل روابط عمومی http://bonyad.com" style="--dept:#4f46e5;--dept2:#6366f1">
+            <span class="card-status card-status--dev"><i></i>در حال توسعه</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="new-website.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سایت جدید بنیاد مسکن و استان‌ها</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل روابط عمومی</span>
+            </div>
+            <div class="card-foot">
+                <div class="status-note-row"><span class="note">تاریخ بهره‌برداری: ۱۴۰۵/۰۶</span></div>
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href=".\RiasatMob.html" target="_blank" rel="noopener" class="card" data-status="status-operational" data-search="سامانه ارتباط مردم و دولت (سامد) نهاد ریاست حمهوری بنیاد مسکن http://bonyad.com" style="--dept:#4f46e5;--dept2:#6366f1">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="Samad.jpg" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه ارتباط مردم و دولت (سامد)</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>نهاد ریاست حمهوری</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>بنیاد مسکن</span>
+            </div>
+            <div class="card-foot">
+                <div class="status-note-row"><span class="note">دارای کاربران ستاد مرکزی و استانها</span></div>
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href=".\RiasatMob.html" target="_blank" rel="noopener" class="card" data-status="status-operational" data-search="سامانه یکپارچه مراسلات الکترونیکی دولت (سیماد) نهاد ریاست حمهوری بنیاد مسکن http://bonyad.com" style="--dept:#4f46e5;--dept2:#6366f1">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="Simad.jpg" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه یکپارچه مراسلات الکترونیکی دولت (سیماد)</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>نهاد ریاست حمهوری</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>بنیاد مسکن</span>
+            </div>
+            <div class="card-foot">
+                <div class="status-note-row"><span class="note">مکاتبات ستاد مرکزی</span></div>
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href=".\RiasatMob.html" target="_blank" rel="noopener" class="card" data-status="status-operational" data-search="سامانه رسیدگی به شکایات (136) سازمان بازرسی کل کشور بنیاد مسکن http://bonyad.com" style="--dept:#4f46e5;--dept2:#6366f1">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="136.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه رسیدگی به شکایات (136)</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>سازمان بازرسی کل کشور</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>بنیاد مسکن</span>
+            </div>
+            <div class="card-foot">
+                <div class="status-note-row"><span class="note">سازمان بازرسی کل کشور</span></div>
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href=".\RiasatMob.html" target="_blank" rel="noopener" class="card" data-status="status-operational" data-search="سامانه مدیریت جلسات مجازی بنیاد مسکن بنیاد مسکن کل سازمان https://vc365.videocake.ir/" style="--dept:#4f46e5;--dept2:#6366f1">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="vc2.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه مدیریت جلسات مجازی بنیاد مسکن</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کل سازمان</span>
+            </div>
+            <div class="card-foot">
+                <div class="status-note-row"><span class="note">ستاد مرکزی - بنیاد استانها</span></div>
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://vc365.videocake.ir/</span></div>
+            </div>
+        </a>
+        <a href="https://mehrabani.bonyadmaskan.ir" target="_blank" rel="noopener" class="card" data-status="status-operational" data-search="بنیاد مهربانی بنیاد مسکن دفتر حساب ۱۰۰ https://mehrabani.bonyadmaskan.ir/" style="--dept:#4f46e5;--dept2:#6366f1">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="logo-bm.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">ب</span>
+                </span>
+                <h3 class="card-title">بنیاد مهربانی</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر حساب ۱۰۰</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://mehrabani.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="سامانه تخصصی حساب ۱۰۰ امام (ره) بنیاد مسکن دفتر حساب ۱۰۰ http://bonyad.com" style="--dept:#4f46e5;--dept2:#6366f1">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="H100.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه تخصصی حساب ۱۰۰ امام (ره)</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر حساب ۱۰۰</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href="../LegalMob/LegalMob.html" target="_blank" rel="noopener" class="card" data-status="status-static" data-search="سامانه adliran قوه قضائیه اداره کل حقوقی https://adliran.ir" style="--dept:#4f46e5;--dept2:#6366f1">
+            <span class="card-status card-status--static"><i></i>ثابت</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="ADLIRAN.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه ADLIRAN</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>قوه قضائیه</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل حقوقی</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://adliran.ir</span></div>
+            </div>
+        </a>
+        <a href="../LegalMob/LegalMob.html" target="_blank" rel="noopener" class="card" data-status="status-static" data-search="سامانه دسترسی آزاد به اطلاعات (iranfoia) وزارت فرهنگ و ارشاد اسلامی اداره کل حقوقی https://iranfoia.ir" style="--dept:#4f46e5;--dept2:#6366f1">
+            <span class="card-status card-status--static"><i></i>ثابت</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="IranFoia.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه دسترسی آزاد به اطلاعات (IranFoia)</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>وزارت فرهنگ و ارشاد اسلامی</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل حقوقی</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://iranfoia.ir</span></div>
+            </div>
+        </a>
+            </div>
+        </div>
+    </section>
+    <section class="dept" id="sec-1" data-dept="poshtibani" style="--dept:#7c3aed;--dept2:#8b5cf6">
+        <button class="dept-head" type="button" aria-expanded="false">
+            <span class="dept-head-main">
+                <span class="dept-dot"></span>
+                <span class="dept-name">معاونت پشتیبانی و توسعه منابع انسانی</span>
+            </span>
+            <span class="dept-count">5</span>
+            <svg class="dept-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="dept-body">
+            <div class="grid">
+        <a href="../HrmMob/HrmMob.html" target="_blank" rel="noopener" class="card" data-status="status-operational" data-search="سامانه erp منابع انسانی بنیاد مسکن اداره کل امور اداری http://bonyad.com" style="--dept:#7c3aed;--dept2:#8b5cf6">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="Rahkaran.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه ERP منابع انسانی</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل امور اداری</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="سامانه erp مالی بنیاد مسکن اداره کل مالی http://bonyad.com" style="--dept:#7c3aed;--dept2:#8b5cf6">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="Rahkaran.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه ERP مالی</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل مالی</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="سامانه erp ذیحسابی بنیاد مسکن اداره کل ذیحسابی http://bonyad.com" style="--dept:#7c3aed;--dept2:#8b5cf6">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="Rahkaran.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه ERP ذیحسابی</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل ذیحسابی</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="ردیاب ناوگان ماشین‌آلات بنیاد مسکن پشتیبانی امور اجرایی https://avl.bonyadmaskan.ir/" style="--dept:#7c3aed;--dept2:#8b5cf6">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="gps.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">ر</span>
+                </span>
+                <h3 class="card-title">ردیاب ناوگان ماشین‌آلات</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>پشتیبانی امور اجرایی</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://avl.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="رفاهی بنیاد مسکن اداره کل امور اداری https://refahi.bonyadmaskan.ir/" style="--dept:#7c3aed;--dept2:#8b5cf6">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="refahi.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">ر</span>
+                </span>
+                <h3 class="card-title">رفاهی</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>اداره کل امور اداری</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://refahi.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+            </div>
+        </div>
+    </section>
+    <section class="dept" id="sec-2" data-dept="barnameh" style="--dept:#059669;--dept2:#10b981">
+        <button class="dept-head" type="button" aria-expanded="false">
+            <span class="dept-head-main">
+                <span class="dept-dot"></span>
+                <span class="dept-name">معاونت برنامه‌ریزی</span>
+            </span>
+            <span class="dept-count">8</span>
+            <svg class="dept-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="dept-body">
+            <div class="grid">
+        <a href="#" class="card" data-status="status-operational" data-search="سامانه احراز هویت یکپارچه (sso) بنیاد مسکن کلیه سامانه‌های بنیاد http://sso.bonyadmaskan.ir/" style="--dept:#059669;--dept2:#10b981">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="fingerprint.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه احراز هویت یکپارچه (SSO)</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کلیه سامانه‌های بنیاد</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://sso.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-developing" data-search="پنجره واحد خدمات الکترونیک بنیاد مسکن کلیه سامانه‌های بنیاد https://eservices.bonyadmaskan.ir/" style="--dept:#059669;--dept2:#10b981">
+            <span class="card-status card-status--dev"><i></i>در حال توسعه</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="vahed.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">پ</span>
+                </span>
+                <h3 class="card-title">پنجره واحد خدمات الکترونیک</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کلیه سامانه‌های بنیاد</span>
+            </div>
+            <div class="card-foot">
+                <div class="status-note-row"><span class="note">تاریخ بهره‌برداری: ۱۴۰۵/۰۴/۱۳</span></div>
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://eservices.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="سامانه یکپارچه نقشه و داده‌های مکانی بنیاد مسکن حوزه‌های نیازمند به نقشه https://sinam.bonyadmaskan.ir/" style="--dept:#059669;--dept2:#10b981">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="sinam.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه یکپارچه نقشه و داده‌های مکانی</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>حوزه‌های نیازمند به نقشه</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://sinam.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="سامانه آماری رصد بنیاد مسکن کلیه سامانه‌های بنیاد https://rasad.bonyadmaskan.ir/" style="--dept:#059669;--dept2:#10b981">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="rasad.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه آماری رصد</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کلیه سامانه‌های بنیاد</span>
+            </div>
+            <div class="card-foot">
+                <div class="status-note-row"><span class="note">آماده دریافت نیازمندی‌ها جهت توسعه</span></div>
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://rasad.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="آرشیو الکترونیک اسناد بنیاد مسکن حوزه‌های نیازمند به آرشیو http://bonyad.com" style="--dept:#059669;--dept2:#10b981">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="Bonicon.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">آ</span>
+                </span>
+                <h3 class="card-title">آرشیو الکترونیک اسناد</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>حوزه‌های نیازمند به آرشیو</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="سامانه جامع پرداخت بنیاد مسکن کلیه فرآیندهای پرداخت http://bonyad.com" style="--dept:#059669;--dept2:#10b981">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="Bonicon.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه جامع پرداخت</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کلیه فرآیندهای پرداخت</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="سامانه مرورگر امن بنیاد مسکن دفتر مرکزی بنیاد http://bonyad.com" style="--dept:#059669;--dept2:#10b981">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="Bonicon.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه مرورگر امن</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر مرکزی بنیاد</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="شبکه اجتماعی و ایمیل سازمانی بنیاد مسکن کل سازمان http://bonyad.com" style="--dept:#059669;--dept2:#10b981">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="Bonicon.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">ش</span>
+                </span>
+                <h3 class="card-title">شبکه اجتماعی و ایمیل سازمانی</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کل سازمان</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+            </div>
+        </div>
+    </section>
+    <section class="dept" id="sec-3" data-dept="omran" style="--dept:#b45309;--dept2:#d97706">
+        <button class="dept-head" type="button" aria-expanded="false">
+            <span class="dept-head-main">
+                <span class="dept-dot"></span>
+                <span class="dept-name">معاونت توسعه و عمران روستایی</span>
+            </span>
+            <span class="dept-count">7</span>
+            <svg class="dept-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="dept-body">
+            <div class="grid">
+        <a href="#" class="card" data-status="status-developing" data-search="سامانه جامع عمران روستایی بنیاد مسکن کل معاونت http://bonyad.com" style="--dept:#b45309;--dept2:#d97706">
+            <span class="card-status card-status--dev"><i></i>در حال توسعه</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="Bonicon.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه جامع عمران روستایی</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>کل معاونت</span>
+            </div>
+            <div class="card-foot">
+                <div class="status-note-row"><span class="note">تاریخ بهره‌برداری: ۱۴۰۵/۰۶/۰۱</span></div>
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="ساخت و ساز روستایی راهبر بنیاد مسکن دفتر امور فنی طرح‌ها https://svs.bonyadmaskan.ir/" style="--dept:#b45309;--dept2:#d97706">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="rahbar.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">ساخت و ساز روستایی راهبر</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر امور فنی طرح‌ها</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://svs.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="خطایاب طرح‌ها بنیاد مسکن دفتر امور فنی طرح‌ها https://khatayab.bonyadmaskan.ir/" style="--dept:#b45309;--dept2:#d97706">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="khatayab.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">خ</span>
+                </span>
+                <h3 class="card-title">خطایاب طرح‌ها</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر امور فنی طرح‌ها</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://khatayab.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-developing" data-search="مدیریت و کنترل اجرای پروژه (پی‌وب) بنیاد مسکن دفتر امور اجرایی http://bonyad.com" style="--dept:#b45309;--dept2:#d97706">
+            <span class="card-status card-status--dev"><i></i>در حال توسعه</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="Bonicon.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">م</span>
+                </span>
+                <h3 class="card-title">مدیریت و کنترل اجرای پروژه (پی‌وب)</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر امور اجرایی</span>
+            </div>
+            <div class="card-foot">
+                <div class="status-note-row"><span class="note">تاریخ بهره‌برداری: ۱۴۰۵/۰۴/۰۱</span></div>
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://bonyad.com</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-static" data-search="سماع بنیاد مسکن دفتر برنامه‌ریزی / زمین http://samaneh.bonyadmaskan.ir/" style="--dept:#b45309;--dept2:#d97706">
+            <span class="card-status card-status--static"><i></i>ثابت</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="sama.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سماع</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر برنامه‌ریزی / زمین</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://samaneh.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-static" data-search="مدیریت انتخاب مشاوران (سیما) بنیاد مسکن دفتر امور فنی طرح‌ها http://sima.bonyadmaskan.ir/" style="--dept:#b45309;--dept2:#d97706">
+            <span class="card-status card-status--static"><i></i>ثابت</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="sima.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">م</span>
+                </span>
+                <h3 class="card-title">مدیریت انتخاب مشاوران (سیما)</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر امور فنی طرح‌ها</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>http://sima.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-static" data-search="مدیریت توزیع و مصرف قیر بنیاد مسکن دفتر امور اجرایی https://ghir.bonyadmaskan.ir/" style="--dept:#b45309;--dept2:#d97706">
+            <span class="card-status card-status--static"><i></i>ثابت</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="ghir.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">م</span>
+                </span>
+                <h3 class="card-title">مدیریت توزیع و مصرف قیر</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>دفتر امور اجرایی</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://ghir.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+            </div>
+        </div>
+    </section>
+    <section class="dept" id="sec-4" data-dept="bazsazi" style="--dept:#be123c;--dept2:#e11d48">
+        <button class="dept-head" type="button" aria-expanded="false">
+            <span class="dept-head-main">
+                <span class="dept-dot"></span>
+                <span class="dept-name">معاونت امور بازسازی و مسکن روستایی</span>
+            </span>
+            <span class="dept-count">3</span>
+            <svg class="dept-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="dept-body">
+            <div class="grid">
+        <a href="#" class="card" data-status="status-operational" data-search="سامانه بهسازی مسکن روستایی بنیاد مسکن مسکن روستایی https://smr.bonyadmaskan.ir/" style="--dept:#be123c;--dept2:#e11d48">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="behsazi.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه بهسازی مسکن روستایی</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>مسکن روستایی</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://smr.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="سامانه نظام فنی روستایی بنیاد مسکن نظارت و ارزیابی https://nfr.bonyadmaskan.ir/" style="--dept:#be123c;--dept2:#e11d48">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="nfr.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">س</span>
+                </span>
+                <h3 class="card-title">سامانه نظام فنی روستایی</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>نظارت و ارزیابی</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://nfr.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+        <a href="#" class="card" data-status="status-operational" data-search="پایش عملکرد بازسازی و ساماندهی بنیاد مسکن بازسازی / ساماندهی https://payesh.bonyadmaskan.ir/" style="--dept:#be123c;--dept2:#e11d48">
+            <span class="card-status card-status--ok"><i></i>عملیاتی</span>
+            <div class="card-top">
+                <span class="card-icon">
+                    <img src="payeshbazsazi.png" alt="" loading="lazy" onerror="this.closest('.card-icon').dataset.fallback='1'">
+                    <span class="card-icon-fallback">پ</span>
+                </span>
+                <h3 class="card-title">پایش عملکرد بازسازی و ساماندهی</h3>
+            </div>
+            <div class="card-meta">
+                <span class="meta-row"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6"/></svg>بنیاد مسکن</span>
+                <span class="meta-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>بازسازی / ساماندهی</span>
+            </div>
+            <div class="card-foot">
+                
+                <div class="card-link"><svg viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>https://payesh.bonyadmaskan.ir/</span></div>
+            </div>
+        </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="page-footer">
+        <p>سامانه هوشمند مدیریتی ریاست بنیاد مسکن انقلاب اسلامی</p>
+    </footer>
+</main>
+
+<button id="toTop" class="to-top" aria-label="بازگشت به بالا" hidden>
+    <svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+
+<script>
+(function () {
+    'use strict';
+
+    var depts = Array.prototype.slice.call(document.querySelectorAll('.dept'));
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+    var navchips = Array.prototype.slice.call(document.querySelectorAll('.navchip'));
+    var searchInput = document.getElementById('searchInput');
+    var clearBtn = document.getElementById('clearSearch');
+    var noResults = document.getElementById('noResults');
+
+    /* ---------- accordion ---------- */
+    function setOpen(dept, open) {
+        var head = dept.querySelector('.dept-head');
+        var body = dept.querySelector('.dept-body');
+        head.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) { body.setAttribute('data-expanded', '1'); dept.setAttribute('data-open', ''); }
+        else { body.removeAttribute('data-expanded'); dept.removeAttribute('data-open'); }
+    }
+
+    depts.forEach(function (dept) {
+        var head = dept.querySelector('.dept-head');
+        head.addEventListener('click', function () {
+            var isOpen = head.getAttribute('aria-expanded') === 'true';
+            setOpen(dept, !isOpen);
+        });
+    });
+
+    /* ---------- quick nav ---------- */
+    navchips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+            var target = document.getElementById(chip.dataset.target);
+            if (!target) return;
+            var dept = target;
+            setOpen(dept, true);
+            var headerOffset = 66;
+            var y = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        });
+    });
+
+    function highlightNavOnScroll() {
+        var scrollPos = window.scrollY + 120;
+        var current = null;
+        depts.forEach(function (dept) {
+            if (dept.offsetTop <= scrollPos) current = dept;
+        });
+        navchips.forEach(function (chip) { chip.classList.remove('active'); });
+        if (current) {
+            var chip = navchips.filter(function (c) { return c.dataset.target === current.id; })[0];
+            if (chip) chip.classList.add('active');
+        }
+    }
+    document.addEventListener('scroll', throttle(highlightNavOnScroll, 120), { passive: true });
+    highlightNavOnScroll();
+
+    /* ---------- search ---------- */
+    function normalize(s) { return (s || '').toLowerCase(); }
+
+    function runSearch() {
+        var q = normalize(searchInput.value.trim());
+        clearBtn.hidden = q.length === 0;
+        var anyVisible = false;
+
+        depts.forEach(function (dept) {
+            var deptCards = Array.prototype.slice.call(dept.querySelectorAll('.card'));
+            var visibleCount = 0;
+            deptCards.forEach(function (card) {
+                var match = q === '' || card.dataset.search.indexOf(q) !== -1;
+                card.classList.toggle('is-hidden', !match);
+                if (match) visibleCount++;
+            });
+            var countEl = dept.querySelector('.dept-count');
+            countEl.textContent = visibleCount;
+            dept.hidden = visibleCount === 0;
+            if (visibleCount > 0) anyVisible = true;
+            if (q !== '' && visibleCount > 0) setOpen(dept, true);
+            if (q === '' ) setOpen(dept, dept === depts[0]);
+        });
+
+        noResults.hidden = anyVisible || q === '';
+    }
+
+    var searchTimer;
+    searchInput.addEventListener('input', function () {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(runSearch, 120);
+    });
+    clearBtn.addEventListener('click', function () {
+        searchInput.value = '';
+        runSearch();
+        searchInput.focus();
+    });
+
+    /* ---------- scroll reveal ---------- */
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        cards.forEach(function (card) { io.observe(card); });
+    } else {
+        cards.forEach(function (card) { card.classList.add('reveal'); });
+    }
+
+    /* ---------- count-up stats ---------- */
+    function animateCount(el) {
+        var target = parseInt(el.dataset.count, 10) || 0;
+        var start = 0;
+        var duration = 900;
+        var startTime = null;
+        function step(ts) {
+            if (!startTime) startTime = ts;
+            var progress = Math.min((ts - startTime) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(start + (target - start) * eased);
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = target;
+        }
+        requestAnimationFrame(step);
+    }
+    var statEls = Array.prototype.slice.call(document.querySelectorAll('.stat-count'));
+    if ('IntersectionObserver' in window && statEls.length) {
+        var statIo = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) { animateCount(entry.target); statIo.unobserve(entry.target); }
+            });
+        }, { threshold: 0.4 });
+        statEls.forEach(function (el) { statIo.observe(el); });
+    } else {
+        statEls.forEach(animateCount);
+    }
+
+    /* ---------- back to top ---------- */
+    var toTop = document.getElementById('toTop');
+    document.addEventListener('scroll', throttle(function () {
+        toTop.hidden = window.scrollY < 420;
+    }, 150), { passive: true });
+    toTop.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    /* ---------- utils ---------- */
+    function throttle(fn, wait) {
+        var last = 0, timer = null;
+        return function () {
+            var now = Date.now();
+            var args = arguments, ctx = this;
+            if (now - last >= wait) { last = now; fn.apply(ctx, args); }
+            else {
+                clearTimeout(timer);
+                timer = setTimeout(function () { last = Date.now(); fn.apply(ctx, args); }, wait - (now - last));
+            }
+        };
+    }
+})();
+
+</script>
+</body>
+</html>
