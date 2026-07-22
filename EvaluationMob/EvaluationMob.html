@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<title>گزارش عملکرد سه‌ماهه بودجه ۱۴۰۵ | بنیاد مسکن انقلاب اسلامی</title>
+<style>
+  :root{
+    --green-900:#1f3d1f;
+    --green-800:#2c4f27;
+    --green-700:#3a6b34;
+    --green-600:#4f8a43;
+    --green-500:#5a9c4c;
+    --green-200:#cfe6c2;
+    --orange:#e8823a;
+    --orange-dark:#c9611f;
+    --gold:#d4a72c;
+    --blue:#3f7fb0;
+    --purple:#8a5fb0;
+    --teal:#2f9a90;
+    --brown:#a06b3a;
+    --bg:#f6f7f3;
+    --card:#ffffff;
+    --ink:#1c2418;
+    --muted:#6b7263;
+    --danger:#c0392b;
+    --good:#2e7d32;
+    --line:#e3e6dc;
+    --radius:18px;
+    --shadow:0 6px 20px rgba(30,50,20,.09);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"Vazirmatn","IRANSans","Segoe UI",Tahoma,sans-serif;
+    background:linear-gradient(180deg,#eef3e8 0%,var(--bg) 340px);
+    color:var(--ink);
+    line-height:1.9;
+    font-size:15px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 16px 60px;}
+
+  /* ===== HERO ===== */
+  .hero{
+    background:radial-gradient(1200px 400px at 50% -150px, #4a7a3f 0%, var(--green-900) 70%);
+    color:#fff;
+    padding:10px 16px 10px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;inset:0;
+    background:repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 2px, transparent 2px 22px);
+    pointer-events:none;
+  }
+  .hero .badge{
+    display:inline-block;background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.35);
+    padding:6px 16px;border-radius:999px;font-size:12.5px;letter-spacing:.3px;margin-bottom:14px;
+  }
+  .hero h1{font-size:22px;margin:0 0 8px;font-weight:800;line-height:1.6;}
+  .hero p.sub{margin:0;color:#dbe9d3;font-size:13.5px;max-width:640px;margin-inline:auto;}
+  .hero .meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+  .hero .meta span{background:rgba(0,0,0,.18);padding:6px 12px;border-radius:10px;font-size:12px;color:#eef3e8;}
+
+  /* ===== NAV BUTTONS ===== */
+  .tabs{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    display:flex;overflow-x:auto;gap:8px;padding:10px 12px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{
+    flex:0 0 auto;
+    display:inline-flex;align-items:center;gap:6px;
+    padding:9px 16px;border-radius:999px;font-size:12.5px;font-weight:700;
+    color:#fff;white-space:nowrap;text-decoration:none;border:none;cursor:pointer;
+    background:linear-gradient(160deg,var(--green-600),var(--green-800));
+    box-shadow:0 3px 8px rgba(40,80,30,.25);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .tab-btn:active{transform:scale(.94);}
+  .tab-btn.is-active{
+    background:linear-gradient(160deg,var(--gold),var(--orange-dark));
+    box-shadow:0 3px 10px rgba(200,120,20,.35);
+  }
+  .tab-btn .ic{font-size:14px;}
+
+  section{margin-top:26px;scroll-margin-top:70px;}
+  .card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:18px 16px;border:1px solid var(--line);
+  }
+  h2.sec-title{
+    font-size:17px;margin:0 0 4px;color:var(--green-900);font-weight:800;
+    display:flex;align-items:center;gap:8px;
+  }
+  h2.sec-title .num{
+    background:var(--green-800);color:#fff;width:26px;height:26px;border-radius:8px;
+    display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:none;
+  }
+  p.desc{color:var(--muted);font-size:13px;margin:4px 0 16px;}
+
+  /* ===== executive summary grid ===== */
+  .kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  @media(min-width:640px){.kpi-grid{grid-template-columns:repeat(4,1fr);}}
+  .kpi{
+    background:linear-gradient(160deg,#fff,#f3f7ee);
+    border:1px solid var(--line);border-radius:14px;padding:14px 10px;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  .kpi::before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--green-700);}
+  .kpi b{display:block;font-size:21px;color:var(--green-800);}
+  .kpi span{font-size:11.5px;color:var(--muted);}
+
+  .callout{
+    border-radius:12px;padding:12px 14px;font-size:13px;margin:12px 0;
+    border-inline-start:4px solid var(--green-700);background:#f2f7ec;
+  }
+  .callout.warn{border-inline-start-color:var(--danger);background:#fdf1ef;}
+  .callout.gold{border-inline-start-color:var(--gold);background:#fbf6e6;}
+
+  /* ===== bars ===== */
+  .barlist{display:flex;flex-direction:column;gap:7px;margin-top:10px;}
+  .barrow{display:grid;grid-template-columns:22px 92px 1fr 52px;align-items:center;gap:7px;font-size:11.5px;}
+  .barrow .rk{font-weight:800;color:var(--muted);text-align:center;font-size:11px;}
+  .barrow .name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);font-weight:700;}
+  .barrow .track{background:#eef1e8;border-radius:8px;height:15px;overflow:hidden;position:relative;}
+  .barrow .fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--green-500),var(--green-800));}
+  .barrow.top .fill{background:linear-gradient(90deg,#8bc76a,var(--green-900));}
+  .barrow.bottom .fill{background:linear-gradient(90deg,#f0a15c,var(--danger));}
+  .barrow .val{font-weight:800;color:var(--green-900);text-align:left;font-size:11.5px;}
+
+  /* diverging chart */
+  .divrow{display:grid;grid-template-columns:90px 1fr;align-items:center;gap:8px;font-size:11.5px;margin-bottom:6px;}
+  .divrow .name{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .divtrack{position:relative;height:16px;background:#eef1e8;border-radius:8px;overflow:hidden;}
+  .divtrack .mid{position:absolute;inset-inline-start:50%;top:0;bottom:0;width:1px;background:#c7ccbc;}
+  .divtrack .seg{position:absolute;top:0;bottom:0;border-radius:6px;}
+  .divtrack .seg.pos{background:linear-gradient(90deg,#8bc76a,var(--green-800));}
+  .divtrack .seg.neg{background:linear-gradient(90deg,var(--danger),#e08b6b);}
+  .divval{font-size:10.5px;color:var(--muted);text-align:center;margin-top:2px;}
+
+  /* ===== activity cards ===== */
+  .act-grid{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:760px){.act-grid{grid-template-columns:1fr 1fr;}}
+  .act-card{
+    border-radius:16px;padding:14px;background:#fff;position:relative;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 3px 10px rgba(30,50,20,.05);
+  }
+  .act-card::before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:5px;}
+  .act-card .head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .act-card .ic-badge{
+    width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    font-size:19px;flex:none;color:#fff;
+  }
+  .act-card h3{margin:0;font-size:13.5px;color:var(--green-900);font-weight:800;line-height:1.4;}
+  .act-card .wtag{font-size:10px;background:var(--green-200);color:var(--green-900);border-radius:999px;padding:2px 8px;display:inline-block;margin-top:2px;}
+  .act-body{display:flex;gap:12px;align-items:center;}
+  .gauge-wrap{flex:none;text-align:center;}
+  .gauge-wrap .glabel{font-size:9.5px;color:var(--muted);margin-top:2px;max-width:74px;}
+  .act-facts{flex:1;font-size:11.5px;}
+  .mini-row{display:flex;justify-content:space-between;gap:6px;padding:4px 0;border-bottom:1px dashed var(--line);}
+  .mini-row:last-child{border-bottom:none;}
+  .tag-good{color:var(--good);font-weight:700;}
+  .tag-bad{color:var(--danger);font-weight:700;}
+
+  /* ===== tables ===== */
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px;border:1px solid var(--line);}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:12.5px;}
+  thead th{background:var(--green-800);color:#fff;padding:9px 8px;position:sticky;top:0;font-weight:700;white-space:nowrap;text-align:center;}
+  tbody td{padding:8px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap;}
+  tbody tr:nth-child(even){background:#f7f9f4;}
+  tbody td.name{text-align:right;font-weight:700;color:var(--green-900);position:sticky;right:0;background:inherit;}
+  .rank-pill{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;font-weight:800;font-size:11.5px;color:#fff;}
+  .rank-pill.grp-top{background:linear-gradient(160deg,#8bc76a,var(--green-900));}
+  .rank-pill.grp-bottom{background:linear-gradient(160deg,#f0a15c,var(--danger));}
+  .rank-pill.grp-mid{background:linear-gradient(160deg,#9aa38c,#6b7263);}
+  .rank-pill.medal-1{background:linear-gradient(160deg,#f4d264,#c9a12a);color:#4a3600;}
+  .rank-pill.medal-2{background:linear-gradient(160deg,#e4e7e9,#b7bcc0);color:#333;}
+  .rank-pill.medal-3{background:linear-gradient(160deg,#e4b58a,#b9713a);color:#3a2200;}
+  .delta-up{color:var(--good);font-weight:800;}
+  .delta-down{color:var(--danger);font-weight:800;}
+  .delta-flat{color:var(--muted);}
+
+  .legend{display:flex;gap:14px;font-size:11.5px;color:var(--muted);flex-wrap:wrap;margin-top:10px;}
+  .legend .dot{display:inline-block;width:11px;height:11px;border-radius:4px;margin-inline-end:5px;vertical-align:-1px;}
+  .legend .dot.top{background:linear-gradient(160deg,#8bc76a,var(--green-900));}
+  .legend .dot.bottom{background:linear-gradient(160deg,#f0a15c,var(--danger));}
+  .legend .dot.mid{background:linear-gradient(160deg,#9aa38c,#6b7263);}
+
+  footer{text-align:center;color:var(--muted);font-size:11.5px;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+
+  details.method{border:1px dashed var(--green-700);border-radius:14px;padding:12px 14px;background:#f5f9f0;font-size:12.5px;}
+  details.method summary{cursor:pointer;font-weight:800;color:var(--green-900);}
+
+  .flagbox{background:#fdf1ef;border:1px solid #f1c7c0;border-radius:14px;padding:12px 14px;font-size:12.5px;margin-top:10px;}
+  .flagbox b{color:var(--danger);}
+
+  .showmore{margin-top:10px;}
+  .showmore summary{cursor:pointer;font-size:12.5px;font-weight:700;color:var(--green-800);list-style:none;display:inline-flex;align-items:center;gap:5px;}
+  .showmore summary::-webkit-details-marker{display:none;}
+  .showmore summary::after{content:"▾";transition:transform .2s;}
+  .showmore[open] summary::after{transform:rotate(180deg);}
+
+  @media(max-width:420px){
+    .hero h1{font-size:19px;}
+    .kpi b{font-size:17px;}
+    .barrow{grid-template-columns:18px 78px 1fr 44px;}
+    .act-body{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>عملکرد سه‌ماهه بودجه ۱۴۰۵<br>بنیاد مسکن انقلاب اسلامی استان‌ها</h1>
+  <p class="sub">تحلیل تفکیکی بر اساس ۹ فعالیت راهبردی؛ گزارش‌گیری تا تاریخ ۱۴۰۵/۰۳/۳۱</p>
+  <div class="meta">
+    <span>📅 سه‌ماهه اول ۱۴۰۵</span>
+    <span>🏘️ ۳۱ استان</span>
+    <span>📊 ۹ فعالیت راهبردی</span>
+    <span>🎯 امتیاز کل از ۱۰۰</span>
+  </div>
+</div>
+
+<nav class="tabs" id="tabnav">
+  <a class="tab-btn" data-target="summary" href="#summary"><span class="ic">📋</span>جمع‌بندی</a>
+  <a class="tab-btn" data-target="activities" href="#activities"><span class="ic">📊</span>۹ فعالیت</a>
+  <a class="tab-btn" data-target="official" href="#official"><span class="ic">🏆</span>رتبه رسمی</a>
+  <a class="tab-btn" data-target="custom" href="#custom"><span class="ic">🔍</span>راستی‌آزمایی</a>
+  <a class="tab-btn" data-target="risk" href="#risk"><span class="ic">⚠️</span>هشدارها</a>
+  <a class="tab-btn" data-target="method" href="#method"><span class="ic">📎</span>منابع داده</a>
+</nav>
+
+<div class="wrap">
+
+<!-- ============ SUMMARY ============ -->
+<section id="summary">
+  <div class="card">
+    <h2 class="sec-title"><span class="num">۱</span> جمع‌بندی اجرایی</h2>
+    <p class="desc">نگاه کلی به وضعیت عملکرد سه‌ماهه اول ۱۴۰۵ در مقایسه با برنامه مصوب</p>
+
+    <div class="kpi-grid">
+      <div class="kpi"><b>۴۹٪</b><span>میانگین پیشرفت مسکن محرومین (برنامه ۷۸٪)</span></div>
+      <div class="kpi"><b>۴۴٪</b><span>میانگین پیشرفت نهضت ملی مسکن (برنامه ۵۲٪)</span></div>
+      <div class="kpi"><b>۱۰,۱۰۰</b><span>واحد انبوه‌ساز با پیشرفت کمتر از ۲۰٪</span></div>
+      <div class="kpi"><b>۵۷۹</b><span>واحد مسکن حمایتی تکمیل‌شده (برنامه ۴۸۲)</span></div>
+    </div>
+
+    <div id="chart-summary" style="margin-top:18px"></div>
+
+    <div class="callout">
+      <b>وضعیت کلی:</b> در بیشتر فعالیت‌های ساختی (مسکن محرومین، نهضت ملی مسکن)، عملکرد به‌طور محسوسی از برنامه عقب است؛ در مقابل در حوزه‌های «زمین»، «طرح‌های هادی» و «مسکن حمایتی» عملکرد از برنامه پیشی گرفته است.
+    </div>
+    <div class="callout gold"><b>استان‌های برتر رتبه کلی:</b> خراسان رضوی، خوزستان، بوشهر، آذربایجان شرقی، خراسان شمالی</div>
+    <div class="callout warn"><b>استان‌های نیازمند توجه:</b> کردستان، کهگیلویه و بویراحمد، البرز، ایلام</div>
+  </div>
+</section>
+
+<!-- ============ ACTIVITIES ============ -->
+<section id="activities">
+  <div class="card">
+    <h2 class="sec-title"><span class="num">۲</span> تحلیل تفکیکی ۹ فعالیت راهبردی</h2>
+    <p class="desc">هر فعالیت با وزن مشخص در امتیاز نهایی ۱۰۰گانه سهیم است — عدد داخل دایره، شاخص عملکرد آن فعالیت است</p>
+    <div class="act-grid" id="act-grid"></div>
+  </div>
+</section>
+
+<!-- ============ OFFICIAL RANKING ============ -->
+<section id="official">
+  <div class="card">
+    <h2 class="sec-title"><span class="num">۳</span> رتبه‌بندی رسمی کل استان‌ها</h2>
+    <p class="desc">مجموع امتیاز ۹ فعالیت راهبردی از ۱۰۰ — همه ۳۱ استان</p>
+
+    <div class="barlist" id="chart-official"></div>
+    <div class="legend">
+      <span><span class="dot top"></span>۱۰ استان برتر</span>
+      <span><span class="dot mid"></span>میانه جدول</span>
+      <span><span class="dot bottom"></span>۱۰ استان پایانی</span>
+    </div>
+
+    <details class="showmore" open>
+      <summary>مشاهده جدول کامل با جزئیات</summary>
+      <div class="table-scroll" style="margin-top:10px">
+        <table id="tbl-official">
+          <thead><tr><th>رتبه</th><th>استان</th><th>امتیاز کل</th><th>وضعیت</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ CUSTOM ANALYSIS ============ -->
+<section id="custom">
+  <div class="card">
+    <h2 class="sec-title"><span class="num">۴</span> راستی‌آزمایی رتبه‌بندی</h2>
+    <p class="desc">
+      رتبه رسمی نهایی، حاصل جمع امتیاز ۹ فعالیت راهبردی (وزن‌های ۳۴+۷+۱۰+۱۱+۱۱+۱۲+۴+۶+۴ ≈ ۱۰۰) است.
+      برای بررسی صحت، امتیاز هر استان از تک‌تک ۹ نمودار رتبه‌بندی جداگانه دوباره جمع‌آوری و جمع‌بندی شد.
+      نمودار زیر اختلاف بین این بازمحاسبه و رتبه رسمی را نشان می‌دهد.
+    </p>
+
+    <div class="callout">
+      اختلاف میانگین بین دو رتبه‌بندی حدود ۱.۵ امتیاز است که طبیعی و ناشی از گرد‌کردن اعداد در نمودارهاست؛ این یعنی رتبه‌بندی رسمی از نظر روش، سازگار و قابل اتکا است. مواردی با اختلاف بیش از ۳ امتیاز، در نمودار زیر برجسته شده‌اند.
+    </div>
+
+    <div id="chart-delta" style="margin-top:14px"></div>
+
+    <details class="showmore" open>
+      <summary>مشاهده جدول کامل مقایسه‌ای ۳۱ استان</summary>
+      <div class="table-scroll" style="margin-top:10px">
+        <table id="tbl-custom">
+          <thead><tr><th>رتبه بازبینی</th><th>استان</th><th>امتیاز بازبینی</th><th>رتبه رسمی</th><th>امتیاز رسمی</th><th>اختلاف</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ RISK / FLAGS ============ -->
+<section id="risk">
+  <div class="card">
+    <h2 class="sec-title"><span class="num">۵</span> هشدارها و نکات نیازمند بازبینی</h2>
+
+    <div class="flagbox">
+      <b>⚠️ ناهماهنگی قابل‌توجه — خراسان شمالی:</b>
+      در بازبینی مستقل، امتیاز این استان (~۵۶.۴) با رتبه رسمی (۶۲.۱۳) فاصله معناداری (~۵.۷ امتیاز) دارد؛ به‌احتمال زیاد ناشی از ابهام در خوانش نمودار «وضعیت اقتصادی» (فعالیت ۸) است.
+      <br><b>پیشنهاد:</b> مقدار دقیق این استان در نمودار فعالیت ۸ از فایل خام Excel تأیید شود.
+    </div>
+
+    <div class="flagbox" style="background:#fff8e8;border-color:#eddb9e;">
+      <b>⚠️ انبوه‌سازهای کم‌پیشرفت:</b> ۱۰,۱۰۰ واحد نهضت ملی مسکن با پیشرفت فیزیکی کمتر از ۲۰٪ شناسایی شده‌اند؛
+      بیشترین تمرکز در کرمانشاه (۲,۰۰۳)، خوزستان (۱,۷۲۰) و همدان (۱,۶۶۵).
+    </div>
+
+    <div class="flagbox" style="background:#f1f6fb;border-color:#c8dcf0;">
+      <b>ℹ️ الگوی تکرارشونده ضعف:</b> کردستان در ۶ از ۹ فعالیت در نیمه پایینی رتبه‌بندی قرار دارد؛ نشان‌دهنده ضعف سیستماتیک، نه یک نقطه‌ضعف موضعی.
+    </div>
+
+    <div class="flagbox" style="background:#f1fbf3;border-color:#bfe6c8;">
+      <b>✅ نقطه قوت:</b> در «زمین» و «طرح‌های هادی روستایی»، عملکرد ملی از برنامه فراتر رفته (واگذاری زمین طبق قانون حمایت از خانواده ۵۲۲٪ برنامه).
+    </div>
+  </div>
+</section>
+
+<!-- ============ DATA SOURCE ============ -->
+<section id="method">
+  <div class="card" style="background: linear-gradient(135deg, #f8fbf5, #eef5e6); border: 1px solid var(--green-200); box-shadow: 0 8px 24px rgba(44,79,39,0.06);">
+    <h2 class="sec-title" style="color: var(--green-900); border-bottom: 2px dashed var(--green-200); padding-bottom: 12px; margin-bottom: 16px;">
+        <span class="num" style="background: var(--teal);">۶</span> مبنای تحلیل و منابع داده
+    </h2>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="background: #fff; padding: 12px 16px; border-radius: 12px; border-right: 4px solid var(--blue); box-shadow: 0 2px 8px rgba(0,0,0,0.04); font-size: 13.5px;">
+        <b>۱. استخراج داده‌ها:</b> تمام جداول و نمودارهای عددی سند اصلی (۳۱ اسلاید) استخراج و بر اساس ۹ فعالیت راهبردی دسته‌بندی شد.
+      </div>
+      <div style="background: #fff; padding: 12px 16px; border-radius: 12px; border-right: 4px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.04); font-size: 13.5px;">
+        <b>۲. رتبه‌بندی رسمی:</b> مستقیماً از نمودار پایانی گزارش گرفته شده و بدون تغییر ارائه شده است.
+      </div>
+      <div style="background: #fff; padding: 12px 16px; border-radius: 12px; border-right: 4px solid var(--purple); box-shadow: 0 2px 8px rgba(0,0,0,0.04); font-size: 13.5px;">
+        <b>۳. راستی‌آزمایی:</b> امتیاز هر استان در هر یک از ۹ نمودار رتبه‌بندی جداگانه به‌صورت مستقل خوانده و مطابق وزن اعلام‌شده هر فعالیت با هم جمع شد.
+      </div>
+      <div style="background: #fff; padding: 12px 16px; border-radius: 12px; border-right: 4px solid var(--danger); box-shadow: 0 2px 8px rgba(0,0,0,0.04); font-size: 13.5px;">
+        <b>۴. هشدارها:</b> اختلاف بیش از ۳ امتیاز بین بازبینی و رتبه رسمی به‌عنوان هشدار احتمال خطای ثبت/خوانش داده علامت‌گذاری شد.
+      </div>
+      <div style="background: #fff; padding: 12px 16px; border-radius: 12px; border-right: 4px solid var(--green-600); box-shadow: 0 2px 8px rgba(0,0,0,0.04); font-size: 13.5px;">
+        <b>۵. افزایش دقت:</b> در صورت دسترسی به فایل خام Excel منبع، دقت راستی‌آزمایی قابل افزایش است.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  گزارش تحلیلی تهیه‌شده بر اساس سند «عملکرد ۳ماهه بودجه۱۴۰۵ بنیاد مسکن انقلاب اسلامی استان‌ها» — اللهم عجل لولیک الفرج
+</footer>
+
+</div>
+
+<script>
+/* ===================== DATA ===================== */
+const official = [
+  ["خراسان رضوی",70.15],["خوزستان",66.09],["بوشهر",65.46],["آذربایجان شرقی",63.42],
+  ["خراسان شمالی",62.13],["کرمان",60.59],["خراسان جنوبی",60.26],["مازندران",57.81],
+  ["اصفهان",56.46],["یزد",55.84],["کرمانشاه",55.64],["فارس",55.57],["اردبیل",55.20],
+  ["سیستان و بلوچستان",54.68],["گیلان",54.63],["آذربایجان غربی",54.13],["زنجان",52.73],
+  ["قم",52.72],["گلستان",52.63],["مرکزی",52.53],["قزوین",50.41],["همدان",50.35],
+  ["لرستان",49.77],["چهارمحال و بختیاری",49.27],["تهران",48.78],["هرمزگان",46.96],
+  ["سمنان",46.80],["ایلام",45.68],["البرز",43.98],["کهگیلویه و بویراحمد",43.87],["کردستان",36.72]
+];
+
+const custom = [
+  ["خراسان رضوی",68.70],["بوشهر",64.73],["خوزستان",63.98],["آذربایجان شرقی",63.32],
+  ["کرمان",59.25],["خراسان جنوبی",59.19],["مازندران",57.00],["اصفهان",56.55],
+  ["خراسان شمالی",56.39],["فارس",54.38],["اردبیل",54.19],["یزد",53.99],
+  ["سیستان و بلوچستان",53.32],["گیلان",53.31],["کرمانشاه",53.08],["آذربایجان غربی",51.95],
+  ["همدان",51.54],["قم",51.35],["مرکزی",51.29],["لرستان",51.25],["زنجان",51.05],
+  ["گلستان",50.94],["قزوین",49.56],["تهران",48.93],["چهارمحال و بختیاری",48.09],
+  ["هرمزگان",46.42],["سمنان",45.80],["ایلام",44.89],["البرز",42.98],
+  ["کهگیلویه و بویراحمد",42.26],["کردستان",34.55]
+];
+
+const activities = [
+  {icon:"🏘️",color:"var(--green-700)",title:"مسکن محرومین روستایی‌شهری",weight:34,
+   gauge:49,gaugeNote:"هدف: ۷۸٪",
+   facts:[["برترین رتبه","آذربایجان شرقی (۲۰.۷۴)",true],["ضعیف‌ترین","کهگیلویه و بویراحمد (۷.۷۵)",false],["تسهیلات جذب‌شده","۱۲۰,۹۱۱ از ۲۲۰,۰۰۰ (۵۵٪)",null]]},
+  {icon:"🚜",color:"var(--blue)",title:"امور ماشین‌آلات",weight:7,
+   gauge:97,gaugeNote:"بالاترین امتیاز",
+   facts:[["برترین رتبه","قزوین (۶.۷۸) — ۲ دستگاه جدید",true],["ضعیف‌ترین","چهارمحال و بختیاری (۰.۰۰)",false]]},
+  {icon:"🛣️",color:"var(--brown)",title:"تهیه و اجرای طرح‌های هادی",weight:10,
+   gauge:71,gaugeNote:"بالاترین امتیاز",
+   facts:[["اجرای طرح هادی","۱,۰۸۷ روستا (برنامه ۹۹۴)",true],["برترین رتبه","خوزستان (۷.۱۳)",true],["ضعیف‌ترین","کردستان (۱.۷۱)",false]]},
+  {icon:"🌍",color:"var(--teal)",title:"زمین",weight:11,
+   gauge:92,gaugeNote:"بالاترین امتیاز",
+   facts:[["تملک زمین","۲,۲۷۴ هکتار (برنامه ۲,۰۱۵)",true],["برترین رتبه","خراسان رضوی (۱۰.۱۳)",true],["ضعیف‌ترین","کردستان (۲.۳۲)",false]]},
+  {icon:"🏗️",color:"var(--orange-dark)",title:"نهضت ملی مسکن",weight:11,
+   gauge:44,gaugeNote:"هدف: ۵۲٪",
+   facts:[["اتمام و واگذاری","۳,۱۴۳ از ۶,۰۴۶",null],["برترین رتبه","قم (۱۰.۶۶)",true],["⚠️ هشدار","۱۰,۱۰۰ واحد پیشرفت &lt;۲۰٪",false]]},
+  {icon:"🏠",color:"var(--purple)",title:"مسکن حمایتی",weight:12,
+   gauge:42,gaugeNote:"هدف: ۴۵٪",
+   facts:[["اتمام و واگذاری","۵۷۹ (برنامه ۴۸۲)",true],["برترین رتبه","خراسان رضوی (۱۱.۸۶)",true],["ضعیف‌ترین","کرمان (۳.۹۸)",false]]},
+  {icon:"📒",color:"var(--muted)",title:"حسابرسی و انضباط مالی",weight:4,
+   gauge:100,gaugeNote:"بالاترین امتیاز",
+   facts:[["برترین رتبه","تهران و خراسان رضوی (۴.۰۰)",true],["ضعیف‌ترین","کهگیلویه و بویراحمد (۰.۵۰)",false]]},
+  {icon:"💰",color:"var(--gold)",title:"وضعیت اقتصادی و مالی",weight:6,
+   gauge:100,gaugeNote:"بالاترین امتیاز",
+   facts:[["بالاترین بازده اقتصادی","مرکزی (۶.۳۲)",true],["برترین رتبه ترکیبی","خراسان رضوی (۶.۰۰)",true],["ضعیف‌ترین","ایلام (۰.۱۹)",false]]},
+  {icon:"⚖️",color:"var(--green-900)",title:"حقوقی و املاک",weight:4,
+   gauge:86,gaugeNote:"بالاترین امتیاز",
+   facts:[["برترین رتبه","همدان (۳.۴۴)",true],["ضعیف‌ترین","قم (۰.۶۱)",false]]}
+];
+
+/* ===================== HELPERS ===================== */
+function gaugeSVG(percent, color){
+  const r=26, c=2*Math.PI*r, off=c*(1-percent/100);
+  return `<svg width="64" height="64" viewBox="0 0 64 64">
+    <circle cx="32" cy="32" r="${r}" fill="none" stroke="#eef1e8" stroke-width="7"/>
+    <circle cx="32" cy="32" r="${r}" fill="none" stroke="${color}" stroke-width="7"
+      stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${off}"
+      transform="rotate(-90 32 32)"/>
+    <text x="32" y="37" text-anchor="middle" font-size="15" font-weight="800" fill="${color}" font-family="Vazirmatn,sans-serif">${percent}%</text>
+  </svg>`;
+}
+
+/* ===================== ACTIVITY CARDS ===================== */
+const actGrid = document.getElementById("act-grid");
+activities.forEach((a,idx)=>{
+  const factsHtml = a.facts.map(f=>{
+    const [k,v,good] = f;
+    const cls = good===true?"tag-good":good===false?"tag-bad":"";
+    return `<div class="mini-row"><span>${k}</span><span class="${cls}">${v}</span></div>`;
+  }).join("");
+  actGrid.insertAdjacentHTML("beforeend", `
+    <div class="act-card" style="--acc:${a.color}">
+      <div class="head">
+        <div>
+          <h3>${idx+1}. ${a.title}</h3>
+          <span class="wtag">وزن ${a.weight} از ۱۰۰</span>
+        </div>
+      </div>
+      <div class="act-body">
+        <div class="gauge-wrap">
+          ${gaugeSVG(a.gauge, a.color)}
+          <div class="glabel">${a.gaugeNote}</div>
+        </div>
+        <div class="act-facts">${factsHtml}</div>
+      </div>
+    </div>`);
+  // colored right-border accent
+  const styleTag = document.createElement("style");
+  styleTag.textContent = `.act-grid .act-card:nth-child(${idx+1})::before{background:${a.color};}`;
+  document.head.appendChild(styleTag);
+});
+
+/* ===================== OFFICIAL BAR CHART ===================== */
+
+
+/* ===================== OFFICIAL TABLE ===================== */
+const offBody = document.querySelector("#tbl-official tbody");
+official.forEach((row,i)=>{
+  const [name,score]=row;
+  let grpClass = i<10?"grp-top":(i>=official.length-10?"grp-bottom":"grp-mid");
+  let medalClass = i===0?"medal-1":i===1?"medal-2":i===2?"medal-3":"";
+  const pillClass = medalClass || grpClass;
+  const status = i<10 ? '<span style="color:var(--good);font-weight:700">برتر</span>'
+               : i>=official.length-10 ? '<span style="color:var(--danger);font-weight:700">نیازمند بهبود</span>'
+               : '<span style="color:var(--muted)">متوسط</span>';
+  offBody.insertAdjacentHTML("beforeend", `
+    <tr>
+      <td><span class="rank-pill ${pillClass}">${i+1}</span></td>
+      <td class="name">${name}</td>
+      <td><b>${score.toFixed(2)}</b></td>
+      <td>${status}</td>
+    </tr>`);
+});
+
+/* ===================== DELTA (DIVERGING) CHART ===================== */
+const officialMap = Object.fromEntries(official.map(r=>[r[0],r]));
+const officialRankMap = Object.fromEntries(official.map((r,i)=>[r[0],i+1]));
+
+const deltas = custom.map(([name,score])=>{
+  const off = officialMap[name] ? officialMap[name][1] : null;
+  return {name, score, off, delta: off!==null ? (score-off) : 0};
+}).sort((a,b)=>Math.abs(b.delta)-Math.abs(a.delta)).slice(0,15);
+
+const maxAbsDelta = Math.max(...deltas.map(d=>Math.abs(d.delta)));
+const chartDelta = document.getElementById("chart-delta");
+deltas.forEach(d=>{
+  const pct = (Math.abs(d.delta)/maxAbsDelta*50).toFixed(1);
+  const isPos = d.delta>=0;
+  const seg = isPos
+    ? `<span class="seg pos" style="right:50%;width:${pct}%"></span>`
+    : `<span class="seg neg" style="left:50%;width:${pct}%"></span>`;
+  const flagStyle = Math.abs(d.delta)>3 ? "background:#fff3e0;border-radius:8px;padding:4px 6px" : "";
+  chartDelta.insertAdjacentHTML("beforeend", `
+    <div class="divrow" style="${flagStyle}">
+      <span class="name">${d.name}</span>
+      <div>
+        <div class="divtrack"><span class="mid"></span>${seg}</div>
+        <div class="divval">${isPos?"▲":"▼"} ${Math.abs(d.delta).toFixed(2)} امتیاز ${isPos?"بالاتر":"پایین‌تر"} در بازبینی</div>
+      </div>
+    </div>`);
+});
+
+/* ===================== CUSTOM TABLE ===================== */
+const custBody = document.querySelector("#tbl-custom tbody");
+custom.forEach((row,i)=>{
+  const [name,score] = row;
+  const offRank = officialRankMap[name] || "-";
+  const offScore = officialMap[name] ? officialMap[name][1] : null;
+  const delta = offScore!==null ? (score-offScore) : null;
+  let deltaHtml = "-";
+  if(delta!==null){
+    const cls = Math.abs(delta) < 0.6 ? "delta-flat" : (delta>0 ? "delta-up":"delta-down");
+    const arrow = Math.abs(delta) < 0.6 ? "≈" : (delta>0 ? "▲":"▼");
+    deltaHtml = `<span class="${cls}">${arrow} ${Math.abs(delta).toFixed(2)}</span>`;
+  }
+  const flagged = Math.abs(delta) > 3 ? ' style="background:#fff3e0"' : '';
+  custBody.insertAdjacentHTML("beforeend", `
+    <tr${flagged}>
+      <td><span class="rank-pill grp-mid" style="background:var(--green-700)">${i+1}</span></td>
+      <td class="name">${name}</td>
+      <td><b>${score.toFixed(2)}</b></td>
+      <td>${offRank}</td>
+      <td>${offScore!==null?offScore.toFixed(2):"-"}</td>
+      <td>${deltaHtml}</td>
+    </tr>`);
+});
+
+/* ===================== SUMMARY MINI CHART (plan vs actual) ===================== */
+const summaryData = [
+  ["مسکن محرومین",78,49],
+  ["نهضت ملی مسکن",52,44],
+  ["مسکن حمایتی",45,42]
+];
+const chartSummary = document.getElementById("chart-summary");
+let sHtml = '<div style="display:flex;flex-direction:column;gap:12px">';
+summaryData.forEach(([label,plan,actual])=>{
+  sHtml += `
+    <div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+        <b>${label}</b><span style="color:var(--muted)">برنامه ${plan}٪ · عملکرد ${actual}٪</span>
+      </div>
+      <div style="position:relative;height:18px;background:#eef1e8;border-radius:9px;overflow:hidden">
+        <div style="position:absolute;inset-inline-start:0;top:0;bottom:0;width:${plan}%;background:#d9e6cf;border-radius:9px"></div>
+        <div style="position:absolute;inset-inline-start:0;top:0;bottom:0;width:${actual}%;background:linear-gradient(90deg,var(--green-600),var(--green-900));border-radius:9px"></div>
+      </div>
+    </div>`;
+});
+sHtml += '</div>';
+chartSummary.innerHTML = sHtml;
+
+/* ===================== NAV ACTIVE STATE (scrollspy) ===================== */
+const tabBtns = Array.from(document.querySelectorAll(".tab-btn"));
+const sections = tabBtns.map(b=>document.getElementById(b.dataset.target));
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      const id = en.target.id;
+      tabBtns.forEach(b=>b.classList.toggle("is-active", b.dataset.target===id));
+    }
+  });
+},{rootMargin:"-40% 0px -50% 0px"});
+sections.forEach(s=>s && io.observe(s));
+</script>
+</body>
+</html>
