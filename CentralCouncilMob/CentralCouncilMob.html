@@ -237,6 +237,7 @@
             flex-basis: 130px;
         }
 
+
         .member-card img {
             width: 62px;
             height: 62px;
@@ -848,7 +849,7 @@
                         color: '#ffffff',
                         font: { weight: 'bold', size: 10.5 },
                         formatter: (value) => value + '%',
-                        align: 'center',
+                        align: 5,
                         anchor: 'center',
                         offset: 4,
                         clamp: true,
@@ -907,8 +908,8 @@
                     datalabels: {
                         color: '#1e293b',
                         anchor: 'end',
-                        align: -70,
-                        offset: 6,
+                        align: -20,
+                        offset: 10,			
                         clamp: true,
                         font: { weight: 'bold', size: 10.5 },
                         formatter: (value) => value
@@ -941,7 +942,7 @@
             let dir = -1;
             let paused = false;
             let resumeTimer = null;
-            const speed = 0.4; // px per frame, gentle pace
+            const speed = 1.5; // px per frame, gentle pace
 
             function step() {
                 if (!paused) {
