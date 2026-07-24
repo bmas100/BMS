@@ -2,10 +2,6 @@ const LOG_URL = "https://script.google.com/macros/s/AKfycbwV2BLqtTU789b2I-Na3cGz
 
 const Tracker = {
 
-    userCode: "",
-    sessionId: "",
-    deviceId: "",
-
     init() {
 
         const p = new URLSearchParams(location.search);
@@ -14,78 +10,39 @@ const Tracker = {
 
         this.sessionId = crypto.randomUUID();
 
-        this.deviceId = localStorage.getItem("deviceId");
+        this.deviceId = localStorage.getItem("DeviceID");
 
         if (!this.deviceId) {
 
             this.deviceId = crypto.randomUUID();
 
-            localStorage.setItem("deviceId", this.deviceId);
+            localStorage.setItem("DeviceID", this.deviceId);
 
         }
 
     },
 
-    async send(action, target = "", result = "Success") {
+    send(action, target = "", result = "Success") {
 
-        const data = {
+        const form = new FormData();
 
-            EventID: crypto.randomUUID(),
+        form.append("UserCode", this.userCode);
+        form.append("DateTime", new Date().toISOString());
+        form.append("SessionID", this.sessionId);
+        form.append("Page", location.pathname.split("/").pop());
+        form.append("Action", action);
+        form.append("Target", target);
+        form.append("Result", result);
+        form.append("IP", "");
+        form.append("VisitDuration", "");
+        form.append("DeviceID", this.deviceId);
+        form.append("Browser", navigator.userAgent);
+        form.append("OS", navigator.platform);
+        form.append("Resolution", screen.width + "x" + screen.height);
+        form.append("Referrer", document.referrer);
+        form.append("PWA", window.matchMedia("(display-mode: standalone)").matches);
 
-            UserCode: this.userCode,
-
-            DateTime: new Date().toISOString(),
-
-            SessionID: this.sessionId,
-
-            Page: location.pathname.split("/").pop(),
-
-            Action: action,
-
-            Target: target,
-
-            Result: result,
-
-            IP: "",
-
-            VisitDuration: "",
-
-            DeviceID: this.deviceId,
-
-            Browser: navigator.userAgent,
-
-            OS: navigator.platform,
-
-            Resolution: screen.width + "x" + screen.height,
-
-            Referrer: document.referrer,
-
-            PWA: window.matchMedia("(display-mode: standalone)").matches
-
-        };
-
-        try {
-
-            const r = await fetch(LOG_URL, {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify(data)
-
-            });
-
-            console.log(await r.text());
-
-        }
-        catch (e) {
-
-            console.error(e);
-
-        }
+        navigator.sendBeacon(LOG_URL, form);
 
     }
 
