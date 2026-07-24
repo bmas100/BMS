@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <!-- User requested to enable pinch-to-zoom for mobile dashboards -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>گزارش تحلیلی مدیریتی مصوبات شورای مرکزی</title>
+    
+    <!-- Vazirmatn Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Chart.js & Datalabels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    
+    <style>
+        :root {
+            --primary-dark: #0f172a;      /* Executive Navy */
+            --primary: #1e293b;           /* Slate 800 */
+            --primary-light: #334155;     /* Slate 700 */
+            --accent-gold: #d4af37;       /* Executive Gold */
+            --accent-gold-light: #fef08a;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-radius: 16px;
+            --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.1), 0 2px 4px -1px rgba(15, 23, 42, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -2px rgba(15, 23, 42, 0.05);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px; /* More compact for mobile */
+        }
+
+        /* --- Executive Banner --- */
+        .banner {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 25px 15px; /* Compact padding */
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 4px solid var(--accent-gold);
+        }
+        
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .banner h1 {
+            font-size: 1.5rem; /* Adjusted for mobile */
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #f8fafc;
+        }
+
+        .banner p {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+        }
+
+        .update-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: var(--accent-gold-light);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+        }
+
+        /* --- Section Titles --- */
+        .section-title {
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+        }
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background: var(--accent-gold);
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+
+        /* --- Executive Member Cards --- */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .member-card {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 15px 10px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #e2e8f0;
+            position: relative;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .member-card.president {
+            border-top: 3px solid var(--accent-gold);
+            box-shadow: var(--shadow-md);
+            background: linear-gradient(to bottom, #ffffff, #f8fafc);
+        }
+
+        .member-card img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-light);
+            padding: 2px;
+            margin-bottom: 10px;
+            background: white;
+        }
+        .member-card.president img {
+            border-color: var(--accent-gold);
+            width: 80px;
+            height: 80px;
+        }
+
+        .member-card h3 {
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            margin-bottom: 2px;
+            font-weight: 700;
+        }
+
+        .member-card p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* --- KPI Cards --- */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 per row on mobile */
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 3px;
+            background: var(--accent-gold);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .kpi-card:hover::after { opacity: 1; }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .kpi-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .kpi-icon {
+            font-size: 1.2rem;
+            background: #f1f5f9;
+            width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 8px;
+        }
+
+        .kpi-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        /* --- Charts Section --- */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Stack on mobile */
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        @media (min-width: 768px) {
+            .charts-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .chart-container {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 250px; /* Fixed height for mobile */
+            width: 100%;
+        }
+
+        /* --- Distinct Separated Table --- */
+        .table-container {
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px; /* Separated rows */
+            min-width: 500px;
+        }
+
+        th {
+            text-align: right;
+            padding: 10px 15px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 700;
+            background: transparent;
+        }
+
+        td {
+            padding: 12px 15px;
+            background: var(--bg-card);
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        td:first-child {
+            border-right: 1px solid #e2e8f0;
+            border-radius: 0 8px 8px 0;
+            font-weight: bold;
+        }
+        
+        td:last-child {
+            border-left: 1px solid #e2e8f0;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .trend-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .trend-high { background: #fee2e2; color: #991b1b; }
+        .trend-mid { background: #fef3c7; color: #92400e; }
+        .trend-low { background: #dcfce7; color: #166534; }
+
+        /* --- Enhanced Executive Analysis Cards (SWOT + More) --- */
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Stacked on mobile */
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        @media (min-width: 768px) {
+            .analysis-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .analysis-card {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .analysis-card.strength { border-right: 4px solid #10b981; }
+        .analysis-card.weakness { border-right: 4px solid #ef4444; }
+        .analysis-card.opportunity { border-right: 4px solid #3b82f6; }
+        .analysis-card.load { border-right: 4px solid #8b5cf6; }
+        .analysis-card.smart { border-right: 4px solid var(--accent-gold); }
+
+        .analysis-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .analysis-header h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .analysis-icon {
+            font-size: 1.3rem;
+        }
+
+        .analysis-card ul {
+            list-style: none;
+        }
+
+        .analysis-card ul li {
+            position: relative;
+            padding-right: 20px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        .analysis-card ul li::before {
+            content: '■';
+            position: absolute;
+            right: 0;
+            top: 2px;
+            font-size: 0.6rem;
+        }
+        
+        .strength ul li::before { color: #10b981; }
+        .weakness ul li::before { color: #ef4444; }
+        .opportunity ul li::before { color: #3b82f6; }
+        .load ul li::before { color: #8b5cf6; }
+        .smart ul li::before { color: var(--accent-gold); }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- Premium Banner -->
+        <div class="banner">
+            <h1>داشبورد راهبردی مصوبات شورای مرکزی</h1>
+            <p>تحلیل ساختاری، محتوایی و عملکردی جلسات | ۱۴۰۰ الی ۱۴۰۵</p>
+            <div class="update-badge">آخرین بروزرسانی: ۱۴۰۵/۰۳/۰۵</div>
+        </div>
+
+        <!-- Executive Council Members -->
+        <h2 class="section-title">اعضای شورای مرکزی</h2>
+        <div class="members-grid">
+            <div class="member-card president">
+                <img src="RoohaniNezhad.jpg" alt="حسین روحانی نژاد" onerror="this.src='https://ui-avatars.com/api/?name=ر+ن&background=d4af37&color=fff'">
+                <h3>حسین روحانی نژاد</h3>
+                <p>رئیس شورای مرکزی</p>
+            </div>
+            <div class="member-card">
+                <img src="KhajeDaloei.jpg" alt="منوچهر خواجه‌دلویی" onerror="this.src='https://ui-avatars.com/api/?name=م+خ&background=1e293b&color=fff'">
+                <h3>منوچهر خواجه‌دلویی</h3>
+                <p>رئیس بنیاد مسکن</p>
+            </div>
+            <div class="member-card">
+                <img src="Sadegh.jpg" alt="فرزانه صادق مالواجرد" onerror="this.src='https://ui-avatars.com/api/?name=ف+ص&background=1e293b&color=fff'">
+                <h3>فرزانه صادق</h3>
+                <p>وزیر راه و شهرسازی</p>
+            </div>
+            <div class="member-card">
+                <img src="SaeediKia.jpg" alt="محمد سعیدی‌کیا" onerror="this.src='https://ui-avatars.com/api/?name=م+س&background=1e293b&color=fff'">
+                <h3>محمد سعیدی‌کیا</h3>
+                <p>عضو شورا</p>
+            </div>
+            <div class="member-card">
+                <img src="Garakani.jpg" alt="امیرحسین گرکانی" onerror="this.src='https://ui-avatars.com/api/?name=ا+گ&background=1e293b&color=fff'">
+                <h3>امیرحسین گرکانی</h3>
+                <p>عضو شورا</p>
+            </div>
+        </div>
+
+        <!-- Compact KPI Grid -->
+        <h2 class="section-title">نمای کلی عملکرد</h2>
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">تعداد مصوبات</span>
+                    <span class="kpi-icon">📁</span>
+                </div>
+                <div class="kpi-value">۱۱۰</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">تعداد بندها</span>
+                    <span class="kpi-icon">📝</span>
+                </div>
+                <div class="kpi-value">۲۷۰</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">واحدهای مسئول</span>
+                    <span class="kpi-icon">🏢</span>
+                </div>
+                <div class="kpi-value">۳۶</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">واحدهای ذی‌نفع</span>
+                    <span class="kpi-icon">🔗</span>
+                </div>
+                <div class="kpi-value">+۸۰</div>
+            </div>
+        </div>
+
+        <!-- Charts (Values Inside) -->
+        <h2 class="section-title">تحلیل آماری و روندها</h2>
+        <div class="charts-grid">
+            <div class="chart-container">
+                <div class="chart-title">توزیع موضوعی مصوبات (درصد)</div>
+                <div class="chart-wrapper">
+                    <canvas id="subjectChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">روند تراکم مصوبات (بند در هر جلسه)</div>
+                <div class="chart-wrapper">
+                    <canvas id="densityChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Separated Row Table -->
+        <h2 class="section-title">جزئیات سالانه جلسات</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>سال</th>
+                        <th>تعداد جلسات</th>
+                        <th>تعداد بندها</th>
+                        <th>شاخص تراکم</th>
+                        <th>وضعیت روند</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>۱۴۰۰</td>
+                        <td>۲۸</td>
+                        <td>۴۰</td>
+                        <td>۱.۴۳</td>
+                        <td><span class="trend-badge trend-low">خلوت</span></td>
+                    </tr>
+                    <tr>
+                        <td>۱۴۰۱</td>
+                        <td>۲۵</td>
+                        <td>۵۶</td>
+                        <td>۲.۲۴</td>
+                        <td><span class="trend-badge trend-mid">متوازن</span></td>
+                    </tr>
+                    <tr>
+                        <td>۱۴۰۲</td>
+                        <td>۲۴</td>
+                        <td>۸۶</td>
+                        <td>۳.۵۸</td>
+                        <td><span class="trend-badge trend-high">افزایش حجم</span></td>
+                    </tr>
+                    <tr>
+                        <td>۱۴۰۳</td>
+                        <td>۹</td>
+                        <td>۴۰</td>
+                        <td>۴.۴۴</td>
+                        <td><span class="trend-badge trend-high">تراکم حداکثری</span></td>
+                    </tr>
+                    <tr>
+                        <td>۱۴۰۴</td>
+                        <td>۱۰</td>
+                        <td>۲۸</td>
+                        <td>۲.۸۰</td>
+                        <td><span class="trend-badge trend-mid">تعدیل نسبی</span></td>
+                    </tr>
+                    <tr>
+                        <td>۱۴۰۵ (تا خرداد)</td>
+                        <td>۴</td>
+                        <td>۱۰</td>
+                        <td>۲.۵۰</td>
+                        <td><span class="trend-badge trend-mid">مستمر</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Expanded Analysis Cards -->
+        <h2 class="section-title">گزارش راهبردی و کارت‌های تحلیلی</h2>
+        <div class="analysis-grid">
+            
+            <div class="analysis-card strength">
+                <div class="analysis-header">
+                    <span class="analysis-icon">🟢</span>
+                    <h3>نقاط قوت عملکردی</h3>
+                </div>
+                <ul>
+                    <li>پوشش جامع حوزه‌های مأموریتی از مسکن محرومان تا امور بودجه و مجامع.</li>
+                    <li>ایجاد انسجام و هم‌افزایی میان بیش از ۸۰ واحد و اداره کل استانی.</li>
+                    <li>ثبت و مستندسازی متمرکز تصمیمات و ایجاد بانک دانش مدیریتی.</li>
+                </ul>
+            </div>
+
+            <div class="analysis-card weakness">
+                <div class="analysis-header">
+                    <span class="analysis-icon">🔴</span>
+                    <h3>آسیب‌شناسی و چالش‌ها</h3>
+                </div>
+                <ul>
+                    <li>غرق شدن در امور خرد اجرایی (۳۸.۵٪ مصوبات مربوط به انتصابات است).</li>
+                    <li>فقدان مهلت زمانی مشخص و شاخص کمی ارزیابی برای بیش از ۹۵٪ بندها.</li>
+                    <li>رشد فزاینده شاخص تراکم و سنگین شدن دستور کار در جلسات اخیر.</li>
+                </ul>
+            </div>
+
+            <div class="analysis-card opportunity">
+                <div class="analysis-header">
+                    <span class="analysis-icon">🔵</span>
+                    <h3>اقدامات اصلاحی پیشنهادی</h3>
+                </div>
+                <ul>
+                    <li>تفویض اختیار تأیید انتصابات خرد به مجامع جهت آزادسازی ظرفیت شورا.</li>
+                    <li>الزام دبیرخانه به درج «مهلت اجرا» در متن تمامی مصوبات ابلاغی.</li>
+                    <li>تفکیک دقیق «تصمیمات سیاست‌گذارانه» از «مصوبات اجرایی و اداری».</li>
+                </ul>
+            </div>
+
+            <div class="analysis-card load">
+                <div class="analysis-header">
+                    <span class="analysis-icon">🟣</span>
+                    <h3>تحلیل توزیع بار اجرایی</h3>
+                </div>
+                <ul>
+                    <li>تمرکز ۶۰ درصدی بار اجرایی مصوبات بر دوش معاونت پشتیبانی و امور شرکت‌ها.</li>
+                    <li>توزیع متوازن مصوبات تخصصی بین معاونت عمران شهری و مسکن روستایی.</li>
+                    <li>نقش محوری پژوهشکده سوانح در مطالعات زیربنایی مصوبات.</li>
+                </ul>
+            </div>
+            
+            <div class="analysis-card smart">
+                <div class="analysis-header">
+                    <span class="analysis-icon">💡</span>
+                    <h3>الزامات هوشمندسازی</h3>
+                </div>
+                <ul>
+                    <li>راه‌اندازی سامانه برخط پیگیری مصوبات متصل به داشبورد مدیریتی کلان.</li>
+                    <li>تعریف KPI (شاخص کلیدی عملکرد) برای سنجش خودکار درصد پیشرفت.</li>
+                    <li>ایجاد سیستم هشدار خودکار برای مصوبات دارای تأخیر اجرایی.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Register Datalabels plugin
+        Chart.register(ChartDataLabels);
+        
+        Chart.defaults.font.family = 'Vazirmatn';
+        Chart.defaults.font.size = 12; // slightly smaller for mobile
+        Chart.defaults.color = '#64748b';
+
+        // 1. Doughnut Chart (Values inside segments)
+        const ctxSubject = document.getElementById('subjectChart').getContext('2d');
+        new Chart(ctxSubject, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    'انتصابات', 
+                    'پروژه‌های عمرانی', 
+                    'امور مالی', 
+                    'امور اجرایی', 
+                    'اسناد راهبردی', 
+                    'امور شرکتی'
+                ],
+                datasets: [{
+                    data: [38.5, 16.7, 13.3, 16.3, 8.2, 7.0],
+                    backgroundColor: [
+                        '#0f172a', // Navy
+                        '#d4af37', // Gold
+                        '#3b82f6', // Blue
+                        '#10b981', // Green
+                        '#8b5cf6', // Purple
+                        '#f59e0b'  // Amber
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '50%',
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        rtl: true,
+                        labels: { boxWidth: 12, padding: 15 }
+                    },
+                    datalabels: {
+                        color: '#ffffff',
+                        font: { weight: 'bold', size: 11 },
+                        formatter: (value) => value + '%',
+                        display: function(context) {
+                            return context.dataset.data[context.dataIndex] > 8; // Hide small labels
+                        }
+                    }
+                }
+            }
+        });
+
+        // 2. Bar Chart (Values inside bars)
+        const ctxDensity = document.getElementById('densityChart').getContext('2d');
+        new Chart(ctxDensity, {
+            type: 'bar',
+            data: {
+                labels: ['۱۴۰۰', '۱۴۰۱', '۱۴۰۲', '۱۴۰۳', '۱۴۰۴', '۱۴۰۵'],
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'خط روند',
+                        data: [1.43, 2.24, 3.58, 4.44, 2.80, 2.50],
+                        borderColor: '#d4af37',
+                        backgroundColor: '#d4af37',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: false,
+                        datalabels: { display: false } // hide labels for line
+                    },
+                    {
+                        type: 'bar',
+                        label: 'شاخص تراکم',
+                        data: [1.43, 2.24, 3.58, 4.44, 2.80, 2.50],
+                        backgroundColor: '#0f172a',
+                        borderRadius: 6,
+                        barPercentage: 0.6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, grid: { borderDash: [4, 4] } },
+                    x: { grid: { display: false } }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { boxWidth: 12 }
+                    },
+                    datalabels: {
+                        color: '#ffffff',
+                        anchor: 'center',
+                        align: 'center',
+                        font: { weight: 'bold', size: 11 },
+                        formatter: (value) => value
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
