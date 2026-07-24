@@ -128,7 +128,7 @@
 
         .banner-eyebrow {
             position: relative;
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             letter-spacing: 0.5px;
             color: var(--accent-gold-light);
             font-weight: 600;
@@ -160,11 +160,12 @@
             background: rgba(212, 175, 55, 0.16);
             border: 1px solid rgba(212, 175, 55, 0.4);
             color: var(--accent-gold-light);
-            padding: 4px 14px;
+            padding: 3px 14px;
             border-radius: 20px;
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             font-weight: 600;
             backdrop-filter: blur(4px);
+margin-top:5px;
         }
         .update-badge .dot {
             width: 6px; height: 6px; border-radius: 50%;
@@ -536,8 +537,8 @@
         @media (min-width: 640px) {
             body { font-size: 15px; }
             .container { padding: 8px 22px 10px; max-width: 900px; }
-            .banner { padding: 24px 32px 24px; margin-bottom: 16px; }
-            .banner h1 { font-size: 1.6rem; }
+            .banner { padding: 15px 32px 15px; margin-bottom: 15px; margin-top: -35px;}
+            .banner h1 { font-size: 1.5rem; }
             .banner p { font-size: 0.95rem; }
             .kpi-grid { grid-template-columns: repeat(4, 1fr); }
             .charts-grid { grid-template-columns: 1fr 1fr; }
@@ -580,8 +581,8 @@
         <div class="banner reveal">
             <div class="banner-eyebrow">بنیاد مسکن انقلاب اسلامی</div>
             <h1>داشبورد راهبردی مصوبات شورای مرکزی</h1>
-            <p>تحلیل ساختاری، محتوایی و عملکردی جلسات | ۱۴۰۰ الی ۱۴۰۵</p>
-            <div class="update-badge"><span class="dot"></span> بروزرسانی: ۱۴۰۵/۰۵/۰۲</div>
+            <p>تحلیل ساختاری و عملکردی جلسات | ۱۴۰۰ الی ۱۴۰۵</p>
+            <div class="update-badge"><span class="dot"></span> بروزرسانی:  ۱۴۰۵/۰۵/۰۲</div>
         </div>
 
         <!-- Executive Council Members -->
@@ -677,7 +678,7 @@
                 <div class="year-row">
                     <div class="year-badge">۱۴۰۰</div>
                     <div class="year-meta"><span>جلسات: <b>۲۸</b></span><span>بندها: <b>۴۰</b></span></div>
-                    <div class="year-status"><span class="trend-badge trend-low">خلوت</span></div>
+                    <div class="year-status"><span class="trend-badge trend-low">کم حجم</span></div>
                 </div>
                 <div class="year-row">
                     <div class="year-badge">۱۴۰۱</div>
@@ -733,7 +734,7 @@
                     </div>
                     <div class="analysis-body">
                         <ul>
-                            <li>غرق شدن در امور خرد اجرایی (۳۸.۵٪ از مصوبات مربوط به انتصابات است).</li>
+                            <li>درگیر شدن در امور خرد اجرایی (۳۶.۵٪ از مصوبات مربوط به انتصابات است).</li>
                             <li>فقدان مهلت زمانی مشخص و شاخص کمی ارزیابی برای بیش از ۹۵٪ بندها.</li>
                             <li>رشد فزاینده شاخص تراکم و سنگین شدن دستور کار در جلسات پیشین.</li>
                         </ul>
@@ -761,7 +762,7 @@
                     </div>
                     <div class="analysis-body">
                         <ul>
-                            <li>تمرکز بالای بار اجرایی مصوبات بر دوش معاونت پشتیبانی و امور شرکت‌ها.</li>
+                            <li>تمرکز بالای بار اجرایی مصوبات در معاونت پشتیبانی و امور شرکت‌ها.</li>
                             <li>توزیع متوازن مصوبات تخصصی بین معاونت عمران شهری و مسکن روستایی.</li>
                             <li>نقش محوری پژوهشکده سوانح در مطالعات زیربنایی مصوبات.</li>
                         </ul>
@@ -817,7 +818,7 @@
                     'امور مالی',
                     'امور اجرایی',
                     'اسناد راهبردی',
-                    'امور شرکتی'
+                    'امور شرکت‌ها'
                 ],
                 datasets: [{
                     data: [36.5, 17.7, 14.3, 16.3, 8.2, 7.0],
@@ -852,7 +853,7 @@
                         formatter: (value) => value + '%',
                         align: 5,
                         anchor: 'center',
-                        offset: 4,
+                        offset: 7,
                         clamp: true,
                         display: function(context) {
                             return context.dataset.data[context.dataIndex] > 8;
