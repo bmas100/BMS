@@ -53,7 +53,7 @@
         .container {
             max-width: 760px;
             margin: 0 auto;
-            padding: 14px 14px 10px;
+            padding: 6px 14px 10px;
         }
 
         /* --- Sticky condensed top bar (mobile) --- */
@@ -65,7 +65,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-            padding: 10px 14px;
+            padding: 7px 14px;
             background: rgba(15, 23, 42, 0.92);
             backdrop-filter: blur(10px) saturate(140%);
             -webkit-backdrop-filter: blur(10px) saturate(140%);
@@ -77,18 +77,18 @@
         }
         .topbar.show { transform: translateY(0); opacity: 1; }
         .topbar-title {
-            font-size: 0.85rem;
+            font-size: 0.76rem;
             font-weight: 700;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         .topbar-badge {
-            font-size: 0.68rem;
+            font-size: 0.62rem;
             color: var(--accent-gold-light);
             background: rgba(212,175,55,0.15);
             border: 1px solid rgba(212,175,55,0.35);
-            padding: 3px 9px;
+            padding: 2px 8px;
             border-radius: 20px;
             white-space: nowrap;
             flex-shrink: 0;
@@ -99,9 +99,9 @@
             background: linear-gradient(155deg, var(--primary-dark) 0%, var(--primary) 55%, #24334a 100%);
             color: white;
             border-radius: var(--border-radius);
-            padding: 30px 20px 26px;
+            padding: 18px 18px 18px;
             text-align: center;
-            margin-bottom: 22px;
+            margin-bottom: 16px;
             box-shadow: var(--shadow-lg);
             position: relative;
             overflow: hidden;
@@ -126,28 +126,28 @@
 
         .banner-eyebrow {
             position: relative;
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             letter-spacing: 0.5px;
             color: var(--accent-gold-light);
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             opacity: 0.9;
         }
 
         .banner h1 {
             position: relative;
-            font-size: 1.32rem;
+            font-size: 1.22rem;
             font-weight: 800;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #f8fafc;
-            line-height: 1.5;
+            line-height: 1.45;
         }
 
         .banner p {
             position: relative;
-            font-size: 0.88rem;
+            font-size: 0.84rem;
             color: #cbd5e1;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .update-badge {
@@ -196,7 +196,7 @@
             margin: -10px 0 16px 17px;
         }
 
-        section { margin-bottom: 30px; }
+        section { margin-bottom: 30px; scroll-margin-top: 58px; }
 
         /* --- Executive Member Carousel (mobile-first horizontal scroll) --- */
         .members-scroller {
@@ -235,12 +235,6 @@
             border-top: 3px solid var(--accent-gold);
             background: linear-gradient(to bottom, #ffffff, #fbf9f2);
             flex-basis: 130px;
-        }
-        .member-card.president::before {
-            content: '⭐';
-            position: absolute;
-            top: 8px; left: 8px;
-            font-size: 0.7rem;
         }
 
         .member-card img {
@@ -422,7 +416,7 @@
         .trend-mid { background: #fef3c7; color: #92400e; }
         .trend-low { background: #dcfce7; color: #166534; }
 
-        /* --- Analysis cards: collapsible accordion on mobile --- */
+        /* --- Analysis cards: always expanded, tinted headers by type --- */
         .analysis-grid {
             display: flex;
             flex-direction: column;
@@ -447,11 +441,15 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 15px 16px;
-            cursor: pointer;
+            padding: 14px 16px;
             user-select: none;
-            -webkit-tap-highlight-color: transparent;
         }
+
+        .strength .analysis-header { background: rgba(16, 185, 129, 0.08); }
+        .weakness .analysis-header { background: rgba(239, 68, 68, 0.08); }
+        .opportunity .analysis-header { background: rgba(59, 130, 246, 0.08); }
+        .load .analysis-header { background: rgba(139, 92, 246, 0.08); }
+        .smart .analysis-header { background: rgba(212, 175, 55, 0.12); }
 
         .analysis-header h3 {
             font-size: 0.92rem;
@@ -464,21 +462,6 @@
             font-size: 1.15rem;
             flex-shrink: 0;
         }
-
-        .analysis-chevron {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-        }
-        .analysis-card.open .analysis-chevron { transform: rotate(180deg); }
-
-        .analysis-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s ease;
-        }
-        .analysis-card.open .analysis-body { max-height: 400px; }
 
         .analysis-card ul {
             list-style: none;
@@ -561,8 +544,6 @@
             .member-card.president { flex-basis: 165px; }
             .member-card img { width: 78px; height: 78px; }
             .analysis-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
-            .analysis-body { max-height: none !important; }
-            .analysis-chevron { display: none; }
             .year-list { display: grid; grid-template-columns: repeat(2, 1fr); }
         }
         @media (min-width: 1024px) {
@@ -604,8 +585,7 @@
         <!-- Executive Council Members -->
         <section id="members">
             <h2 class="section-title">اعضای شورای مرکزی</h2>
-            <div class="section-sub">← برای مشاهده همه اعضا بکشید</div>
-            <div class="members-scroller reveal">
+            <div class="members-scroller reveal" id="membersScroller">
                 <div class="member-card president">
                     <img src="RoohaniNezhad.jpg" alt="حسین روحانی نژاد" onerror="this.src='https://ui-avatars.com/api/?name=ر+ن&background=d4af37&color=fff'">
                     <h3>حسین روحانی نژاد</h3>
@@ -617,19 +597,19 @@
                     <p>رئیس بنیاد مسکن</p>
                 </div>
                 <div class="member-card">
+                    <img src="SaeediKia.jpg" alt="محمد سعیدی‌کیا" onerror="this.src='https://ui-avatars.com/api/?name=م+س&background=1e293b&color=fff'">
+                    <h3>محمد سعیدی‌کیا</h3>
+                    <p>عضو شورای مرکزی</p>
+                </div>
+                <div class="member-card">
                     <img src="Sadegh.jpg" alt="فرزانه صادق مالواجرد" onerror="this.src='https://ui-avatars.com/api/?name=ف+ص&background=1e293b&color=fff'">
                     <h3>فرزانه صادق</h3>
                     <p>وزیر راه و شهرسازی</p>
                 </div>
                 <div class="member-card">
-                    <img src="SaeediKia.jpg" alt="محمد سعیدی‌کیا" onerror="this.src='https://ui-avatars.com/api/?name=م+س&background=1e293b&color=fff'">
-                    <h3>محمد سعیدی‌کیا</h3>
-                    <p>عضو شورا</p>
-                </div>
-                <div class="member-card">
                     <img src="Garakani.jpg" alt="امیرحسین گرکانی" onerror="this.src='https://ui-avatars.com/api/?name=ا+گ&background=1e293b&color=fff'">
                     <h3>امیرحسین گرکانی</h3>
-                    <p>عضو شورا</p>
+                    <p>عضو شورای مرکزی</p>
                 </div>
             </div>
         </section>
@@ -730,11 +710,10 @@
             <h2 class="section-title">گزارش راهبردی و کارت‌های تحلیلی</h2>
             <div class="analysis-grid reveal">
 
-                <div class="analysis-card strength open">
-                    <div class="analysis-header" onclick="toggleCard(this)">
+                <div class="analysis-card strength">
+                    <div class="analysis-header">
                         <span class="analysis-icon">🟢</span>
                         <h3>نقاط قوت عملکردی</h3>
-                        <span class="analysis-chevron">⌄</span>
                     </div>
                     <div class="analysis-body">
                         <ul>
@@ -746,10 +725,9 @@
                 </div>
 
                 <div class="analysis-card weakness">
-                    <div class="analysis-header" onclick="toggleCard(this)">
+                    <div class="analysis-header">
                         <span class="analysis-icon">🔴</span>
                         <h3>آسیب‌شناسی و چالش‌ها</h3>
-                        <span class="analysis-chevron">⌄</span>
                     </div>
                     <div class="analysis-body">
                         <ul>
@@ -761,10 +739,9 @@
                 </div>
 
                 <div class="analysis-card opportunity">
-                    <div class="analysis-header" onclick="toggleCard(this)">
+                    <div class="analysis-header">
                         <span class="analysis-icon">🔵</span>
                         <h3>اقدامات اصلاحی پیشنهادی</h3>
-                        <span class="analysis-chevron">⌄</span>
                     </div>
                     <div class="analysis-body">
                         <ul>
@@ -776,10 +753,9 @@
                 </div>
 
                 <div class="analysis-card load">
-                    <div class="analysis-header" onclick="toggleCard(this)">
+                    <div class="analysis-header">
                         <span class="analysis-icon">🟣</span>
                         <h3>تحلیل توزیع بار اجرایی</h3>
-                        <span class="analysis-chevron">⌄</span>
                     </div>
                     <div class="analysis-body">
                         <ul>
@@ -791,10 +767,9 @@
                 </div>
 
                 <div class="analysis-card smart">
-                    <div class="analysis-header" onclick="toggleCard(this)">
+                    <div class="analysis-header">
                         <span class="analysis-icon">💡</span>
                         <h3>الزامات ردیابی و اجرای به‌موقع مصوبات</h3>
-                        <span class="analysis-chevron">⌄</span>
                     </div>
                     <div class="analysis-body">
                         <ul>
@@ -861,7 +836,7 @@
                 maintainAspectRatio: false,
                 cutout: '52%',
                 layout: {
-                    padding: isSmall ? { top: 4, bottom: 4 } : { right: 30, left: 30 }
+                    padding: isSmall ? { top: 4, bottom: 4, left: 4, right: 22 } : { right: 30, left: 30 }
                 },
                 plugins: {
                     legend: {
@@ -875,6 +850,8 @@
                         formatter: (value) => value + '%',
                         align: 'center',
                         anchor: 'center',
+                        offset: 4,
+                        clamp: true,
                         display: function(context) {
                             return context.dataset.data[context.dataIndex] > 8;
                         }
@@ -916,7 +893,7 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 layout: {
-                    padding: { top: 22 }
+                    padding: { top: 22, right: 14 }
                 },
                 scales: {
                     y: { beginAtZero: true, grid: { borderDash: [4, 4] }, ticks: { font: { size: 10.5 } } },
@@ -930,8 +907,9 @@
                     datalabels: {
                         color: '#1e293b',
                         anchor: 'end',
-                        align: 'top',
-                        offset: 4,
+                        align: -70,
+                        offset: 6,
+                        clamp: true,
                         font: { weight: 'bold', size: 10.5 },
                         formatter: (value) => value
                     }
@@ -939,11 +917,56 @@
             }
         });
 
-        // Accordion behaviour for analysis cards (mobile only visually via CSS max-height override on desktop)
-        function toggleCard(headerEl) {
-            const card = headerEl.closest('.analysis-card');
-            card.classList.toggle('open');
-        }
+        // Slow continuous auto-scroll for the members carousel
+        // (RTL scrollLeft sign conventions differ across browsers, so we detect the
+        // real min/max range first, then glide back and forth between them)
+        (function autoScrollMembers() {
+            const scroller = document.getElementById('membersScroller');
+            if (!scroller) return;
+
+            function getRange() {
+                const original = scroller.scrollLeft;
+                scroller.scrollLeft = -999999;
+                const a = scroller.scrollLeft;
+                scroller.scrollLeft = 999999;
+                const b = scroller.scrollLeft;
+                scroller.scrollLeft = original;
+                return [Math.min(a, b), Math.max(a, b)];
+            }
+
+            let [minVal, maxVal] = getRange();
+            if (maxVal - minVal < 2) return; // nothing to scroll
+
+            let pos = scroller.scrollLeft;
+            let dir = -1;
+            let paused = false;
+            let resumeTimer = null;
+            const speed = 0.4; // px per frame, gentle pace
+
+            function step() {
+                if (!paused) {
+                    pos += dir * speed;
+                    if (pos <= minVal) { pos = minVal; dir = 1; }
+                    if (pos >= maxVal) { pos = maxVal; dir = -1; }
+                    scroller.scrollLeft = pos;
+                } else {
+                    pos = scroller.scrollLeft;
+                }
+                requestAnimationFrame(step);
+            }
+
+            function pauseTemporarily() {
+                paused = true;
+                clearTimeout(resumeTimer);
+                resumeTimer = setTimeout(() => { paused = false; }, 3500);
+            }
+
+            ['touchstart', 'mousedown', 'wheel'].forEach(evt => {
+                scroller.addEventListener(evt, pauseTemporarily, { passive: true });
+            });
+
+            requestAnimationFrame(step);
+        })();
 
         // Sticky topbar reveal on scroll
         const topbar = document.getElementById('topbar');
@@ -967,20 +990,38 @@
         }, { threshold: 0.12 });
         revealEls.forEach(el => revealObserver.observe(el));
 
-        // Bottom nav active state
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href')));
-        const navObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const id = '#' + entry.target.id;
-                const link = document.querySelector(`.nav-link[href="${id}"]`);
-                if (entry.isIntersecting) {
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    if (link) link.classList.add('active');
+        // Bottom nav active state — computed from scroll position rather than
+        // IntersectionObserver, since sections of very different heights made the
+        // observer-based approach skip or stick on some sections.
+        const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+        const navSections = navLinks
+            .map(a => document.querySelector(a.getAttribute('href')))
+            .filter(Boolean);
+
+        function updateActiveNav() {
+            const offset = (topbar ? topbar.offsetHeight : 0) + 40;
+            const scrollPos = window.scrollY + offset;
+            const doc = document.documentElement;
+            const atBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 4;
+
+            let current = navSections[0];
+            for (const sec of navSections) {
+                if (sec.offsetTop <= scrollPos) {
+                    current = sec;
+                } else {
+                    break;
                 }
-            });
-        }, { threshold: 0.3, rootMargin: '-30% 0px -50% 0px' });
-        sections.forEach(sec => { if (sec) navObserver.observe(sec); });
+            }
+            if (atBottom) current = navSections[navSections.length - 1];
+
+            navLinks.forEach(l => l.classList.remove('active'));
+            const activeLink = navLinks.find(l => l.getAttribute('href') === '#' + current.id);
+            if (activeLink) activeLink.classList.add('active');
+        }
+
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        window.addEventListener('resize', updateActiveNav);
+        updateActiveNav();
     </script>
 </body>
 </html>
