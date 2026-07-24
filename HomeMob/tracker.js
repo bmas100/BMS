@@ -1,26 +1,29 @@
-const LOG_URL = "https://script.google.com/macros/s/AKfycbzsa899SuNFVfusSNib0J1IvvycMYsU0z9paTB7Z8pgypFp60L-469Km6gTDGUrusQ/exec";
+const LOG_URL = "https://script.google.com/macros/s/AKfycbwV2BLqtTU789b2I-Na3cGzonALX0AKktQc5pRWcxzkvtBOzLmufd1mCn7YVWKlq4M6/exec";
 
-async function logEvent(action, target = "", result = "Success") {
+function getUserCode() {
+    const p = new URLSearchParams(location.search);
+    return p.get("u") || "";
+}
 
-    const now = new Date();
+async function testConnection() {
 
     const data = {
 
         EventID: crypto.randomUUID(),
 
-        UserCode: "TEST1234",
+        UserCode: getUserCode(),
 
-        DateTime: now.toISOString(),
+        DateTime: new Date().toISOString(),
 
-        SessionID: crypto.randomUUID(),
+        SessionID: "TEST",
 
-        Page: location.pathname.split("/").pop(),
+        Page: "Home",
 
-        Action: action,
+        Action: "Open",
 
-        Target: target,
+        Target: "",
 
-        Result: result,
+        Result: "Success",
 
         IP: "",
 
@@ -36,28 +39,28 @@ async function logEvent(action, target = "", result = "Success") {
 
         Referrer: document.referrer,
 
-        PWA: window.matchMedia('(display-mode: standalone)').matches
+        PWA: window.matchMedia("(display-mode: standalone)").matches
 
     };
 
-    try{
+    try {
 
-        const res = await fetch(LOG_URL,{
+        const r = await fetch(LOG_URL, {
 
-            method:"POST",
+            method: "POST",
 
-            headers:{
-                "Content-Type":"application/json"
+            headers: {
+                "Content-Type": "application/json"
             },
 
-            body:JSON.stringify(data)
+            body: JSON.stringify(data)
 
         });
 
-        console.log(await res.text());
+        console.log(await r.text());
 
     }
-    catch(e){
+    catch (e) {
 
         console.error(e);
 
@@ -65,4 +68,4 @@ async function logEvent(action, target = "", result = "Success") {
 
 }
 
-logEvent("Open");
+testConnection();
