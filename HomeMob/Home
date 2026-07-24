@@ -117,7 +117,7 @@
 
     </div>
 
-<script src="tracker.js"></script>
+<script src="tracker.js?v=1"></script>
 
 </body>
 </html>
