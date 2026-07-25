@@ -45,7 +45,7 @@
                     const userCode = params.get("u") || localStorage.getItem("UserCode");
                     
                     if (userCode && userCode !== "Unknown") {
-                        document.getElementById('user-avatar').src = userCode + '.jpg';
+                        document.getElementById('user-avatar').src = './UserPic/' + userCode + '.jpg';
                     }
                 })();
             </script>
