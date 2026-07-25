@@ -1,4 +1,4 @@
-const LOG_URL = "https://script.google.com/macros/s/AKfycbykfhgpC3mczyX67DoiL9oBjdy0MW8nFbGr3Kan9p2OU8wobD9Am9XMK_GuK8vFs9Xu/exec";
+const LOG_URL = "https://script.google.com/macros/s/AKfycbwhxzuNr9GOMwQ6m0rKKHpyLSG5bG65OsOkYgY7z7YaKnxpVO6j6JrJrqCGn3dV-g/exec";
 
 const Tracker = {
     init() {
@@ -33,15 +33,21 @@ const Tracker = {
 
     send(action, target = "", result = "Success") {
         const data = new URLSearchParams();
+        const now = new Date();
+        
+        // استخراج تاریخ شمسی و زمان به صورت تفکیک شده
+        const dateStr = now.toLocaleDateString('fa-IR'); 
+        const timeStr = now.toLocaleTimeString('fa-IR', { hour12: false }); 
         
         data.append("UserCode", this.userCode);
-        data.append("DateTime", new Date().toISOString());
+        data.append("Date", dateStr); 
+        data.append("Time", timeStr); 
         data.append("SessionID", this.sessionId);
         data.append("Page", location.pathname.split("/").pop() || "Home");
         data.append("Action", action);
         data.append("Target", target);
         data.append("Result", result);
-        data.append("IP", ""); // استخراج IP از سمت کلاینت بدون سرویس جانبی ممکن نیست
+        data.append("IP", ""); // رزرو شده برای توسعه آینده
         data.append("VisitDuration", ""); 
         data.append("DeviceID", this.deviceId);
         data.append("Browser", navigator.userAgent);
@@ -54,7 +60,7 @@ const Tracker = {
         fetch(LOG_URL, {
             method: 'POST',
             mode: 'no-cors', 
-            keepalive: true, // جایگزین مدرن و مطمئن‌تر برای sendBeacon
+            keepalive: true, 
             body: data
         }).catch(err => console.error("Tracking error:", err));
     },
