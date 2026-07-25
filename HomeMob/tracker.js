@@ -1,4 +1,4 @@
-const LOG_URL = "https://script.google.com/macros/s/AKfycbwV2BLqtTU789b2I-Na3cGzonALX0AKktQc5pRWcxzkvtBOzLmufd1mCn7YVWKlq4M6/exec";
+const LOG_URL = "https://script.google.com/macros/s/AKfycbykfhgpC3mczyX67DoiL9oBjdy0MW8nFbGr3Kan9p2OU8wobD9Am9XMK_GuK8vFs9Xu/exec";
 
 const Tracker = {
     init() {
