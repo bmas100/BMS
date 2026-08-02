@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سامانه هوشمند مدیریتی ریاست</title>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        let userCode = urlParams.get("u");
+
+        if (userCode) {
+            localStorage.setItem("UserCode", userCode);
+        } else {
+            userCode = localStorage.getItem("UserCode");
+        }
+
+        if (userCode) {
+            window.location.replace(`Home.html?u=${userCode}`);
+        } else {
+            window.location.replace("Home.html");
+        }
+    </script>
+</head>
+<body>
+    <p style="text-align: center; margin-top: 50px; font-family: Tahoma; color: #555;">
+        در حال انتقال به سامانه هوشمند ریاست...
+    </p>
+</body>
+</html>
