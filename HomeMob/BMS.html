@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سامانه هوشمند مدیریتی ریاست</title>
+    <script>
+        // خواندن پارامتر u از آدرس یا حافظه
+        const urlParams = new URLSearchParams(window.location.search);
+        let userCode = urlParams.get("u");
+
+        if (userCode) {
+            localStorage.setItem("UserCode", userCode);
+        } else {
+            userCode = localStorage.getItem("UserCode");
+        }
+
+        // انتقال فوری به صفحه اصلی همراه با ورژن برای جلوگیری از کش شدن هدایت
+        if (userCode) {
+            window.location.replace(`Home.html?u=${userCode}&v=` + Date.now());
+        } else {
+            window.location.replace("Home.html?v=" + Date.now());
+        }
+    </script>
+</head>
+<body>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: Tahoma; background: #f8fafc; color: #1e3a8a;">
+        <h3>در حال بارگذاری سامانه هوشمند ریاست...</h3>
+    </div>
+</body>
+</html>
