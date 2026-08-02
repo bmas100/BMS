@@ -1,0 +1,26 @@
+{
+  "name": "سامانه هوشمند مدیریتی ریاست",
+  "short_name": "داشبورد ریاست",
+  "description": "سامانه هوشمند مدیریتی ریاست بنیاد مسکن انقلاب اسلامی",
+  "start_url": "./Home.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e3a8a",
+  "dir": "rtl",
+  "lang": "fa",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "BonyadLogo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "BonyadLogo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
