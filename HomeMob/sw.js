@@ -1,51 +1,43 @@
-// با هر بار آپدیت اساسی داشبورد، این عدد را یک شماره بالا ببرید
-const CACHE_NAME = 'bonyad-dashboard-v4'; 
-
-// فایل‌هایی که نیاز به کش شدن اولیه دارند (بدون فایل HTML)
-const ASSETS_TO_CACHE = [
-    './style.css?v=3',
-    './banner.css?v=3',
-    './BonyadLogo.png'
-];
+// این نام را کاملا تغییر دادیم تا سیستم مجبور به ساخت کش جدید شود
+const CACHE_NAME = 'bonyad-dashboard-v10-killer'; 
 
 self.addEventListener('install', (event) => {
-    // نصب و اجرای فوری نسخه جدید
+    // دستور skipWaiting بلافاصله نسخه جدید را فعال می‌کند و منتظر بسته شدن برنامه نمی‌ماند
     self.skipWaiting();
-    event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(ASSETS_TO_CACHE);
-        })
-    );
 });
 
 self.addEventListener('activate', (event) => {
-    // پاک کردن تمام کش‌های مربوط به نسخه‌های قبل
+    // پاکسازی بی‌رحمانه تمام کش‌های قبلی که در گوشی رئیس و مدیرکل ذخیره شده است
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
                     if (cacheName !== CACHE_NAME) {
-                        return caches.delete(cacheName); 
+                        console.log('Clearing old cache:', cacheName);
+                        return caches.delete(cacheName);
                     }
                 })
             );
-        }).then(() => self.clients.claim()) 
+        }).then(() => self.clients.claim()) // در دست گرفتن کنترل فوری صفحات باز
     );
 });
 
 self.addEventListener('fetch', (event) => {
-    // استراتژی Network-First با نادیده گرفتن پارامترهای URL
+    // استراتژی Network First: همیشه اول از سرور گیت‌هاب بگیر
     event.respondWith(
         fetch(event.request)
             .then((networkResponse) => {
-                // اگر اینترنت وصل بود، جدیدترین نسخه را بگیر و در کش ذخیره کن
-                return caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, networkResponse.clone());
-                    return networkResponse;
-                });
+                // اگر درخواست موفق بود و از نوع GET بود، آن را در کش جدید ذخیره کن
+                if (event.request.method === 'GET' && event.request.url.startsWith('http')) {
+                    const responseClone = networkResponse.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, responseClone);
+                    });
+                }
+                return networkResponse;
             })
             .catch(() => {
-                // در زمان قطعی اینترنت، از کش بخوان و پارامتر u= را نادیده بگیر
+                // اگر اینترنت قطع بود، از کش بخوان و پارامترهای اختصاصی مثل ?u= را نادیده بگیر
                 return caches.match(event.request, { ignoreSearch: true });
             })
     );
