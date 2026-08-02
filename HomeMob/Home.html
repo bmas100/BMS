@@ -6,20 +6,19 @@
     <title>سامانه هوشمند مدیریتی ریاست</title>
     
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-Variable-font-face.css" rel="stylesheet" type="text/css" />
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- اضافه‌شدن ورژن به CSS برای دور زدن کش -->
-    <link rel="stylesheet" href="style.css?v=3">
-    <link rel="stylesheet" href="banner.css?v=3">
+    <!-- اضافه کردن ورژن برای جلوگیری از فریز شدن استایل‌ها -->
+    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="banner.css?v=5">
 
-    <!-- ================= PWA Code================= -->
+    <!-- ================= PWA Code ================= -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e3a8a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="BonyadLogo.png">
-    <!-- ====================================================== -->
+    <!-- ============================================ -->
 </head>
 <body>
     <div class="app-container">
@@ -34,17 +33,24 @@
                 <small>اداره‌کل حوزه ریاست</small>
             </div>
             
+            <!-- تصویر کاربر -->
             <img src="./UserPic/Boss.png" alt="ریاست بنیاد" class="img-boss" id="user-avatar" onerror="this.onerror=null; this.src='./UserPic/Boss.png';"> 
 
             <script>
+                // اسکریپت تشخیص هویت کاربر بر اساس لینک اختصاصی
                 (function() {
                     const params = new URLSearchParams(window.location.search);
-                    const userCode = params.get("u") || localStorage.getItem("UserCode");
+                    const userCode = params.get("u");
                     
-                    if (userCode && userCode !== "Unknown") {
-                        // ذخیره مجدد در صورت ورود از طریق لینک جدید
-                        localStorage.setItem("UserCode", userCode); 
-                        document.getElementById('user-avatar').src = './UserPic/' + userCode + '.jpg';
+                    // اگر لینک حاوی پارامتر u بود، آن را ذخیره کن
+                    if (userCode) {
+                        localStorage.setItem("UserCode", userCode);
+                    }
+                    
+                    // خواندن کد نهایی از حافظه
+                    const finalCode = localStorage.getItem("UserCode");
+                    if (finalCode && finalCode !== "Unknown") {
+                        document.getElementById('user-avatar').src = './UserPic/' + finalCode + '.jpg';
                     }
                 })();
             </script>
@@ -114,35 +120,37 @@
 
         <img src="Footer.png" alt="Footer" class="footer-img">
 
-        <!-- ================= PWA Update Script ================= -->
+        <!-- ================= اسکریپت کنترل کش و آپدیت خودکار ================= -->
         <script>
+            let refreshing = false;
+
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
                     navigator.serviceWorker.register('sw.js').then(function(registration) {
                         
-                        // جستجو برای آپدیت جدید فایل sw.js
+                        // بررسی اجباری برای آپدیت Service Worker
                         registration.update();
 
-                        registration.onupdatefound = () => {
-                            const installingWorker = registration.installing;
-                            installingWorker.onstatechange = () => {
-                                if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    // با پیدا شدن نسخه جدید، صفحه رفرش می‌شود تا آپدیت اعمال شود
-                                    window.location.reload();
-                                }
-                            };
-                        };
                     }).catch(function(err) {
                         console.log('ServiceWorker registration failed: ', err);
                     });
                 });
+
+                // این بخش منتظر پیام تغییر کنترلر (نسخه جدید) می‌ماند
+                // به محض اینکه sw.js جدید جایگزین شد، صفحه را اتوماتیک رفرش می‌کند
+                navigator.serviceWorker.addEventListener('controllerchange', function() {
+                    if (!refreshing) {
+                        window.location.reload();
+                        refreshing = true;
+                    }
+                });
             }
         </script>
-        <!-- ======================================================== -->
+        <!-- ================================================================ -->
 
     </div>
 
-<script src="tracker.js?v=17"></script>
+<script src="tracker.js?v=20"></script>
 
 </body>
 </html>
