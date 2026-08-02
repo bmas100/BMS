@@ -6,11 +6,12 @@
     <title>سامانه هوشمند مدیریتی ریاست</title>
     
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-Variable-font-face.css" rel="stylesheet" type="text/css" />
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- ورژن دهی برای جلوگیری از کش شدن استایل‌ها -->
-    <link rel="stylesheet" href="style.css?v=2">
-    <link rel="stylesheet" href="banner.css?v=2">
+    <!-- اضافه‌شدن ورژن به CSS برای دور زدن کش -->
+    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="banner.css?v=3">
 
     <!-- ================= PWA Code================= -->
     <link rel="manifest" href="manifest.json">
@@ -41,6 +42,8 @@
                     const userCode = params.get("u") || localStorage.getItem("UserCode");
                     
                     if (userCode && userCode !== "Unknown") {
+                        // ذخیره مجدد در صورت ورود از طریق لینک جدید
+                        localStorage.setItem("UserCode", userCode); 
                         document.getElementById('user-avatar').src = './UserPic/' + userCode + '.jpg';
                     }
                 })();
@@ -111,20 +114,20 @@
 
         <img src="Footer.png" alt="Footer" class="footer-img">
 
-        <!-- ================= PWA Auto-Update Script ================= -->
+        <!-- ================= PWA Update Script ================= -->
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
                     navigator.serviceWorker.register('sw.js').then(function(registration) {
                         
-                        // اجبار مرورگر به چک کردن نسخه جدید sw.js در هر بار باز شدن صفحه
+                        // جستجو برای آپدیت جدید فایل sw.js
                         registration.update();
 
-                        // اگر نسخه جدیدی پیدا و نصب شد، صفحه را یکبار رفرش کن تا کش پاک شود
                         registration.onupdatefound = () => {
                             const installingWorker = registration.installing;
                             installingWorker.onstatechange = () => {
                                 if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // با پیدا شدن نسخه جدید، صفحه رفرش می‌شود تا آپدیت اعمال شود
                                     window.location.reload();
                                 }
                             };
@@ -139,7 +142,7 @@
 
     </div>
 
-<script src="tracker.js?v=16"></script>
+<script src="tracker.js?v=17"></script>
 
 </body>
 </html>
