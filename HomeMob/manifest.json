@@ -1,7 +1,7 @@
 {
   "name": "سامانه هوشمند مدیریتی ریاست",
   "short_name": "داشبورد ریاست",
-  "description": "سامانه هوشمند مدیریتی ریاست بنیاد مسکن انقلاب اسلامی",
+  "description": "سامانه مدیریت کلان بنیاد مسکن انقلاب اسلامی",
   "start_url": "./Home.html",
   "display": "standalone",
   "background_color": "#ffffff",
