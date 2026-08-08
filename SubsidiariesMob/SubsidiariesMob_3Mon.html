@@ -45,59 +45,86 @@
             margin: 0 auto;
         }
 
-        /* 1. بنر اختصاصی ریاست بنیاد */
+        /* 1. بنر ارتقا یافته و بسیار شیک ریاست بنیاد */
         .dashboard-header {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0369a1 100%);
+            background: radial-gradient(circle at 80% 20%, #1e40af 0%, #1e3a8a 40%, #0f172a 100%);
             color: white;
-            border-radius: 18px;
-            padding: 32px;
-            margin-bottom: 28px;
-            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.25);
+            border-radius: 20px;
+            padding: 36px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px -5px rgba(15, 23, 42, 0.35);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .dashboard-header::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -10%;
-            width: 350px;
-            height: 350px;
-            background: rgba(255, 255, 255, 0.05);
+            top: -60px;
+            left: -60px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(255, 255, 255, 0) 70%);
             border-radius: 50%;
             pointer-events: none;
         }
 
+        .dashboard-header::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            right: 15%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header-title-box {
+            position: relative;
+            z-index: 2;
+        }
+
         .header-title-box h1 {
-            font-size: 26px;
-            font-weight: 800;
-            margin-bottom: 8px;
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 10px;
             color: #ffffff;
             letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .header-title-box p {
             font-size: 15px;
-            color: #cbd5e1;
-            font-weight: 400;
+            color: #94a3b8;
+            font-weight: 500;
         }
 
         .header-badges {
             display: flex;
             gap: 12px;
-            margin-top: 20px;
+            margin-top: 24px;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
         }
 
         .header-badge {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 6px 14px;
-            border-radius: 20px;
+            padding: 8px 16px;
+            border-radius: 30px;
             font-size: 13px;
-            color: #f1f5f9;
+            font-weight: 600;
+            color: #f8fafc;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         /* 2. کارت‌های شاخص‌های کلیدی (KPIs) */
@@ -110,19 +137,19 @@
 
         .kpi-card {
             background: var(--card-bg);
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 22px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s ease;
         }
 
         .kpi-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -4px rgba(0, 0, 0, 0.08);
         }
 
         .kpi-title {
@@ -188,10 +215,15 @@
 
         .pillar-card {
             background: var(--card-bg);
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 22px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s;
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-2px);
         }
 
         .pillar-header {
@@ -245,16 +277,12 @@
             margin-bottom: 35px;
         }
 
-        @media (max-width: 992px) {
-            .charts-wrapper { grid-template-columns: 1fr; }
-        }
-
         .chart-box {
             background: var(--card-bg);
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 22px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
         }
 
         .chart-box h3 {
@@ -264,18 +292,20 @@
             color: var(--primary-dark);
         }
 
-        /* 5. جداول شیک با ردیف‌های رنگی */
+        /* 5. جداول شیک با اسکرول افقی در موبایل */
         .table-container {
             background: var(--card-bg);
-            border-radius: 14px;
+            border-radius: 16px;
             border: 1px solid var(--border-color);
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
             margin-bottom: 35px;
         }
 
         table {
             width: 100%;
+            min-width: 850px; /* تضمین خوانایی و فعال شدن اسکرول در موبایل */
             border-collapse: collapse;
             text-align: right;
             font-size: 13.5px;
@@ -291,12 +321,14 @@
             font-weight: 700;
             font-size: 13px;
             letter-spacing: 0.3px;
+            white-space: nowrap;
         }
 
         td {
             padding: 14px 16px;
             border-bottom: 1px solid var(--border-color);
             color: var(--text-main);
+            white-space: nowrap;
         }
 
         tbody tr:nth-child(even) {
@@ -315,7 +347,7 @@
             font-size: 12px;
         }
 
-        /* 6. کارت‌های اختصاصی شرکت‌ها با آیکون */
+        /* 6. کارت‌های اختصاصی شرکت‌ها با Border-top و گرافیک گیرا */
         .company-cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
@@ -327,12 +359,25 @@
             background: var(--card-bg);
             border-radius: 16px;
             border: 1px solid var(--border-color);
+            border-top: 5px solid var(--accent); /* border-top درخواستی */
             padding: 24px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.09);
+        }
+
+        /* استایل اختصاصی border-top برای شرکت‌های ممتاز */
+        .company-card.border-top-success { border-top-color: var(--success); }
+        .company-card.border-top-primary { border-top-color: var(--primary-light); }
+        .company-card.border-top-warning { border-top-color: var(--warning); }
+        .company-card.border-top-danger { border-top-color: var(--danger); }
 
         .company-card-header {
             display: flex;
@@ -346,7 +391,7 @@
         .company-icon {
             width: 58px;
             height: 58px;
-            border-radius: 12px;
+            border-radius: 14px;
             object-fit: cover;
             border: 1px solid var(--border-color);
             background: #f1f5f9;
@@ -355,6 +400,7 @@
             justify-content: center;
             font-weight: bold;
             color: var(--primary);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
 
         .company-title-wrap h3 {
@@ -374,9 +420,10 @@
             gap: 8px;
             background: #f8fafc;
             padding: 12px;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-bottom: 16px;
             text-align: center;
+            border: 1px solid #f1f5f9;
         }
 
         .company-stat-item .lbl {
@@ -426,7 +473,7 @@
             color: var(--accent);
         }
 
-        /* 7. کارت‌های تحلیلی پایین صفحه */
+        /* 7. کارت‌های تحلیلی جذاب و رنگی پایین صفحه با آیکون */
         .bottom-insights-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -435,30 +482,58 @@
         }
 
         .insight-card {
-            background: var(--card-bg);
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 24px;
-            border-top: 4px solid var(--accent);
-            border-left: 1px solid var(--border-color);
-            border-right: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            transition: transform 0.2s;
         }
 
-        .insight-card.danger { border-top-color: var(--danger); }
-        .insight-card.success { border-top-color: var(--success); }
-        .insight-card.warning { border-top-color: var(--warning); }
+        .insight-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .insight-card.success {
+            background: #f0fdf4;
+            border-top: 5px solid var(--success);
+            border-color: #bbf7d0;
+        }
+
+        .insight-card.danger {
+            background: #fef2f2;
+            border-top: 5px solid var(--danger);
+            border-color: #fecaca;
+        }
+
+        .insight-card.warning {
+            background: #fffbe2;
+            border-top: 5px solid var(--warning);
+            border-color: #fde68a;
+        }
+
+        .insight-card.primary {
+            background: #eff6ff;
+            border-top: 5px solid var(--primary-light);
+            border-color: #bfdbfe;
+        }
 
         .insight-card h3 {
             font-size: 16px;
             font-weight: 800;
             margin-bottom: 12px;
-            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+
+        .insight-card.success h3 { color: #166534; }
+        .insight-card.danger h3 { color: #991b1b; }
+        .insight-card.warning h3 { color: #92400e; }
+        .insight-card.primary h3 { color: #1e40af; }
 
         .insight-card p {
             font-size: 13px;
-            color: #475569;
+            color: #334155;
             line-height: 1.6;
         }
 
@@ -469,6 +544,22 @@
             font-size: 12px;
             border-top: 1px solid var(--border-color);
             margin-top: 20px;
+        }
+
+        /* تنظیمات ریسپانسیو اختصاصی برای دستگاه‌های مختلف (موبایل و تبلت) */
+        @media (max-width: 992px) {
+            .charts-wrapper { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dashboard-header { padding: 24px; border-radius: 14px; }
+            .header-title-box h1 { font-size: 20px; }
+            .header-title-box p { font-size: 13px; }
+            .section-title { font-size: 17px; }
+            .kpi-value { font-size: 26px; }
+            .company-cards-grid { grid-template-columns: 1fr; }
+            .bottom-insights-grid { grid-template-columns: 1fr; }
         }
 
         @media print {
@@ -482,7 +573,7 @@
 
 <div class="container">
 
-    <!-- 1. بنر زیبا و اختصاصی ریاست بنیاد -->
+    <!-- 1. بنر زیبا، مدرن و اختصاصی ریاست بنیاد -->
     <div class="dashboard-header">
         <div class="header-title-box">
             <h1>داشبورد ارزیابی مدیریتی و راهبردی شرکت‌های تابعه</h1>
@@ -505,7 +596,7 @@
         <div class="kpi-card">
             <span class="kpi-title">رتبه ۱ درصد تحقق ظرفیت</span>
             <span class="kpi-value text-success">۱۰۰٪</span>
-            <span class="kpi-subtext text-success">موسسه معین بنیاد (کسب ۷۱ از ۷۱ امتیاز مشمول)</span>
+            <span class="kpi-subtext text-success">موسسه معین بنیاد (کسب ۷۱ از ۷۱ حد انتظار)</span>
         </div>
         <div class="kpi-card">
             <span class="kpi-title">قوی‌ترین حوزه ارزیابی</span>
@@ -592,23 +683,23 @@
         </div>
     </div>
 
-    <!-- 4. نمودارهای مقایسه‌ای و مدرن -->
+    <!-- 4. نمودارهای مقایسه‌ای و مدرن با اعداد عمودی روی میله‌ها -->
     <div class="section-header">
         <div class="section-title">نمودارهای مقایسه‌ای و تحلیلی عملکرد شرکت‌ها</div>
     </div>
 
     <div class="charts-wrapper">
         <div class="chart-box">
-            <h3>مقایسه درصد تحقق از سقف مشمول (%)</h3>
-            <canvas id="realizationChart" height="230"></canvas>
+            <h3>مقایسه درصد تحقق از حد انتظار (%)</h3>
+            <canvas id="realizationChart" height="240"></canvas>
         </div>
         <div class="chart-box">
-            <h3>مقایسه امتیاز خام کسب‌شده vs سقف مشمول</h3>
-            <canvas id="scoresChart" height="230"></canvas>
+            <h3>مقایسه امتیاز خام کسب‌شده vs حد انتظار</h3>
+            <canvas id="scoresChart" height="240"></canvas>
         </div>
     </div>
 
-    <!-- 5. جدول شیک مقایسه‌ای با ردیف‌های یکی در میان رنگی -->
+    <!-- 5. جدول شیک مقایسه‌ای با اسکرول افقی مطمئن در موبایل -->
     <div class="section-header">
         <div class="section-title">جدول جامع رتبه‌بندی و ارزیابی مقایسه‌ای شرکت‌های تابعه</div>
     </div>
@@ -620,7 +711,7 @@
                     <th>رتبه تحقق</th>
                     <th>نام شرکت / موسسه</th>
                     <th>امتیاز خام (از ۱۰۰)</th>
-                    <th>سقف امتیاز مشمول</th>
+                    <th>حد انتظار</th>
                     <th>درصد تحقق ظرفیت</th>
                     <th>امتیاز تشویقی (بازار / R&D)</th>
                     <th>امتیاز مدیریتی</th>
@@ -712,7 +803,7 @@
         </table>
     </div>
 
-    <!-- 6. تحلیل تفکیکی شرکت‌ها به صورت کارت‌های مجزا با آیکون -->
+    <!-- 6. تحلیل تفکیکی شرکت‌ها به صورت کارت‌های مجزا با Border-top رنگی -->
     <div class="section-header">
         <div class="section-title">تحلیل مدیریتی و شناسنامه اختصاصی شرکت‌های تابعه</div>
     </div>
@@ -720,7 +811,7 @@
     <div class="company-cards-grid">
 
         <!-- کارت شرکت ۱: سیمان شهرکرد -->
-        <div class="company-card">
+        <div class="company-card border-top-success">
             <div>
                 <div class="company-card-header">
                     <img src="SimanShahreKord.jpg" alt="سیمان شهرکرد" class="company-icon" onerror="this.onerror=null; this.innerHTML='سیمان'; this.style.fontSize='12px';">
@@ -735,7 +826,7 @@
                         <span class="val">۸۶</span>
                     </div>
                     <div class="company-stat-item">
-                        <span class="lbl">سقف مشمول</span>
+                        <span class="lbl">حد انتظار</span>
                         <span class="val">۸۸</span>
                     </div>
                     <div class="company-stat-item">
@@ -764,7 +855,7 @@
         </div>
 
         <!-- کارت شرکت ۲: معین بنیاد -->
-        <div class="company-card">
+        <div class="company-card border-top-success">
             <div>
                 <div class="company-card-header">
                     <img src="MoeinBonyad.jpg" alt="موسسه معین بنیاد" class="company-icon" onerror="this.onerror=null; this.innerHTML='معین';">
@@ -779,7 +870,7 @@
                         <span class="val">۷۱</span>
                     </div>
                     <div class="company-stat-item">
-                        <span class="lbl">سقف مشمول</span>
+                        <span class="lbl">حد انتظار</span>
                         <span class="val">۷۱</span>
                     </div>
                     <div class="company-stat-item">
@@ -790,7 +881,7 @@
                 <div class="analysis-block">
                     <h4 class="text-success">✔ نقاط قوت برجسته</h4>
                     <ul>
-                        <li>تحقق ۱۰۰ درصدی تمام تکالیف و شاخص‌های مشمول.</li>
+                        <li>تحقق ۱۰۰ درصدی تمام تکالیف و شاخص‌های تعیین‌شده.</li>
                         <li>بهره‌وری کامل دارایی‌ها و سرمایه (۵٫۰ از ۵).</li>
                         <li>انضباط دقیق در اجرای برنامه‌های ابلاغی.</li>
                     </ul>
@@ -808,7 +899,7 @@
         </div>
 
         <!-- کارت شرکت ۳: عمران و نوسازی تهران -->
-        <div class="company-card">
+        <div class="company-card border-top-warning">
             <div>
                 <div class="company-card-header">
                     <img src="NosaziOmranTehran.jpg" alt="عمران و نوسازی تهران" class="company-icon" onerror="this.onerror=null; this.innerHTML='عمران';">
@@ -823,7 +914,7 @@
                         <span class="val">۷۲</span>
                     </div>
                     <div class="company-stat-item">
-                        <span class="lbl">سقف مشمول</span>
+                        <span class="lbl">حد انتظار</span>
                         <span class="val">۷۶</span>
                     </div>
                     <div class="company-stat-item">
@@ -852,7 +943,7 @@
         </div>
 
         <!-- کارت شرکت ۴: بنیاد بتن ایران -->
-        <div class="company-card">
+        <div class="company-card border-top-primary">
             <div>
                 <div class="company-card-header">
                     <img src="BonyadBeton.jpg" alt="بنیاد بتن ایران" class="company-icon" onerror="this.onerror=null; this.innerHTML='بتن';">
@@ -867,7 +958,7 @@
                         <span class="val">۷۸</span>
                     </div>
                     <div class="company-stat-item">
-                        <span class="lbl">سقف مشمول</span>
+                        <span class="lbl">حد انتظار</span>
                         <span class="val">۸۸</span>
                     </div>
                     <div class="company-stat-item">
@@ -895,7 +986,7 @@
         </div>
 
         <!-- کارت شرکت ۵: شرکت آزادراه -->
-        <div class="company-card">
+        <div class="company-card border-top-warning">
             <div>
                 <div class="company-card-header">
                     <img src="AzadRah.jpg" alt="شرکت آزادراه" class="company-icon" onerror="this.onerror=null; this.innerHTML='آزادراه';">
@@ -910,7 +1001,7 @@
                         <span class="val">۸۴</span>
                     </div>
                     <div class="company-stat-item">
-                        <span class="lbl">سقف مشمول</span>
+                        <span class="lbl">حد انتظار</span>
                         <span class="val">۱۰۰</span>
                     </div>
                     <div class="company-stat-item">
@@ -921,7 +1012,7 @@
                 <div class="analysis-block">
                     <h4 class="text-success">✔ نقاط قوت برجسته</h4>
                     <ul>
-                        <li>کسب بالاترین جمع خام (۸۱ از ۱۰۰) و بالاترین سقف مشمول (۱۰۰).</li>
+                        <li>کسب بالاترین جمع خام (۸۱ از ۱۰۰) و بالاترین حد انتظار (۱۰۰).</li>
                         <li>تحقق ممتاز برنامه‌های مالی و سودآوری (۳۹٫۳ از ۴۰).</li>
                     </ul>
                 </div>
@@ -938,7 +1029,7 @@
         </div>
 
         <!-- کارت شرکت ۶: ایجاد محیط -->
-        <div class="company-card">
+        <div class="company-card border-top-primary">
             <div>
                 <div class="company-card-header">
                     <img src="IjadMohit.jpg" alt="ایجاد محیط" class="company-icon" onerror="this.onerror=null; this.innerHTML='محیط';">
@@ -953,7 +1044,7 @@
                         <span class="val">۷۸</span>
                     </div>
                     <div class="company-stat-item">
-                        <span class="lbl">سقف مشمول</span>
+                        <span class="lbl">حد انتظار</span>
                         <span class="val">۹۲</span>
                     </div>
                     <div class="company-stat-item">
@@ -981,7 +1072,7 @@
         </div>
 
         <!-- کارت شرکت ۷: شرکت بازرگانی -->
-        <div class="company-card">
+        <div class="company-card border-top-danger">
             <div>
                 <div class="company-card-header">
                     <img src="SamanMohit.jpg" alt="شرکت بازرگانی" class="company-icon" onerror="this.onerror=null; this.innerHTML='بازرگانی';">
@@ -996,7 +1087,7 @@
                         <span class="val">۷۰</span>
                     </div>
                     <div class="company-stat-item">
-                        <span class="lbl">سقف مشمول</span>
+                        <span class="lbl">حد انتظار</span>
                         <span class="val">۸۳</span>
                     </div>
                     <div class="company-stat-item">
@@ -1024,7 +1115,7 @@
         </div>
 
         <!-- کارت شرکت ۸: توسعه مسکن ایران -->
-        <div class="company-card">
+        <div class="company-card border-top-danger">
             <div>
                 <div class="company-card-header">
                     <img src="ToseMaskan.jpg" alt="توسعه مسکن ایران" class="company-icon" onerror="this.onerror=null; this.innerHTML='توسعه';">
@@ -1039,7 +1130,7 @@
                         <span class="val">۷۸</span>
                     </div>
                     <div class="company-stat-item">
-                        <span class="lbl">سقف مشمول</span>
+                        <span class="lbl">حد انتظار</span>
                         <span class="val">۹۶</span>
                     </div>
                     <div class="company-stat-item">
@@ -1057,7 +1148,7 @@
                 <div class="analysis-block">
                     <h4 class="text-danger">✖ چالش اصلی</h4>
                     <ul>
-                        <li>پایین‌ترین نسبت تحقق به سقف مشمول (۸۱٫۲٪) به دلیل بهره‌وری پایین سرمایه.</li>
+                        <li>پایین‌ترین نسبت تحقق به حد انتظار (۸۱٫۲٪) به دلیل بهره‌وری پایین سرمایه.</li>
                     </ul>
                 </div>
             </div>
@@ -1068,35 +1159,35 @@
 
     </div>
 
-    <!-- 7. کارت‌های تحلیلی و راهبردی پایین صفحه -->
+    <!-- 7. کارت‌های تحلیلی و راهبردی رنگی با آیکون‌های اختصاصی -->
     <div class="section-header">
         <div class="section-title">جمع‌بندی تحلیلی و پیام‌های راهبردی داشبورد مدیریتی</div>
     </div>
 
     <div class="bottom-insights-grid">
         <div class="insight-card success">
-            <h3 class="text-success">۱. ثبات و انضباط عالی مالی</h3>
+            <h3>🛡️ ۱. ثبات و انضباط عالی مالی</h3>
             <p>عملکرد هلدینگ در تحقق درآمدها، کنترل هزینه‌ها و انضباط مالی با میانگین ۹٫۰ از ۱۰ بسیار اطمینان‌بخش است. این امر نشان‌دهنده واقع‌بینی در بودجه‌ریزی و نظارت مستمر مالی است.</p>
         </div>
 
         <div class="insight-card danger">
-            <h3 class="text-danger">۲. عارضه «ناهمگونی مدیریتی»</h3>
+            <h3>⚖️ ۲. عارضه «ناهمگونی مدیریتی»</h3>
             <p>اختلاف شدید کیفیت راهبری از ۲۸٪ (عمران‌ونوسازی) تا ۹۱٪ (بنیاد بتن) نشان می‌دهد نظام راهبری شرکتی قائم به فرد است و به یک «استاندارد یکپارچه هلدینگی» تبدیل نشده است.</p>
         </div>
 
         <div class="insight-card warning">
-            <h3 class="text-warning">۳. ضرورت ارتقای بهره‌وری سرمایه</h3>
+            <h3>📈 ۳. ضرورت ارتقای بهره‌وری سرمایه</h3>
             <p>شرکت‌های بزرگ با سرمایه سنگین (مانند آزادراه با امتیاز بهره‌وری ۰٫۶ از ۵) دچار رکود بخشی از دارایی‌ها هستند. مشکل اصلی «کمبود منابع» نیست، بلکه «نحوه به‌کارگیری سرمایه» است.</p>
         </div>
 
         <div class="insight-card danger">
-            <h3 class="text-danger">۴. عقب‌ماندگی در تحول دیجیتال</h3>
+            <h3>🚀 ۴. عقب‌ماندگی در تحول دیجیتال</h3>
             <p>امتیاز متوسط ۴٫۰ از ۱۰ در نوآوری و کسب امتیاز صفر در R&D توسط چند شرکت، هلدینگ را در معرض مخاطرات رقابتی آینده قرار می‌دهد. سرمایه‌گذاری دانش‌بنیان باید الزامی شود.</p>
         </div>
 
-        <div class="insight-card success">
-            <h3 class="text-primary">۵. ضرورت اصلاح سنجه ارزیابی</h3>
-            <p>پیشنهاد می‌شود «درصد تحقق از سقف مشمول» رسماً جایگزین امتیاز خام شود تا شرکت‌هایی مانند معین بنیاد (با ۱۰۰٪ تحقق) و توسعه مسکن با دقت و عدالت بیشتری سنجیده شوند.</p>
+        <div class="insight-card primary">
+            <h3>💡 ۵. ضرورت اصلاح سنجه ارزیابی</h3>
+            <p>پیشنهاد می‌شود «درصد تحقق از حد انتظار» رسماً جایگزین امتیاز خام شود تا شرکت‌هایی مانند معین بنیاد (با ۱۰۰٪ تحقق) و توسعه مسکن با دقت و عدالت بیشتری سنجیده شوند.</p>
         </div>
     </div>
 
@@ -1106,8 +1197,56 @@
 
 </div>
 
-<!-- اسکریپت ساخت نمودارها -->
+<!-- اسکریپت ساخت نمودارها همراه با پلاگین سفارشی اعداد عمودی -->
 <script>
+    // پلاگین اختصاصی جهت ترسیم عمودی اعداد روی میله‌های Chart.js
+    const verticalDataLabelsPlugin = {
+        id: 'verticalDataLabelsPlugin',
+        afterDatasetsDraw(chart) {
+            const { ctx } = chart;
+            chart.data.datasets.forEach((dataset, datasetIndex) => {
+                const meta = chart.getDatasetMeta(datasetIndex);
+                if (!meta.hidden) {
+                    meta.data.forEach((element, index) => {
+                        const value = dataset.data[index];
+                        if (value !== null && value !== undefined) {
+                            ctx.save();
+                            const { x, y, base } = element;
+                            const barHeight = Math.abs(base - y);
+                            
+                            // تعیین رنگ متن بر اساس نوع میله
+                            if (datasetIndex === 1) {
+                                ctx.fillStyle = '#334155'; // رنگ تیره برای میله خاکستری حد انتظار
+                            } else {
+                                ctx.fillStyle = '#ffffff'; // رنگ سفید روی میله اصلی
+                            }
+                            
+                            ctx.font = 'bold 11px Vazirmatn, sans-serif';
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            
+                            // محاسبه موقعیت قرارگیری عمودی عدد روی میله
+                            let posY = y + (barHeight > 35 ? 22 : -12);
+                            if (barHeight <= 35 && datasetIndex !== 1) {
+                                ctx.fillStyle = '#0f172a';
+                            }
+                            
+                            ctx.translate(x, posY);
+                            ctx.rotate(-Math.PI / 2); // چرخش ۹۰ درجه متن به صورت عمودی
+                            
+                            const suffix = chart.canvas.id === 'realizationChart' ? '%' : '';
+                            ctx.fillText(value + suffix, 0, 0);
+                            ctx.restore();
+                        }
+                    });
+                }
+            });
+        }
+    };
+
+    // ثبت پلاگین در Chart.js
+    Chart.register(verticalDataLabelsPlugin);
+
     // نمودار ۱: درصد تحقق
     const ctx1 = document.getElementById('realizationChart').getContext('2d');
     new Chart(ctx1, {
@@ -1115,7 +1254,7 @@
         data: {
             labels: ['معین بنیاد', 'سیمان شهرکرد', 'عمران تهران', 'بنیاد بتن', 'ایجاد محیط', 'بازرگانی', 'آزادراه', 'توسعه مسکن'],
             datasets: [{
-                label: 'درصد تحقق نسبت به سقف مشمول (%)',
+                label: 'درصد تحقق نسبت به حد انتظار (%)',
                 data: [100.0, 97.7, 94.7, 88.6, 84.8, 84.3, 84.0, 81.2],
                 backgroundColor: [
                     '#059669', '#059669', '#10b981', '#2563eb', 
@@ -1126,14 +1265,15 @@
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: { legend: { display: false } },
             scales: {
-                y: { min: 70, max: 105, ticks: { callback: v => v + '%' } }
+                y: { min: 70, max: 108, ticks: { callback: v => v + '%' } }
             }
         }
     });
 
-    // نمودار ۲: امتیاز خام در برابر سقف مشمول
+    // نمودار ۲: امتیاز خام در برابر حد انتظار
     const ctx2 = document.getElementById('scoresChart').getContext('2d');
     new Chart(ctx2, {
         type: 'bar',
@@ -1147,7 +1287,7 @@
                     borderRadius: 6
                 },
                 {
-                    label: 'سقف امتیاز مشمول',
+                    label: 'حد انتظار',
                     data: [88, 100, 88, 96, 92, 76, 71, 83],
                     backgroundColor: '#cbd5e1',
                     borderRadius: 6
@@ -1156,8 +1296,9 @@
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: { legend: { position: 'bottom' } },
-            scales: { y: { max: 105 } }
+            scales: { y: { max: 108 } }
         }
     });
 </script>
