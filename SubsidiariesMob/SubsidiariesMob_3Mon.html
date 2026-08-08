@@ -283,6 +283,8 @@
             padding: 22px;
             border: 1px solid var(--border-color);
             box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
         }
 
         .chart-box h3 {
@@ -292,12 +294,21 @@
             color: var(--primary-dark);
         }
 
+        .chart-container-inner {
+            position: relative; 
+            height: 280px; /* جلوگیری قطعی از کش‌آمدگی نمودارها */
+            width: 100%;
+            flex-grow: 1;
+        }
+
         /* 5. جداول شیک با اسکرول افقی در موبایل */
         .table-container {
             background: var(--card-bg);
             border-radius: 16px;
             border: 1px solid var(--border-color);
             overflow-x: auto;
+            width: 100%;
+            max-width: 100vw;
             -webkit-overflow-scrolling: touch;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
             margin-bottom: 35px;
@@ -347,7 +358,7 @@
             font-size: 12px;
         }
 
-        /* 6. کارت‌های اختصاصی شرکت‌ها با Border-top و گرافیک گیرا */
+        /* 6. کارت‌های اختصاصی شرکت‌ها */
         .company-cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
@@ -359,7 +370,7 @@
             background: var(--card-bg);
             border-radius: 16px;
             border: 1px solid var(--border-color);
-            border-top: 5px solid var(--accent); /* border-top درخواستی */
+            border-top: 5px solid var(--accent);
             padding: 24px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.04);
             display: flex;
@@ -373,7 +384,6 @@
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.09);
         }
 
-        /* استایل اختصاصی border-top برای شرکت‌های ممتاز */
         .company-card.border-top-success { border-top-color: var(--success); }
         .company-card.border-top-primary { border-top-color: var(--primary-light); }
         .company-card.border-top-warning { border-top-color: var(--warning); }
@@ -401,6 +411,11 @@
             font-weight: bold;
             color: var(--primary);
             box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+
+        .company-title-wrap {
+            flex-grow: 1;
         }
 
         .company-title-wrap h3 {
@@ -412,6 +427,36 @@
         .company-title-wrap p {
             font-size: 12px;
             color: var(--text-muted);
+        }
+
+        /* نمودار دایره‌ای درصد در کارت شرکت */
+        .circular-progress {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11.5px;
+            font-weight: 800;
+            position: relative;
+            background: conic-gradient(var(--score-color) var(--progress), #e2e8f0 0deg);
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .circular-progress::before {
+            content: "";
+            position: absolute;
+            inset: 4.5px; /* ضخامت حلقه دایره */
+            background-color: var(--card-bg);
+            border-radius: 50%;
+        }
+
+        .circular-progress span {
+            position: relative;
+            z-index: 1;
+            color: var(--primary-dark);
         }
 
         .company-stats-row {
@@ -473,7 +518,7 @@
             color: var(--accent);
         }
 
-        /* 7. کارت‌های تحلیلی جذاب و رنگی پایین صفحه با آیکون */
+        /* 7. کارت‌های تحلیلی جذاب */
         .bottom-insights-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -546,7 +591,7 @@
             margin-top: 20px;
         }
 
-        /* تنظیمات ریسپانسیو اختصاصی برای دستگاه‌های مختلف (موبایل و تبلت) */
+        /* تنظیمات ریسپانسیو */
         @media (max-width: 992px) {
             .charts-wrapper { grid-template-columns: 1fr; }
         }
@@ -576,8 +621,8 @@
     <!-- 1. بنر زیبا، مدرن و اختصاصی ریاست بنیاد -->
     <div class="dashboard-header">
         <div class="header-title-box">
-            <h1>داشبورد ارزیابی مدیریتی و راهبردی شرکت‌های تابعه</h1>
-            <p> سه‌ماهه نخست سال ۱۴۰۵ </p>
+            <h1>سامانه مدیریتی ریاست</h1>
+            <p>ارزیابی مدیریتی و راهبردی شرکت‌های تابعه - سه ماه</p>
         </div>
         <div class="header-badges">
             <span class="header-badge">📅 دوره ارزیابی: ۳ ماهه نخست ۱۴۰۵</span>
@@ -691,11 +736,15 @@
     <div class="charts-wrapper">
         <div class="chart-box">
             <h3>مقایسه درصد تحقق از حد انتظار (%)</h3>
-            <canvas id="realizationChart" height="240"></canvas>
+            <div class="chart-container-inner">
+                <canvas id="realizationChart"></canvas>
+            </div>
         </div>
         <div class="chart-box">
             <h3>مقایسه امتیاز خام کسب‌شده vs حد انتظار</h3>
-            <canvas id="scoresChart" height="240"></canvas>
+            <div class="chart-container-inner">
+                <canvas id="scoresChart"></canvas>
+            </div>
         </div>
     </div>
 
@@ -819,6 +868,9 @@
                         <h3>سیمان شهرکرد</h3>
                         <p>صنعتی و تولیدی | رتبه ۱ امتیاز خام</p>
                     </div>
+                    <div class="circular-progress" style="--progress: 97.7%; --score-color: var(--success);">
+                        <span>۹۷٫۷٪</span>
+                    </div>
                 </div>
                 <div class="company-stats-row">
                     <div class="company-stat-item">
@@ -862,6 +914,9 @@
                     <div class="company-title-wrap">
                         <h3>موسسه معین بنیاد</h3>
                         <p>خدماتی و مالی | رتبه ۱ درصد تحقق</p>
+                    </div>
+                    <div class="circular-progress" style="--progress: 100%; --score-color: var(--success);">
+                        <span>۱۰۰٫۰٪</span>
                     </div>
                 </div>
                 <div class="company-stats-row">
@@ -907,6 +962,9 @@
                         <h3>عمران و نوسازی تهران</h3>
                         <p>پروژه‌محور و عمران | رتبه ۳ درصد تحقق</p>
                     </div>
+                    <div class="circular-progress" style="--progress: 94.7%; --score-color: var(--success);">
+                        <span>۹۴٫۷٪</span>
+                    </div>
                 </div>
                 <div class="company-stats-row">
                     <div class="company-stat-item">
@@ -951,6 +1009,9 @@
                         <h3>بنیاد بتن ایران</h3>
                         <p>تولیدی و صنعت ساخت | رتبه ۴ درصد تحقق</p>
                     </div>
+                    <div class="circular-progress" style="--progress: 88.6%; --score-color: var(--primary-light);">
+                        <span>۸۸٫۶٪</span>
+                    </div>
                 </div>
                 <div class="company-stats-row">
                     <div class="company-stat-item">
@@ -993,6 +1054,9 @@
                     <div class="company-title-wrap">
                         <h3>شرکت احداث آزادراه‌ها</h3>
                         <p>زیرساخت و پروژه | رتبه ۲ امتیاز خام</p>
+                    </div>
+                    <div class="circular-progress" style="--progress: 84.0%; --score-color: var(--warning);">
+                        <span>۸۴٫۰٪</span>
                     </div>
                 </div>
                 <div class="company-stats-row">
@@ -1037,6 +1101,9 @@
                         <h3>ایجاد محیط</h3>
                         <p>عمران و توسعه | رتبه ۵ درصد تحقق</p>
                     </div>
+                    <div class="circular-progress" style="--progress: 84.8%; --score-color: var(--primary-light);">
+                        <span>۸۴٫۸٪</span>
+                    </div>
                 </div>
                 <div class="company-stats-row">
                     <div class="company-stat-item">
@@ -1080,6 +1147,9 @@
                         <h3>شرکت بازرگانی</h3>
                         <p>بازرگانی و تامین | رتبه ۶ درصد تحقق</p>
                     </div>
+                    <div class="circular-progress" style="--progress: 84.3%; --score-color: var(--warning);">
+                        <span>۸۴٫۳٪</span>
+                    </div>
                 </div>
                 <div class="company-stats-row">
                     <div class="company-stat-item">
@@ -1122,6 +1192,9 @@
                     <div class="company-title-wrap">
                         <h3>توسعه مسکن ایران</h3>
                         <p>انبوه سازی و مسکن | رتبه ۸ درصد تحقق</p>
+                    </div>
+                    <div class="circular-progress" style="--progress: 81.2%; --score-color: var(--danger);">
+                        <span>۸۱٫۲٪</span>
                     </div>
                 </div>
                 <div class="company-stats-row">
