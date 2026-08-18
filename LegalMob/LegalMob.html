@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سامانه مدیریتی ریاست بنیاد مسکن - داشبورد جامع</title>
+    <!-- Vazirmatn Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js & DataLabels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Vazirmatn', 'sans-serif'] },
+                    colors: {
+                        primary: '#1e3a8a',
+                        secondary: '#3b82f6',
+                        accent: '#10b981',
+                        dark: '#0f172a'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; background-color: #f8fafc; }
+        .banner-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e40af 50%, #2563eb 100%);
+            position: relative; overflow: hidden;
+        }
+        .banner-bg::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 10%, transparent 20%),
+                        radial-gradient(circle, rgba(255,255,255,0.05) 10%, transparent 20%);
+            background-size: 30px 30px; transform: rotate(30deg); animation: moveBg 60s linear infinite;
+        }
+        @keyframes moveBg { 0% { transform: rotate(30deg) translateY(0); } 100% { transform: rotate(30deg) translateY(-500px); } }
+        .progress-circle {
+            width: 90px; height: 90px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; position: relative;
+            background: #e2e8f0; margin: 0 auto;
+        }
+        .progress-circle::before {
+            content: ""; position: absolute; inset: 0; border-radius: 50%;
+            background: conic-gradient(var(--color) var(--p), #e2e8f0 0deg);
+            transition: background 1s ease-in-out;
+        }
+        .progress-circle::after {
+            content: ""; position: absolute; inset: 8px; background-color: white;
+            border-radius: 50%; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .progress-value { position: relative; z-index: 1; font-size: 1.25rem; font-weight: 800; color: #1e293b; }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .cite-badge { font-size: 0.6rem; color: #94a3b8; margin-right: 4px; font-weight: normal; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased p-2 md:p-4 lg:p-6">
+
+    <div class="max-w-[1500px] mx-auto space-y-6">
+        
+        <!-- ================= BANNER ================= -->
+<header class="banner-bg rounded-3xl shadow-xl px-6 py-4 md:px-10 md:py-6 text-white flex flex-col md:flex-row items-center justify-between border-b-8 border-amber-400">
+
+    <div class="relative z-10 space-y-3 text-center md:text-right w-full md:w-3/4">
+
+<div class="flex items-center justify-center px-4 py-1.5 bg-white/10 border border-white/20 rounded-full text-x font-semibold mb-2 backdrop-blur-md w-fit mx-auto">
+    <span class="relative flex h-2.5 w-2.5 ml-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+    </span>
+    سامانه مدیریتی ریاست بنیاد مسکن
+</div>
+
+        <h1 class="text-3xl md:text-3xl font-black tracking-tight drop-shadow-xl leading-tight">
+            اداره‌کل حقوقی و املاک
+        </h1>
+
+        <p class="text-blue-100 text-sm md:text-lg font-bold leading-relaxed">
+            امور حقوقی - رفع تصرفات - دیوان عدالت - حساب ۱۰۰ امام (ره)
+        </p>
+
+    </div>
+
+    <div class="relative z-10 mt-5 md:mt-0 flex items-center opacity-90">
+
+
+        <!-- دکمه جزئیات گزارش -->
+        <a
+            href="./LegalDetail.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ml-[100px] inline-flex items-center gap-2 px-5 py-2.5
+                   bg-white/15 hover:bg-white/25
+                   border border-white/30 hover:border-white/50
+                   rounded-xl backdrop-blur-md
+                   text-white font-bold text-sm
+                   shadow-lg hover:shadow-xl
+                   transition-all duration-300
+                   hover:-translate-y-0.5"
+        >
+            <i class="fa-solid fa-file-lines text-amber-400"></i>
+            <span>جزئیات گزارش</span>
+        </a>
+        <!-- آیکون -->
+        <div class="transform hover:scale-105 transition-transform">
+            <i class="fa-solid fa-chart-line text-6xl md:text-[80px] drop-shadow-2xl text-amber-400"></i>
+        </div>
+
+    </div>
+
+</header>
+        <!-- ================= STATISTICAL CARDS (TOP KPI) ================= -->
+        <div class="flex items-center mb-2 mt-8">
+            <h2 class="text-xl font-black text-slate-800 flex items-center"><i class="fa-solid fa-gauge-high text-blue-600 ml-2"></i>شاخص‌های کلیدی عملکرد (KPI)</h2>
+            <div class="flex-grow h-px bg-slate-200 mr-4"></div>
+        </div>
+        <!-- استفاده از 6 ستون برای کاهش اسکرول -->
+        <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-slate-100 flex flex-col card-hover border-b-4 border-b-blue-500 relative">
+                <p class="text-slate-500 text-xs font-bold mb-1">کل پرونده‌های ثبتی و حقوقی</p>
+                <h3 class="text-3xl font-black text-slate-800">۱۰,۳۶۲ <span class="cite-badge">[cite: 3]</span></h3>
+                <p class="text-[10px] text-blue-500 mt-2 font-bold">۶,۱۱۴ مرتبط | ۴,۲۴۸ غیرمرتبط <span class="cite-badge">[cite: 3]</span></p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-slate-100 flex flex-col card-hover border-b-4 border-b-emerald-500 relative">
+                <p class="text-slate-500 text-xs font-bold mb-1">تعداد کل آراء له بنیاد</p>
+                <h3 class="text-3xl font-black text-slate-800">۴,۷۵۴ <span class="cite-badge">[cite: 3]</span></h3>
+                <p class="text-[10px] text-emerald-500 mt-2 font-bold">از مجموع ۵,۰۷۶ رای مختومه <span class="cite-badge">[cite: 3]</span></p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-slate-100 flex flex-col card-hover border-b-4 border-b-amber-500 relative">
+                <p class="text-slate-500 text-xs font-bold mb-1">مساحت رفع تصرفات</p>
+                <h3 class="text-3xl font-black text-slate-800" dir="ltr">۵.۸۵ <span class="text-lg">M</span><span class="cite-badge">[cite: 3]</span></h3>
+                <p class="text-[10px] text-amber-600 mt-2 font-bold">۵,۸۵۰,۱۷۴ متر مربع (از ۱۴۰۲)<span class="cite-badge">[cite: 3]</span></p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-slate-100 flex flex-col card-hover border-b-4 border-b-rose-500 relative">
+                <p class="text-slate-500 text-xs font-bold mb-1">ارزش رفع تصرفات</p>
+                <h3 class="text-3xl font-black text-slate-800">۵۵,۲۲۵ <span class="cite-badge">[cite: 3]</span></h3>
+                <p class="text-[10px] text-rose-500 mt-2 font-bold">میلیارد ریال (ارزش روز تقریبی) <span class="cite-badge">[cite: 3]</span></p>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-slate-100 flex flex-col card-hover border-b-4 border-b-purple-500">
+                <p class="text-slate-500 text-xs font-bold mb-1">مساحت اراضی حساب ۱۰۰</p>
+                <h3 class="text-3xl font-black text-slate-800" dir="ltr">۱.۴۹ <span class="text-lg">M</span><span class="cite-badge">[cite: 3]</span></h3>
+                <p class="text-[10px] text-purple-600 mt-2 font-bold">۱,۴۹۸,۸۱۰ مترمربع شناسایی شده<span class="cite-badge">[cite: 3]</span></p>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-slate-100 flex flex-col card-hover border-b-4 border-b-cyan-500">
+                <p class="text-slate-500 text-xs font-bold mb-1">درخواست سامانه انتشار</p>
+                <h3 class="text-3xl font-black text-slate-800">۶۶۰ <span class="cite-badge">[cite: 3]</span></h3>
+                <p class="text-[10px] text-cyan-600 mt-2 font-bold">۶۵۹ پاسخ و ۲۰۰ رسیدگی به شکایت<span class="cite-badge">[cite: 3]</span></p>
+            </div>
+        </section>
+
+        <!-- ================= CIRCULAR PROGRESS ================= -->
+        <div class="flex items-center mb-2 mt-8">
+            <h2 class="text-xl font-black text-slate-800 flex items-center"><i class="fa-solid fa-spinner text-emerald-500 ml-2"></i>نسبت‌های تحلیلی و کارآمدی</h2>
+            <div class="flex-grow h-px bg-slate-200 mr-4"></div>
+        </div>
+        <section class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            
+            <div class="bg-white rounded-2xl shadow-sm p-3 border border-slate-100 flex flex-col items-center text-center card-hover">
+                <div class="progress-circle mb-2" style="--p: 59%; --color: #3b82f6;">
+                    <div class="progress-value">۵۹٪</div>
+                </div>
+                <h4 class="text-xs font-bold text-slate-700">پرونده‌های مرتبط بنیاد</h4>
+                <p class="text-[10px] text-slate-500 mt-1">۶۱۱۴ مورد از کل <span class="cite-badge">[cite: 3]</span></p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-3 border border-slate-100 flex flex-col items-center text-center card-hover">
+                <div class="progress-circle mb-2" style="--p: 85%; --color: #10b981;">
+                    <div class="progress-value">۸۵٪</div>
+                </div>
+                <h4 class="text-xs font-bold text-slate-700">موفقیت در دیوان عدالت</h4>
+                <p class="text-[10px] text-slate-500 mt-1">۲۳ مورد عدم ابطال از ۲۷ پرونده <span class="cite-badge">[cite: 3]</span></p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-3 border border-slate-100 flex flex-col items-center text-center card-hover">
+                <div class="progress-circle mb-2" style="--p: 93%; --color: #f59e0b;">
+                    <div class="progress-value">۹۳٪</div>
+                </div>
+                <h4 class="text-xs font-bold text-slate-700">نسبت آراء له به مختومه</h4>
+                <p class="text-[10px] text-slate-500 mt-1">۴۷۵۴ له از ۵۰۷۶ مختومه <span class="cite-badge">[cite: 3]</span></p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-3 border border-slate-100 flex flex-col items-center text-center card-hover">
+                <div class="progress-circle mb-2" style="--p: 99%; --color: #8b5cf6;">
+                    <div class="progress-value">۹۹٪</div>
+                </div>
+                <h4 class="text-xs font-bold text-slate-700">پاسخگویی سامانه انتشار</h4>
+                <p class="text-[10px] text-slate-500 mt-1">۶۵۹ پاسخ از ۶۶۰ درخواست <span class="cite-badge">[cite: 3]</span></p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-3 border border-slate-100 flex flex-col items-center text-center card-hover">
+                <div class="progress-circle mb-2" style="--p: 97%; --color: #14b8a6;">
+                    <div class="progress-value">۹۷٪</div>
+                </div>
+                <h4 class="text-xs font-bold text-slate-700">رسیدگی به شکایات سامانه</h4>
+                <p class="text-[10px] text-slate-500 mt-1">۲۰۰ رسیدگی از ۲۰۵ شکایت <span class="cite-badge">[cite: 3]</span></p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-3 border border-slate-100 flex flex-col items-center text-center justify-center card-hover">
+                <i class="fa-solid fa-stopwatch text-4xl text-rose-500 mb-2"></i>
+                <h4 class="text-xs font-bold text-slate-700">کاهش زمان کمیسیون</h4>
+                <p class="text-[10px] text-slate-500 mt-1 font-bold">از ۳۵ روز به ۷ روز <span class="cite-badge">[cite: 3]</span></p>
+            </div>
+
+        </section>
+
+        <!-- ================= PROVINCES BREAKDOWN TABLES ================= -->
+        <div class="flex items-center mb-2 mt-8">
+            <h2 class="text-xl font-black text-slate-800 flex items-center"><i class="fa-solid fa-map-location-dot text-indigo-600 ml-2"></i>خلاصه وضعیت استان‌ها (بیشترین و کمترین) <span class="cite-badge">[cite: 3]</span></h2>
+            <div class="flex-grow h-px bg-slate-200 mr-4"></div>
+        </div>
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            
+            <!-- Table 1: Land Protection -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-slate-50 px-4 py-3 border-b border-slate-200 font-bold text-sm text-slate-700 flex justify-between">
+                    <span>آمار رفع تصرفات (از شهریور ۱۴۰۲)</span>
+                    <i class="fa-solid fa-shield text-slate-400"></i>
+                </div>
+                <div class="p-4 space-y-3">
+                    <div>
+                        <span class="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-1 rounded">بیشترین تصرفات</span>
+                        <p class="text-sm font-semibold mt-2 text-slate-800">کرمان، سیستان و بلوچستان، هرمزگان</p>
+                    </div>
+                    <div class="h-px bg-slate-100"></div>
+                    <div>
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">کمترین تصرفات</span>
+                        <p class="text-sm font-semibold mt-2 text-slate-800">لرستان، یزد، کردستان</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table 2: Commissions 1404 -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-slate-50 px-4 py-3 border-b border-slate-200 font-bold text-sm text-slate-700 flex justify-between">
+                    <span>پرونده‌های کمیسیون معاملات (سال ۱۴۰۴)</span>
+                    <i class="fa-solid fa-folder-open text-slate-400"></i>
+                </div>
+                <div class="p-4 space-y-3">
+                    <div>
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded">بیشترین پرونده</span>
+                        <p class="text-xs leading-relaxed font-semibold mt-2 text-slate-800">گلستان، خوزستان، زنجان، کرمانشاه، خراسان رضوی، اصفهان، آذربایجان غربی</p>
+                    </div>
+                    <div class="h-px bg-slate-100"></div>
+                    <div>
+                        <span class="text-xs font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded">کمترین پرونده</span>
+                        <p class="text-xs leading-relaxed font-semibold mt-2 text-slate-800">آذربایجان شرقی، بوشهر، تهران، چهارمحال، کهگیلویه، هرمزگان</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table 3: Commissions 1405 -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-slate-50 px-4 py-3 border-b border-slate-200 font-bold text-sm text-slate-700 flex justify-between">
+                    <span>پرونده‌های کمیسیون معاملات (۳ ماهه ۱۴۰۵)</span>
+                    <i class="fa-solid fa-folder-open text-slate-400"></i>
+                </div>
+                <div class="p-4 space-y-3">
+                    <div>
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded">بیشترین پرونده</span>
+                        <p class="text-xs leading-relaxed font-semibold mt-2 text-slate-800">اردبیل، مازندران، خراسان رضوی، اصفهان، گیلان، آذربایجان غربی، البرز</p>
+                    </div>
+                    <div class="h-px bg-slate-100"></div>
+                    <div>
+                        <span class="text-xs font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded">کمترین پرونده</span>
+                        <p class="text-xs leading-relaxed font-semibold mt-2 text-slate-800">آذربایجان شرقی، بوشهر، خراسان جنوبی، زنجان، یزد، قزوین، کرمان، لرستان، مرکزی، همدان</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= CHARTS SECTION ================= -->
+        <div class="flex items-center mb-2 mt-8">
+            <h2 class="text-xl font-black text-slate-800 flex items-center"><i class="fa-solid fa-chart-pie text-purple-600 ml-2"></i>نمودارهای آماری دقیق پرونده‌ها <span class="cite-badge">[cite: 3]</span></h2>
+            <div class="flex-grow h-px bg-slate-200 mr-4"></div>
+        </div>
+        <section class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+            
+            <!-- Pie Chart: Types -->
+            <div class="bg-white rounded-2xl shadow-md p-4 border border-slate-100 card-hover lg:col-span-1">
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-sm font-black text-slate-800">ترکیب موضوعی ۱۰,۳۶۲ پرونده</h4>
+                </div>
+                <div class="relative h-60 w-full flex justify-center">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Bar Chart: Meetings -->
+            <div class="bg-white rounded-2xl shadow-md p-4 border border-slate-100 card-hover lg:col-span-2">
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-sm font-black text-slate-800">تعداد جلسات کمیته حفاظت از اراضی طی سال‌ها</h4>
+                </div>
+                <div class="relative h-60 w-full">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Doughnut Chart: Votes Count -->
+            <div class="bg-white rounded-2xl shadow-md p-4 border border-slate-100 card-hover lg:col-span-1">
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-sm font-black text-slate-800">آراء صادره له و علیه بنیاد</h4>
+                </div>
+                <div class="relative h-60 w-full flex justify-center">
+                    <canvas id="doughnutChart"></canvas>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= DETAILED REPORTS ================= -->
+        <div class="flex items-center mb-2 mt-8">
+            <h2 class="text-xl font-black text-slate-800 flex items-center"><i class="fa-solid fa-file-contract text-teal-600 ml-2"></i>گزارش تحلیلی مالی و حقوقی (حساب ۱۰۰ و دیوان عدالت)</h2>
+            <div class="flex-grow h-px bg-slate-200 mr-4"></div>
+        </div>
+        
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-12">
+            
+            <!-- Analytical Card 1: Account 100 -->
+            <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-lg p-6 text-white relative overflow-hidden">
+                <div class="absolute -right-6 -bottom-6 text-slate-700 opacity-20 text-[150px]"><i class="fa-solid fa-mosque"></i></div>
+                <div class="relative z-10">
+                    <h3 class="text-xl font-black mb-4 flex items-center text-amber-400 border-b border-slate-700 pb-2">
+                        <i class="fa-solid fa-landmark-dome ml-2"></i>املاک شناسایی شده حساب ۱۰۰ امام (ره) <span class="cite-badge">[cite: 3]</span>
+                    </h3>
+                    <div class="bg-white/10 rounded-xl p-4 mb-4 backdrop-blur-sm border border-white/10">
+                        <ul class="space-y-2">
+                            <li class="flex justify-between items-center text-sm border-b border-white/10 pb-2">
+                                <span class="text-slate-300">مجموع مساحت کل اراضی (۲۸ پلاک)</span>
+                                <strong class="text-white text-lg">۱,۴۹۸,۸۱۰ <span class="text-xs">مترمربع</span></strong>
+                            </li>
+                            <li class="flex items-start pt-2">
+                                <i class="fa-solid fa-check-circle text-emerald-400 mt-1 ml-2"></i>
+                                <span class="text-xs leading-relaxed"><strong class="text-amber-300">انبارهای تهرانپارس:</strong> ۲۱۳,۱۲۰ متر مربع (دارای سند مالکیت).</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-check-circle text-emerald-400 mt-1 ml-2"></i>
+                                <span class="text-xs leading-relaxed"><strong class="text-amber-300">اراضی مابین فاز ۱ و ۲ اکباتان:</strong> ۳۸۰,۰۰۰ متر مربع (در مرحله کارشناسی و اختلاف شهرداری).</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-check-circle text-emerald-400 mt-1 ml-2"></i>
+                                <span class="text-xs leading-relaxed"><strong class="text-amber-300">اراضی مشایی طرشت:</strong> ۴۳۵,۲۳۸ متر مربع (در مرحله ثبت و احراز مالکیت).</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-check-circle text-emerald-400 mt-1 ml-2"></i>
+                                <span class="text-xs leading-relaxed"><strong class="text-amber-300">سایر اراضی مهم:</strong> اراضی شهرک ابریشم، سعادت آباد، کردان کرج و بندرعباس در حال صدور یا اخذ سند.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytical Card 2: Financial Votes & Adalat -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-200 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500 rounded-bl-full opacity-10"></div>
+                <h3 class="text-xl font-black mb-4 flex items-center text-slate-800 border-b border-slate-100 pb-2">
+                    <i class="fa-solid fa-scale-balanced text-blue-600 ml-2"></i>ارزش مالی آراء و عملکرد دیوان عدالت <span class="cite-badge">[cite: 3]</span>
+                </h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <div class="bg-emerald-50 p-3 rounded-lg border border-emerald-100 text-center">
+                        <p class="text-[10px] font-bold text-emerald-700">ارزش ریالی آراء له از سال ۱۴۰۴</p>
+                        <h4 class="text-lg font-black text-emerald-600 mt-1">۲۶,۸۲۲ <span class="text-xs">میلیارد ریال</span></h4>
+                    </div>
+                    <div class="bg-rose-50 p-3 rounded-lg border border-rose-100 text-center">
+                        <p class="text-[10px] font-bold text-rose-700">ارزش ریالی آراء علیه از سال ۱۴۰۴</p>
+                        <h4 class="text-lg font-black text-rose-600 mt-1">۱,۵۰۲ <span class="text-xs">میلیارد ریال</span></h4>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                    <h4 class="font-bold text-blue-800 mb-2 text-sm flex items-center"><i class="fa-solid fa-gavel ml-2"></i>آمار دیوان عدالت اداری (نیمه دوم ۱۴۰۲ تا ۱۴۰۵)</h4>
+                    <ul class="text-xs text-slate-600 space-y-2">
+                        <li class="flex justify-between border-b border-blue-100 pb-1"><span>تعداد پرونده با نتیجه عدم ابطال:</span> <strong class="text-emerald-600">۲۳ فقره</strong></li>
+                        <li class="flex justify-between border-b border-blue-100 pb-1"><span>تعداد پرونده با نتیجه ابطال:</span> <strong class="text-rose-600">۴ فقره</strong></li>
+                        <li class="flex justify-between pb-1"><span>تعداد کل آراء مأخوذه:</span> <strong>۲۷ فقره</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- ================= SCRIPTS FOR CHARTS ================= -->
+    <script>
+        Chart.register(ChartDataLabels);
+        Chart.defaults.font.family = 'Vazirmatn';
+        Chart.defaults.color = '#64748b';
+        
+        const commonDataLabelsConfig = {
+            color: '#1e293b',
+            font: { family: 'Vazirmatn', weight: 'bold', size: 12 },
+            formatter: (value) => value.toLocaleString('fa-IR')
+        };
+
+        // 1. Pie Chart - Case Types (Based on Source 3)
+        const ctxPie = document.getElementById('pieChart').getContext('2d');
+        new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: ['حقوقی', 'کیفری', 'دیوان عدالت', 'شبه‌قضایی'],
+                datasets: [{
+                    data: [9078, 822, 422, 40],
+                    backgroundColor: ['#3b82f6', '#ef4444', '#10b981', '#f59e0b'],
+                    borderWidth: 2, borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10, family: 'Vazirmatn' } } },
+                    datalabels: {
+                        color: '#fff',
+                        font: { family: 'Vazirmatn', weight: 'bold', size: 10 },
+                        formatter: (value, context) => {
+                            if (value < 400) return ''; // Hide small labels
+                            return value.toLocaleString('fa-IR');
+                        }
+                    }
+                }
+            }
+        });
+
+        // 2. Bar Chart - Committee Meetings (Based on Source 3)
+        const ctxBar = document.getElementById('barChart').getContext('2d');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['سال ۱۴۰۱', 'سال ۱۴۰۲', 'سال ۱۴۰۳', 'سال ۱۴۰۴', 'سه ماهه ۱۴۰۵'],
+                datasets: [{
+                    label: 'تعداد جلسات کمیته',
+                    data: [391, 196, 32, 25, 7],
+                    backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                    borderRadius: 6, barPercentage: 0.5
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    datalabels: { ...commonDataLabelsConfig, anchor: 'end', align: 'top', offset: 2 }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 3. Doughnut Chart - Votes Count (Based on Source 3: 4754 vs total 5076 -> 322 diff)
+        const ctxDoughnut = document.getElementById('doughnutChart').getContext('2d');
+        new Chart(ctxDoughnut, {
+            type: 'doughnut',
+            data: {
+                labels: ['آراء له بنیاد', 'آراء علیه بنیاد'],
+                datasets: [{
+                    data: [4754, 322],
+                    backgroundColor: ['#10b981', '#ef4444'],
+                    borderWidth: 2, borderColor: '#ffffff', cutout: '70%'
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11, family: 'Vazirmatn' } } },
+                    datalabels: {
+                        color: '#1e293b',
+                        font: { family: 'Vazirmatn', weight: 'bold', size: 12 },
+                        formatter: (value) => value.toLocaleString('fa-IR')
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
