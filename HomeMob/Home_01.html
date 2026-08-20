@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <!-- جلوگیری از زوم شدن صفحه برای القای حس اپلیکیشن موبایل -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ردیابی دقیق چرخه</title>
+    
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-Variable-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- اضافه کردن ورژن برای جلوگیری از فریز شدن استایل‌ها -->
+    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="banner.css?v=5">
+
+    <!-- ================= PWA Code ================= -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e3a8a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ردیابی چرخه">
+    <link rel="apple-touch-icon" href="BonyadLogo.png">
+    <!-- ============================================ -->
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="banner">
+            <span class="badge-demo">نسخه آزمایشی</span>
+            <img src="BonyadLogo.png" alt="لوگو بنیاد" class="img-bonyad">
+            
+            <div class="titles">
+                <h1>بنیاد مسکن انقلاب اسلامی</h1>
+                <h2>ردیابی دقیق چرخه</h2>
+                <small>اداره‌کل حوزه ریاست</small>
+            </div>
+            
+            <!-- تصویر کاربر -->
+            <img src="./UserPic/Boss.png" alt="ریاست بنیاد" class="img-boss" id="user-avatar" onerror="this.onerror=null; this.src='./UserPic/Boss.png';"> 
+
+            <script>
+                // اسکریپت تشخیص هویت کاربر بر اساس لینک اختصاصی
+                (function() {
+                    const params = new URLSearchParams(window.location.search);
+                    const userCode = params.get("u");
+                    
+                    // اگر لینک حاوی پارامتر u بود، آن را ذخیره کن
+                    if (userCode) {
+                        localStorage.setItem("UserCode", userCode);
+                    }
+                    
+                    // خواندن کد نهایی از حافظه
+                    const finalCode = localStorage.getItem("UserCode");
+                    if (finalCode && finalCode !== "Unknown") {
+                        document.getElementById('user-avatar').src = './UserPic/' + finalCode + '.jpg';
+                    }
+                })();
+            </script>
+        </header>
+        
+        <div class="grid-container">
+            <!-- ردیف 1 -->
+            <a href="../CentralCouncilMob/CentralCouncilMob.html" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-sitemap"></i></div>
+                <p>شورای مرکزی</p>
+            </a>
+            <a href="https://bmas100.github.io/War/WarReport.html" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-person-digging"></i></div>
+                <p>بازسازی جنگ رمضان</p>
+            </a>
+            
+            <!-- ردیف 2 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-map-location-dot"></i></div>
+                <p>امور استان‌ها</p>
+            </a>
+            <a href="../SubsidiariesMob/SubsidiariesMob.html" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-building"></i></div>
+                <p>شرکت‌های تابعه</p>
+            </a>
+            
+            <!-- ردیف 3 -->
+            <a href="../EvaluationMob/EvaluationMob.html" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-chart-line"></i></div>
+                <p>ارزیابی عملکرد</p>
+            </a>
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-user-tie"></i></div>
+                <p>ارزیابی مدیران</p>
+            </a>
+            
+            <!-- ردیف 4 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-house-chimney-window"></i></div>
+                <p>خانه امید</p>
+            </a>
+            <a href="../LegalMob/LegalMob.html" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-scale-balanced"></i></div>
+                <p>حقوقی و املاک</p>
+            </a>
+            
+            <!-- ردیف 5 -->
+            <a href="../HrmMob/HrmMob.html" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-users-gear"></i></div>
+                <p>منابع انسانی</p>
+            </a>
+            <a href="../SystemsMob/SystemsMob.html" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-server"></i></div>
+                <p>پلتفرم‌های بنیادمسکن</p>
+            </a>
+
+            <!-- ردیف 6 -->
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-comments"></i></div>
+                <p>ارتباط با ریاست</p>
+            </a>
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-share-nodes"></i></div>
+                <p>رسانه‌ها و فضای مجازی</p>
+            </a>
+        </div>
+
+        <img src="Footer.png" alt="Footer" class="footer-img">
+
+        <!-- ================= اسکریپت کنترل کش و آپدیت خودکار ================= -->
+        <script>
+            let refreshing = false;
+
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('sw.js').then(function(registration) {
+                        
+                        // بررسی اجباری برای آپدیت Service Worker
+                        registration.update();
+
+                    }).catch(function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+
+                // این بخش منتظر پیام تغییر کنترلر (نسخه جدید) می‌ماند
+                // به محض اینکه sw.js جدید جایگزین شد، صفحه را اتوماتیک رفرش می‌کند
+                navigator.serviceWorker.addEventListener('controllerchange', function() {
+                    if (!refreshing) {
+                        window.location.reload();
+                        refreshing = true;
+                    }
+                });
+            }
+        </script>
+        <!-- ================================================================ -->
+
+    </div>
+
+<script src="tracker.js?v=20"></script>
+
+</body>
+</html>
