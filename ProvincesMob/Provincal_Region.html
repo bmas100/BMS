@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گزارش تحلیلی سفرهای ناحیه‌ای ریاست بنیاد مسکن</title>
+    
+    <!-- Vazirmatn Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #1e3a8a;       /* Deep Navy Blue */
+            --primary-light: #2563eb; /* Royal Blue */
+            --secondary: #047857;     /* Emerald Green */
+            --accent: #d97706;        /* Amber/Orange */
+            --purple: #7c3aed;        /* Violet */
+            --teal: #0d9488;          /* Teal */
+            --danger: #dc2626;        /* Red */
+            --dark: #1f2937;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #e2e8f0;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.12), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding-bottom: 40px;
+        }
+
+        .dashboard-container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- Header / Banner --- */
+        .banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1e40af 100%);
+            color: white;
+            border-radius: var(--radius);
+            padding: 16px 28px; /* ارتفاع بنر کاهش یافت */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.3);
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .banner::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .banner-subtitle {
+            font-size: 0.9rem;
+            color: #93c5fd;
+            font-weight: 500;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .banner-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .banner-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.85rem;
+        }
+
+        .meta-tag {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .banner-action .btn-details {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px; /* ارتفاع دکمه کاهش یافت */
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(4, 120, 87, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .banner-action .btn-details:hover {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(4, 120, 87, 0.6);
+        }
+
+        /* --- KPI Cards Grid (8 Cards) --- */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 20px 18px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .kpi-card.blue { border-top: 4px solid var(--primary-light); }
+        .kpi-card.green { border-top: 4px solid var(--secondary); }
+        .kpi-card.purple { border-top: 4px solid var(--purple); }
+        .kpi-card.teal { border-top: 4px solid var(--teal); }
+        .kpi-card.amber { border-top: 4px solid var(--accent); }
+        .kpi-card.red { border-top: 4px solid var(--danger); }
+        .kpi-card.dark { border-top: 4px solid var(--dark); }
+        .kpi-card.indigo { border-top: 4px solid #4f46e5; }
+
+        .kpi-info h3 {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .kpi-info .value {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .kpi-info .sub-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .kpi-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .kpi-card.blue .kpi-icon { background: rgba(37, 99, 235, 0.1); color: var(--primary-light); }
+        .kpi-card.green .kpi-icon { background: rgba(4, 120, 87, 0.1); color: var(--secondary); }
+        .kpi-card.purple .kpi-icon { background: rgba(124, 58, 237, 0.1); color: var(--purple); }
+        .kpi-card.teal .kpi-icon { background: rgba(13, 148, 136, 0.1); color: var(--teal); }
+        .kpi-card.amber .kpi-icon { background: rgba(217, 119, 6, 0.1); color: var(--accent); }
+        .kpi-card.red .kpi-icon { background: rgba(220, 38, 38, 0.1); color: var(--danger); }
+        .kpi-card.dark .kpi-icon { background: rgba(31, 41, 55, 0.1); color: var(--dark); }
+        .kpi-card.indigo .kpi-icon { background: rgba(79, 70, 229, 0.1); color: #4f46e5; }
+
+        /* --- Section Titles --- */
+        .section-header {
+            margin: 35px 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-header h2 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .section-header .line {
+            height: 2px;
+            background: linear-gradient(to left, var(--border-color), transparent);
+            width: 100%;
+        }
+
+        /* --- Charts Grid (4 Charts) --- */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 22px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-header {
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chart-header h3 {
+            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 310px;
+            width: 100%;
+        }
+
+        /* --- Tables Styling --- */
+        .table-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 15px; /* پدینگ اطراف جدول کمتر شد */
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+            font-size: 0.85rem; /* فونت جدول کمی جمع و جورتر شد */
+        }
+
+        .custom-table th {
+            background-color: #f1f5f9;
+            color: var(--primary);
+            padding: 10px 12px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        .custom-table td {
+            padding: 8px 12px; /* ارتفاع ردیف‌ها کمتر شد */
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        /* رنگ ردیف‌های یک در میان */
+        .custom-table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        .custom-table tbody tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .custom-table tr:hover {
+            background-color: #f1f5f9;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .badge.green { background: #d1fae5; color: #065f46; }
+        .badge.yellow { background: #fef3c7; color: #92400e; }
+        .badge.red { background: #fee2e2; color: #991b1b; }
+        .badge.blue { background: #dbeafe; color: #1e40af; }
+
+        /* --- Analytical Cards (Bottom Section) --- */
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .analysis-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            border-right: 5px solid var(--primary-light);
+            transition: all 0.3s ease;
+        }
+
+        .analysis-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .analysis-card.green-border { border-right-color: var(--secondary); }
+        .analysis-card.amber-border { border-right-color: var(--accent); }
+        .analysis-card.purple-border { border-right-color: var(--purple); }
+        .analysis-card.red-border { border-right-color: var(--danger); }
+
+        .analysis-card h4 {
+            color: var(--primary);
+            font-size: 1.05rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            background-color: #f1f5f9; /* بک‌گراند اضافه شد */
+            padding: 10px 14px;
+            border-radius: 8px;
+        }
+
+        .analysis-card h4 i {
+            font-size: 1.2rem;
+        }
+
+        .analysis-list {
+            list-style: none;
+        }
+
+        .analysis-list li {
+            position: relative;
+            padding-right: 22px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: #334155;
+            text-align: justify;
+        }
+
+        .analysis-list li::before {
+            content: '\f104'; /* FontAwesome angle-left */
+            font-family: 'FontAwesome';
+            position: absolute;
+            right: 0;
+            top: 2px;
+            color: var(--primary-light);
+            font-weight: bold;
+        }
+
+        .analysis-list li strong {
+            color: var(--text-main);
+        }
+
+        /* Responsiveness for Mobile */
+        @media (max-width: 768px) {
+            .banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+                padding: 20px;
+            }
+            .banner-action {
+                width: 100%;
+            }
+            .banner-action .btn-details {
+                width: 100%;
+                justify-content: center;
+            }
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-header h2 {
+                font-size: 1rem;
+                white-space: normal;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+            .banner-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    
+    <!-- Banner Header -->
+    <div class="banner">
+        <div class="banner-content">
+            <div class="banner-subtitle">
+                <i class="fa-solid fa-server"></i>
+                سامانه مدیریتی ریاست بنیاد مسکن
+            </div>
+            <h1 class="banner-title">گزارش تحلیلی سفرهای ناحیه‌ای ریاست بنیاد مسکن</h1>
+            <div class="banner-meta">
+                <div class="meta-tag">
+                    <i class="fa-regular fa-calendar-check"></i>
+                    تاریخ گزارش: ۱۴۰۵/۰۶/۰۱
+                </div>
+                <div class="meta-tag">
+                    <i class="fa-solid fa-earth-americas"></i>
+                    پوشش: ۵ منطقه (۲۶ استان کشور)
+                </div>
+            </div>
+        </div>
+        <div class="banner-action">
+            <a href="../ProvincesMob/Provincial_Visits/VisitsReport_1405/06/01.pdf" target="_blank" class="btn-details">
+                <i class="fa-solid fa-file-pdf"></i>
+                جزئیات گزارش
+            </a>
+        </div>
+    </div>
+
+    <!-- KPI Cards Grid (8 Numerical & Managerial Cards) -->
+    <div class="kpi-grid">
+        <div class="kpi-card blue">
+            <div class="kpi-info">
+                <h3>کل مصوبات ثبت‌شده</h3>
+                <div class="value">۹۹</div>
+                <div class="sub-text">در نیمه اول سال ۱۴۰۵</div>
+            </div>
+            <div class="kpi-icon"><i class="fa-solid fa-file-signature"></i></div>
+        </div>
+        
+        <div class="kpi-card green">
+            <div class="kpi-info">
+                <h3>استان‌های مشارکت‌کننده</h3>
+                <div class="value">۲۶</div>
+                <div class="sub-text">در قالب ۵ نشست منطقه‌ای</div>
+            </div>
+            <div class="kpi-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+        </div>
+        
+        <div class="kpi-card purple">
+            <div class="kpi-info">
+                <h3>مناطق جغرافیایی</h3>
+                <div class="value">۵</div>
+                <div class="sub-text">نشست‌های استانی محوری</div>
+            </div>
+            <div class="kpi-icon"><i class="fa-solid fa-layer-group"></i></div>
+        </div>
+
+        <div class="kpi-card teal">
+            <div class="kpi-info">
+                <h3>میانگین مصوبات هر سفر</h3>
+                <div class="value">۱۹.۸</div>
+                <div class="sub-text">مصوبه به ازای هر نشست</div>
+            </div>
+            <div class="kpi-icon"><i class="fa-solid fa-calculator"></i></div>
+        </div>
+
+        <div class="kpi-card amber">
+            <div class="kpi-info">
+                <h3>بیشترین مصوبه منطقه‌ای</h3>
+                <div class="value">۳۰</div>
+                <div class="sub-text">منطقه شمال (مازندران)</div>
+            </div>
+            <div class="kpi-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+        </div>
+
+        <div class="kpi-card dark">
+            <div class="kpi-info">
+                <h3>کمترین مصوبه منطقه‌ای</h3>
+                <div class="value">۱۱</div>
+                <div class="sub-text">منطقه غرب (کرمانشاه)</div>
+            </div>
+            <div class="kpi-icon"><i class="fa-solid fa-arrow-trend-down"></i></div>
+        </div>
+
+        <div class="kpi-card red">
+            <div class="kpi-info">
+                <h3>مصوبات فاقد KPI عددی</h3>
+                <div class="value">۸۵٪</div>
+                <div class="sub-text">نیازمند تدقیق و پروژه‌محوری</div>
+            </div>
+            <div class="kpi-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        </div>
+
+        <div class="kpi-card indigo">
+            <div class="kpi-info">
+                <h3>محورهای عملیاتی</h3>
+                <div class="value">۶</div>
+                <div class="sub-text">حوزه تخصصی ارزیابی</div>
+            </div>
+            <div class="kpi-icon"><i class="fa-solid fa-list-check"></i></div>
+        </div>
+    </div>
+
+    <!-- Charts Section (4 Charts) -->
+    <div class="section-header">
+        <h2><i class="fa-solid fa-chart-column"></i> تحلیل‌های آماری و نمودارهای تصمیات</h2>
+        <div class="line"></div>
+    </div>
+
+    <div class="charts-grid">
+        <!-- Chart 1: Regional Approvals -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3><i class="fa-solid fa-chart-bar"></i> پراکندگی مصوبات به تفکیک مناطق جغرافیایی</h3>
+            </div>
+            <div class="chart-container">
+                <canvas id="regionBarChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 2: Thematic Distribution -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3><i class="fa-solid fa-chart-pie"></i> سهم موضوعی مصوبات از محورهای ۶ گانه (درصد)</h3>
+            </div>
+            <div class="chart-container">
+                <canvas id="themeDoughnutChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 3: Maturity Assessment -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3><i class="fa-solid fa-gauge-high"></i> ارزیابی شاخص‌های بلوغ ساختاری صورتجلسات</h3>
+            </div>
+            <div class="chart-container">
+                <canvas id="maturityChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 4: Region vs Invited Provinces -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3><i class="fa-solid fa-users-between-lines"></i> مقایسه تعداد استان‌های حاضر و حجم مصوبات</h3>
+            </div>
+            <div class="chart-container">
+                <canvas id="provinceCompareChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Section 1: Regional Meetings Details -->
+    <div class="section-header">
+        <h2><i class="fa-solid fa-table-list"></i> مشخصات و ابعاد جغرافیایی نشست‌های ۵ گانه</h2>
+        <div class="line"></div>
+    </div>
+
+    <div class="table-card">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>منطقه / استان میزبان</th>
+                    <th>تاریخ برگزاری (۱۴۰۵)</th>
+                    <th>استان‌های مدعو و حاضر در نشست</th>
+                    <th>تعداد استان‌ها</th>
+                    <th>تعداد مصوبات</th>
+                    <th>رویکرد محوری نشست</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>زنجان (شمال‌غرب)</strong></td>
+                    <td>۸ و ۹ اردیبهشت</td>
+                    <td>آذربایجان شرقی، آذربایجان غربی، اردبیل، زنجان، قزوین</td>
+                    <td>۵</td>
+                    <td><span class="badge blue">۱۲ مصوبه</span></td>
+                    <td>کنترل قیمت، شفافیت معاملات و بازسازی سوانح</td>
+                </tr>
+                <tr>
+                    <td><strong>کرمانشاه (غرب)</strong></td>
+                    <td>۲۲ و ۲۳ اردیبهشت</td>
+                    <td>کرمانشاه، کردستان، ایلام، لرستان، خوزستان، همدان</td>
+                    <td>۶</td>
+                    <td><span class="badge blue">۱۱ مصوبه</span></td>
+                    <td>طرح‌های هادی روستایی و مدل‌های نوآورانه مسکن محرومین</td>
+                </tr>
+                <tr>
+                    <td><strong>خراسان رضوی (شرق)</strong></td>
+                    <td>۳ و ۴ خرداد</td>
+                    <td>خراسان رضوی، خراسان شمالی، خراسان جنوبی، سیستان و بلوچستان، یزد</td>
+                    <td>۵</td>
+                    <td><span class="badge blue">۱۹ مصوبه</span></td>
+                    <td>منابع مالی استانی و بهره‌گیری از اختیارات تفویض‌شده</td>
+                </tr>
+                <tr>
+                    <td><strong>مازندران (شمال)</strong></td>
+                    <td>۳۱ خرداد و ۱ تیر</td>
+                    <td>مازندران، گیلان، سمنان، گلستان، البرز</td>
+                    <td>۵</td>
+                    <td><span class="badge blue">۳۰ مصوبه</span></td>
+                    <td>آمایش سرزمین، مولدسازی و ساماندهی نیروی انسانی</td>
+                </tr>
+                <tr>
+                    <td><strong>مرکزی (مرکز)</strong></td>
+                    <td>۳۰ و ۳۱ تیر</td>
+                    <td>مرکزی، تهران، اصفهان، چهارمحال و بختیاری، قم</td>
+                    <td>۵</td>
+                    <td><span class="badge blue">۲۷ مصوبه</span></td>
+                    <td>بازسازی، مسئولیت اجتماعی صنایع و توسعه سرمایه انسانی</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Table Section 2: Six Operational Axes -->
+    <div class="section-header">
+        <h2><i class="fa-solid fa-sitemap"></i> ماتریس محورهای شش‌گانه عملیاتی و تکالیف کلیدی استان‌ها</h2>
+        <div class="line"></div>
+    </div>
+
+    <div class="table-card">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>محور عملیاتی</th>
+                    <th>اقدامات و تکالیف کلیدی تصویب‌شده</th>
+                    <th>استان‌ها / معاونت‌های مسئول</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>۱. مسکن محرومین و حساب ۱۰۰</strong></td>
+                    <td>تغییر الگوی ساخت به مقاوم‌سازی • شناسایی زمین نهادها (بنیاد مستضعفان) • ثبت هزینه‌ها در سرفصل حساب ۱۰۰ • تبدیل پروژه‌های بدون متقاضی به مسکن محرومین • استفاده از مسکن استیجاری • تشکیل جلسات هفتگی «خانه امید»</td>
+                    <td>تمامی استان‌ها، معاونت بازسازی و مسکن روستایی، خیرین مسکن‌ساز</td>
+                </tr>
+                <tr>
+                    <td><strong>۲. نهضت ملی و مسکن شهری</strong></td>
+                    <td>تهیه FS دقیق و عدم تغییر Scope • پیشبرد بر اساس آورده متقاضی (فازبندی) • تکمیل پروژه‌های بالای ۶۰٪ تا پایان ۱۴۰۵ • مطالعه سکونتگاه‌های جدید و پروژه‌های مشابه کوثر • اعطای ۲۶۰ فقره تسهیلات قرض‌الحسنه به چهارمحال</td>
+                    <td>معاونت مسکن و عمران شهری، ادارات کل استان‌ها</td>
+                </tr>
+                <tr>
+                    <td><strong>۳. بازسازی و عمران روستایی</strong></td>
+                    <td>اتمام تعمیرات تا شهریور و سفت‌کاری تا پایان سال • نقش محوری مالکان در بازسازی • بازنگری موضعی و سریع طرح‌های هادی • تدوین چارچوب مسکن معیشت‌محور و شفاف‌سازی تهاتر قیر</td>
+                    <td>معاونت بازسازی، معاونت توسعه و عمران روستایی</td>
+                </tr>
+                <tr>
+                    <td><strong>۴. برنامه‌ریزی و امور مالی</strong></td>
+                    <td>پایبندی به بودجه مصوب ۱۴۰۵ • استفاده از مولدسازی و مالیات‌های نشان‌دار • برگزاری مجمع سال ۱۴۰۴ تا پایان شهریور • انعقاد قراردادهای تیپ و مدیریت پیش‌فروش</td>
+                    <td>معاونت برنامه‌ریزی، معاونت پشتیبانی، استان‌ها</td>
+                </tr>
+                <tr>
+                    <td><strong>۵. ماشین‌آلات و شرکت‌ها</strong></td>
+                    <td>نوسازی ماشین‌آلات و واردات قطعات از مناطق آزاد • استفاده از ظرفیت تعمیرگاهی منطقه آزاد آذربایجان غربی • حداکثر استفاده از ظرفیت اقتصادی شرکت‌های تابعه</td>
+                    <td>مدیریت ماشین‌آلات، شرکت‌های تابعه، استان آذربایجان غربی</td>
+                </tr>
+                <tr>
+                    <td><strong>۶. منابع انسانی و ساختار</strong></td>
+                    <td>بازنگری ساختار (چابک‌سازی و تفکیک برنامه و بودجه) • ساماندهی نیروی انسانی و برنامه‌ریزی جانشین‌پروری • ارسال لیست همکاران فاقد مسکن (فرم ج سبز) • منع مطلق حضور کارکنان در فعالیت‌های انتخاباتی</td>
+                    <td>معاونت پشتیبانی و مدیریت منابع انسانی، حراست</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Analytical Cards Section -->
+    <div class="section-header">
+        <h2><i class="fa-solid fa-lightbulb"></i> تحلیل تحولات پارادایمی و راهبردی دوره جدید</h2>
+        <div class="line"></div>
+    </div>
+
+    <div class="analysis-grid">
+        <div class="analysis-card">
+            <h4><i class="fa-solid fa-hands-holding-child" style="color: var(--primary-light);"></i> ۱. مسکن محرومین؛ اهرم‌سازی منابع</h4>
+            <ul class="analysis-list">
+                <li><strong>تغییر رویکرد:</strong> حرکت از ورود مستقیم و پرهزینه به پروژه‌ها به سمت الگوی «مقاوم‌سازی مسکن روستایی و بازسازی‌ها».</li>
+                <li><strong>زمین به‌عنوان گلوگاه:</strong> تاکید متواتر بر شناسایی زمین‌های نهادها (بنیاد مستضعفان) جهت ایجاد «بانک زمین مسکن محرومین».</li>
+                <li><strong>مدل‌های نوآورانه:</strong> تبدیل پروژه‌های بدون متقاضی نهضت ملی به مسکن محرومین و توسعه الگوی مسکن استیجاری.</li>
+            </ul>
+        </div>
+
+        <div class="analysis-card green-border">
+            <h4><i class="fa-solid fa-vault" style="color: var(--secondary);"></i> ۲. تامین مالی تلفیقی و بیرونی</h4>
+            <ul class="analysis-list">
+                <li><strong>جذب منابع خارج از اعتبار:</strong> استفاده فعال از ظرفیت مالیات‌های نشان‌دار و مسئولیت اجتماعی صنایع (مانند سیمان شهرکرد).</li>
+                <li><strong>مولدسازی دارایی‌ها:</strong> بهره‌گیری از اختیارات تفویض‌شده به استانداران جهت مولدسازی املاک دولتی برای بازسازی.</li>
+                <li><strong>انضباط مالی:</strong> ثبت دقیق کلیه هزینه‌های خدمات فنی مسکن محرومین در سرفصل حساب ۱۰۰.</li>
+            </ul>
+        </div>
+
+        <div class="analysis-card amber-border">
+            <h4><i class="fa-solid fa-chart-line" style="color: var(--accent);"></i> ۳. نهضت ملی؛ کنترل اقتصاد پروژه</h4>
+            <ul class="analysis-list">
+                <li><strong>امکان‌سنجی (F.S):</strong> الزام به تهیه مطالعات F.S دقیق پیش از کلنگ‌زنی و عدم تغییر در محدوده (Scope) پروژه‌ها.</li>
+                <li><strong>پیشبرد بر اساس آورده:</strong> فازبندی پروژه‌ها بر اساس آورده واقعی متقاضیان جهت جلوگیری از انباشت بدهی.</li>
+                <li><strong>هدف‌گذاری پیشرفت:</strong> اولویت‌دهی مطلق به تکمیل پروژه‌های با پیشرفت بالای ۶۰٪ تا پایان سال ۱۴۰۵.</li>
+            </ul>
+        </div>
+
+        <div class="analysis-card purple-border">
+            <h4><i class="fa-solid fa-network-wired" style="color: var(--purple);"></i> ۴. مدیریت منطقه‌ای و اشتراک ظرفیت</h4>
+            <ul class="analysis-list">
+                <li><strong>خدمات مشترک منطقه‌ای:</strong> استفاده استان‌های همجوار از خدمات تعمیرگاهی منطقه آزاد آذربایجان غربی.</li>
+                <li><strong>ارزیابی متقاطع:</strong> سنجش عملکرد واحدهای تابعه بر اساس ارزیابی‌های ۳ ماهه ستاد مرکزی.</li>
+                <li><strong>انتقال تجربیات:</strong> تعمیم الگوهای موفق تامین مالی استانی به سایر مناطق ۵ گانه.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Regional Breakdown & Pathology -->
+    <div class="section-header">
+        <h2><i class="fa-solid fa-microscope"></i> آسیب‌شناسی ساختاری و ارزیابی بلوغ صورتجلسات</h2>
+        <div class="line"></div>
+    </div>
+
+    <!-- Table Section 3: Maturity Pathology Table -->
+    <div class="table-card">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>مؤلفه مدیریتی</th>
+                    <th>وضعیت موجود در صورتجلسات</th>
+                    <th>سطح ارزیابی</th>
+                    <th>راهکار اصلاحی و پیشنهادی</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>تبیین اولویت‌های کلان</strong></td>
+                    <td>شفافیت در مسکن محرومین و انضباط بودجه مصوب</td>
+                    <td><span class="badge green">قوی 🟢</span></td>
+                    <td>حفظ و تقویت جهت‌گیری‌های راهبردی ستادی</td>
+                </tr>
+                <tr>
+                    <td><strong>ایجاد مدل منطقه‌ای</strong></td>
+                    <td>حضور همزمان ۵ الی ۶ استان و امکان مقایسه و اشتراک</td>
+                    <td><span class="badge green">قوی 🟢</span></td>
+                    <td>تعمیم مدل خدمات مشترک (مانند تعمیرگاه و ماشین‌آلات)</td>
+                </tr>
+                <tr>
+                    <td><strong>تنوع موضوعی</strong></td>
+                    <td>پوشش همزمان مسائل عمرانی، مالی، ماشین‌آلات و منابع انسانی</td>
+                    <td><span class="badge yellow">متوسط 🟡</span></td>
+                    <td>جلوگیری از پراکندگی دستور کارها و تمرکز بر اولویت‌ها</td>
+                </tr>
+                <tr>
+                    <td><strong>تعیین متولی / مالک اقدام</strong></td>
+                    <td>استفاده از عبارات عام نظیر «استان‌ها اقدام نمایند»</td>
+                    <td><span class="badge red">بسیار ضعیف 🔴</span></td>
+                    <td>ثبت صریح نام مدیرکل یا معاونت مسئول اقدام</td>
+                </tr>
+                <tr>
+                    <td><strong>زمان‌بندی و موعد (Deadline)</strong></td>
+                    <td>نبود تاریخ اتمام و مهلت زمانی در اکثریت مطلق مصوبات</td>
+                    <td><span class="badge red">بسیار ضعیف 🔴</span></td>
+                    <td>تعیین مهلت زمان‌بندی شفاف (مثلاً ۳۰ روزه یا ۶۰ روزه)</td>
+                </tr>
+                <tr>
+                    <td><strong>شاخص سنجش (KPI)</strong></td>
+                    <td>کیفی بودن بندها (مانند «تأکید شد»، «پیگیری شود»)</td>
+                    <td><span class="badge red">بسیار ضعیف 🔴</span></td>
+                    <td>تبدیل به متراژ، تعداد، درصد پیشرفت فیزیکی یا مبلغ</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Final Actionable Proposals -->
+    <div class="section-header">
+        <h2><i class="fa-solid fa-bullseye"></i> پیشنهادات اجرایی: تبدیل مصوبات سفر به سامانه حکمرانی</h2>
+        <div class="line"></div>
+    </div>
+
+    <div class="analysis-grid">
+        <div class="analysis-card red-border">
+            <h4><i class="fa-solid fa-table-cells" style="color: var(--danger);"></i> ۱. ماتریس مسئولیت و تعهد استاندارد</h4>
+            <p style="font-size: 0.9rem; margin-bottom: 10px;">ثبت تمامی مصوبات از سفرهای آتی در قالب فرمت استاندارد:</p>
+            <ul class="analysis-list">
+                <li><strong>کد مصوبه • شرح اقدام • متولی مستقیم • موعد اجرا • شاخص KPI • ریسک اصلی • تصمیم موردنیاز</strong></li>
+            </ul>
+        </div>
+
+        <div class="analysis-card amber-border">
+            <h4><i class="fa-solid fa-diagram-project" style="color: var(--accent);"></i> ۲. پروژه‌محوری مصوبات کیفی</h4>
+            <p style="font-size: 0.9rem; margin-bottom: 10px;">تبدیل بندهای کیفی به پروژه‌های قابل رصد (نمونه بانک زمین):</p>
+            <ul class="analysis-list">
+                <li><strong>هدف: ۱۰۰ هکتار | شناسایی‌شده: ۶۵ هکتار | توافق‌شده: ۳۰ هکتار | ظرفیت: ۱,۲۰۰ واحد</strong></li>
+            </ul>
+        </div>
+
+        <div class="analysis-card green-border">
+            <h4><i class="fa-solid fa-clock-rotate-left" style="color: var(--secondary);"></i> ۳. بازآرایی زمان‌بندی نشست‌ها</h4>
+            <p style="font-size: 0.9rem; margin-bottom: 10px;">تخصیص زمان جلسات آتی بر اساس پیگیری عملکرد:</p>
+            <ul class="analysis-list">
+                <li><strong>۳۰ دقیقه اول:</strong> بررسی انحرافات مصوبات سفر قبلی | <strong>۴۵ دقیقه:</strong> مسائل استراتژیک | <strong>۳۰ دقیقه:</strong> جمع‌بندی بر اساس ماتریس مسئولیت.</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+
+<script>
+    // Register ChartDataLabels plugin
+    Chart.register(ChartDataLabels);
+
+    // Global Font Configuration
+    Chart.defaults.font.family = 'Vazirmatn';
+    Chart.defaults.color = '#334155';
+
+    // --- Chart 1: Regional Approvals Bar Chart ---
+    const ctxBar = document.getElementById('regionBarChart').getContext('2d');
+    new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: ['مازندران (شمال)', 'مرکزی (مرکز)', 'خراسان رضوی (شرق)', 'زنجان (شمال‌غرب)', 'کرمانشاه (غرب)'],
+            datasets: [{
+                label: 'تعداد مصوبات',
+                data: [30, 27, 19, 12, 11],
+                backgroundColor: [
+                    'rgba(37, 99, 235, 0.85)',
+                    'rgba(4, 120, 87, 0.85)',
+                    'rgba(217, 119, 6, 0.85)',
+                    'rgba(124, 58, 237, 0.85)',
+                    'rgba(220, 38, 38, 0.85)'
+                ],
+                borderRadius: 8,
+                barThickness: 32
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                datalabels: {
+                    // تنظیمات رنگ و موقعیت مقادیر (قابل تغییر برای همین نمودار)
+                    color: '#000000',       // رنگ اعداد (مشکی)
+                    align: 'right',         // موقعیت چپ و راست: 'start', 'center', 'end', 'right', 'left'
+                    anchor: 'end',          // موقعیت بالا و پایین: 'start', 'center', 'end'
+                    offset: 5,              // فاصله عدد از نقطه مشخص شده
+                    font: { weight: 'bold', size: 12, family: 'Vazirmatn' },
+                    formatter: (value) => value + ' مصوبه'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#e2e8f0' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // --- Chart 2: Thematic Distribution Doughnut Chart ---
+    const ctxDoughnut = document.getElementById('themeDoughnutChart').getContext('2d');
+    new Chart(ctxDoughnut, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                'مسکن محرومین و حساب ۱۰۰ (۳۲٪)',
+                'نهضت ملی و مسکن شهری (۲۴٪)',
+                'بازسازی و عمران روستایی (۱۸٪)',
+                'برنامه‌ریزی و امور مالی (۱۴٪)',
+                'ماشین‌آلات و شرکت‌ها (۷٪)',
+                'منابع انسانی و ساختار (۵٪)'
+            ],
+            datasets: [{
+                data: [32, 24, 18, 14, 7, 5],
+                backgroundColor: [
+                    '#1e3a8a',
+                    '#047857',
+                    '#d97706',
+                    '#7c3aed',
+                    '#0d9488',
+                    '#4f46e5'
+                ],
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '58%',
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 12,
+                        padding: 12,
+                        font: { family: 'Vazirmatn', size: 11 }
+                    }
+                },
+                datalabels: {
+                    // تنظیمات رنگ و موقعیت مقادیر دایره (قابل تغییر)
+                    color: '#000000',       // رنگ اعداد
+                    align: 'right',         // جابجایی افقی
+                    anchor: 'end',          // لنگرگاه
+                    offset: 5,              // فاصله
+                    font: { weight: 'bold', size: 12, family: 'Vazirmatn' },
+                    formatter: (value) => value + '٪'
+                }
+            }
+        }
+    });
+
+    // --- Chart 3: Maturity Assessment Chart ---
+    const ctxMaturity = document.getElementById('maturityChart').getContext('2d');
+    new Chart(ctxMaturity, {
+        type: 'bar',
+        data: {
+            labels: ['تبیین اولویت‌ها', 'مدل منطقه‌ای', 'تنوع موضوعی', 'تعیین متولی', 'زمان‌بندی دقیق', 'شاخص KPI'],
+            datasets: [{
+                label: 'درصد بلوغ ساختاری',
+                data: [90, 85, 70, 25, 20, 15],
+                backgroundColor: [
+                    '#047857',
+                    '#047857',
+                    '#d97706',
+                    '#dc2626',
+                    '#dc2626',
+                    '#dc2626'
+                ],
+                borderRadius: 6
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                datalabels: {
+                    // تنظیمات مقادیر میله‌های افقی
+                    color: '#000000',
+                    align: 'right',         // چپ و راست شدن
+                    anchor: 'end',          // بالا و پایین / موقعیت محور
+                    offset: 5,              // فاصله
+                    font: { weight: 'bold', size: 12, family: 'Vazirmatn' },
+                    formatter: (value) => value + '٪'
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: { color: '#e2e8f0' }
+                },
+                y: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // --- Chart 4: Region vs Invited Provinces Comparison Chart ---
+    const ctxCompare = document.getElementById('provinceCompareChart').getContext('2d');
+    new Chart(ctxCompare, {
+        type: 'bar',
+        data: {
+            labels: ['زنجان', 'کرمانشاه', 'خراسان رضوی', 'مازندران', 'مرکزی'],
+            datasets: [
+                {
+                    label: 'تعداد استان‌های حاضر',
+                    data: [5, 6, 5, 5, 5],
+                    backgroundColor: '#3b82f6',
+                    borderRadius: 6
+                },
+                {
+                    label: 'تعداد مصوبات',
+                    data: [12, 11, 19, 30, 27],
+                    backgroundColor: '#1e3a8a',
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: { font: { family: 'Vazirmatn', size: 11 } }
+                },
+                datalabels: {
+                    // تنظیمات مقادیر نمودار مقایسه‌ای
+                    color: '#000000',
+                    align: 'right',
+                    anchor: 'end',
+                    offset: 5,
+                    font: { weight: 'bold', size: 12, family: 'Vazirmatn' },
+                    formatter: (value) => value
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#e2e8f0' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
