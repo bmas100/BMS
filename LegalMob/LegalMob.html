@@ -181,7 +181,7 @@
     box-shadow: 0 4px 10px rgba(30, 58, 138, 0.25);
   }
 
-  .kpi-tag{font-size:10px; color:var(--ink-500); background:rgba(255,255,255,0.8); border:1px solid #e3e8ee; padding:2px 8px; border-radius:100px; font-weight:600;}
+  .kpi-tag{font-size:12px; color:#2c00ff; background:rgba(255,255,255,0.8); border:1px solid #e3e8ee; padding:2px 8px; border-radius:100px; font-weight:600;}
   .kpi-num{font-size:20px; font-weight:800; color:var(--ink-900); line-height:1.2;}
   .kpi-num small{font-size:12px; font-weight:600; color:var(--ink-500); margin-inline-start:4px;}
   .kpi-label{font-size:11.5px; color:var(--ink-500); font-weight:500;}
@@ -204,11 +204,11 @@
   /* ---------- CHART WRAPPER (حل مشکل کش آمدن و Border زیبا) ---------- */
   .chart-wrapper {
     position: relative;
-    height: 280px; /* ارتفاع ثابت جهت جلوگیری از کش آمدن */
+    height: 300px; /* ارتفاع ثابت جهت جلوگیری از کش آمدن */
     width: 100%;
     border: 1px solid var(--line);
     border-radius: 12px;
-    padding: 12px;
+    padding: 10px;
     background: linear-gradient(to bottom right, #ffffff, #fbfcfd);
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.015), 0 4px 12px rgba(0,0,0,0.03);
     margin-top: 10px;
@@ -337,7 +337,7 @@
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <div class="brand"><span class="dot"></span> واحد حقوقی و املاک</div>
+    <div class="brand"><span class="dot"></span>1405/05/28</div>
     <div class="nav-links">
       <a href="#overview">کلیات</a>
       <a href="#verdicts">آراء</a>
@@ -379,19 +379,24 @@
         <div class="sub">۶٬۱۱۴ مرتبط | ۴٬۲۴۸ غیرمرتبط</div>
       </div>
       <div class="cell">
-        <div class="num">۲۶.۸۲</div>
+        <div class="num">۲.۶۸</div>
         <div class="lbl">ارزش ریالی آراء له (همت)</div>
         <div class="sub">از سال ۱۴۰۴ تاکنون</div>
       </div>
+
+
+      <div class="cell">
+        <div class="num">۰.۱۳</div>
+        <div class="lbl">ارزش ریالی آراء علیه (همت)</div>
+        <div class="sub">از سال ۱۴۰۴ تاکنون</div>
+      </div>
+
+
+
       <div class="cell">
         <div class="num">۵٬۸۵۰٬۱۷۴</div>
         <div class="lbl">متر مربع رفع تصرف</div>
         <div class="sub">معادل ۵۵.۲۳ همت</div>
-      </div>
-      <div class="cell">
-        <div class="num">۳۱</div>
-        <div class="lbl">استان تحت پوشش</div>
-        <div class="sub">بنیاد مسکن سراسر کشور</div>
       </div>
     </div>
   </div>
@@ -478,7 +483,14 @@
       </div>
     </div>
 
-    <div class="kpi-grid cols-4">
+    <div class="kpi-grid cols">
+
+      <div class="kpi-card bt-navy">
+        <div class="kpi-top"><div class="kpi-icon navy"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-archive"/></svg></div></div>
+        <div class="kpi-num">۵٬۰۷۶</div>
+        <div class="kpi-label">کل آراء مختومه</div>
+      </div>
+
       <div class="kpi-card bt-teal">
         <div class="kpi-top"><div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-check"/></svg></div></div>
         <div class="kpi-num">۴٬۷۵۴</div>
@@ -489,16 +501,19 @@
         <div class="kpi-num">۳۸۰</div>
         <div class="kpi-label">تعداد آراء علیه</div>
       </div>
-      <div class="kpi-card bt-navy">
-        <div class="kpi-top"><div class="kpi-icon navy"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-archive"/></svg></div></div>
-        <div class="kpi-num">۵٬۰۷۶</div>
-        <div class="kpi-label">کل آراء مختومه</div>
-      </div>
+
       <div class="kpi-card bt-gold">
         <div class="kpi-top"><div class="kpi-icon gold"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-trend"/></svg></div></div>
-        <div class="kpi-num">۲۶.۸۲<small>همت</small></div>
-        <div class="kpi-label">ارزش ریالی له (تجمعی)</div>
+        <div class="kpi-num">۲.۶۸<small>همت</small></div>
+        <div class="kpi-label">ارزش ریالی آراء له</div>
       </div>
+
+      <div class="kpi-card bt-gold">
+        <div class="kpi-top"><div class="kpi-icon gold"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-trend"/></svg></div></div>
+        <div class="kpi-num">۰.۱۳<small>همت</small></div>
+        <div class="kpi-label">ارزش ریالی آراء علیه</div>
+      </div>
+
     </div>
 
     <div class="grid-3 row-gap">
@@ -544,7 +559,7 @@
       </div>
       <div class="table-scroll" style="max-height: 250px;">
         <table>
-          <thead><tr><th class="name-cell">استان</th><th>ارزش آراء له (ریال)</th><th>ارزش آراء علیه (ریال)</th></tr></thead>
+          <thead><tr><th class="name-cell">استان</th><th>ارزش آراء له (همت)</th><th>ارزش آراء علیه (همت)</th></tr></thead>
           <tbody id="tblValues"></tbody>
         </table>
       </div>
@@ -834,6 +849,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var c = 2*Math.PI*r;
     var offset = c - (percent/100)*c;
     var el = document.getElementById(containerId);
+
     el.innerHTML =
       '<svg class="ring-svg" width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'">' +
         '<circle cx="'+size/2+'" cy="'+size/2+'" r="'+r+'" fill="none" stroke="#EDEFF2" stroke-width="10"/>' +
@@ -901,7 +917,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var tblValuesBody = document.getElementById('tblValues');
   fullValueTable.forEach(function(r){
     tblValuesBody.insertAdjacentHTML('beforeend',
-      '<tr><td class="name-cell">'+r[0]+'</td><td class="num-cell">'+fa(r[1])+'</td><td>'+fa(r[2])+'</td></tr>');
+      '<tr><td class="name-cell">'+r[0]+'</td><td class="num-cell">'+faDec(r[1]/10000000000000, 3)+'</td><td>'+faDec(r[2]/10000000000000, 3)+'</td></tr>');
   });
 
   var committee = {
@@ -932,6 +948,14 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ---------------- charts ---------------- */
   function moneyToBillion(v){ return v/1e9; }
 
+  // -------------------------------------------------------------------------
+  // توابع کمکی جدید: این دو تابع اجازه می‌دهند اعداد را مستقل در X و Y جابجا کنید
+  // X: مثبت (راست) ، منفی (چپ)
+  // Y: مثبت (پایین) ، منفی (بالا)
+  // -------------------------------------------------------------------------
+  function getAlign(x, y) { return Math.atan2(y, x) * (180 / Math.PI); }
+  function getOffset(x, y) { return Math.sqrt(x * x + y * y); }
+
   new Chart(document.getElementById('chartOverviewTop10'), {
     type:'bar',
     data:{
@@ -948,7 +972,17 @@ document.addEventListener('DOMContentLoaded', function () {
       maintainAspectRatio:false,
       plugins:{
         legend:{position:'bottom', labels:{boxWidth:10, font:{size:10.5}}},
-        datalabels:{color:'#fff', font:{size:9}, formatter:function(v){ return v>50? fa(v):''; }}
+        datalabels:{
+          // ---> تنظیمات جابجایی همزمان X و Y (نمودار میله‌ای انباشته) <---
+          anchor: 'center', 
+          // مقادیر داخل پرانتز را تغییر دهید: (X, Y)
+          // مثال: برای ۵ پیکسل چپ و ۱۰ پیکسل بالا وارد کنید: (-5, -10)
+          align: getAlign(0, 0),
+          offset: getOffset(0, 0),
+          // حتماً اعداد بالا و پایین دقیقاً یکسان باشند ☝️
+          // ------------------------------------------------------------------
+          color:'#fff', font:{size:9}, formatter:function(v){ return v>50? fa(v):''; }
+        }
       },
       scales:{ x:{stacked:true, grid:{color:'#EEF1F4'}, ticks:{callback:function(v){return fa(v);}}}, y:{stacked:true, grid:{display:false}} }
     }
@@ -965,7 +999,14 @@ document.addEventListener('DOMContentLoaded', function () {
       maintainAspectRatio:false,
       plugins:{
         legend:{position:'bottom', labels:{boxWidth:10, font:{size:11}}},
-        datalabels:{color:'#000', font:{size:12, weight:'700'}, formatter:function(v,ctx){
+        datalabels:{
+          // ---> تنظیمات جابجایی همزمان X و Y (نمودار دایره‌ای توخالی) <---
+          anchor: 'center',
+          // مقادیر داخل پرانتز را تغییر دهید: (X, Y)
+          align: getAlign(5, 0),
+          offset: getOffset(5, 0),
+          // ------------------------------------------------------------------
+          color:'#000', font:{size:12, weight:'700'}, formatter:function(v,ctx){
           var total = ctx.chart.data.datasets[0].data.reduce(function(a,b){return a+b;},0);
           return faDec(v/total*100,0)+'٪';
         }}
@@ -987,7 +1028,16 @@ document.addEventListener('DOMContentLoaded', function () {
       maintainAspectRatio:false,
       plugins:{
         legend:{position:'bottom', labels:{boxWidth:10, font:{size:10.5}}},
-        datalabels:{anchor:'end', align:'top', color:'#37475A', font:{size:9}, formatter:function(v){return fa(v);}}
+        datalabels:{
+          // ---> تنظیمات جابجایی همزمان X و Y (نمودار میله‌های عمودی) <---
+          anchor: 'end', // نقطه اتصال در بالای میله است
+          // در اینجا پیش‌فرض 4 پیکسل به سمت بالا (Y=-4) تنظیم شده است.
+          // اگر می‌خواهید 3 پیکسل هم به راست برود وارد کنید: (3, -4)
+          align: getAlign(3, -1),
+          offset: getOffset(3, -1),
+          // ------------------------------------------------------------------
+          color:'#37475A', font:{size:9}, formatter:function(v){return fa(v);}
+        }
       },
       scales:{ x:{grid:{display:false}, ticks:{font:{size:10}}}, y:{grid:{color:'#EEF1F4'}, ticks:{callback:function(v){return fa(v);}}} }
     }
@@ -1004,7 +1054,15 @@ document.addEventListener('DOMContentLoaded', function () {
       maintainAspectRatio:false,
       plugins:{
         legend:{display:false},
-        datalabels:{anchor:'end', align:'end', color:'#178073', font:{size:9, weight:'700'}, formatter:function(v){return faDec(v,0);}}
+        datalabels:{
+          // ---> تنظیمات جابجایی همزمان X و Y (نمودار میله‌های افقی - بخش اول) <---
+          anchor: 'end',
+          // در اینجا پیش‌فرض 4 پیکسل به سمت راست (X=4) تنظیم شده است.
+          align: getAlign(20, 2),
+          offset: getOffset(20, 2),
+          // ------------------------------------------------------------------
+          color:'#178073', font:{size:9, weight:'700'}, formatter:function(v){return faDec(v,0);}
+        }
       },
       scales:{ x:{grid:{color:'#EEF1F4'}, ticks:{callback:function(v){return fa(v);}}}, y:{grid:{display:false}} }
     }
@@ -1021,7 +1079,15 @@ document.addEventListener('DOMContentLoaded', function () {
       maintainAspectRatio:false,
       plugins:{
         legend:{display:false},
-        datalabels:{anchor:'end', align:'end', color:'#B84438', font:{size:9, weight:'700'}, formatter:function(v){return faDec(v,0);}}
+        datalabels:{
+          // ---> تنظیمات جابجایی همزمان X و Y (نمودار میله‌های افقی - بخش دوم) <---
+          anchor: 'end',
+          // در اینجا پیش‌فرض 4 پیکسل به سمت راست (X=4) تنظیم شده است.
+          align: getAlign(15, 1),
+          offset: getOffset(15, 1),
+          // ------------------------------------------------------------------
+          color:'#B84438', font:{size:9, weight:'700'}, formatter:function(v){return faDec(v,0);}
+        }
       },
       scales:{ x:{grid:{color:'#EEF1F4'}, ticks:{callback:function(v){return fa(v);}}}, y:{grid:{display:false}} }
     }
@@ -1040,9 +1106,22 @@ document.addEventListener('DOMContentLoaded', function () {
       plugins:{
         legend:{position:'bottom', labels:{boxWidth:10, font:{size:10.5}}},
         datalabels:{
+          // ---> تنظیمات جابجایی همزمان X و Y (نمودار ترکیبی خط و میله) <---
+          anchor: 'center',
+          align: function(ctx) {
+            // مقادیر داخل پرانتز را برای نمودار خطی تغییر دهید (پیش‌فرض ۵ پیکسل بالا)
+            if (ctx.dataset.type === 'line') return getAlign(0, -5);
+            // مقادیر داخل پرانتز را برای نمودار میله‌ای تغییر دهید (بدون جابجایی)
+            return getAlign(0, 0);
+          },
+          offset: function(ctx) {
+            // ⚠️ این اعداد باید عیناً مثل اعداد بالا (align) باشند
+            if (ctx.dataset.type === 'line') return getOffset(0, -5);
+            return getOffset(0, 0);
+          },
+          // ------------------------------------------------------------------
           color:function(ctx){ return ctx.dataset.type==='line' ? '#8a6d10' : '#fff'; },
           font:{size:9},
-          align:function(ctx){ return ctx.dataset.type==='line' ? 'top' : 'center'; },
           formatter:function(v){ return fa(v); }
         }
       },
@@ -1064,12 +1143,19 @@ document.addEventListener('DOMContentLoaded', function () {
       maintainAspectRatio:false,
       plugins:{
         legend:{position:'right', labels:{boxWidth:10, padding:10, font:{size:9.5}}},
-        datalabels:{color:'#fff', font:{size:10, weight:'800'}, formatter:function(v){ return v>0? fa(v):''; }}
+        datalabels:{
+          // ---> تنظیمات جابجایی همزمان X و Y (نمودار پای چارت) <---
+          anchor: 'center',
+          // مقادیر داخل پرانتز را تغییر دهید: (X, Y)
+          align: getAlign(0, 0),
+          offset: getOffset(0, 0),
+          // ------------------------------------------------------------------
+          color:'#fff', font:{size:10, weight:'800'}, formatter:function(v){ return v>0? fa(v):''; }
+        }
       }
     }
   });
 
 });
-</script>
-</body>
+</script></body>
 </html>
