@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>سامانه مدیریتی ریاست - ارزیابی مدیران کل</title>
+    
+    <style>
+        /* آدرس‌دهی فونت به‌صورت لوکال */
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('../CSS/Fonts/Vazirmatn-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('fonts/Vazirmatn-Bold.woff2') format('woff2');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --bg-color: #f0f4f8;
+            --primary: #1e3a8a;
+            --accent: #fbbf24;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#dbeafe 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-dark);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Top Banner */
+        .header-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            border-bottom: 4px solid var(--accent);
+        }
+
+        .header-titles {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        /* جابجایی و استایل تیترها */
+        .header-titles h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .header-titles h2 {
+            margin: 4px 0 0 0;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* استایل تاریخ و ساعت در مرکز */
+        .header-clock {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.95rem;
+            font-weight: bold;
+            direction: ltr; /* برای حفظ چیدمان صحیح اعداد و خط تیره */
+            white-space: nowrap;
+        }
+
+        .evaluator-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            object-fit: cover;
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        /* Main Container */
+        .container {
+            padding: 20px 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Grid Layout */
+        .managers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px 10px;
+        }
+
+        @media (min-width: 480px) {
+            .managers-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Manager Card Styles */
+        .manager-card {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+
+        .manager-card:active {
+            transform: scale(0.95);
+        }
+
+        .profile-wrapper {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            margin-bottom: 8px;
+        }
+
+        .profile-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: conic-gradient(transparent, transparent, transparent, var(--accent));
+            animation: rotate 5s linear infinite;
+        }
+
+        .profile-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+
+        .profile-image {
+            position: relative;
+            z-index: 10;
+            width: calc(100% - 6px);
+            height: calc(100% - 6px);
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: 0px 0px;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .manager-name {
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            text-align: center;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .province-name {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin: 2px 0 0 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-banner">
+        <div class="header-titles">
+            <!-- تیترها جابجا و بولد شدند -->
+            <h1>ارزیابی مدیران کل استان‌ها</h1>
+            <h2>سامانه مدیریتی ریاست بنیاد مسکن</h2>
+        </div>
+        
+        <!-- نگهدارنده تاریخ و ساعت (وسط بنر) -->
+        <div id="clockDisplay" class="header-clock">
+            <!-- مقدار با جاوااسکریپت پر می‌شود -->
+        </div>
+
+        <img id="evaluatorAvatar" class="evaluator-avatar" src="" alt="ارزیاب" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2NjYyI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00czEuNzktNCA0LTRtMCA2Yy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi.2Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg=='">
+    </header>
+
+    <main class="container">
+        <div class="managers-grid" id="managersContainer">
+        </div>
+    </main>
+
+    <script>
+        // --- 1. تنظیم ساعت و تاریخ در مرکز بنر ---
+        function updateClock() {
+            const now = new Date();
+            
+            // استخراج تاریخ شمسی
+            const dateOptions = { calendar: 'persian', year: 'numeric', month: '2-digit', day: '2-digit' };
+            const dateStr = new Intl.DateTimeFormat('fa-IR', dateOptions).format(now);
+            
+            // استخراج ساعت
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            const timeStr = new Intl.DateTimeFormat('fa-IR', timeOptions).format(now);
+            
+            // نمایش در فرمت: 1405/05/07   -   21:54:31
+            document.getElementById('clockDisplay').innerText = `${dateStr}   -   ${timeStr}`;
+        }
+        setInterval(updateClock, 1000); // به‌روزرسانی هر ۱ ثانیه
+        updateClock(); // اجرای اولیه
+
+        // --- 2. خواندن پارامتر u از URL ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const evaluatorParam = urlParams.get('u') || 'default_user';
+
+        // --- 3. تنظیم عکس آواتار بنر بالا از فولدر UserPic ---
+        document.getElementById('evaluatorAvatar').src = `../Images/UserPic/${evaluatorParam}.jpg`;
+
+        // --- داده‌های استان‌ها ---
+        const provincesData = [
+            {n:'آذربایجان شرقی', m:'حجت اله سروری', p:'AzSharqi_Sarvari.jpg'},
+            {n:'آذربایجان غربی', m:'علیرضا مقدم', p:'AzQarbi_Moghadam.jpg'},
+            {n:'اردبیل', m:'حامد کیخسروی', p:'Ardabil_KeiKhosravi.jpg'},
+            {n:'اصفهان', m:'غلامرضا اسماعیلی', p:'Isfahan_Esmaeili.jpg'},
+            {n:'البرز', m:'علی دیوسالار', p:'Alborz_DivSalar.jpg'},
+            {n:'ایلام', m:'حبیب اله محبی', p:'Ilam_Mohebi.jpg'},
+            {n:'بوشهر', m:'امیر برومند', p:'Bushehr_Boromand.jpg'},
+            {n:'تهران', m:'حسین جنتی', p:'Tehran_Janati.jpg'},
+            {n:'چهارمحال و بختیاری', m:'فرشید ریاحی', p:'CHB_Riahi.jpg'},
+            {n:'خراسان جنوبی', m:'قاسم تنها', p:'SKH_Tanha.jpg'},
+            {n:'خراسان رضوی', m:'خلیل منبتی', p:'RKH_Monabati.jpg'},
+            {n:'خراسان شمالی', m:'هادی زارعی', p:'NKH_Zarei.jpg'},
+            {n:'خوزستان', m:'محمود اکبری فضلی', p:'Khuzestan_Akbari.jpg'},
+            {n:'زنجان', m:'رضا خواجه ای', p:'Zanjan_Khajei.jpg'},
+            {n:'سمنان', m:'حمیدرضا همتی', p:'Semnan_Hemati.jpg'},
+            {n:'سیستان و بلوچستان', m:'امین عدیلی', p:'SB_Adili.jpg'},
+            {n:'فارس', m:'علیرضا حمیدی', p:'Fars_Hamidi.jpg'},
+            {n:'قزوین', m:'اصغر گونجی', p:'Qazvin_Gavanaji.jpg'},
+            {n:'قم', m:'محمد اطهری', p:'Qom_Athari.jpg'},
+            {n:'کردستان', m:'محمد رسولی', p:'Kordestan_Rasoli.jpg'},
+            {n:'کرمان', m:'مهدی محمدی', p:'Kerman_Mohamadi.jpg'},
+            {n:'کرمانشاه', m:'شمس الله خدادادی', p:'Kermanshah_Khodadadi.jpg'},
+            {n:'کهگیلویه و بویراحمد', m:'حامد صیادی', p:'KB_Sayadi.jpg'},
+            {n:'گلستان', m:'داوود خسروی', p:'Golestan_Khosravi.jpg'},
+            {n:'گیلان', m:'حامد دائمی', p:'Gilan_Daemi.jpg'},
+            {n:'لرستان', m:'پویا تابعی', p:'Lorestan_Tabei.jpg'},
+            {n:'مازندران', m:'علی اصغر احمدی', p:'Mazandaran_Ahmadi.jpg'},
+            {n:'مرکزی', m:'علی عسگری', p:'Markazi_Asgari.jpg'},
+            {n:'هرمزگان', m:'شهریار نوری زاده', p:'Hormozgan_Norizadeh.jpg'},
+            {n:'همدان', m:'مسعود رضایی', p:'Hamedan_Rezaei.jpg'},
+            {n:'یزد', m:'علیرضا نادریان زاده', p:'Yazd_NaderianZadeh.jpg'}
+        ];
+
+        const container = document.getElementById('managersContainer');
+
+        // تولید داینامیک لیست مدیران
+        provincesData.forEach(prov => {
+            // ایجاد لینک و پاس دادن پارامتر u
+            const evalLink = `evaluate.html?province=${encodeURIComponent(prov.n)}&u=${encodeURIComponent(evaluatorParam)}`;
+            
+            const card = document.createElement('a');
+            card.className = 'manager-card';
+            card.href = evalLink;
+            card.target = '_blank';
+            card.rel = 'noopener noreferrer';
+
+            card.innerHTML = `
+                <div class="profile-wrapper">
+                    <img class="profile-image" src="../Images/${prov.p}" alt="${prov.m}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2VlZSI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00czEuNzktNCA0LTRtMCA2Yy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi.2Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg=='">
+                </div>
+                <h3 class="manager-name">${prov.m}</h3>
+                <p class="province-name">${prov.n}</p>
+            `;
+            
+            container.appendChild(card);
+        });
+    </script>
+</body>
+</html>
