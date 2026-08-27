@@ -41,12 +41,11 @@
             -webkit-tap-highlight-color: transparent;
             user-select: none; 
             -webkit-user-select: none;
-            /* حذف touch-action محدودکننده تا اسکرول آزاد شود */
             
-            /* بک‌گراند متحرک و پویا */
-            background: linear-gradient(-45deg, #f0f4f8, #dbeafe, #c7d2fe, #e0e7ff);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            /* بک‌گراند متحرک و پویاتر */
+            background: linear-gradient(-45deg, #e0e7ff, #bae6fd, #bfdbfe, #ddd6fe);
+            background-size: 300% 300%;
+            animation: gradientBG 8s ease infinite;
             min-height: 100vh;
         }
 
@@ -59,7 +58,7 @@
         /* Top Banner */
         .header-banner {
             background: linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,58,138,0.95) 100%);
-            backdrop-filter: blur(10px); /* افکت شیشه‌ای هدر */
+            backdrop-filter: blur(10px);
             color: white;
             padding: 15px 20px;
             display: flex;
@@ -91,23 +90,6 @@
             font-weight: bold;
         }
 
-        /* دکمه تمام صفحه */
-        .fullscreen-btn {
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-family: inherit;
-            cursor: pointer;
-            margin-left: 15px; /* فاصله از آواتار */
-            transition: background 0.3s;
-        }
-        .fullscreen-btn:active {
-            background: rgba(255,255,255,0.3);
-        }
-
         .evaluator-avatar {
             width: 45px;
             height: 45px;
@@ -128,7 +110,7 @@
         .managers-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px 10px;
+            gap: 10px; /* تغییر فاصله بر اساس درخواست */
         }
 
         @media (min-width: 480px) {
@@ -144,7 +126,7 @@
             flex-direction: column;
             align-items: center;
             background: var(--card-bg);
-            padding: 7px 5px;
+            padding: 7px 5px; /* تغییر پدینگ بر اساس درخواست */
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -225,7 +207,6 @@
             <h1>ارزیابی مدیران کل استان‌ها</h1>
         </div>
         
-
         <img id="evaluatorAvatar" class="evaluator-avatar" src="" alt="ارزیاب" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2NjYyI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00czEuNzktNCA0LTRtMCA2Yy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi.2Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg=='">
     </header>
 
@@ -235,10 +216,9 @@
     </main>
 
     <script>
-        // --- 1. قفل کردن زوم (بدون مسدود کردن اسکرول عمودی) ---
+        // --- قفل کردن زوم (بدون مسدود کردن اسکرول عمودی) ---
         // مسدود کردن زوم با دو انگشت (Pinch to zoom)
         document.addEventListener('touchmove', function (event) {
-            // فقط در صورتی که کاربر از دو یا چند انگشت استفاده کند (زوم) اکشن متوقف می‌شود
             if (event.touches.length > 1) { 
                 event.preventDefault(); 
             }
@@ -254,29 +234,14 @@
             lastTouchEnd = now;
         }, false);
 
-        // --- 2. مدیریت حالت تمام صفحه برای پنهان کردن URL مرورگر ---
-        const fullscreenBtn = document.getElementById('fullscreenBtn');
-        fullscreenBtn.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    console.log("خطا در ورود به حالت تمام صفحه: " + err.message);
-                });
-                fullscreenBtn.style.display = 'none'; // مخفی کردن دکمه بعد از اعمال
-            }
-        });
-
-        // --- 3. خواندن پارامتر u از URL و پاک کردن آن ---
+        // --- خواندن پارامتر u از URL ---
         const urlParams = new URLSearchParams(window.location.search);
         const evaluatorParam = urlParams.get('u') || 'default_user';
 
-        if (window.history && window.history.replaceState) {
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-
-        // --- 4. تنظیم عکس آواتار ---
+        // --- تنظیم عکس آواتار ---
         document.getElementById('evaluatorAvatar').src = `../Images/UserPic/${evaluatorParam}.jpg`;
 
-        // --- 5. داده‌های استان‌ها ---
+        // --- داده‌های استان‌ها ---
         const provincesData = [
             {n:'آذربایجان شرقی', m:'حجت اله سروری', p:'AzSharqi_Sarvari.jpg'},
             {n:'آذربایجان غربی', m:'علیرضا مقدم', p:'AzQarbi_Moghadam.jpg'},
