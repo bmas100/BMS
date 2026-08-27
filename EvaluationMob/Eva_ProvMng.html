@@ -18,7 +18,7 @@
         }
         @font-face {
             font-family: 'Vazirmatn';
-            src: url('fonts/Vazirmatn-Bold.woff2') format('woff2');
+            src: url('../CSS/Fonts/Vazirmatn-Bold.woff2') format('woff2');
             font-weight: bold;
             font-style: normal;
             font-display: swap;
@@ -217,24 +217,7 @@
     </main>
 
     <script>
-        // --- 1. تنظیم ساعت و تاریخ در مرکز بنر ---
-        function updateClock() {
-            const now = new Date();
-            
-            // استخراج تاریخ شمسی
-            const dateOptions = { calendar: 'persian', year: 'numeric', month: '2-digit', day: '2-digit' };
-            const dateStr = new Intl.DateTimeFormat('fa-IR', dateOptions).format(now);
-            
-            // استخراج ساعت
-            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-            const timeStr = new Intl.DateTimeFormat('fa-IR', timeOptions).format(now);
-            
-            // نمایش در فرمت: 1405/05/07   -   21:54:31
-            document.getElementById('clockDisplay').innerText = `${dateStr}   -   ${timeStr}`;
-        }
-        setInterval(updateClock, 1000); // به‌روزرسانی هر ۱ ثانیه
-        updateClock(); // اجرای اولیه
-
+        
         // --- 2. خواندن پارامتر u از URL ---
         const urlParams = new URLSearchParams(window.location.search);
         const evaluatorParam = urlParams.get('u') || 'default_user';
