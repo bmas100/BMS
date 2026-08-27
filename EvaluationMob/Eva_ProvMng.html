@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- تنظیمات نمایش به صورت اپلیکیشن (بدون نوار آدرس مرورگر) در موبایل -->
+    <!-- تنظیمات نمایش به صورت اپلیکیشن در موبایل -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>سامانه مدیریتی ریاست - ارزیابی مدیران کل</title>
     
     <style>
-        /* آدرس‌دهی فونت به‌صورت لوکال */
         @font-face {
             font-family: 'Vazirmatn';
             src: url('../CSS/Fonts/Vazirmatn-Regular.woff2') format('woff2');
@@ -27,32 +26,40 @@
         }
 
         :root {
-            --bg-color: #f0f4f8;
             --primary: #1e3a8a;
             --accent: #fbbf24;
-            --card-bg: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.85); /* شیشه‌ای کردن کارت‌ها برای نمایش بهتر بک‌گراند */
             --text-dark: #1e293b;
             --text-muted: #64748b;
         }
 
-        /* جلوگیری از انتخاب متن و رفتارهای پیش‌فرض لمسی برای حس بهتر اپلیکیشن */
         body {
             margin: 0;
             padding: 0;
             font-family: 'Vazirmatn', sans-serif;
-            background-color: var(--bg-color);
-            background-image: radial-gradient(#dbeafe 1px, transparent 1px);
-            background-size: 20px 20px;
             color: var(--text-dark);
             -webkit-tap-highlight-color: transparent;
-            user-select: none; /* جلوگیری از انتخاب متن */
+            user-select: none; 
             -webkit-user-select: none;
-            touch-action: pan-y; /* فقط اجازه اسکرول عمودی می‌دهد و زوم را در برخی مرورگرها می‌بندد */
+            /* حذف touch-action محدودکننده تا اسکرول آزاد شود */
+            
+            /* بک‌گراند متحرک و پویا */
+            background: linear-gradient(-45deg, #f0f4f8, #dbeafe, #c7d2fe, #e0e7ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Top Banner */
         .header-banner {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            background: linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,58,138,0.95) 100%);
+            backdrop-filter: blur(10px); /* افکت شیشه‌ای هدر */
             color: white;
             padding: 15px 20px;
             display: flex;
@@ -61,7 +68,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             border-bottom: 4px solid var(--accent);
         }
 
@@ -71,7 +78,6 @@
             flex: 1;
         }
 
-        /* جابجایی و استایل تیترها */
         .header-titles h1 {
             margin: 0;
             font-size: 1.2rem;
@@ -85,15 +91,21 @@
             font-weight: bold;
         }
 
-        /* استایل تاریخ و ساعت در مرکز */
-        .header-clock {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.95rem;
-            font-weight: bold;
-            direction: ltr; /* برای حفظ چیدمان صحیح اعداد و خط تیره */
-            white-space: nowrap;
+        /* دکمه تمام صفحه */
+        .fullscreen-btn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-family: inherit;
+            cursor: pointer;
+            margin-left: 15px; /* فاصله از آواتار */
+            transition: background 0.3s;
+        }
+        .fullscreen-btn:active {
+            background: rgba(255,255,255,0.3);
         }
 
         .evaluator-avatar {
@@ -125,29 +137,34 @@
             }
         }
 
-        /* Manager Card Styles */
+        /* Manager Card */
         .manager-card {
             text-decoration: none;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: transform 0.2s ease;
+            background: var(--card-bg);
+            padding: 10px 5px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .manager-card:active {
             transform: scale(0.95);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .profile-wrapper {
             position: relative;
-            width: 80px;
-            height: 80px;
+            width: 75px;
+            height: 75px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             margin-bottom: 8px;
         }
 
@@ -157,7 +174,7 @@
             width: 150%;
             height: 150%;
             background: conic-gradient(transparent, transparent, transparent, var(--accent));
-            animation: rotate 5s linear infinite;
+            animation: rotate 4s linear infinite;
         }
 
         .profile-wrapper::after {
@@ -196,7 +213,7 @@
             font-size: 0.65rem;
             color: var(--text-muted);
             text-align: center;
-            margin: 2px 0 0 0;
+            margin: 4px 0 0 0;
         }
     </style>
 </head>
@@ -208,6 +225,9 @@
             <h1>ارزیابی مدیران کل استان‌ها</h1>
         </div>
         
+        <!-- دکمه ورود به حالت تمام‌صفحه -->
+        <button id="fullscreenBtn" class="fullscreen-btn">تـمـام‌صـفـحـه</button>
+
         <img id="evaluatorAvatar" class="evaluator-avatar" src="" alt="ارزیاب" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2NjYyI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00czEuNzktNCA0LTRtMCA2Yy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi.2Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg=='">
     </header>
 
@@ -217,15 +237,16 @@
     </main>
 
     <script>
-        // --- قفل کردن کامل Zoom در دستگاه‌های لمسی (بخصوص iOS) ---
-        // جلوگیری از زوم با دو انگشت (Pinch to zoom)
+        // --- 1. قفل کردن زوم (بدون مسدود کردن اسکرول عمودی) ---
+        // مسدود کردن زوم با دو انگشت (Pinch to zoom)
         document.addEventListener('touchmove', function (event) {
-            if (event.scale !== 1) { 
+            // فقط در صورتی که کاربر از دو یا چند انگشت استفاده کند (زوم) اکشن متوقف می‌شود
+            if (event.touches.length > 1) { 
                 event.preventDefault(); 
             }
         }, { passive: false });
 
-        // جلوگیری از زوم با دبل تپ (Double tap to zoom)
+        // مسدود کردن زوم با دبل‌تپ سریع
         let lastTouchEnd = 0;
         document.addEventListener('touchend', function (event) {
             const now = (new Date()).getTime();
@@ -235,21 +256,29 @@
             lastTouchEnd = now;
         }, false);
 
+        // --- 2. مدیریت حالت تمام صفحه برای پنهان کردن URL مرورگر ---
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log("خطا در ورود به حالت تمام صفحه: " + err.message);
+                });
+                fullscreenBtn.style.display = 'none'; // مخفی کردن دکمه بعد از اعمال
+            }
+        });
 
-        // --- خواندن پارامتر u از URL ---
+        // --- 3. خواندن پارامتر u از URL و پاک کردن آن ---
         const urlParams = new URLSearchParams(window.location.search);
         const evaluatorParam = urlParams.get('u') || 'default_user';
 
-        // --- پاک کردن پارامتر از URL (مخفی کردن آدرس واقعی) ---
         if (window.history && window.history.replaceState) {
-            // آدرس را در نوار مرورگر به مسیر اصلی (بدون ?u=...) تغییر می‌دهد
             window.history.replaceState({}, document.title, window.location.pathname);
         }
 
-        // --- تنظیم عکس آواتار بنر بالا از فولدر UserPic ---
+        // --- 4. تنظیم عکس آواتار ---
         document.getElementById('evaluatorAvatar').src = `../Images/UserPic/${evaluatorParam}.jpg`;
 
-        // --- داده‌های استان‌ها ---
+        // --- 5. داده‌های استان‌ها ---
         const provincesData = [
             {n:'آذربایجان شرقی', m:'حجت اله سروری', p:'AzSharqi_Sarvari.jpg'},
             {n:'آذربایجان غربی', m:'علیرضا مقدم', p:'AzQarbi_Moghadam.jpg'},
@@ -286,9 +315,7 @@
 
         const container = document.getElementById('managersContainer');
 
-        // تولید داینامیک لیست مدیران
         provincesData.forEach(prov => {
-            // ایجاد لینک و پاس دادن پارامتر u
             const evalLink = `evaluate.html?province=${encodeURIComponent(prov.n)}&u=${encodeURIComponent(evaluatorParam)}`;
             
             const card = document.createElement('a');
