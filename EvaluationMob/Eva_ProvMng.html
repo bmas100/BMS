@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- تنظیمات نمایش به صورت اپلیکیشن (بدون نوار آدرس مرورگر) در موبایل -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>سامانه مدیریتی ریاست - ارزیابی مدیران کل</title>
     
     <style>
@@ -33,6 +35,7 @@
             --text-muted: #64748b;
         }
 
+        /* جلوگیری از انتخاب متن و رفتارهای پیش‌فرض لمسی برای حس بهتر اپلیکیشن */
         body {
             margin: 0;
             padding: 0;
@@ -42,6 +45,9 @@
             background-size: 20px 20px;
             color: var(--text-dark);
             -webkit-tap-highlight-color: transparent;
+            user-select: none; /* جلوگیری از انتخاب متن */
+            -webkit-user-select: none;
+            touch-action: pan-y; /* فقط اجازه اسکرول عمودی می‌دهد و زوم را در برخی مرورگرها می‌بندد */
         }
 
         /* Top Banner */
@@ -199,11 +205,9 @@
     <header class="header-banner">
         <div class="header-titles">
             <h2>سامانه مدیریتی ریاست بنیاد مسکن</h2>
-			<h1>ارزیابی مدیران کل استان‌ها</h1>
+            <h1>ارزیابی مدیران کل استان‌ها</h1>
         </div>
         
-
-
         <img id="evaluatorAvatar" class="evaluator-avatar" src="" alt="ارزیاب" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2NjYyI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00czEuNzktNCA0LTRtMCA2Yy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi.2Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg=='">
     </header>
 
@@ -213,12 +217,36 @@
     </main>
 
     <script>
-        
-        // --- 2. خواندن پارامتر u از URL ---
+        // --- قفل کردن کامل Zoom در دستگاه‌های لمسی (بخصوص iOS) ---
+        // جلوگیری از زوم با دو انگشت (Pinch to zoom)
+        document.addEventListener('touchmove', function (event) {
+            if (event.scale !== 1) { 
+                event.preventDefault(); 
+            }
+        }, { passive: false });
+
+        // جلوگیری از زوم با دبل تپ (Double tap to zoom)
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+
+        // --- خواندن پارامتر u از URL ---
         const urlParams = new URLSearchParams(window.location.search);
         const evaluatorParam = urlParams.get('u') || 'default_user';
 
-        // --- 3. تنظیم عکس آواتار بنر بالا از فولدر UserPic ---
+        // --- پاک کردن پارامتر از URL (مخفی کردن آدرس واقعی) ---
+        if (window.history && window.history.replaceState) {
+            // آدرس را در نوار مرورگر به مسیر اصلی (بدون ?u=...) تغییر می‌دهد
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
+        // --- تنظیم عکس آواتار بنر بالا از فولدر UserPic ---
         document.getElementById('evaluatorAvatar').src = `../Images/UserPic/${evaluatorParam}.jpg`;
 
         // --- داده‌های استان‌ها ---
