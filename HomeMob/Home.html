@@ -89,23 +89,12 @@
     </div>
     <p>ارزیابی مدیران</p>
 </a>
-            
-                    <script>
-                    function openEvaluation(event) {
-                        event.preventDefault();
-                    
-                        // دریافت پارامتر u از URL فعلی
-                        const params = new URLSearchParams(window.location.search);
-                        const u = params.get('u');
-                    
-                        // ساخت آدرس صفحه ارزیابی
-                        const url = `../EvaluationMob/Eva_ProvMng.html?u=${encodeURIComponent(u || '')}`;
-                    
-                        // باز کردن در صفحه جدید
-                        window.open(url, '_blank');
-                    }
-                    </script>            
-            
+
+            <a href="#" target="_blank" class="card">
+                <div class="icon-wrapper"><i class="fa-solid fa-user-tie"></i></div>
+                <p>ارزیابی مدیران</p>
+            </a>
+          
             <!-- ردیف 4 -->
             <a href="#" target="_blank" class="card">
                 <div class="icon-wrapper"><i class="fa-solid fa-house-chimney-window"></i></div>
