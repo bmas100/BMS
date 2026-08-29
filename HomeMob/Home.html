@@ -84,25 +84,27 @@
             </a>
 
 <a href="#" target="_blank" class="card" onclick="openEvaluation(event)">
-    <div class="icon-wrapper"><i class="fa-solid fa-user-tie"></i></div>
+    <div class="icon-wrapper">
+        <i class="fa-solid fa-user-tie"></i>
+    </div>
     <p>ارزیابی مدیران</p>
 </a>
-
-<script>
-function openEvaluation(event) {
-    event.preventDefault();
-
-    // دریافت پارامتر u از URL فعلی
-    const params = new URLSearchParams(window.location.search);
-    const u = params.get('u');
-
-    // ساخت آدرس صفحه ارزیابی
-    const url = `../EvaluationMob/Eva_ProvMng.html?u=${encodeURIComponent(u || '')}`;
-
-    // باز کردن در صفحه جدید
-    window.open(url, '_blank');
-}
-</script>            
+            
+                    <script>
+                    function openEvaluation(event) {
+                        event.preventDefault();
+                    
+                        // دریافت پارامتر u از URL فعلی
+                        const params = new URLSearchParams(window.location.search);
+                        const u = params.get('u');
+                    
+                        // ساخت آدرس صفحه ارزیابی
+                        const url = `../EvaluationMob/Eva_ProvMng.html?u=${encodeURIComponent(u || '')}`;
+                    
+                        // باز کردن در صفحه جدید
+                        window.open(url, '_blank');
+                    }
+                    </script>            
             
             <!-- ردیف 4 -->
             <a href="#" target="_blank" class="card">
