@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>سامانه هوشمند مدیریتی ریاست</title>
+
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-Variable-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- توجه: چون فایل‌های style.css و banner.css در اختیار نبودند، تمام استایل صفحه به‌صورت یکپارچه و داخلی نوشته شده است -->
+
+    <!-- ================= PWA Code ================= -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#100d0b">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="سامانه هوشمند مدیریتی ریاست">
+    <link rel="apple-touch-icon" href="BonyadLogo.png">
+    <!-- ============================================ -->
+
+    <style>
+        :root {
+            --bg-0: #100d0b;
+            --bg-1: #17130f;
+            --glass: rgba(255, 255, 255, 0.045);
+            --glass-strong: rgba(255, 255, 255, 0.075);
+            --glass-line: rgba(255, 255, 255, 0.09);
+            --card-bg: rgba(24, 20, 16, 0.55);
+            --orange-1: #ff6a1a;
+            --orange-2: #ff9433;
+            --orange-3: #ffc257;
+            --ember: #ff4d4d;
+            --text-1: #f6f0e6;
+            --text-2: #b7a998;
+            --text-3: #8b7d6c;
+            --live: #35d68c;
+            --danger-1: #e3452c;
+            --danger-2: #ff7a3d;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: var(--bg-0);
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            color: var(--text-1);
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ================= پس‌زمینه‌ی متحرک (مش گرادیانی) ================= */
+        .bg-mesh {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            background: var(--bg-0);
+        }
+        .bg-mesh span {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.55;
+            will-change: transform;
+        }
+        .blob-1 {
+            width: 60vw; height: 60vw;
+            background: radial-gradient(circle, var(--orange-1), transparent 70%);
+            top: -20vw; right: -18vw;
+            animation: drift1 22s ease-in-out infinite alternate;
+        }
+        .blob-2 {
+            width: 55vw; height: 55vw;
+            background: radial-gradient(circle, var(--ember), transparent 70%);
+            bottom: -22vw; left: -20vw;
+            animation: drift2 26s ease-in-out infinite alternate;
+            opacity: 0.35;
+        }
+        .blob-3 {
+            width: 40vw; height: 40vw;
+            background: radial-gradient(circle, var(--orange-3), transparent 70%);
+            top: 35%; left: 50%;
+            animation: drift3 30s ease-in-out infinite alternate;
+            opacity: 0.28;
+        }
+        @keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(-6%, 8%) scale(1.15); } }
+        @keyframes drift2 { from { transform: translate(0,0) scale(1); } to { transform: translate(8%, -6%) scale(1.2); } }
+        @keyframes drift3 { from { transform: translate(-50%,-40%) scale(1); } to { transform: translate(-45%,-55%) scale(1.3); } }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image: radial-gradient(rgba(255, 200, 140, 0.10) 1px, transparent 1px);
+            background-size: 22px 22px;
+            opacity: 0.35;
+            animation: gridPan 50s linear infinite;
+        }
+        @keyframes gridPan { from { background-position: 0 0; } to { background-position: 220px 220px; } }
+
+        .grain {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            pointer-events: none;
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+        }
+
+        /* ================= صفحه پیشواز ================= */
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100dvh;
+            background: var(--bg-0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.7s ease, visibility 0.7s;
+        }
+        .splash-ring {
+            position: relative;
+            width: min(38vw, 190px);
+            height: min(38vw, 190px);
+        }
+        .splash-ring::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--orange-1), transparent 25%, var(--orange-3) 50%, transparent 75%, var(--orange-1));
+            animation: spin 3.5s linear infinite;
+        }
+        .splash-ring img {
+            position: relative;
+            z-index: 1;
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--bg-0);
+            animation: splashPulse 1.8s ease-in-out infinite;
+        }
+        @keyframes splashPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 148, 51, 0.35); }
+            50% { box-shadow: 0 0 0 14px rgba(255, 148, 51, 0); }
+        }
+
+        /* ================= پنجره‌های پاپ‌آپ ================= */
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100dvh;
+            background: rgba(8, 6, 4, 0.6);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        .popup-shell {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 86%;
+            max-width: 400px;
+            transform: translate(-50%, -50%) scale(0.85);
+            border-radius: 26px;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.25, 1.3), opacity 0.3s ease, visibility 0.4s;
+        }
+        .popup-shell .ring {
+            position: absolute;
+            inset: -35%;
+            background: conic-gradient(from 0deg, var(--orange-1), transparent 22%, var(--orange-3) 48%, transparent 74%, var(--orange-1));
+            animation: spin 9s linear infinite;
+        }
+        .popup-shell .face {
+            position: relative;
+            margin: 2px;
+            background: linear-gradient(165deg, #1c1712, #131009);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 24px;
+            padding: 24px 20px 20px;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+            overflow: hidden;
+        }
+        .popup-overlay.active, .popup-shell.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .popup-shell.active { transform: translate(-50%, -50%) scale(1); }
+
+        .popup-title {
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--orange-3), var(--orange-1));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            padding-bottom: 12px;
+        }
+        .popup-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 46px; height: 3px;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--orange-1), var(--orange-3));
+        }
+        .popup-body { display: flex; flex-direction: column; gap: 10px; }
+        .popup-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            background: var(--glass);
+            border: 1px solid var(--glass-line);
+            padding: 14px 16px;
+            border-radius: 14px;
+            color: var(--text-1);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+        }
+        .popup-btn i { color: var(--orange-2); font-size: 0.8rem; }
+        .popup-btn:active {
+            background: rgba(255, 148, 51, 0.14);
+            border-color: rgba(255, 148, 51, 0.4);
+            transform: scale(0.98);
+        }
+        .close-popup-btn {
+            margin-top: 16px;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, var(--danger-1), var(--danger-2));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: filter 0.2s ease, transform 0.2s ease;
+        }
+        .close-popup-btn:active { transform: scale(0.97); filter: brightness(1.1); }
+
+        /* ================= چارچوب اصلی ================= */
+        .shell {
+            position: relative;
+            z-index: 1;
+            height: 100dvh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(8px, 1.6vh, 14px);
+            padding: clamp(8px, 1.6vh, 14px);
+            overflow: hidden;
+        }
+
+        .glass-panel {
+            background: var(--glass);
+            border: 1px solid var(--glass-line);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 12px 34px rgba(0,0,0,0.3);
+        }
+
+        /* ================= بنر ================= */
+        .banner {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: clamp(8px, 2.5vw, 14px);
+            padding: clamp(10px, 1.8vh, 14px) clamp(12px, 3.5vw, 18px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar-ring {
+            position: relative;
+            width: clamp(46px, 12vw, 58px);
+            height: clamp(46px, 12vw, 58px);
+            flex: 0 0 auto;
+        }
+        .avatar-ring::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--orange-1), transparent 25%, var(--orange-3) 50%, transparent 75%, var(--orange-1));
+            animation: spin 5s linear infinite;
+        }
+        .avatar-ring img {
+            position: relative;
+            z-index: 1;
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 3px solid var(--bg-1);
+            background: var(--bg-1);
+        }
+
+        .titles { flex: 1 1 auto; text-align: center; min-width: 0; }
+        .titles h1 {
+            margin: 0;
+            font-size: clamp(0.9rem, 3.8vw, 1.2rem);
+            font-weight: 800;
+            color: var(--text-1);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .titles h2 {
+            margin: 3px 0 0;
+            font-size: clamp(0.66rem, 2.8vw, 0.85rem);
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--orange-2), var(--orange-3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .meta-row {
+            margin-top: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .status-pill, .version-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 999px;
+            border: 1px solid var(--glass-line);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-2);
+        }
+        .status-pill .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--live);
+            box-shadow: 0 0 0 0 rgba(53, 214, 140, 0.6);
+            animation: livePulse 1.8s ease-in-out infinite;
+        }
+        @keyframes livePulse {
+            0% { box-shadow: 0 0 0 0 rgba(53,214,140,0.55); }
+            70% { box-shadow: 0 0 0 6px rgba(53,214,140,0); }
+            100% { box-shadow: 0 0 0 0 rgba(53,214,140,0); }
+        }
+        .version-chip { color: var(--orange-3); }
+
+        /* ================= پنل دسترسی سریع ================= */
+        .quick-panel {
+            flex: 1 1 auto;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            padding: clamp(10px, 1.8vh, 14px) clamp(10px, 3vw, 14px);
+            gap: 6px;
+        }
+        .quick-eyebrow {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 4px 6px;
+            color: var(--text-3);
+        }
+        .quick-eyebrow i { color: var(--orange-2); font-size: 0.72rem; }
+        .quick-eyebrow span {
+            font-size: clamp(0.65rem, 2.6vw, 0.78rem);
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .quick-eyebrow .rule {
+            flex: 1 1 auto;
+            height: 1px;
+            background: linear-gradient(90deg, var(--glass-line), transparent);
+        }
+
+        .grid-container {
+            flex: 1 1 auto;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, minmax(0, 1fr));
+            gap: clamp(7px, 1.8vw, 11px);
+        }
+
+        .card {
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            animation: cardIn 0.5s cubic-bezier(0.2,0.8,0.2,1) both;
+            animation-delay: calc(var(--i) * 45ms);
+        }
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(10px) scale(0.94); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .card .ring {
+            position: absolute;
+            inset: -45%;
+            background: conic-gradient(from 0deg, var(--orange-1), transparent 22%, var(--orange-3) 48%, transparent 74%, var(--orange-1));
+            animation: spin 7s linear infinite;
+            animation-delay: calc(var(--i) * -300ms);
+            opacity: 0.85;
+        }
+        .card .face {
+            position: absolute;
+            inset: 1.6px;
+            border-radius: 16px;
+            background: var(--card-bg);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(4px, 1.2vh, 7px);
+            padding: 4px;
+            text-align: center;
+            overflow: hidden;
+        }
+        .card .face::before {
+            content: '';
+            position: absolute;
+            top: 8px; left: 8px;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: var(--orange-2);
+            opacity: 0.55;
+        }
+        .card .sweep {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.10) 50%, transparent 65%);
+            transform: translateX(-140%);
+            pointer-events: none;
+            animation: sweepMove 4.5s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 350ms);
+        }
+        @keyframes sweepMove {
+            0% { transform: translateX(-140%); }
+            35%, 100% { transform: translateX(140%); }
+        }
+        .card:active .face { transform: scale(0.96); }
+
+        .icon-wrapper {
+            position: relative;
+            width: clamp(36px, 11vw, 50px);
+            height: clamp(36px, 11vw, 50px);
+            border-radius: 13px;
+            background: linear-gradient(150deg, rgba(255,255,255,0.09), rgba(255,255,255,0.02));
+            border: 1px solid var(--glass-line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: iconFloat 3.2s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 140ms);
+        }
+        .icon-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -30%;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--icon-glow, var(--orange-1)) 0%, transparent 70%);
+            opacity: 0.35;
+            filter: blur(6px);
+            z-index: -1;
+            animation: glowPulse 3.2s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 140ms);
+        }
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.28; transform: scale(1); }
+            50% { opacity: 0.55; transform: scale(1.15); }
+        }
+        .icon-wrapper i {
+            font-size: clamp(0.9rem, 3.8vw, 1.25rem);
+            color: var(--orange-2);
+        }
+        .icon-wrapper i::before {
+            background: linear-gradient(135deg, var(--icon-a, var(--orange-1)), var(--icon-b, var(--orange-3)));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .card p {
+            margin: 0;
+            font-size: clamp(0.56rem, 2.5vw, 0.74rem);
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--text-1);
+            padding: 0 3px;
+        }
+
+        .card:nth-child(6n+1) { --icon-a: #ff6a1a; --icon-b: #ffb04a; --icon-glow: #ff6a1a; }
+        .card:nth-child(6n+2) { --icon-a: #ff8a1f; --icon-b: #ffc247; --icon-glow: #ff8a1f; }
+        .card:nth-child(6n+3) { --icon-a: #ff5a3d; --icon-b: #ff9e4d; --icon-glow: #ff5a3d; }
+        .card:nth-child(6n+4) { --icon-a: #ff9433; --icon-b: #ffd166; --icon-glow: #ff9433; }
+        .card:nth-child(6n+5) { --icon-a: #ff4d4d; --icon-b: #ff9040; --icon-glow: #ff4d4d; }
+        .card:nth-child(6n+6) { --icon-a: #ffa93e; --icon-b: #ffe08a; --icon-glow: #ffa93e; }
+
+        /* ================= نوار پایین ================= */
+        .footer-bar {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: clamp(6px, 1.2vh, 10px) 14px;
+        }
+        .footer-line {
+            flex: 1 1 auto;
+            max-width: 120px;
+            height: 2px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, transparent, var(--orange-1), var(--orange-3), var(--orange-1), transparent);
+            background-size: 220% 100%;
+            animation: linePan 3.5s linear infinite;
+        }
+        @keyframes linePan { 0% { background-position: 0% 0; } 100% { background-position: 220% 0; } }
+        .footer-mark {
+            width: clamp(20px, 5vh, 26px);
+            height: clamp(20px, 5vh, 26px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(140deg, var(--orange-1), var(--orange-3));
+            color: #1a0e04;
+            font-size: 0.65rem;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .bg-mesh span, .bg-grid, .card .ring, .card .sweep, .icon-wrapper, .icon-wrapper::before,
+            .avatar-ring::before, .splash-ring::before, .splash-ring img, .status-pill .dot, .footer-line, .footer-mark {
+                animation: none !important;
+            }
+        }
+        @media (max-height: 620px) {
+            .titles h2 { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-mesh"><span class="blob-1"></span><span class="blob-2"></span><span class="blob-3"></span></div>
+    <div class="bg-grid"></div>
+    <div class="grain"></div>
+
+    <!-- ================= بخش پیشواز ================= -->
+    <div id="splash-screen">
+        <div class="splash-ring"><img src="./BonyadLogo.png" alt="تصویر شروع"></div>
+    </div>
+
+    <!-- ================= لایه‌های پاپ‌آپ ================= -->
+    <div id="popup-overlay" class="popup-overlay" onclick="closePopup()"></div>
+    <div id="popup-content" class="popup-shell">
+        <span class="ring"></span>
+        <div class="face">
+            <div id="popup-title" class="popup-title"></div>
+            <div id="popup-body" class="popup-body"></div>
+            <button class="close-popup-btn" onclick="closePopup()">بستن</button>
+        </div>
+    </div>
+
+    <div class="shell">
+
+        <header class="banner glass-panel">
+            <div class="avatar-ring"><img src="BonyadLogo.png" alt="لوگو بنیاد"></div>
+
+            <div class="titles">
+                <h1>بنیاد مسکن انقلاب اسلامی</h1>
+                <h2>سامانه هوشمند مدیریتی ریاست</h2>
+                <div class="meta-row">
+                    <span class="status-pill"><span class="dot"></span>سامانه فعال</span>
+                    <span class="version-chip">نسخه ۱.۰</span>
+                </div>
+            </div>
+
+            <!-- تصویر کاربر -->
+            <div class="avatar-ring"><img src="./UserPic/Boss.png" alt="ریاست بنیاد" id="user-avatar" onerror="this.onerror=null; this.src='./UserPic/Boss.png';"></div>
+
+            <script>
+                // اسکریپت تشخیص هویت کاربر بر اساس لینک اختصاصی
+                (function() {
+                    const params = new URLSearchParams(window.location.search);
+                    const userCode = params.get("u");
+
+                    // اگر لینک حاوی پارامتر u بود، آن را ذخیره کن
+                    if (userCode) {
+                        localStorage.setItem("UserCode", userCode);
+                    }
+
+                    // خواندن کد نهایی از حافظه
+                    const finalCode = localStorage.getItem("UserCode");
+                    if (finalCode && finalCode !== "Unknown") {
+                        document.getElementById('user-avatar').src = './UserPic/' + finalCode + '.jpg';
+                    }
+                })();
+            </script>
+        </header>
+
+        <div class="quick-panel glass-panel">
+            <div class="quick-eyebrow">
+                <i class="fa-solid fa-bolt"></i>
+                <span>دسترسی سریع</span>
+                <span class="rule"></span>
+            </div>
+
+            <div class="grid-container">
+                <!-- ردیف 1 -->
+                <a href="../CentralCouncilMob/CentralCouncilMob.html" target="_blank" class="card" style="--i:0">
+                    <span class="ring"></span>
+                    <span class="face">
+                        <span class="sweep"></span>
+                        <span class="icon-wrapper"><i class="fa-solid fa-sitemap"></i></span>
+                        <p>شورای مرکزی</p>
+                    </span>
+                </a>
+                <a href="https://bmas100.github.io/War/WarReport.html" target="_blank" class="card" style="--i:1">
+                    <span class="ring"></span>
+                    <span class="face">
+                        <span class="sweep"></span>
+                        <span class="icon-wrapper"><i class="fa-solid fa-person-digging"></i></span>
+                        <p>بازسازی جنگ رمضان</p>
+                    </span>
+                </a>
+
+                <!-- ردیف 2 -->
+                <a href="#" onclick="openPopup('provinces'); return false;" class="card" style="--i:2">
+                    <span class="ring"></span>
+                    <span class="face">
+                        <span class="sweep"></span>
+                        <span class="icon-wrapper"><i class="fa-solid fa-map-location-dot"></i></span>
+                        <p>امور استان‌ها</p>
+                    </span>
+                </a>
+                <a href="#" onclick="openPopup('subsidiaries'); return false;" class="card" style="--i:3">
+                    <span class="ring"></span>
+                    <span class="face">
+                        <span class="sweep"></span>
+                        <span class="icon-wrapper"><i class="fa-solid fa-building"></i></span>
+                        <p>شرکت‌های تابعه</p>
+                    </span>
+                </a>
+
+                <!-- ردیف 3 -->
+                <a href="#" onclick="openPopup('evaluation'); return false;" class="card" style="--i:4">
+                    <span class="ring"></span>
+                    <span class="face">
+                        <span class="sweep"></span>
+                        <span class="icon-wrapper"><i class="fa-solid fa-chart-line"></i></span>
+                        <p>ارزیابی عملکرد</p>
+                    </span>
+                </a>
+                <a href="#" target="_blank" class="card" onclick="openEvaluation(event)" style="--i:5">
+                    <span class="ring"></span>
+                    <span class="face">
+                        <span class="sweep"></span>
+                        <span class="icon-wrapper"><i class="fa-solid fa-user-tie"></i></span>
+                        <p>ارزیابی مدیران</p>
+                    </span>
+                </a>
+
+                <script>
+                function openEvaluation(event) {
+                    event.preventDefault();
+
+                    // دریافت پارامتر u از URL فعلی
+                    const params = new URLSearchParams(window.location.search);
+                    const u = params.get('u');
+
+                    // ساخت آدرس صفحه ارزیابی
+                    const url = `../EvaluationMob/Eva_ProvMng.html?u=${encodeURIComponent(u || '')}`;
+
+                    // باز کردن در صفحه جدید
+                    window.open(url, '_blank');
+                }
+                </script>
+
+                <!-- ردیف 4 -->
+                <a href="#" target="_blank" class="card" style="--i:6">
+                    <span class="ring"></span>
+                    <span class="face">
+                        <span class="sweep"></span>
+                        <span class="icon-wrapper"><i class="fa-solid fa-house-chimney-window"></i></span>
+                        <p>خانه امید</p>
+                    </span>
+                </a>
+                <a href="../LegalMob/LegalMob.html" target="_blank" class="card" style="--i:7">
+                    <span class="ring"></span>
+                    <span class="face">
+                        <span class="sweep"></span>
+                        <span class="icon-wrapper"><i class="fa-solid fa-scale-balanced"></i></span>
+                        <p>حقوقی و املاک</p>
+                    </span>
+                </a>
+
+                <!-- ردیف 5 -->
+                <a href="../HrmMob/HrmMob.html" target="_blank" class="card" style="--i:8">
+                    <span class="ring"></span>
+                    <span class="face">
+                        <span class="sweep"></span>
+                        <span class="icon-wrapper"><i class="fa-solid fa-users-gear"></i></span>
+                        <p>منابع انسانی</p>
+                    </span>
+                </a>
+                <a href="../SystemsMob/SystemsMob.html" target="_blank" class="card" style="--i:9">
+                    <span class="ring"></span>
+                    <span class="face">
+                        <span class="sweep"></span>
+                        <span class="icon-wrapper"><i class="fa-solid fa-server"></i></span>
+                        <p>پلتفرم‌های بنیادمسکن</p>
+                    </span>
+                </a>
+
+                <!-- ردیف 6 -->
+                <a href="#" target="_blank" class="card" style="--i:10">
+                    <span class="ring"></span>
+                    <span class="face">
+                        <span class="sweep"></span>
+                        <span class="icon-wrapper"><i class="fa-solid fa-comments"></i></span>
+                        <p>ارتباط با ریاست</p>
+                    </span>
+                </a>
+                <a href="#" target="_blank" class="card" style="--i:11">
+                    <span class="ring"></span>
+                    <span class="face">
+                        <span class="sweep"></span>
+                        <span class="icon-wrapper"><i class="fa-solid fa-globe"></i></span>
+                        <p>رسانه‌ها و شبکه‌های اجتماعی</p>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- نوار تزیینی پایین صفحه به‌جای تصویر Footer.png -->
+        <div class="footer-bar" aria-hidden="true">
+            <span class="footer-line"></span>
+            <span class="footer-mark"><i class="fa-solid fa-house-chimney-window"></i></span>
+            <span class="footer-line"></span>
+        </div>
+
+        <!-- ================= اسکریپت کنترل کش و آپدیت خودکار ================= -->
+        <script>
+            let refreshing = false;
+
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('sw.js').then(function(registration) {
+
+                        // بررسی اجباری برای آپدیت Service Worker
+                        registration.update();
+
+                    }).catch(function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+
+                // این بخش منتظر پیام تغییر کنترلر (نسخه جدید) می‌ماند
+                // به محض اینکه sw.js جدید جایگزین شد، صفحه را اتوماتیک رفرش می‌کند
+                navigator.serviceWorker.addEventListener('controllerchange', function() {
+                    if (!refreshing) {
+                        window.location.reload();
+                        refreshing = true;
+                    }
+                });
+            }
+        </script>
+        <!-- ================================================================ -->
+
+    </div>
+
+    <!-- ================= کدهای اجرایی مربوط به پاپ‌آپ و پیشواز ================= -->
+    <script>
+        // مخفی شدن صفحه پیشواز (Splash Screen)
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                splash.style.visibility = 'hidden';
+            }, 1000); // زمان مکث  1ثانیه (قابل تغییر)
+        });
+
+        // تنظیمات داده‌های هر پاپ‌آپ
+        const popupsData = {
+            evaluation: {
+                title: "ارزیابی عملکرد",
+                buttons: [
+                    { text: "ستاد مرکزی", link: "../EvaluationMob/EvaHeadquarters.html" },
+                    { text: "بنیاد مسکن استان‌ها", link: "../EvaluationMob/EvaluationMob.html" },
+                    { text: "شرکتهای تابعه", link: "../SubsidiariesMob/SubsidiariesMob.html" },
+                    { text: "شاخص‌های عملکرد", link: "../EvaluationMob/KPIs.html" }
+                ]
+            },
+            provinces: {
+                title: "امور استان‌ها",
+                buttons: [
+                    { text: "سفرهای استانی", link: "../ProvincesMob/Provincal_Visits.html" },
+                    { text: "سفرهای ناحیه‌ای", link: "../ProvincesMob/Provincal_Region.html" }
+                ]
+            },
+            subsidiaries: {
+                title: "شرکت‌های تابعه",
+                buttons: [
+                    { text: "عملکرد دوره‌ای", link: "../SubsidiariesMob/SubsidiariesMob.html" },
+                    { text: "عملکرد مالی و بودجه", link: "../SubsidiariesMob/SubsidiariesMob_3Mon.html" }
+                ]
+            }
+        };
+
+        // نمایش پاپ‌آپ
+        function openPopup(key) {
+            const data = popupsData[key];
+            if (!data) return;
+
+            document.getElementById('popup-title').innerText = data.title;
+
+            const body = document.getElementById('popup-body');
+            body.innerHTML = '';
+
+            data.buttons.forEach(btn => {
+                const a = document.createElement('a');
+                a.href = btn.link;
+                a.target = "_blank"; // باز شدن در صفحه جدید
+                a.className = "popup-btn";
+                a.innerHTML = `<span>${btn.text}</span><i class="fa-solid fa-chevron-left"></i>`;
+                body.appendChild(a);
+            });
+
+            document.getElementById('popup-overlay').classList.add('active');
+            document.getElementById('popup-content').classList.add('active');
+        }
+
+        // بستن پاپ‌آپ
+        function closePopup() {
+            document.getElementById('popup-overlay').classList.remove('active');
+            document.getElementById('popup-content').classList.remove('active');
+        }
+    </script>
+
+<script src="tracker.js?v=20"></script>
+
+</body>
+</html>
