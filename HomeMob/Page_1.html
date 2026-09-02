@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="سامانه هوشمند مدیریتی ریاست">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0b3d2e">
+<title>سامانه هوشمند مدیریتی ریاست</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-950:#08291f;
+    --green-900:#0b3d2e;
+    --green-700:#125c43;
+    --green-600:#187a58;
+    --green-400:#2fa377;
+    --gold-500:#c1993f;
+    --gold-300:#e6cd8e;
+    --sand-50:#fbf8f0;
+    --sand-100:#f4eddb;
+    --sand-200:#ece1c6;
+    --ink-900:#1b211c;
+    --ink-600:#5c655d;
+    --ink-400:#8c948a;
+    --white:#ffffff;
+    --shadow-soft: 0 1px 2px rgba(11,61,46,.06), 0 8px 24px -12px rgba(11,61,46,.18);
+    --shadow-lift: 0 4px 10px rgba(11,61,46,.08), 0 20px 40px -16px rgba(11,61,46,.28);
+    --radius-card: 18px;
+    --radius-pill: 999px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Vazirmatn', Tahoma, sans-serif;
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #103f2e 0%, transparent 60%),
+      var(--sand-100);
+    color:var(--ink-900);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    overscroll-behavior-y:none;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+  }
+
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit;}
+
+  :focus-visible{
+    outline:2px solid var(--gold-500);
+    outline-offset:3px;
+    border-radius:8px;
+  }
+
+  /* ===== Shell / phone-like frame on wide viewports ===== */
+  .shell{
+    max-width:480px;
+    margin:0 auto;
+    min-height:100vh;
+    position:relative;
+    background:var(--sand-50);
+    box-shadow:0 0 80px rgba(0,0,0,.12);
+  }
+  @media (min-width:520px){
+    body{padding:28px 0;}
+    .shell{min-height:calc(100vh - 56px); border-radius:28px; overflow:hidden;}
+  }
+
+  /* ===================== SPLASH ===================== */
+  #splash{
+    position:fixed; inset:0; z-index:100;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:22px;
+    padding:24px;
+    text-align:center;
+    background:
+      radial-gradient(900px 500px at 50% 8%, rgba(230,205,142,.14), transparent 55%),
+      linear-gradient(175deg, var(--green-950) 0%, var(--green-900) 46%, var(--green-700) 100%);
+    color:var(--sand-50);
+    transition:opacity .55s ease, visibility .55s ease;
+  }
+  #splash.hide{opacity:0; visibility:hidden; pointer-events:none;}
+
+  .splash-ring{
+    width:126px; height:126px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.10), rgba(255,255,255,0) 60%);
+    border:1px solid rgba(230,205,142,.35);
+    animation:ring-breathe 3.6s ease-in-out infinite;
+  }
+  .splash-ring img{width:74px; height:74px; object-fit:contain; filter:drop-shadow(0 6px 16px rgba(0,0,0,.35));}
+  @keyframes ring-breathe{
+    0%,100%{box-shadow:0 0 0 0 rgba(230,205,142,.16);}
+    50%{box-shadow:0 0 0 14px rgba(230,205,142,0);}
+  }
+
+  .splash-eyebrow{
+    font-size:13px; font-weight:600; letter-spacing:.02em;
+    color:var(--gold-300);
+    opacity:.95;
+  }
+  .splash-title{
+    font-size:23px; font-weight:800; line-height:1.55;
+    max-width:280px;
+  }
+  .splash-sub{
+    font-size:13.5px; color:rgba(251,248,240,.7); font-weight:400;
+  }
+
+  .enter-btn{
+    margin-top:6px;
+    padding:13px 34px;
+    border-radius:var(--radius-pill);
+    border:1px solid rgba(230,205,142,.55);
+    background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
+    color:var(--gold-300);
+    font-size:14.5px; font-weight:600;
+    cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .18s ease, background .25s ease, color .25s ease;
+  }
+  .enter-btn:hover{background:var(--gold-300); color:var(--green-950); transform:translateY(-1px);}
+  .enter-btn:active{transform:translateY(0) scale(.98);}
+  .enter-btn svg{width:16px; height:16px; transition:transform .2s ease;}
+  .enter-btn:hover svg{transform:translateX(-3px);}
+
+  /* ===================== APP ===================== */
+  #app{opacity:0;}
+  #app.ready{opacity:1;}
+
+  .reveal{
+    opacity:0;
+    transform:translateY(10px);
+    animation:rise .55s cubic-bezier(.2,.7,.25,1) forwards;
+  }
+  @keyframes rise{ to{opacity:1; transform:translateY(0);} }
+
+  /* ---- Header ---- */
+  .head{
+    position:relative;
+    padding:18px 20px 30px;
+    background:
+      radial-gradient(520px 260px at 85% -20%, rgba(230,205,142,.18), transparent 60%),
+      linear-gradient(170deg, var(--green-950), var(--green-900) 55%, var(--green-700) 130%);
+    color:var(--sand-50);
+    overflow:hidden;
+  }
+  .head::after{
+    content:"";
+    position:absolute; inset:auto -10% -60% -10%;
+    height:140px;
+    background:radial-gradient(closest-side, rgba(230,205,142,.10), transparent 70%);
+  }
+  .head-top{
+    display:flex; align-items:center; justify-content:space-between;
+    position:relative; z-index:1;
+  }
+  .head-menu-btn{
+    width:38px; height:38px; border-radius:11px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.10);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--sand-50);
+  }
+  .head-menu-btn svg{width:18px; height:18px;}
+  .head-seal{width:34px; height:34px; object-fit:contain; opacity:.92;}
+
+  .head-body{position:relative; z-index:1; margin-top:26px;}
+  .head-org{
+    font-size:13px; font-weight:600; color:var(--gold-300);
+    display:flex; align-items:center; gap:6px;
+  }
+  .head-org::before{
+    content:""; width:5px; height:5px; border-radius:50%;
+    background:var(--gold-300); display:inline-block;
+  }
+  .head-title{
+    font-size:26px; font-weight:800; line-height:1.5;
+    margin-top:8px; max-width:15ch;
+  }
+  .head-meta{
+    margin-top:14px;
+    font-size:12.5px; color:rgba(251,248,240,.62); font-weight:500;
+    display:flex; align-items:center; gap:8px;
+  }
+  .head-meta .dot{width:3px; height:3px; border-radius:50%; background:rgba(251,248,240,.4);}
+  .head-version{
+    padding:2px 9px; border-radius:var(--radius-pill);
+    border:1px solid rgba(230,205,142,.4); color:var(--gold-300);
+    font-size:11px; font-weight:600;
+  }
+
+  /* ---- Profile card (overlapping header) ---- */
+  .profile{
+    margin:-34px 16px 0;
+    position:relative; z-index:2;
+    background:var(--white);
+    border-radius:var(--radius-card);
+    box-shadow:var(--shadow-lift);
+    padding:14px 16px;
+    display:flex; align-items:center; gap:13px;
+    border:1px solid var(--sand-200);
+  }
+  .profile-photo{
+    width:56px; height:56px; border-radius:14px;
+    object-fit:cover;
+    background:var(--sand-100);
+    border:1px solid var(--sand-200);
+    flex-shrink:0;
+  }
+  .profile-text{min-width:0;}
+  .profile-role{font-size:11.5px; color:var(--green-600); font-weight:700; letter-spacing:.01em;}
+  .profile-name{font-size:15.5px; font-weight:700; color:var(--ink-900); margin-top:2px;}
+  .profile-line{font-size:12px; color:var(--ink-400); margin-top:2px;}
+  .profile-arrow{
+    margin-inline-start:auto; width:30px; height:30px; border-radius:9px;
+    background:var(--sand-100); display:flex; align-items:center; justify-content:center;
+    color:var(--green-700); flex-shrink:0;
+  }
+  .profile-arrow svg{width:15px; height:15px;}
+
+  /* ---- Sections ---- */
+  .content{padding:22px 16px 8px;}
+  .section{margin-bottom:22px;}
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding:0 4px 10px;
+  }
+  .section-title{font-size:14px; font-weight:700; color:var(--ink-900);}
+  .section-count{font-size:11.5px; color:var(--ink-400); font-weight:500;}
+
+  .menu{
+    background:var(--white);
+    border-radius:var(--radius-card);
+    border:1px solid var(--sand-200);
+    box-shadow:var(--shadow-soft);
+    overflow:hidden;
+  }
+  .menu-item{
+    display:flex; align-items:center; gap:12px;
+    padding:14px 15px;
+    position:relative;
+    border-bottom:1px solid var(--sand-100);
+    -webkit-tap-highlight-color:transparent;
+    overflow:hidden;
+  }
+  .menu-item:last-child{border-bottom:none;}
+  .menu-item::before{
+    content:"";
+    position:absolute; inset:0;
+    background:var(--green-900);
+    opacity:0;
+    transition:opacity .2s ease;
+  }
+  .menu-item:hover::before{opacity:.04;}
+  .menu-item:active::before{opacity:.08;}
+
+  .item-icon{
+    width:38px; height:38px; border-radius:11px;
+    flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(155deg, var(--green-700), var(--green-900));
+    color:var(--gold-300);
+    position:relative; z-index:1;
+  }
+  .item-icon svg{width:18px; height:18px;}
+  .menu-item.dim .item-icon{
+    background:var(--sand-100); color:var(--ink-400);
+  }
+
+  .item-text{min-width:0; flex:1; position:relative; z-index:1;}
+  .item-title{font-size:13.8px; font-weight:600; color:var(--ink-900);}
+  .item-sub{font-size:11.2px; color:var(--ink-400); margin-top:2px;}
+  .menu-item.dim .item-title{color:var(--ink-600);}
+
+  .item-chevron{
+    color:var(--ink-400); flex-shrink:0; position:relative; z-index:1;
+    transition:transform .18s ease;
+  }
+  .item-chevron svg{width:15px; height:15px;}
+  .menu-item:hover .item-chevron{transform:translateX(-3px); color:var(--green-700);}
+
+  .soon-badge{
+    font-size:9.5px; font-weight:700; color:var(--ink-400);
+    background:var(--sand-100); border-radius:6px; padding:2px 6px;
+    position:relative; z-index:1; flex-shrink:0;
+  }
+
+  /* ---- Footer ---- */
+  .foot{
+    margin-top:8px;
+    padding:26px 20px 30px;
+    text-align:center;
+    background:linear-gradient(180deg, transparent, var(--sand-200) 40%);
+  }
+  .foot-emblem{width:30px; height:30px; object-fit:contain; opacity:.55; margin-bottom:10px;}
+  .foot-org{font-size:12px; font-weight:700; color:var(--ink-600);}
+  .foot-line{font-size:11px; color:var(--ink-400); margin-top:4px;}
+
+  /* ripple */
+  .ripple{
+    position:absolute; border-radius:50%;
+    background:rgba(11,61,46,.16);
+    transform:scale(0); animation:ripple .55s ease-out forwards;
+    pointer-events:none; z-index:1;
+  }
+  @keyframes ripple{ to{ transform:scale(3); opacity:0; } }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ===================== SPLASH ===================== -->
+  <div id="splash">
+    <div class="splash-ring">
+      <img src="https://bmas100.github.io/BMS/HomeMob/BonyadLogo.png" alt="نشان بنیاد مسکن انقلاب اسلامی">
+    </div>
+    <div>
+      <div class="splash-eyebrow">بنیاد مسکن انقلاب اسلامی</div>
+      <div class="splash-title">سامانه هوشمند مدیریتی ریاست</div>
+      <div class="splash-sub" style="margin-top:8px;">اداره کل حوزه ریاست — نسخه ۱.۰</div>
+    </div>
+    <button class="enter-btn" id="enterBtn" type="button">
+      ورود به سامانه
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    </button>
+  </div>
+
+  <!-- ===================== APP ===================== -->
+  <div id="app">
+
+    <!-- Header -->
+    <header class="head reveal" style="animation-delay:.05s">
+      <div class="head-top">
+        <button class="head-menu-btn" type="button" aria-label="فهرست">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <img class="head-seal" src="https://bmas100.github.io/BMS/HomeMob/BonyadLogo.png" alt="لوگو بنیاد">
+      </div>
+      <div class="head-body">
+        <div class="head-org">بنیاد مسکن انقلاب اسلامی</div>
+        <h1 class="head-title">سامانه هوشمند مدیریتی ریاست</h1>
+        <div class="head-meta">
+          <span>اداره کل حوزه ریاست</span>
+          <span class="dot"></span>
+          <span class="head-version">نسخه ۱.۰</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Profile -->
+    <div class="profile reveal" style="animation-delay:.14s">
+      <img class="profile-photo" src="https://bmas100.github.io/BMS/HomeMob/UserPic/Boss.png" alt="ریاست بنیاد">
+      <div class="profile-text">
+        <div class="profile-role">ریاست بنیاد</div>
+        <div class="profile-name">حوزه ریاست بنیاد مسکن</div>
+        <div class="profile-line">مشاهده پیام‌ها و دستورات جاری</div>
+      </div>
+      <span class="profile-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      </span>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+      <!-- Section: Governance -->
+      <div class="section reveal" style="animation-delay:.20s">
+        <div class="section-head">
+          <span class="section-title">راهبری و نظارت</span>
+          <span class="section-count">۵ مورد</span>
+        </div>
+        <div class="menu">
+
+          <a class="menu-item" href="https://bmas100.github.io/BMS/CentralCouncilMob/CentralCouncilMob.html">
+            <span class="item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/></svg>
+            </span>
+            <span class="item-text">
+              <div class="item-title">شورای مرکزی</div>
+              <div class="item-sub">مصوبات و جلسات شورا</div>
+            </span>
+            <span class="item-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+            </span>
+          </a>
+
+          <a class="menu-item" href="#">
+            <span class="item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9l8-5 8 5v10"/><path d="M9 19v-6h6v6"/></svg>
+            </span>
+            <span class="item-text">
+              <div class="item-title">امور استان‌ها</div>
+              <div class="item-sub">وضعیت و گزارش استان‌ها</div>
+            </span>
+            <span class="item-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+            </span>
+          </a>
+
+          <a class="menu-item" href="#">
+            <span class="item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </span>
+            <span class="item-text">
+              <div class="item-title">شرکت‌های تابعه</div>
+              <div class="item-sub">فهرست و عملکرد شرکت‌ها</div>
+            </span>
+            <span class="item-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+            </span>
+          </a>
+
+          <a class="menu-item" href="#">
+            <span class="item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20V10M9 20V4M15 20v-7M21 20V8"/></svg>
+            </span>
+            <span class="item-text">
+              <div class="item-title">ارزیابی عملکرد</div>
+              <div class="item-sub">شاخص‌ها و داشبورد عملکرد</div>
+            </span>
+            <span class="item-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+            </span>
+          </a>
+
+          <a class="menu-item" href="#">
+            <span class="item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M8.5 14.5 6 21l6-3 6 3-2.5-6.5"/></svg>
+            </span>
+            <span class="item-text">
+              <div class="item-title">ارزیابی مدیران</div>
+              <div class="item-sub">رتبه‌بندی و بازخورد مدیریتی</div>
+            </span>
+            <span class="item-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+            </span>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Section: National projects -->
+      <div class="section reveal" style="animation-delay:.26s">
+        <div class="section-head">
+          <span class="section-title">طرح‌های ملی</span>
+          <span class="section-count">۲ مورد</span>
+        </div>
+        <div class="menu">
+
+          <a class="menu-item" href="https://bmas100.github.io/War/WarReport.html">
+            <span class="item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-6 7 6v12M9 21v-6h6v6"/></svg>
+            </span>
+            <span class="item-text">
+              <div class="item-title">بازسازی جنگ رمضان</div>
+              <div class="item-sub">پیشرفت پروژه‌های بازسازی</div>
+            </span>
+            <span class="item-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+            </span>
+          </a>
+
+          <a class="menu-item" href="https://bmas100.github.io/BMS/HopeHouseMob/HopeHouse.html">
+            <span class="item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M12 21v-6a1 1 0 0 1 2 0"/><path d="M11.3 14.2c-1-1-1-2.4 0-3.3.9-.9 2.3-.9 3.2 0 .1.1.3.3.5.5.2-.2.4-.4.5-.5.9-.9 2.3-.9 3.2 0 1 .9 1 2.3 0 3.3l-3.7 3.5-3.7-3.5Z"/></svg>
+            </span>
+            <span class="item-text">
+              <div class="item-title">خانه امید</div>
+              <div class="item-sub">حمایت از خانواده‌های نیازمند</div>
+            </span>
+            <span class="item-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+            </span>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Section: Organizational support -->
+      <div class="section reveal" style="animation-delay:.32s">
+        <div class="section-head">
+          <span class="section-title">پشتیبانی سازمانی</span>
+          <span class="section-count">۳ مورد</span>
+        </div>
+        <div class="menu">
+
+          <a class="menu-item" href="#">
+            <span class="item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7l-3 6a3 3 0 0 0 6 0l-3-6ZM19 7l-3 6a3 3 0 0 0 6 0l-3-6ZM5 7h14"/></svg>
+            </span>
+            <span class="item-text">
+              <div class="item-title">حقوقی و املاک</div>
+              <div class="item-sub">پرونده‌های حقوقی و اموال</div>
+            </span>
+            <span class="item-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+            </span>
+          </a>
+
+          <a class="menu-item" href="https://bmas100.github.io/BMS/HrmMob/HrmMob.html">
+            <span class="item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </span>
+            <span class="item-text">
+              <div class="item-title">منابع انسانی</div>
+              <div class="item-sub">اطلاعات و خدمات پرسنلی</div>
+            </span>
+            <span class="item-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+            </span>
+          </a>
+
+          <a class="menu-item" href="https://bmas100.github.io/BMS/SystemsMob/SystemsMob.html">
+            <span class="item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            </span>
+            <span class="item-text">
+              <div class="item-title">پلتفرم‌های بنیادمسکن</div>
+              <div class="item-sub">دسترسی به سامانه‌های سازمانی</div>
+            </span>
+            <span class="item-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+            </span>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Section: Communications -->
+      <div class="section reveal" style="animation-delay:.38s">
+        <div class="section-head">
+          <span class="section-title">ارتباطات</span>
+          <span class="section-count">۲ مورد</span>
+        </div>
+        <div class="menu">
+
+          <a class="menu-item dim" href="#">
+            <span class="item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.99.36 1.96.67 2.9a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.18-1.18a2 2 0 0 1 2.11-.45c.94.31 1.91.54 2.9.67A2 2 0 0 1 22 16.92Z"/></svg>
+            </span>
+            <span class="item-text">
+              <div class="item-title">ارتباط با ریاست</div>
+              <div class="item-sub">ثبت پیام و درخواست ملاقات</div>
+            </span>
+            <span class="soon-badge">به‌زودی</span>
+          </a>
+
+          <a class="menu-item dim" href="#">
+            <span class="item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11v2a2 2 0 0 0 2 2h1l4 4V5L7 9H6a2 2 0 0 0-2 2Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19.5 5.5a9 9 0 0 1 0 13"/></svg>
+            </span>
+            <span class="item-text">
+              <div class="item-title">رسانه‌ها و فضای مجازی</div>
+              <div class="item-sub">اخبار و بازتاب رسانه‌ای</div>
+            </span>
+            <span class="soon-badge">به‌زودی</span>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="foot reveal" style="animation-delay:.44s">
+      <img class="foot-emblem" src="https://bmas100.github.io/BMS/HomeMob/BonyadLogo.png" alt="">
+      <div class="foot-org">بنیاد مسکن انقلاب اسلامی</div>
+      <div class="foot-line">اداره کل حوزه ریاست &nbsp;·&nbsp; سامانه هوشمند مدیریتی &nbsp;·&nbsp; نسخه ۱.۰</div>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+  (function(){
+    var splash = document.getElementById('splash');
+    var app = document.getElementById('app');
+    var entered = false;
+
+    function enter(){
+      if(entered) return;
+      entered = true;
+      splash.classList.add('hide');
+      app.classList.add('ready');
+    }
+
+    document.getElementById('enterBtn').addEventListener('click', enter);
+    // Auto-enter if the visitor doesn't tap, so the app is never stuck behind the splash.
+    setTimeout(enter, 3200);
+
+    // Lightweight tap ripple on menu rows.
+    document.querySelectorAll('.menu-item').forEach(function(item){
+      item.addEventListener('click', function(e){
+        var rect = item.getBoundingClientRect();
+        var r = document.createElement('span');
+        var size = Math.max(rect.width, rect.height);
+        r.className = 'ripple';
+        r.style.width = r.style.height = size + 'px';
+        r.style.left = (e.clientX - rect.left - size/2) + 'px';
+        r.style.top = (e.clientY - rect.top - size/2) + 'px';
+        item.appendChild(r);
+        setTimeout(function(){ r.remove(); }, 550);
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
