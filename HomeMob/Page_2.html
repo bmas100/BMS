@@ -253,6 +253,14 @@
     overflow:hidden;
   }
   .menu-item:last-child{border-bottom:none;}
+  button.menu-item{
+    width:100%; border:none; background:transparent;
+    font-family:inherit; text-align:right; cursor:pointer;
+  }
+  .item-chevron.expand svg{width:14px; height:14px;}
+  .menu-item:hover .item-chevron.expand{transform:none;}
+  .menu-item[aria-expanded="true"] .item-chevron.expand svg{transform:rotate(180deg);}
+  .item-chevron.expand svg{transition:transform .2s ease;}
   .menu-item::before{
     content:"";
     position:absolute; inset:0;
@@ -294,6 +302,61 @@
   .foot-emblem{width:30px; height:30px; object-fit:contain; opacity:.55; margin-bottom:10px;}
   .foot-org{font-size:12px; font-weight:700; color:var(--ink-600);}
   .foot-line{font-size:11px; color:var(--ink-400); margin-top:4px;}
+
+  /* ---- Sub-menu sheet ---- */
+  .sheet-overlay{
+    position:fixed; inset:0; z-index:70;
+    background:rgba(11,33,25,.45);
+    display:flex; align-items:flex-end; justify-content:center;
+    opacity:0; visibility:hidden;
+    transition:opacity .25s ease, visibility .25s ease;
+  }
+  .sheet-overlay.open{opacity:1; visibility:visible;}
+  @media (min-width:520px){ .sheet-overlay{align-items:center;} }
+
+  .sheet{
+    width:100%; max-width:420px;
+    background:var(--sand-50);
+    border-radius:20px 20px 0 0;
+    padding:10px 16px 20px;
+    transform:translateY(100%);
+    transition:transform .32s cubic-bezier(.2,.7,.25,1);
+    box-shadow:0 -10px 40px rgba(11,61,46,.2);
+  }
+  .sheet-overlay.open .sheet{transform:translateY(0);}
+  @media (min-width:520px){
+    .sheet{border-radius:20px; transform:translateY(16px); }
+    .sheet-overlay.open .sheet{transform:translateY(0);}
+  }
+
+  .sheet-handle{
+    width:36px; height:4px; border-radius:var(--radius-pill);
+    background:var(--sand-200);
+    margin:6px auto 14px;
+  }
+  .sheet-title{
+    font-size:14px; font-weight:700; color:var(--ink-900);
+    padding:0 4px 10px;
+  }
+  .sheet-list{
+    background:var(--white);
+    border-radius:16px;
+    border:1px solid var(--sand-200);
+    overflow:hidden;
+  }
+  .sheet-item{
+    display:flex; align-items:center; gap:10px;
+    padding:14px 15px;
+    font-size:13.5px; font-weight:600; color:var(--ink-900);
+    border-bottom:1px solid var(--sand-100);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .sheet-item:last-child{border-bottom:none;}
+  .sheet-item:hover{background:var(--sand-50);}
+  .sheet-item .dot-ico{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--gold-500); flex-shrink:0;
+  }
 
   /* ---- Nav drawer ---- */
   .drawer-overlay{
@@ -458,7 +521,7 @@
             </span>
           </a>
 
-          <a class="menu-item" href="#" target="_blank" rel="noopener">
+          <button class="menu-item" type="button" data-sheet="performance">
             <span class="item-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20V10M9 20V4M15 20v-7M21 20V8"/></svg>
             </span>
@@ -466,10 +529,10 @@
               <div class="item-title">ارزیابی عملکرد</div>
               <div class="item-sub">شاخص‌ها و داشبورد عملکرد</div>
             </span>
-            <span class="item-chevron">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+            <span class="item-chevron expand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
             </span>
-          </a>
+          </button>
 
           <a class="menu-item" href="#" target="_blank" rel="noopener">
             <span class="item-icon">
@@ -645,6 +708,15 @@
     </div>
   </nav>
 
+  <!-- Sub-menu sheet -->
+  <div class="sheet-overlay" id="sheetOverlay">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-title" id="sheetTitle"></div>
+      <div class="sheet-list" id="sheetList"></div>
+    </div>
+  </div>
+
 <script>
   (function(){
     var splash = document.getElementById('splash');
@@ -696,6 +768,59 @@
     menuBtn.addEventListener('click', openDrawer);
     drawerClose.addEventListener('click', closeDrawer);
     drawerOverlay.addEventListener('click', closeDrawer);
+
+    // ---- Sub-menu sheets (items that expand into internal-page links) ----
+    // NOTE: fill in the real "href" for each sub-item below with the exact
+    // internal page addresses from bmas100.github.io/BMS — placeholders are "#" for now.
+    var submenus = {
+      performance: {
+        title: 'ارزیابی عملکرد',
+        items: [
+          { label: 'ستاد مرکزی', href: '#' },
+          { label: 'بنیاد مسکن استان‌ها', href: '#' },
+          { label: 'شرکت‌های تابعه', href: '#' },
+          { label: 'شاخص‌های عملکرد', href: '#' }
+        ]
+      }
+    };
+
+    var sheetOverlay = document.getElementById('sheetOverlay');
+    var sheetTitle = document.getElementById('sheetTitle');
+    var sheetList = document.getElementById('sheetList');
+    var activeSheetTrigger = null;
+
+    function openSheet(key, triggerEl){
+      var data = submenus[key];
+      if(!data) return;
+      sheetTitle.textContent = data.title;
+      sheetList.innerHTML = '';
+      data.items.forEach(function(it){
+        var a = document.createElement('a');
+        a.className = 'sheet-item';
+        a.href = it.href;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        var dot = document.createElement('span');
+        dot.className = 'dot-ico';
+        a.appendChild(dot);
+        a.appendChild(document.createTextNode(it.label));
+        sheetList.appendChild(a);
+      });
+      sheetOverlay.classList.add('open');
+      activeSheetTrigger = triggerEl;
+      if(triggerEl) triggerEl.setAttribute('aria-expanded', 'true');
+    }
+    function closeSheet(){
+      sheetOverlay.classList.remove('open');
+      if(activeSheetTrigger) activeSheetTrigger.setAttribute('aria-expanded', 'false');
+      activeSheetTrigger = null;
+    }
+    document.querySelectorAll('[data-sheet]').forEach(function(btn){
+      btn.addEventListener('click', function(){ openSheet(btn.getAttribute('data-sheet'), btn); });
+    });
+    sheetOverlay.addEventListener('click', function(e){
+      if(e.target === sheetOverlay) closeSheet();
+    });
 
     // ---- PWA: inline manifest + service worker registration ----
     try{
