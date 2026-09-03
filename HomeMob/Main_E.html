@@ -42,7 +42,7 @@
 
             /* فقط این دو مقدار را برای کم/زیاد کردن فاصله کارت‌ها تغییر دهید */
             --card-column-gap: 8px; /* فاصله افقی بین کارت‌ها */
-            --card-row-gap: -10px;    /* فاصله عمودی بین کارت‌ها: مثلا 0px، 2px، 5px */
+            --card-row-gap: 0px;    /* فاصله عمودی بین کارت‌ها: مثلا 0px، 2px، 5px */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -275,7 +275,8 @@
 
             /* ===== کنترل فاصله کارت‌ها: فقط دو متغیر بالا را تغییر دهید ===== */
             column-gap: var(--card-column-gap) !important;
-            row-gap: var(--card-row-gap) !important;
+          /*  row-gap: var(--card-row-gap) !important; */
+			row-gap: 0px; !important;
 
             align-items: center;
             justify-items: center;
