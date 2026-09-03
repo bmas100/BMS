@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>گزارش تحلیلی بخش حقوقی و قضائی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+  :root{
+    --navy-950:#0A1B2E; --navy-900:#0F2743; --navy-800:#153355; --navy-700:#1C4270;
+    --gold-500:#C9A227; --gold-400:#DAB94A; --gold-100:#FBF3D9;
+    --teal-500:#178073; --teal-100:#E1F3EF;
+    --rose-500:#B84438; --rose-100:#FBE9E6;
+    --bg:#F4F6F8; --card:#FFFFFF;
+    --ink-900:#122033; --ink-700:#37475A; --ink-500:#6B7A8C;
+    --line:#E3E8EE; --radius:12px;
+    --shadow:0 2px 12px rgba(15,39,67,0.05); --shadow-lg:0 8px 24px rgba(10,27,46,0.1);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{ margin:0; font-family:'Vazirmatn', Tahoma, sans-serif; background:var(--bg); color:var(--ink-900); font-feature-settings:"tnum" 1, "ss01" 1; }
+  img,svg{display:block;} a{color:inherit;}
+  .container{max-width:1240px; margin:0 auto; padding:0 24px;}
+  .nav{ position:sticky; top:0; z-index:50; background:rgba(10,27,46,0.94); backdrop-filter:blur(6px); border-bottom:1px solid rgba(255,255,255,0.06); }
+  .nav-inner{ max-width:1240px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:56px; gap:20px; }
+  .brand{display:flex; align-items:center; gap:8px; color:#fff; font-weight:700; font-size:14px; white-space:nowrap;}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--gold-500);}
+  .nav-links{display:flex; gap:4px; overflow-x:auto; scrollbar-width:none;}
+  .nav-links::-webkit-scrollbar{display:none;}
+  .nav-links a{ font-size:12.5px; color:rgba(255,255,255,0.75); text-decoration:none; padding:8px 10px; white-space:nowrap; border-radius:6px; transition:.15s; }
+  .nav-links a:hover{color:#fff; background:rgba(255,255,255,0.1);}
+  .hero{ position:relative; background: radial-gradient(1100px 480px at 15% -10%, rgba(201,162,39,0.15), transparent 60%), radial-gradient(900px 500px at 100% 0%, rgba(28,66,112,0.45), transparent 55%), linear-gradient(160deg, var(--navy-950) 0%, var(--navy-900) 55%, var(--navy-800) 100%); color:#fff; overflow:hidden; padding:16px 0; }
+  .hero-pattern{position:absolute; inset:0; opacity:0.07; pointer-events:none;}
+  .hero-inner{position:relative; z-index:2;}
+  .eyebrow{ display:inline-flex; align-items:center; gap:6px; font-size:12px; letter-spacing:.3px; color:var(--gold-400); background:rgba(201,162,39,0.1); border:1px solid rgba(201,162,39,0.3); padding:4px 12px; border-radius:100px; margin-bottom:8px; }
+  .hero-title-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:12px; }
+  .hero h1{ font-size:clamp(20px,3.5vw,28px); font-weight:800; line-height:1.3; margin:0; }
+  .capsule-btn{ display:inline-flex; align-items:center; gap:8px; background:linear-gradient(90deg, var(--gold-500), var(--gold-400)); color:var(--navy-950); font-weight:700; font-size:13.5px; padding:10px 20px; border-radius:100px; text-decoration:none; box-shadow:0 6px 18px rgba(201,162,39,0.25); transition:transform .15s ease, box-shadow .15s ease; }
+  .capsule-btn:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(201,162,39,0.35);}
+  .capsule-btn svg{width:16px; height:16px;}
+  .hero-strip{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.08); border-radius:14px; overflow:hidden; }
+  .hero-strip .cell{ background:rgba(255,255,255,0.04); padding:10px 16px; }
+  .hero-strip .cell .num{font-size:20px; font-weight:800; color:#fff;}
+  .hero-strip .cell .lbl{font-size:12px; color:rgba(255,255,255,0.65); margin-top:4px;}
+  .hero-strip .cell .sub{font-size:10.5px; color:var(--gold-400); margin-top:2px;}
+  section.block{padding:40px 0;}
+  section.block.alt{background:#fff;}
+  .sec-head{display:flex; align-items:flex-start; gap:14px; margin-bottom:20px;}
+  .sec-title{font-size:18px; font-weight:800; color:var(--ink-900); display:flex; align-items:center; gap:8px;}
+  .sec-title svg{width:22px; height:22px; stroke:var(--gold-500);}
+  .sec-desc{font-size:12.5px; color:var(--ink-500); margin-top:2px; line-height:1.7;}
+  .kpi-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:20px;}
+  .kpi-grid.cols-4{grid-template-columns:repeat(4,1fr);}
+  .kpi-grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .kpi-card{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:8px; border-top: 4px solid var(--navy-700); }
+  .kpi-card.bt-teal { border-top-color: var(--teal-500); background: linear-gradient(145deg, #ffffff 40%, #e8f7f4 100%); }
+  .kpi-card.bt-rose { border-top-color: var(--rose-500); background: linear-gradient(145deg, #ffffff 40%, #fdf2f0 100%); }
+  .kpi-card.bt-gold { border-top-color: var(--gold-500); background: linear-gradient(145deg, #ffffff 40%, #fdf9ec 100%); }
+  .kpi-card.bt-navy { border-top-color: var(--navy-700); background: linear-gradient(145deg, #ffffff 40%, #eef1f6 100%); }
+  .kpi-top{display:flex; align-items:center; justify-content:space-between;}
+  .kpi-icon{ width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #2dd4bf, #fff); box-shadow: 0 4px 10px rgba(15, 118, 110, 0.25); }
+  .kpi-icon svg{width:18px; height:18px; stroke:#ffffff;}
+  .kpi-icon.rose{ background:linear-gradient(135deg, #fb7185, #fff); box-shadow: 0 4px 10px rgba(190, 18, 60, 0.25); }
+  .kpi-icon.gold{ background:linear-gradient(135deg, #facc15, #fff); box-shadow: 0 4px 10px rgba(161, 98, 7, 0.25); }
+  .kpi-icon.navy{ background:linear-gradient(135deg, #60a5fa, #fff); box-shadow: 0 4px 10px rgba(30, 58, 138, 0.25); }
+  .kpi-tag{font-size:12px; color:#2c00ff; background:rgba(255,255,255,0.8); border:1px solid #e3e8ee; padding:2px 8px; border-radius:100px; font-weight:600;}
+  .kpi-num{font-size:20px; font-weight:800; color:var(--ink-900); line-height:1.2;}
+  .kpi-num small{font-size:12px; font-weight:600; color:var(--ink-500); margin-inline-start:4px;}
+  .kpi-label{font-size:11.5px; color:var(--ink-500); font-weight:500;}
+  .panel{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px; box-shadow:var(--shadow); }
+  .panel-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:8px; flex-wrap:wrap;}
+  .panel-title{font-size:13.5px; font-weight:700; color:var(--ink-900);}
+  .panel-title .muted{font-weight:500; color:var(--ink-500); font-size:11px; display:block; margin-top:2px;}
+  .badge{font-size:10.5px; padding:3px 8px; border-radius:100px; background:var(--navy-900); color:#fff;}
+  .grid-2{display:grid; grid-template-columns:1.3fr 1fr; gap:14px;}
+  .grid-2.rev{grid-template-columns:1fr 1.3fr;}
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  .row-gap{margin-bottom:14px;}
+  canvas{max-width:100%;}
+  .chart-wrapper { position: relative; height: 300px; width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 10px; background: linear-gradient(to bottom right, #ffffff, #fbfcfd); box-shadow: inset 0 2px 8px rgba(0,0,0,0.015), 0 4px 12px rgba(0,0,0,0.03); margin-top: 10px; }
+  .ring-wrap{display:flex; flex-direction:column; align-items:center; gap:8px;}
+  .ring-wrap .ring-label{font-size:11.5px; color:var(--ink-500); text-align:center; max-width:140px;}
+  .ring-svg text{font-family:'Vazirmatn', Tahoma, sans-serif; font-weight:800;}
+  .table-scroll{max-height:300px; overflow:auto; border:1px solid var(--line); border-radius:8px;}
+  table{width:100%; border-collapse:collapse; font-size:12px;}
+  thead th{ position:sticky; top:0; background:var(--navy-900); color:#fff; text-align:center; padding:10px 8px; font-weight:600; z-index:1; }
+  thead th:first-child{border-top-right-radius:0;}
+  tbody td{padding:8px; text-align:center; border-bottom:1px solid var(--line); color:var(--ink-700);}
+  tbody tr:nth-child(even){background:#FAFBFC;}
+  tbody tr:hover{background:var(--teal-100);}
+  td.name-cell, th.name-cell{text-align:right;}
+  .num-cell{font-weight:700; color:var(--ink-900);}
+  .tag-cloud{display:flex; flex-wrap:wrap; gap:6px;}
+  .tag{ font-size:11.5px; padding:4px 10px; border-radius:100px; background:var(--teal-100); color:var(--teal-500); font-weight:600; }
+  .tag.rose{background:var(--rose-100); color:var(--rose-500);}
+  .mini-card{ border:1px solid var(--line); border-radius:10px; padding:14px; background:#fff; }
+  .mini-card:nth-child(1) { background: linear-gradient(145deg, #ffffff 50%, #fdf2f0 100%); }
+  .mini-card:nth-child(2) { background: linear-gradient(145deg, #ffffff 50%, #e8f7f4 100%); }
+  .mini-card h4{margin:0 0 10px; font-size:12.5px; display:flex; align-items:center; gap:6px;}
+  .mini-card h4 svg{width:15px; height:15px;}
+  .note{ font-size:11px; color:var(--ink-500); background:#F1F3F6; border-radius:8px; padding:8px 12px; line-height:1.7; margin-top:12px; }
+  .compare-bar{display:flex; align-items:center; gap:12px; margin-top:6px;}
+  .compare-bar .cbox{flex:1; text-align:center; padding:12px 8px; border-radius:10px;}
+  .compare-bar .cbox.old{background:var(--rose-100);}
+  .compare-bar .cbox.new{background:var(--teal-100);}
+  .compare-bar .cbox .n{font-size:20px; font-weight:800;}
+  .compare-bar .cbox.old .n{color:var(--rose-500);}
+  .compare-bar .cbox.new .n{color:var(--teal-500);}
+  .compare-bar .arrow{font-size:18px; color:var(--gold-500);}
+  footer{background:var(--navy-950); color:rgba(255,255,255,0.6); padding:24px 0; font-size:11.5px; text-align:center;}
+  @media (max-width: 980px){ .grid-2, .grid-2.rev, .grid-3{grid-template-columns:1fr;} }
+  @media (max-width: 768px){ .hero-strip{grid-template-columns:repeat(2,1fr);} .kpi-grid, .kpi-grid.cols-4, .kpi-grid.cols-3{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width: 560px){ .kpi-grid, .kpi-grid.cols-4, .kpi-grid.cols-3{grid-template-columns:repeat(2,1fr);} .hero-title-row{flex-direction:column; align-items:flex-start; gap:12px;} }
+  @media (max-width: 380px){ .kpi-grid, .kpi-grid.cols-4, .kpi-grid.cols-3{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+<defs>
+<symbol id="ic-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/> </symbol>
+<symbol id="ic-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/> </symbol>
+<symbol id="ic-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/> </symbol>
+<symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/> </symbol>
+<symbol id="ic-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/> </symbol>
+<symbol id="ic-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/> </symbol>
+<symbol id="ic-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M12 6h.01"/><path d="M16 6h.01"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/> </symbol>
+<symbol id="ic-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/> </symbol>
+<symbol id="ic-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/> </symbol>
+<symbol id="ic-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/> </symbol>
+<symbol id="ic-pie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/> </symbol>
+<symbol id="ic-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/> </symbol>
+<symbol id="ic-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/> </symbol>
+<symbol id="ic-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/> </symbol>
+<symbol id="ic-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/> </symbol>
+</defs>
+</svg>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="dot"></span>1405/05/28</div>
+    <div class="nav-links">
+      <a href="#overview">کلیات</a>
+      <a href="#verdicts">آراء</a>
+      <a href="#court">دیوان عدالت</a>
+      <a href="#transparency">شفافیت</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <svg class="hero-pattern" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs><pattern id="grid" width="46" height="46" patternUnits="userSpaceOnUse"><path d="M46 0H0V46" fill="none" stroke="#DAB94A" stroke-width="0.6"/></pattern></defs>
+    <rect width="100%" height="100%" fill="url(#grid)"/>
+  </svg>
+  <div class="container hero-inner">
+    <span class="eyebrow"><svg width="12" height="12" style="stroke:var(--gold-400)"><use href="#ic-scale"/></svg> سامانه مدیریتی ریاست بنیاد مسکن</span>
+    <div class="hero-title-row">
+      <h1>امور حقوقی و قضائی</h1>
+      <a class="capsule-btn" href="./LegalDetail.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><use href="#ic-file"/></svg> جزئیات گزارش
+      </a>
+    </div>
+    <div class="hero-strip" style="grid-template-columns:repeat(3,1fr);">
+      <div class="cell">
+        <div class="num" id="hs1">۱۰٬۳۶۲</div><div class="lbl">کل پرونده‌های ثبت‌شده</div><div class="sub">۶٬۱۱۴ مرتبط | ۴٬۲۴۸ غیرمرتبط</div>
+      </div>
+      <div class="cell">
+        <div class="num">۲.۶۸</div><div class="lbl">ارزش ریالی آراء له (همت)</div><div class="sub">از سال ۱۴۰۴ تاکنون</div>
+      </div>
+      <div class="cell">
+        <div class="num">۰.۱۳</div><div class="lbl">ارزش ریالی آراء علیه (همت)</div><div class="sub">از سال ۱۴۰۴ تاکنون</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="block" id="overview">
+  <div class="container">
+    <div class="sec-head"><div><div class="sec-title"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-briefcase"/></svg> کلیات پرونده‌های حقوقی، کیفری و شبه‌قضایی</div><div class="sec-desc">آمار پرونده‌های بنیاد مسکن سراسر کشور به تفکیک نوع پرونده و استان</div></div></div>
+    <div class="kpi-grid">
+      <div class="kpi-card bt-navy"><div class="kpi-top"><div class="kpi-icon navy"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-archive"/></svg></div><span class="kpi-tag">مجموع</span></div><div class="kpi-num">۱۰٬۳۶۲</div><div class="kpi-label">کل پرونده‌ها</div></div>
+      <div class="kpi-card bt-teal"><div class="kpi-top"><div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-scale"/></svg></div><span class="kpi-tag">۸۷.۶٪</span></div><div class="kpi-num">۹٬۰۷۸</div><div class="kpi-label">حقوقی</div></div>
+      <div class="kpi-card bt-rose"><div class="kpi-top"><div class="kpi-icon rose"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-alert"/></svg></div><span class="kpi-tag">۷.۹٪</span></div><div class="kpi-num">۸۲۲</div><div class="kpi-label">کیفری</div></div>
+      <div class="kpi-card bt-gold"><div class="kpi-top"><div class="kpi-icon gold"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-building"/></svg></div><span class="kpi-tag">۴.۱٪</span></div><div class="kpi-num">۴۲۲</div><div class="kpi-label">دیوان عدالت</div></div>
+      <div class="kpi-card bt-navy"><div class="kpi-top"><div class="kpi-icon navy"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-file"/></svg></div><span class="kpi-tag">۰.۴٪</span></div><div class="kpi-num">۴۰</div><div class="kpi-label">شبه‌قضایی</div></div>
+    </div>
+    <div class="grid-2 row-gap">
+      <div class="panel"><div class="panel-head"><div class="panel-title">۱۰ استان دارای بیشترین مجموع پرونده‌ها<span class="muted">جمع حقوقی، کیفری و دیوان عدالت</span></div></div><div class="chart-wrapper"><canvas id="chartOverviewTop10"></canvas></div></div>
+      <div class="panel"><div class="panel-head"><div class="panel-title">نسبت ارتباط پرونده‌ها با بنیاد<span class="muted">از مجموع ۱۰٬۳۶۲ پرونده</span></div></div><div class="chart-wrapper"><canvas id="chartRelated"></canvas></div></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">پراکندگی موضوعی پرونده‌ها به تفکیک ۳۱ استان<span class="muted">مرتب‌شده بر اساس مجموع پرونده‌ها (نزولی)</span></div></div>
+      <div class="table-scroll"><table><thead><tr><th class="name-cell">استان</th><th>حقوقی</th><th>کیفری</th><th>دیوان عدالت</th><th>مجموع</th></tr></thead><tbody id="tblOverview"></tbody></table></div>
+    </div>
+  </div>
+</section>
+
+<section class="block alt" id="verdicts">
+  <div class="container">
+    <div class="sec-head"><div><div class="sec-title"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-scale"/></svg> آراء له و علیه بنیاد &mdash; تعداد و ارزش ریالی</div><div class="sec-desc">جمع‌بندی آراء صادره به نفع و علیه بنیاد مسکن به تفکیک استان</div></div></div>
+    <div class="kpi-grid cols">
+      <div class="kpi-card bt-navy"><div class="kpi-top"><div class="kpi-icon navy"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-archive"/></svg></div></div><div class="kpi-num">۵٬۰۷۶</div><div class="kpi-label">کل آراء مختومه</div></div>
+      <div class="kpi-card bt-teal"><div class="kpi-top"><div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-check"/></svg></div></div><div class="kpi-num">۴٬۷۵۴</div><div class="kpi-label">تعداد آراء له</div></div>
+      <div class="kpi-card bt-rose"><div class="kpi-top"><div class="kpi-icon rose"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-cross"/></svg></div></div><div class="kpi-num">۳۸۰</div><div class="kpi-label">تعداد آراء علیه</div></div>
+      <div class="kpi-card bt-gold"><div class="kpi-top"><div class="kpi-icon gold"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-trend"/></svg></div></div><div class="kpi-num">۲.۶۸<small>همت</small></div><div class="kpi-label">ارزش ریالی آراء له</div></div>
+      <div class="kpi-card bt-gold"><div class="kpi-top"><div class="kpi-icon gold"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-trend"/></svg></div></div><div class="kpi-num">۰.۱۳<small>همت</small></div><div class="kpi-label">ارزش ریالی آراء علیه</div></div>
+    </div>
+    <div class="grid-3 row-gap">
+      <div class="panel" style="grid-column:span 1;"><div class="panel-title" style="margin-bottom:10px;">نسبت تعداد آراء از کل مختومه</div><div style="display:flex; justify-content:space-around; align-items:center; height:100%;"><div class="ring-wrap"><div id="ringVerdictFor"></div><div class="ring-label">آراء له</div></div><div class="ring-wrap"><div id="ringVerdictAgainst"></div><div class="ring-label">آراء علیه</div></div></div></div>
+      <div class="panel" style="grid-column:span 2;"><div class="panel-head"><div class="panel-title">۱۰ استان با بیشترین تعداد آراء له در برابر علیه<span class="muted">به ترتیب نزولی آراء له</span></div></div><div class="chart-wrapper"><canvas id="chartVerdictCount"></canvas></div></div>
+    </div>
+    <div class="grid-2 row-gap">
+      <div class="panel"><div class="panel-head"><div class="panel-title">۱۰ استان با بیشترین ارزش ریالی در آراء له<span class="muted">واحد: میلیارد ریال</span></div></div><div class="chart-wrapper"><canvas id="chartValueFor"></canvas></div></div>
+      <div class="panel"><div class="panel-head"><div class="panel-title">۱۰ استان با بیشترین ارزش ریالی در آراء علیه<span class="muted">واحد: میلیارد ریال</span></div></div><div class="chart-wrapper"><canvas id="chartValueAgainst"></canvas></div></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">ارزش ریالی آراء له و علیه به تفکیک استان<span class="muted">مرتب‌شده بر اساس ارزش آراء له (نزولی)</span></div></div>
+      <div class="table-scroll" style="max-height: 250px;"><table><thead><tr><th class="name-cell">استان</th><th>ارزش آراء له (همت)</th><th>ارزش آراء علیه (همت)</th></tr></thead><tbody id="tblValues"></tbody></table></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="court">
+  <div class="container">
+    <div class="sec-head"><div><div class="sec-title"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-building"/></svg> آراء دیوان عدالت اداری</div><div class="sec-desc">از نیمه دوم سال ۱۴۰۲ تا پایان خرداد ۱۴۰۵</div></div></div>
+    <div class="grid-3">
+      <div class="panel" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 24px;"><div id="ringCourtOk"></div><div class="ring-label" style="margin-top:10px;">عدم ابطال (۲۳ فقره)</div></div>
+      <div class="panel" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 24px;"><div id="ringCourtBad"></div><div class="ring-label" style="margin-top:10px;">ابطال (۴ فقره)</div></div>
+      <div class="panel" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding: 24px;"><div class="kpi-icon navy" style="margin-bottom:16px; width: 50px; height: 50px;"><svg viewBox="0 0 24 24" fill="none" style="width:24px; height:24px;"><use href="#ic-archive"/></svg></div><div class="kpi-num" style="font-size:32px;">۲۷</div><div class="kpi-label">مجموع کل آراء مأخوذه</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block alt" id="transparency">
+  <div class="container">
+    <div class="sec-head"><div><div class="sec-title"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-globe"/></svg> سامانه انتشار و دسترسی آزاد به اطلاعات</div><div class="sec-desc">آمار کلی سامانه انتشار در سراسر کشور</div></div></div>
+    <div class="kpi-grid cols-4">
+      <div class="kpi-card bt-navy"><div class="kpi-top"><div class="kpi-icon navy"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-inbox"/></svg></div></div><div class="kpi-num">۶۶۰</div><div class="kpi-label">کل درخواست‌ها</div></div>
+      <div class="kpi-card bt-teal"><div class="kpi-top"><div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-check"/></svg></div></div><div class="kpi-num">۶۵۹</div><div class="kpi-label">کل پاسخ‌ها</div></div>
+      <div class="kpi-card bt-rose"><div class="kpi-top"><div class="kpi-icon rose"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-alert"/></svg></div></div><div class="kpi-num">۲۰۵</div><div class="kpi-label">کل شکایت‌ها</div></div>
+      <div class="kpi-card bt-gold"><div class="kpi-top"><div class="kpi-icon gold"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-check"/></svg></div></div><div class="kpi-num">۲۰۰</div><div class="kpi-label">پاسخ به شکایات</div></div>
+    </div>
+    <div class="grid-3">
+      <div class="panel" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 20px;"><div id="ringReqRate"></div><div class="ring-label" style="margin-top:8px;">پاسخگویی به درخواست‌ها</div></div>
+      <div class="panel" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 20px;"><div id="ringComplaintRate"></div><div class="ring-label" style="margin-top:8px;">پاسخگویی به شکایات</div></div>
+      <div class="panel" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 20px;"><div id="ringOverallRate"></div><div class="ring-label" style="margin-top:8px;">میانگین پاسخگویی کشور</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div> اداره‌کل حوزه ریاست &mdash; تابستان ۱۴۰۵</div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.ChartDataLabels) { Chart.register(ChartDataLabels); }
+  Chart.defaults.font.family = "'Vazirmatn', Tahoma, sans-serif";
+  Chart.defaults.color = '#37475A';
+
+  var faFmt = new Intl.NumberFormat('fa-IR');
+  function fa(n){ return faFmt.format(Math.round(n)); }
+  function faDec(n, d){ return n.toLocaleString('fa-IR', {minimumFractionDigits:d, maximumFractionDigits:d}); }
+
+  var PALETTE = { navy:'#1C4270', gold:'#C9A227', teal:'#178073', rose:'#B84438', navyLight:'#4E6E9B', goldLight:'#E4C568' };
+
+  function getAlign(x, y) { return Math.atan2(y, x) * (180 / Math.PI); }
+  function getOffset(x, y) { return Math.sqrt(x * x + y * y); }
+
+  function ring(containerId, percent, color, size){
+    size = size || 110; var r = size/2 - 10; var c = 2*Math.PI*r; var offset = c - (percent/100)*c; var el = document.getElementById(containerId);
+    if(el) el.innerHTML = '<svg class="ring-svg" width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'">' +
+        '<circle cx="'+size/2+'" cy="'+size/2+'" r="'+r+'" fill="none" stroke="#EDEFF2" stroke-width="10"/>' +
+        '<circle cx="'+size/2+'" cy="'+size/2+'" r="'+r+'" fill="none" stroke="'+color+'" stroke-width="10" stroke-linecap="round" ' +
+          'stroke-dasharray="'+c+'" stroke-dashoffset="'+offset+'" transform="rotate(-90 '+size/2+' '+size/2+')"/>' +
+        '<text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-size="18" fill="#122033">'+faDec(percent,1)+'٪</text>' +
+      '</svg>';
+  }
+  ring('ringVerdictFor', 93, PALETTE.teal, 100);
+  ring('ringVerdictAgainst', 7, PALETTE.rose, 100);
+  ring('ringCourtOk', 85.2, PALETTE.teal, 110);
+  ring('ringCourtBad', 14.8, PALETTE.rose, 110);
+  ring('ringReqRate', 99.8, PALETTE.teal, 110);
+  ring('ringComplaintRate', 97.6, PALETTE.gold, 110);
+  ring('ringOverallRate', 99.3, PALETTE.navy, 110);
+
+  var overviewTop10 = { labels:['اصفهان','فارس','گلستان','مرکزی','کرمان','خراسان رضوی','کرمانشاه','خراسان جنوبی','مازندران','بوشهر'], legal:[1485,1089,980,560,426,416,371,380,286,276], crim:[44,99,30,13,47,39,20,13,22,64], court:[11,19,31,25,4,5,32,11,81,14] };
+  var fullProvinceTable = [ ['اصفهان',1485,44,11],['فارس',1089,99,19],['گلستان',980,30,31],['مرکزی',560,13,25], ['کرمان',426,47,4],['خراسان رضوی',416,39,5],['کرمانشاه',371,20,32],['خراسان جنوبی',380,13,11], ['مازندران',286,22,81],['بوشهر',276,64,14],['کهگیلویه و بویر احمد',270,63,20],['گیلان',238,9,52], ['چهارمحال و بختیاری',220,58,10],['تهران',231,27,6],['خوزستان',148,87,10],['کردستان',200,20,14], ['آذربایجان شرقی',208,20,5],['یزد',172,35,4],['همدان',163,9,10],['زنجان',160,6,8], ['سیستان و بلوچستان',97,68,1],['خراسان شمالی',141,11,9],['اردبیل',122,7,5],['قزوین',98,5,5], ['آذربایجان غربی',65,12,5],['هرمزگان',42,26,3],['لرستان',50,5,11],['سمنان',58,1,0], ['البرز',31,7,9],['ایلام',11,2,5],['قم',9,4,0] ].map(function(r){ return [r[0], r[1], r[2], r[3], r[1]+r[2]+r[3]]; }).sort(function(a,b){ return b[4]-a[4]; });
+  var tblOverviewBody = document.getElementById('tblOverview');
+  if(tblOverviewBody) fullProvinceTable.forEach(function(r){ tblOverviewBody.insertAdjacentHTML('beforeend', '<tr><td class="name-cell">'+r[0]+'</td><td>'+fa(r[1])+'</td><td>'+fa(r[2])+'</td><td>'+fa(r[3])+'</td><td class="num-cell">'+fa(r[4])+'</td></tr>'); });
+
+  var verdictCount = { labels:['گلستان','ایلام','بوشهر','خراسان رضوی','هرمزگان','اصفهان','سمنان','فارس','مرکزی','اردبیل'], forV:[504,393,379,324,320,315,244,240,185,177], againstV:[5,17,43,33,92,12,1,8,17,10] };
+  var valueFor = { labels:['اصفهان','خراسان رضوی','بوشهر','کرمانشاه','خوزستان','زنجان','قزوین','کرمان','خراسان شمالی','گلستان'], data:[7165729464570,4871490000000,2200000000000,1557000000000,1460706000000,930000000000,809981000000,756302000000,712015250000,688600000000] };
+  var valueAgainst = { labels:['اصفهان','خراسان رضوی','آذربایجان غربی','سمنان','فارس','کهگیلویه و بویر احمد','اردبیل','بوشهر','گیلان','کرمانشاه'], data:[365510000000,297040000000,168503346464,121443704650,110000000000,102500000000,80000000000,61120000000,54226380330,31500000000] };
+  var fullValueTable = [ ['اصفهان',7165729464570,365510000000],['خراسان رضوی',4871490000000,297040000000],['بوشهر',2200000000000,61120000000], ['کرمانشاه',1557000000000,31500000000],['خوزستان',1460706000000,600000000],['زنجان',930000000000,1330000000], ['قزوین',809981000000,0],['کرمان',756302000000,0],['خراسان شمالی',712015250000,0],['گلستان',688600000000,19000000000], ['ایلام',660000000000,20000000000],['خراسان جنوبی',653666427298,0],['هرمزگان',630000000000,16900000000], ['فارس',627551220000,110000000000] ];
+  var tblValuesBody = document.getElementById('tblValues');
+  if(tblValuesBody) fullValueTable.forEach(function(r){ tblValuesBody.insertAdjacentHTML('beforeend', '<tr><td class="name-cell">'+r[0]+'</td><td class="num-cell">'+faDec(r[1]/10000000000000, 3)+'</td><td>'+faDec(r[2]/10000000000000, 3)+'</td></tr>'); });
+
+  function moneyToBillion(v){ return v/1e9; }
+  
+  if(document.getElementById('chartOverviewTop10')){
+    new Chart(document.getElementById('chartOverviewTop10'), {
+      type:'bar', data:{ labels:overviewTop10.labels, datasets:[ {label:'حقوقی', data:overviewTop10.legal, backgroundColor:PALETTE.navy, borderRadius:4}, {label:'کیفری', data:overviewTop10.crim, backgroundColor:PALETTE.rose, borderRadius:4}, {label:'دیوان', data:overviewTop10.court, backgroundColor:PALETTE.gold, borderRadius:4} ] },
+      options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom', labels:{boxWidth:10, font:{size:10.5}}}, datalabels:{ anchor: 'center', align: getAlign(0, 0), offset: getOffset(0, 0), color:'#fff', font:{size:9}, formatter:function(v){ return v>50? fa(v):''; } } }, scales:{ x:{stacked:true, grid:{color:'#EEF1F4'}, ticks:{callback:function(v){return fa(v);}}}, y:{stacked:true, grid:{display:false}} } }
+    });
+  }
+  if(document.getElementById('chartRelated')){
+    new Chart(document.getElementById('chartRelated'), {
+      type:'doughnut', data:{ labels:['مرتبط','غیرمرتبط'], datasets:[{data:[6114,4248], backgroundColor:[PALETTE.teal, '#D8DEE6'], borderWidth:0}] },
+      options:{ cutout:'70%', maintainAspectRatio:false, plugins:{ legend:{position:'bottom', labels:{boxWidth:10, font:{size:11}}}, datalabels:{ anchor: 'center', align: getAlign(5, 0), offset: getOffset(5, 0), color:'#000', font:{size:12, weight:'700'}, formatter:function(v,ctx){ var total = ctx.chart.data.datasets[0].data.reduce(function(a,b){return a+b;},0); return faDec(v/total*100,0)+'٪'; } } } }
+    });
+  }
+  if(document.getElementById('chartVerdictCount')){
+    new Chart(document.getElementById('chartVerdictCount'), {
+      type:'bar', data:{ labels:verdictCount.labels, datasets:[ {label:'آراء له', data:verdictCount.forV, backgroundColor:PALETTE.teal, borderRadius:4}, {label:'آراء علیه', data:verdictCount.againstV, backgroundColor:PALETTE.rose, borderRadius:4} ] },
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom', labels:{boxWidth:10, font:{size:10.5}}}, datalabels:{ anchor: 'end', align: getAlign(3, -1), offset: getOffset(3, -1), color:'#37475A', font:{size:9}, formatter:function(v){return fa(v);} } }, scales:{ x:{grid:{display:false}, ticks:{font:{size:10}}}, y:{grid:{color:'#EEF1F4'}, ticks:{callback:function(v){return fa(v);}}} } }
+    });
+  }
+  if(document.getElementById('chartValueFor')){
+    new Chart(document.getElementById('chartValueFor'), {
+      type:'bar', data:{ labels:valueFor.labels, datasets:[{label:'میلیارد ریال', data:valueFor.data.map(moneyToBillion), backgroundColor:PALETTE.teal, borderRadius:4}] },
+      options:{ indexAxis:'y', maintainAspectRatio:false, plugins:{ legend:{display:false}, datalabels:{ anchor: 'end', align: getAlign(20, 2), offset: getOffset(20, 2), color:'#178073', font:{size:9, weight:'700'}, formatter:function(v){return faDec(v,0);} } }, scales:{ x:{grid:{color:'#EEF1F4'}, ticks:{callback:function(v){return fa(v);}}}, y:{grid:{display:false}} } }
+    });
+  }
+  if(document.getElementById('chartValueAgainst')){
+    new Chart(document.getElementById('chartValueAgainst'), {
+      type:'bar', data:{ labels:valueAgainst.labels, datasets:[{label:'میلیارد ریال', data:valueAgainst.data.map(moneyToBillion), backgroundColor:PALETTE.rose, borderRadius:4}] },
+      options:{ indexAxis:'y', maintainAspectRatio:false, plugins:{ legend:{display:false}, datalabels:{ anchor: 'end', align: getAlign(15, 1), offset: getOffset(15, 1), color:'#B84438', font:{size:9, weight:'700'}, formatter:function(v){return faDec(v,0);} } }, scales:{ x:{grid:{color:'#EEF1F4'}, ticks:{callback:function(v){return fa(v);}}}, y:{grid:{display:false}} } }
+    });
+  }
+});
+</script></body></html>

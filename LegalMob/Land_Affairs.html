@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>گزارش تحلیلی بخش اراضی و املاک</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+  :root{
+    --navy-950:#0A1B2E; --navy-900:#0F2743; --navy-800:#153355; --navy-700:#1C4270;
+    --gold-500:#C9A227; --gold-400:#DAB94A; --gold-100:#FBF3D9;
+    --teal-500:#178073; --teal-100:#E1F3EF;
+    --rose-500:#B84438; --rose-100:#FBE9E6;
+    --bg:#F4F6F8; --card:#FFFFFF;
+    --ink-900:#122033; --ink-700:#37475A; --ink-500:#6B7A8C;
+    --line:#E3E8EE; --radius:12px;
+    --shadow:0 2px 12px rgba(15,39,67,0.05); --shadow-lg:0 8px 24px rgba(10,27,46,0.1);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{ margin:0; font-family:'Vazirmatn', Tahoma, sans-serif; background:var(--bg); color:var(--ink-900); font-feature-settings:"tnum" 1, "ss01" 1; }
+  img,svg{display:block;} a{color:inherit;}
+  .container{max-width:1240px; margin:0 auto; padding:0 24px;}
+  .nav{ position:sticky; top:0; z-index:50; background:rgba(10,27,46,0.94); backdrop-filter:blur(6px); border-bottom:1px solid rgba(255,255,255,0.06); }
+  .nav-inner{ max-width:1240px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:56px; gap:20px; }
+  .brand{display:flex; align-items:center; gap:8px; color:#fff; font-weight:700; font-size:14px; white-space:nowrap;}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--gold-500);}
+  .nav-links{display:flex; gap:4px; overflow-x:auto; scrollbar-width:none;}
+  .nav-links::-webkit-scrollbar{display:none;}
+  .nav-links a{ font-size:12.5px; color:rgba(255,255,255,0.75); text-decoration:none; padding:8px 10px; white-space:nowrap; border-radius:6px; transition:.15s; }
+  .nav-links a:hover{color:#fff; background:rgba(255,255,255,0.1);}
+  .hero{ position:relative; background: radial-gradient(1100px 480px at 15% -10%, rgba(201,162,39,0.15), transparent 60%), radial-gradient(900px 500px at 100% 0%, rgba(28,66,112,0.45), transparent 55%), linear-gradient(160deg, var(--navy-950) 0%, var(--navy-900) 55%, var(--navy-800) 100%); color:#fff; overflow:hidden; padding:16px 0; }
+  .hero-pattern{position:absolute; inset:0; opacity:0.07; pointer-events:none;}
+  .hero-inner{position:relative; z-index:2;}
+  .eyebrow{ display:inline-flex; align-items:center; gap:6px; font-size:12px; letter-spacing:.3px; color:var(--gold-400); background:rgba(201,162,39,0.1); border:1px solid rgba(201,162,39,0.3); padding:4px 12px; border-radius:100px; margin-bottom:8px; }
+  .hero-title-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:12px; }
+  .hero h1{ font-size:clamp(20px,3.5vw,28px); font-weight:800; line-height:1.3; margin:0; }
+  .capsule-btn{ display:inline-flex; align-items:center; gap:8px; background:linear-gradient(90deg, var(--gold-500), var(--gold-400)); color:var(--navy-950); font-weight:700; font-size:13.5px; padding:10px 20px; border-radius:100px; text-decoration:none; box-shadow:0 6px 18px rgba(201,162,39,0.25); transition:transform .15s ease, box-shadow .15s ease; }
+  .capsule-btn:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(201,162,39,0.35);}
+  .capsule-btn svg{width:16px; height:16px;}
+  .hero-strip{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.08); border-radius:14px; overflow:hidden; }
+  .hero-strip .cell{ background:rgba(255,255,255,0.04); padding:10px 16px; }
+  .hero-strip .cell .num{font-size:20px; font-weight:800; color:#fff;}
+  .hero-strip .cell .lbl{font-size:12px; color:rgba(255,255,255,0.65); margin-top:4px;}
+  .hero-strip .cell .sub{font-size:10.5px; color:var(--gold-400); margin-top:2px;}
+  section.block{padding:40px 0;}
+  section.block.alt{background:#fff;}
+  .sec-head{display:flex; align-items:flex-start; gap:14px; margin-bottom:20px;}
+  .sec-title{font-size:18px; font-weight:800; color:var(--ink-900); display:flex; align-items:center; gap:8px;}
+  .sec-title svg{width:22px; height:22px; stroke:var(--gold-500);}
+  .sec-desc{font-size:12.5px; color:var(--ink-500); margin-top:2px; line-height:1.7;}
+  .kpi-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:20px;}
+  .kpi-grid.cols-4{grid-template-columns:repeat(4,1fr);}
+  .kpi-grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .kpi-card{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:8px; border-top: 4px solid var(--navy-700); }
+  .kpi-card.bt-teal { border-top-color: var(--teal-500); background: linear-gradient(145deg, #ffffff 40%, #e8f7f4 100%); }
+  .kpi-card.bt-rose { border-top-color: var(--rose-500); background: linear-gradient(145deg, #ffffff 40%, #fdf2f0 100%); }
+  .kpi-card.bt-gold { border-top-color: var(--gold-500); background: linear-gradient(145deg, #ffffff 40%, #fdf9ec 100%); }
+  .kpi-card.bt-navy { border-top-color: var(--navy-700); background: linear-gradient(145deg, #ffffff 40%, #eef1f6 100%); }
+  .kpi-top{display:flex; align-items:center; justify-content:space-between;}
+  .kpi-icon{ width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #2dd4bf, #fff); box-shadow: 0 4px 10px rgba(15, 118, 110, 0.25); }
+  .kpi-icon svg{width:18px; height:18px; stroke:#ffffff;}
+  .kpi-icon.rose{ background:linear-gradient(135deg, #fb7185, #fff); box-shadow: 0 4px 10px rgba(190, 18, 60, 0.25); }
+  .kpi-icon.gold{ background:linear-gradient(135deg, #facc15, #fff); box-shadow: 0 4px 10px rgba(161, 98, 7, 0.25); }
+  .kpi-icon.navy{ background:linear-gradient(135deg, #60a5fa, #fff); box-shadow: 0 4px 10px rgba(30, 58, 138, 0.25); }
+  .kpi-tag{font-size:12px; color:#2c00ff; background:rgba(255,255,255,0.8); border:1px solid #e3e8ee; padding:2px 8px; border-radius:100px; font-weight:600;}
+  .kpi-num{font-size:20px; font-weight:800; color:var(--ink-900); line-height:1.2;}
+  .kpi-num small{font-size:12px; font-weight:600; color:var(--ink-500); margin-inline-start:4px;}
+  .kpi-label{font-size:11.5px; color:var(--ink-500); font-weight:500;}
+  .panel{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px; box-shadow:var(--shadow); }
+  .panel-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:8px; flex-wrap:wrap;}
+  .panel-title{font-size:13.5px; font-weight:700; color:var(--ink-900);}
+  .panel-title .muted{font-weight:500; color:var(--ink-500); font-size:11px; display:block; margin-top:2px;}
+  .badge{font-size:10.5px; padding:3px 8px; border-radius:100px; background:var(--navy-900); color:#fff;}
+  .grid-2{display:grid; grid-template-columns:1.3fr 1fr; gap:14px;}
+  .grid-2.rev{grid-template-columns:1fr 1.3fr;}
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  .row-gap{margin-bottom:14px;}
+  canvas{max-width:100%;}
+  .chart-wrapper { position: relative; height: 300px; width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 10px; background: linear-gradient(to bottom right, #ffffff, #fbfcfd); box-shadow: inset 0 2px 8px rgba(0,0,0,0.015), 0 4px 12px rgba(0,0,0,0.03); margin-top: 10px; }
+  .ring-wrap{display:flex; flex-direction:column; align-items:center; gap:8px;}
+  .ring-wrap .ring-label{font-size:11.5px; color:var(--ink-500); text-align:center; max-width:140px;}
+  .ring-svg text{font-family:'Vazirmatn', Tahoma, sans-serif; font-weight:800;}
+  .table-scroll{max-height:300px; overflow:auto; border:1px solid var(--line); border-radius:8px;}
+  table{width:100%; border-collapse:collapse; font-size:12px;}
+  thead th{ position:sticky; top:0; background:var(--navy-900); color:#fff; text-align:center; padding:10px 8px; font-weight:600; z-index:1; }
+  thead th:first-child{border-top-right-radius:0;}
+  tbody td{padding:8px; text-align:center; border-bottom:1px solid var(--line); color:var(--ink-700);}
+  tbody tr:nth-child(even){background:#FAFBFC;}
+  tbody tr:hover{background:var(--teal-100);}
+  td.name-cell, th.name-cell{text-align:right;}
+  .num-cell{font-weight:700; color:var(--ink-900);}
+  .tag-cloud{display:flex; flex-wrap:wrap; gap:6px;}
+  .tag{ font-size:11.5px; padding:4px 10px; border-radius:100px; background:var(--teal-100); color:var(--teal-500); font-weight:600; }
+  .tag.rose{background:var(--rose-100); color:var(--rose-500);}
+  .mini-card{ border:1px solid var(--line); border-radius:10px; padding:14px; background:#fff; }
+  .mini-card:nth-child(1) { background: linear-gradient(145deg, #ffffff 50%, #fdf2f0 100%); }
+  .mini-card:nth-child(2) { background: linear-gradient(145deg, #ffffff 50%, #e8f7f4 100%); }
+  .mini-card h4{margin:0 0 10px; font-size:12.5px; display:flex; align-items:center; gap:6px;}
+  .mini-card h4 svg{width:15px; height:15px;}
+  .note{ font-size:11px; color:var(--ink-500); background:#F1F3F6; border-radius:8px; padding:8px 12px; line-height:1.7; margin-top:12px; }
+  .compare-bar{display:flex; align-items:center; gap:12px; margin-top:6px;}
+  .compare-bar .cbox{flex:1; text-align:center; padding:12px 8px; border-radius:10px;}
+  .compare-bar .cbox.old{background:var(--rose-100);}
+  .compare-bar .cbox.new{background:var(--teal-100);}
+  .compare-bar .cbox .n{font-size:20px; font-weight:800;}
+  .compare-bar .cbox.old .n{color:var(--rose-500);}
+  .compare-bar .cbox.new .n{color:var(--teal-500);}
+  .compare-bar .arrow{font-size:18px; color:var(--gold-500);}
+  footer{background:var(--navy-950); color:rgba(255,255,255,0.6); padding:24px 0; font-size:11.5px; text-align:center;}
+  @media (max-width: 980px){ .grid-2, .grid-2.rev, .grid-3{grid-template-columns:1fr;} }
+  @media (max-width: 768px){ .hero-strip{grid-template-columns:repeat(2,1fr);} .kpi-grid, .kpi-grid.cols-4, .kpi-grid.cols-3{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width: 560px){ .kpi-grid, .kpi-grid.cols-4, .kpi-grid.cols-3{grid-template-columns:repeat(2,1fr);} .hero-title-row{flex-direction:column; align-items:flex-start; gap:12px;} }
+  @media (max-width: 380px){ .kpi-grid, .kpi-grid.cols-4, .kpi-grid.cols-3{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+<defs>
+<symbol id="ic-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/> </symbol>
+<symbol id="ic-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/> </symbol>
+<symbol id="ic-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/> </symbol>
+<symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/> </symbol>
+<symbol id="ic-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/> </symbol>
+<symbol id="ic-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/> </symbol>
+<symbol id="ic-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M12 6h.01"/><path d="M16 6h.01"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/> </symbol>
+<symbol id="ic-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/> </symbol>
+<symbol id="ic-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/> </symbol>
+<symbol id="ic-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/> </symbol>
+<symbol id="ic-pie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/> </symbol>
+<symbol id="ic-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/> </symbol>
+<symbol id="ic-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/> </symbol>
+<symbol id="ic-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/> </symbol>
+<symbol id="ic-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/> </symbol>
+</defs>
+</svg>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="dot"></span>1405/05/28</div>
+    <div class="nav-links">
+      <a href="#committee">کمیته حفاظت</a>
+      <a href="#possession">رفع تصرفات</a>
+      <a href="#commission">کمیسیون</a>
+      <a href="#properties">حساب ۱۰۰</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <svg class="hero-pattern" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs><pattern id="grid" width="46" height="46" patternUnits="userSpaceOnUse"><path d="M46 0H0V46" fill="none" stroke="#DAB94A" stroke-width="0.6"/></pattern></defs>
+    <rect width="100%" height="100%" fill="url(#grid)"/>
+  </svg>
+  <div class="container hero-inner">
+    <span class="eyebrow"><svg width="12" height="12" style="stroke:var(--gold-400)"><use href="#ic-scale"/></svg> سامانه مدیریتی ریاست بنیاد مسکن</span>
+    <div class="hero-title-row">
+      <h1>امور اراضی و املاک</h1>
+      <a class="capsule-btn" href="./LegalDetail.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><use href="#ic-file"/></svg> جزئیات گزارش
+      </a>
+    </div>
+    <div class="hero-strip" style="grid-template-columns:repeat(1,1fr); max-width:320px;">
+      <div class="cell">
+        <div class="num">۵٬۸۵۰٬۱۷۴</div><div class="lbl">متر مربع رفع تصرف</div><div class="sub">معادل ۵۵.۲۳ همت</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="block" id="committee">
+  <div class="container">
+    <div class="sec-head"><div><div class="sec-title"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-users"/></svg> کمیته حفاظت و نگهداری از اراضی و املاک</div><div class="sec-desc">آمار جلسات و مصوبات در ۳۱ استان، ۱۴۰۱ تا سه‌ماهه اول ۱۴۰۵</div></div></div>
+    <div class="kpi-grid cols-3">
+      <div class="kpi-card bt-navy"><div class="kpi-top"><div class="kpi-icon navy"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-users"/></svg></div></div><div class="kpi-num">۶۵۱</div><div class="kpi-label">مجموع جلسات (۵ دوره)</div></div>
+      <div class="kpi-card bt-gold"><div class="kpi-top"><div class="kpi-icon gold"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-file"/></svg></div></div><div class="kpi-num">۱٬۷۵۰</div><div class="kpi-label">مجموع مصوبات صادرشده</div></div>
+      <div class="kpi-card bt-teal"><div class="kpi-top"><div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-trend"/></svg></div></div><div class="kpi-num">۲.۷</div><div class="kpi-label">میانگین مصوبه به ازای جلسه</div></div>
+    </div>
+    <div class="panel"><div class="panel-head"><div class="panel-title">روند جلسات و مصوبات به تفکیک سال</div></div><div class="chart-wrapper"><canvas id="chartCommittee"></canvas></div></div>
+  </div>
+</section>
+
+<section class="block alt" id="possession">
+  <div class="container">
+    <div class="sec-head"><div><div class="sec-title"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-map"/></svg> آمار رفع تصرفات اراضی</div><div class="sec-desc">از شهریور ۱۴۰۲ الی سه‌ماهه نخست ۱۴۰۵ &mdash; سراسر کشور</div></div></div>
+    <div class="kpi-grid cols-4">
+      <div class="kpi-card bt-teal" style="grid-column:span 2;"><div class="kpi-top"><div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-map"/></svg></div></div><div class="kpi-num">۵٬۸۵۰٬۱۷۴<small>متر مربع</small></div><div class="kpi-label">جمع کل میزان رفع تصرف</div></div>
+      <div class="kpi-card bt-gold" style="grid-column:span 2;"><div class="kpi-top"><div class="kpi-icon gold"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-trend"/></svg></div></div><div class="kpi-num">۵۵.۲۳<small>همت</small></div><div class="kpi-label">ارزش روز ریالی (تقریبی)</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="mini-card"><h4><svg viewBox="0 0 24 24" fill="none" stroke="var(--rose-500)"><use href="#ic-alert"/></svg> دارای بیشترین تصرفات</h4><div class="tag-cloud"><span class="tag rose">کرمان</span><span class="tag rose">سیستان و بلوچستان</span><span class="tag rose">هرمزگان</span></div></div>
+      <div class="mini-card"><h4><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal-500)"><use href="#ic-check"/></svg> دارای کمترین تصرفات</h4><div class="tag-cloud"><span class="tag">لرستان</span><span class="tag">یزد</span><span class="tag">کردستان</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="commission">
+  <div class="container">
+    <div class="sec-head"><div><div class="sec-title"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-clock"/></svg> تقاضاهای کمیسیون و زمان پاسخگویی</div><div class="sec-desc">روند تقاضاها و بررسی پرونده‌ها</div></div></div>
+    <div class="kpi-grid cols-3">
+      <div class="kpi-card bt-navy"><div class="kpi-top"><div class="kpi-icon navy"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-archive"/></svg></div></div><div class="kpi-num">۲۴۱</div><div class="kpi-label">تقاضاهای ارسالی (تا مهر ۱۴۰۲)</div></div>
+      <div class="kpi-card bt-rose"><div class="kpi-top"><div class="kpi-icon rose"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-clock"/></svg></div></div><div class="kpi-num">۳۵<small>روز</small></div><div class="kpi-label">پاسخگویی اولیه (تا مهر ۱۴۰۲)</div></div>
+      <div class="kpi-card bt-teal"><div class="kpi-top"><div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-clock"/></svg></div></div><div class="kpi-num">۷<small>روز</small></div><div class="kpi-label">پاسخگویی سال‌های ۱۴۰۳-۱۴۰۵</div></div>
+    </div>
+    <div class="panel row-gap"><div class="panel-title" style="margin-bottom:8px;">بهبود زمان پاسخگویی کمیسیون</div><div class="compare-bar"><div class="cbox old"><div class="n">۳۵ روز</div><div style="font-size:11px;">میانگین اولیه</div></div><div class="arrow">←</div><div class="cbox new"><div class="n">۷ روز</div><div style="font-size:11px;">میانگین اخیر</div></div></div></div>
+    <div class="grid-2">
+      <div class="mini-card"><h4><svg viewBox="0 0 24 24" fill="none" stroke="var(--rose-500)"><use href="#ic-trend"/></svg> بیشترین پرونده (۱۴۰۴ تا ۱۴۰۵)</h4><div class="tag-cloud"><span class="tag rose">اردبیل</span><span class="tag rose">مازندران</span><span class="tag rose">خراسان رضوی</span><span class="tag rose">اصفهان</span><span class="tag rose">گیلان</span><span class="tag rose">گلستان</span><span class="tag rose">خوزستان</span></div></div>
+      <div class="mini-card"><h4><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal-500)"><use href="#ic-check"/></svg> کمترین پرونده (۱۴۰۴ تا ۱۴۰۵)</h4><div class="tag-cloud"><span class="tag">آذربایجان شرقی</span><span class="tag">بوشهر</span><span class="tag">زنجان</span><span class="tag">یزد</span><span class="tag">قزوین</span><span class="tag">کرمان</span><span class="tag">تهران</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block alt" id="properties">
+  <div class="container">
+    <div class="sec-head"><div><div class="sec-title"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-building"/></svg> املاک شناسایی‌شده &mdash; حساب ۱۰۰ امام (ره)</div><div class="sec-desc">کمیته حفاظت از اراضی تملکی &mdash; ۱۴۰۲/۰۵ تا ۱۴۰۵/۰۳</div></div></div>
+    <div class="kpi-grid cols-3">
+      <div class="kpi-card bt-navy"><div class="kpi-top"><div class="kpi-icon navy"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-map"/></svg></div></div><div class="kpi-num">۱٬۴۹۸٬۸۱۰<small>مترمربع</small></div><div class="kpi-label">مساحت شناسایی‌شده</div></div>
+      <div class="kpi-card bt-gold"><div class="kpi-top"><div class="kpi-icon gold"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-file"/></svg></div></div><div class="kpi-num">۲۸</div><div class="kpi-label">تعداد ردیف / پلاک</div></div>
+      <div class="kpi-card bt-teal"><div class="kpi-top"><div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none"><use href="#ic-check"/></svg></div></div><div class="kpi-num">%۷۵</div><div class="kpi-label">پلاک‌های دارای سند</div></div>
+    </div>
+    <div class="grid-2 row-gap">
+      <div class="panel"><div class="panel-head"><div class="panel-title">توزیع وضعیت سند پلاک‌ها</div></div><div class="chart-wrapper"><canvas id="chartDeedStatus"></canvas></div></div>
+      <div class="panel"><div class="panel-head"><div class="panel-title">جدول املاک شناسایی‌شده</div></div><div class="table-scroll" style="max-height:260px; margin-top:10px;"><table><thead><tr><th>ردیف</th><th class="name-cell">محل</th><th>وضعیت</th><th>متراژ (م.م)</th></tr></thead><tbody id="tblProperties"></tbody></table></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div> اداره‌کل حوزه ریاست &mdash; تابستان ۱۴۰۵</div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.ChartDataLabels) { Chart.register(ChartDataLabels); }
+  Chart.defaults.font.family = "'Vazirmatn', Tahoma, sans-serif";
+  Chart.defaults.color = '#37475A';
+
+  var faFmt = new Intl.NumberFormat('fa-IR');
+  function fa(n){ return faFmt.format(Math.round(n)); }
+  function faDec(n, d){ return n.toLocaleString('fa-IR', {minimumFractionDigits:d, maximumFractionDigits:d}); }
+
+  var PALETTE = { navy:'#1C4270', gold:'#C9A227', teal:'#178073', rose:'#B84438', navyLight:'#4E6E9B', goldLight:'#E4C568' };
+
+  function getAlign(x, y) { return Math.atan2(y, x) * (180 / Math.PI); }
+  function getOffset(x, y) { return Math.sqrt(x * x + y * y); }
+
+  var committee = { labels:['۱۴۰۱','۱۴۰۲','۱۴۰۳','۱۴۰۴','۱۴۰۵'], sessions:[391,196,32,25,7], resolutions:[618,641,200,254,37] };
+  var deedStatus = { labels:['اخذ سند','دارای سند','در حال صدور','دادرسی قضایی','صدور ۳.۵ دانگ','اختلاف شهرداری','ثبت و جانمایی'], data:[18,3,3,1,1,1,1] };
+  var properties = [ [1,'برج فرشته','اخذ سند','۳٬۸۷۸'], [2,'زمین صادقیه','اخذ سند','۴٬۰۰۰'], [3,'انبارهای تهرانپارس','دارای سند','۱۳٬۱۲۰'], [4,'بلوار آفریقا','اخذ سند','۱٬۳۱۸'], [5,'زمین بندرعباس','اخذ سند','۵٬۰۰۰'], [6,'قلعه سلیمان‌خان','دارای سند','۲۴٬۰۰۰'] ];
+  
+  var tblProp = document.getElementById('tblProperties');
+  if(tblProp) properties.forEach(function(r){ tblProp.insertAdjacentHTML('beforeend', '<tr><td>'+fa(r[0])+'</td><td class="name-cell">'+r[1]+'</td><td>'+r[2]+'</td><td class="num-cell">'+r[3]+'</td></tr>'); });
+
+  if(document.getElementById('chartCommittee')){
+    new Chart(document.getElementById('chartCommittee'), {
+      data:{ labels:committee.labels, datasets:[ {type:'bar', label:'جلسات', data:committee.sessions, backgroundColor:PALETTE.navy, borderRadius:4, order:2}, {type:'line', label:'مصوبات', data:committee.resolutions, borderColor:PALETTE.gold, backgroundColor:PALETTE.gold, tension:0.35, borderWidth:2, pointRadius:3, yAxisID:'y1', order:1} ] },
+      options:{ maintainAspectRatio:false, plugins:{ legend:{position:'bottom', labels:{boxWidth:10, font:{size:10.5}}}, datalabels:{ anchor: 'center', align: function(ctx) { if (ctx.dataset.type === 'line') return getAlign(0, -5); return getAlign(0, 0); }, offset: function(ctx) { if (ctx.dataset.type === 'line') return getOffset(0, -5); return getOffset(0, 0); }, color:function(ctx){ return ctx.dataset.type==='line' ? '#8a6d10' : '#fff'; }, font:{size:9}, formatter:function(v){ return fa(v); } } }, scales:{ x:{grid:{display:false}}, y:{position:'left', grid:{color:'#EEF1F4'}, title:{display:false}, ticks:{callback:function(v){return fa(v);}}}, y1:{position:'right', grid:{display:false}, title:{display:false}, ticks:{callback:function(v){return fa(v);}}} } }
+    });
+  }
+  
+  if(document.getElementById('chartDeedStatus')){
+    new Chart(document.getElementById('chartDeedStatus'), {
+      type:'pie', data:{ labels:deedStatus.labels, datasets:[{data:deedStatus.data, backgroundColor:[PALETTE.teal,PALETTE.navy,PALETTE.gold,PALETTE.rose,PALETTE.navyLight,PALETTE.goldLight,'#8892A0'], borderWidth:2, borderColor:'#fff'}] },
+      options:{ maintainAspectRatio:false, plugins:{ legend:{position:'right', labels:{boxWidth:10, padding:10, font:{size:9.5}}}, datalabels:{ anchor: 'center', align: getAlign(0, 0), offset: getOffset(0, 0), color:'#fff', font:{size:10, weight:'800'}, formatter:function(v){ return v>0? fa(v):''; } } } }
+    });
+  }
+});
+</script></body></html>
