@@ -282,7 +282,8 @@
 
             align-items: center;
             justify-items: center;
-        }
+            margin-top: -5px;		
+		}
 
         .card {
             position: relative;
@@ -303,6 +304,7 @@
            /* animation: cardIn 0.5s cubic-bezier(0.2,0.8,0.2,1) both, glowBreathe 3.8s ease-in-out infinite; */
             animation-delay: calc(var(--i) * 45ms), calc(var(--i) * 220ms);
             transition: transform 0.15s ease;
+			margin-top:-5px !important;
         }
 
         @keyframes cardIn { from { opacity: 0; transform: translateY(10px) scale(0.94); } to { opacity: 1; transform: translateY(0) scale(1); } }
