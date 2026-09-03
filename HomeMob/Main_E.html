@@ -275,8 +275,7 @@
 
             /* ===== کنترل فاصله کارت‌ها: فقط دو متغیر بالا را تغییر دهید ===== */
             column-gap: var(--card-column-gap) !important;
-          /*  row-gap: var(--card-row-gap) !important; */
-			row-gap: 0px; !important;
+            row-gap: var(--card-row-gap) !important; 
 
             align-items: center;
             justify-items: center;
@@ -301,6 +300,7 @@
            /* animation: cardIn 0.5s cubic-bezier(0.2,0.8,0.2,1) both, glowBreathe 3.8s ease-in-out infinite; */
             animation-delay: calc(var(--i) * 45ms), calc(var(--i) * 220ms);
             transition: transform 0.15s ease;
+			margin-top:-10px;
         }
 
         @keyframes cardIn { from { opacity: 0; transform: translateY(10px) scale(0.94); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -341,7 +341,7 @@
             border-radius: 16px;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 5px 12px rgba(18,107,69,.18);
-            animation: iconMove 3s ease-in-out infinite;
+            animation: iconMove 4s ease-in-out infinite;
             animation-delay: calc(var(--i) * 140ms);
         }
         @keyframes iconMove {
