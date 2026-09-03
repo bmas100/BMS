@@ -36,9 +36,13 @@
             --danger-1: #126b45;
             --danger-2: #23a06b;
 
-            /* ===== کنترل اندازه کارت‌ها: فقط این دو مقدار را تغییر دهید ===== */
-            --card-width: 96%;   /* کاهش/افزایش عرض کارت‌ها: مثلا 92% یا 100% */
-            --card-height: 88%;  /* کاهش/افزایش ارتفاع کارت‌ها: مثلا 88% یا 100% */
+            /* ===== کنترل اندازه و فاصله کارت‌ها ===== */
+            --card-width: 96%;   /* عرض کارت: مثلا 92% یا 100% */
+            --card-height: 100%; /* ارتفاع کارت: برای کم/زیاد کردن اندازه عمودی کارت تغییر دهید */
+
+            /* فقط این دو مقدار را برای کم/زیاد کردن فاصله کارت‌ها تغییر دهید */
+            --card-column-gap: 8px; /* فاصله افقی بین کارت‌ها */
+            --card-row-gap: 0px;    /* فاصله عمودی بین کارت‌ها: مثلا 0px، 2px، 5px */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -268,8 +272,11 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(4, minmax(0, 1fr));
-            column-gap: 8px !important; /* فاصله افقی کارت‌ها — فقط همین خط را تغییر دهید */
-            row-gap: 2px !important;    /* فاصله عمودی کارت‌ها — فقط همین خط را تغییر دهید */
+
+            /* ===== کنترل فاصله کارت‌ها: فقط دو متغیر بالا را تغییر دهید ===== */
+            column-gap: var(--card-column-gap) !important;
+            row-gap: var(--card-row-gap) !important;
+
             align-items: center;
             justify-items: center;
         }
@@ -277,14 +284,14 @@
         .card {
             position: relative;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 8px;
+            gap: 6px;
             text-align: center;
             width: var(--card-width) !important;
             height: var(--card-height) !important;
             align-self: center !important;
             justify-self: center !important;
             border-radius: 18px;
-            padding: 5px 4px;
+            padding: 6px 4px;
             background: linear-gradient(145deg,#fff,#93e5c3);
             border: 1px solid rgba(18,107,69,.15);
             border-top: 2px solid #126b45;
@@ -356,6 +363,17 @@
 
         /* ================= نوار پایین ================= */
         .footer-bar { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; gap: 10px; padding: clamp(4px, 1vh, 8px) 14px; }
+        /* ================= تصویر Footer ================= */
+        .footer-img {
+            display: block;
+            flex: 0 0 auto;
+            width: min(55%, 220px);
+            height: auto;
+            max-height: 35px;
+            object-fit: contain;
+            margin: 0 auto;
+        }
+
         .footer-line {
             flex: 1 1 auto; max-width: 120px; height: 2px; border-radius: 2px;
             background: linear-gradient(90deg, transparent, var(--accent-1), var(--accent-3), var(--accent-1), transparent);
