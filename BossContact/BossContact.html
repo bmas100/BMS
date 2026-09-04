@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="./client_SL8U"></script>
+
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="http://localhost:5173/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bonyad-communication</title>
+  <style type="text/css" data-vite-dev-id="D:/Project/bonyad-communication/src/styles/global.css">@font-face {
+    font-family: "Vazirmatn";
+    src: url("../CSS/Fonts//Vazirmatn-Regular.woff2") format("woff2");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Vazirmatn";
+    src: url("../CSS/Fonts//Vazirmatn-Medium.woff2") format("woff2");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Vazirmatn";
+    src: url("../CSS/Fonts//Vazirmatn-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Vazirmatn";
+    src: url("../CSS/Fonts//Vazirmatn-Bold.woff2") format("woff2");
+    font-weight: 700;
+}
+/* styles/variables.css */
+:root {
+  --navy-950: #0A2540;
+  --navy-900: #0F3557;
+  --navy-800: #14446E;
+  --navy-700: #1C5A85;
+  --teal-600: #1C7A8C;
+  --gold-600: #B8862A;
+  --gold-500: #C9962C;
+  --gold-400: #DDB75B;
+  --gold-200: #F1DFB0;
+
+  --cream-50: #FBF9F4;
+  --cream-100: #F6F1E6;
+  --cream-200: #EFE7D4;
+
+  --ink-900: #1E2A38;
+  --ink-700: #3A4A5C;
+  --slate-500: #64748B;
+  --line: #E3D9BF;
+
+  --font-base: 'Vazirmatn', Tahoma, sans-serif;
+
+  --shadow-sm: 0 4px 14px rgba(10, 37, 64, 0.06);
+  --shadow-md: 0 15px 35px rgba(10, 37, 64, 0.12);
+  --shadow-lg: 0 30px 60px -12px rgba(10, 37, 64, 0.25);
+
+  --navy-pastel: #DCE8F2;
+  --gold-pastel: #FBEFD2;
+  --teal-pastel: #DAF1EF;
+
+}
+.header {
+  width: 100%;
+  background: rgba(248, 250, 252, 0.65);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 40px -15px rgba(15, 76, 129, 0.1);
+}
+
+.headerContainer {
+  width: min(1200px, 92%);
+  margin: auto;
+  min-height: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 8px 12px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    inset 0 2px 10px rgba(255,255,255,1), 
+    0 8px 20px rgba(0,0,0,0.03);
+}
+
+.navBtn {
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  flex: 1;
+  padding: 6px;
+}
+
+.navBtn:hover, .navBtn:active {
+  color: #0F4C81;
+  transform: translateY(-3px);
+}
+
+.iconWrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+  color: #475569;
+  box-shadow: 
+    0 4px 10px rgba(0,0,0,0.03), 
+    inset 0 2px 0 rgba(255,255,255,1);
+  border: 1px solid #e2e8f0;
+}
+
+.navBtn:hover .iconWrapper {
+  background: linear-gradient(135deg, #0F4C81, #1e6ec4);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 10px 20px rgba(15, 76, 129, 0.3);
+  transform: scale(1.08);
+}
+
+.navIcon {
+  transition: transform 0.3s ease;
+}
+
+.navBtn:hover .navIcon {
+  transform: scale(1.1);
+}
+
+.navBtn span {
+  font-size: 13.5px;
+  font-weight: 800;
+  white-space: nowrap;
+  letter-spacing: -0.3px;
+}
+
+.divider {
+  width: 1.5px;
+  height: 45px;
+  background: linear-gradient(to bottom, transparent, rgba(15, 76, 129, 0.15), transparent);
+}
+
+@media (max-width: 480px) {
+  .navBtn span {
+    font-size: 11.5px;
+  }
+  .iconWrapper {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+  }
+  .iconWrapper svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+/* styles/footer.css */
+
+.footer {
+  position: relative;
+  width: 100%;
+  margin-top: 40px;
+  background: linear-gradient(180deg, var(--navy-900), var(--navy-950));
+  color: var(--cream-50);
+}
+
+.footerPattern {
+  height: 10px;
+  width: 100%;
+  background-image: repeating-linear-gradient(-45deg, var(--gold-500) 0 6px, transparent 6px 12px);
+  opacity: 0.85;
+}
+
+.footerInner {
+  width: min(1200px, 92%);
+  margin: auto;
+  padding: 38px 10px 30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.footerMark {
+  width: 28px;
+  height: 28px;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  background: linear-gradient(135deg, var(--gold-500), var(--gold-400));
+}
+
+.footer p {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: rgba(251, 249, 244, 0.75);
+  line-height: 1.9;
+  max-width: 520px;
+}
+
+@media (max-width: 768px) {
+  .footerInner { padding: 30px 10px 24px; }
+}
+/* تنظیمات پایه */
+.homeWrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f1f5f9;
+  overflow-x: hidden;
+  position: relative;
+  direction: rtl;
+  font-family: 'vazirmatn', sans-serif;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 15px 50px;
+}
+
+.contentWrapper {
+  position: relative;
+  z-index: 2;
+  width: min(640px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* ------------------------------------------------ */
+/* پس‌زمینه متحرک کل صفحه */
+/* ------------------------------------------------ */
+.animatedBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.6;
+  animation: float 14s infinite ease-in-out alternate;
+}
+
+.blob-1 {
+  width: 400px; height: 400px;
+  background: #cce0ff;
+  top: -50px; right: -100px;
+}
+
+.blob-2 {
+  width: 500px; height: 500px;
+  background: #ffebd6;
+  bottom: -150px; left: -100px;
+  animation-delay: -5s;
+}
+
+.blob-3 {
+  width: 300px; height: 300px;
+  background: #e0f2fe;
+  top: 40%; left: 30%;
+  animation-delay: -8s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, 60px) scale(1.2); }
+}
+
+/* ------------------------------------------------ */
+/* کارت اصلی (بنر مرکزی) */
+/* ------------------------------------------------ */
+.bannerContainer {
+  position: relative;
+  background: linear-gradient(
+    120deg, 
+    #ffffff 0%, 
+    #e0f2fe 35%, 
+    #bae6fd 50%, 
+    #e0f2fe 65%, 
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 40px;
+  /* پدینگ بالا برای جا گرفتن نوار زمان افزایش یافت */
+  padding: 65px 30px 45px;
+  box-shadow: 
+    0 35px 70px -15px rgba(15, 76, 129, 0.15),
+    inset 0 0 20px rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+  overflow: hidden; /* این ویژگی لبه‌های نوار بالا را به صورت خودکار گرد می‌کند */
+  z-index: 1;
+}
+
+/* نوار باریک داخل کارت اصلی */
+.topBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(90deg, #0F4C81, #1e293b);
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 50;
+  box-sizing: border-box;
+  /* اعمال شعاع دقیق مشابه کارت */
+  border-radius: 40px 40px 0 0;
+}
+
+.topBarLeft {
+  direction: ltr; 
+  white-space: pre; /* حفظ فاصله‌های خالی فرمت تاریخ */
+}
+
+@keyframes bannerShine {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+.bannerInnerGlow {
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(from 0deg, transparent, rgba(15, 76, 129, 0.04), rgba(245, 158, 11, 0.04), transparent 40%);
+  animation: spinGlow 18s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes spinGlow {
+  100% { transform: rotate(360deg); }
+}
+
+.bannerHeader {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.logoWrapper {
+  margin-bottom: 20px;
+  border-radius: 50%;
+}
+
+.bannerLogo {
+  width: 150px;
+  height: auto;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.08));
+}
+
+.bannerHeader h1 {
+  font-size: clamp(20px, 4.5vw, 26px);
+  color: #0F4C81;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 10px rgba(255,255,255,0.8);
+}
+
+.scopeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.scopeItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #475569;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.scopeItem svg {
+  color: #0F4C81;
+}
+
+.presidentSection {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageRings {
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 2px dashed rgba(15, 76, 129, 0.4);
+  animation: spinGlow 25s linear infinite reverse;
+}
+
+.bossImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 0px 0px; 
+  border-radius: 50%;
+  border: 4px solid #ffffff;
+  box-shadow: 0 20px 40px rgba(15, 76, 129, 0.25);
+  position: relative;
+  z-index: 2;
+}
+
+.presidentInfo {
+  text-align: center;
+}
+
+.presidentInfo h2 {
+  font-size: 20px;
+  color: #1e293b;
+  font-weight: 900;
+  margin-bottom: 0px;
+}
+
+.presidentInfo p {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.actionButtons {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  margin-bottom: -20px;
+}
+
+.btnPrimary, .btnSecondary {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 10px;
+  border-radius: 20px;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btnPrimary {
+  background: linear-gradient(135deg, #0F4C81, #1D4ED8);
+  color: white;
+  box-shadow: 0 12px 30px -8px rgba(15, 76, 129, 0.5);
+}
+
+.btnSecondary {
+  background: white;
+  color: #0F4C81;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+}
+
+.btnPrimary:active, .btnSecondary:active {
+  transform: scale(0.95);
+}
+
+/* ------------------------------------------------ */
+/* کارت‌های پایین صفحه */
+/* ------------------------------------------------ */
+.bottomCardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  width: 100%;
+}
+
+.bottomCard {
+  background: linear-gradient(180deg, #ffffff 0%, #e0f2fe 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid #bae6fd;
+  border-radius: 28px;
+  padding: 20px 8px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; 
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(15, 76, 129, 0.15), inset 0 2px 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.bottomCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(15, 76, 129, 0.25), inset 0 2px 0 rgba(255, 255, 255, 1);
+}
+
+.bottomCard:active {
+  transform: translateY(0);
+}
+
+.bottomCardIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  transition: transform 0.4s ease;
+}
+
+.bottomCard:hover .bottomCardIcon {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.bg-dark { background: linear-gradient(135deg, #1e293b, #0f172a); }
+.bg-gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.bg-blue { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+
+.bottomCard span {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1e293b;
+  text-align: center;
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+}
+
+/* ------------------------------------------------ */
+/* بخش زیرنویس متحرک (Ticker) */
+/* ------------------------------------------------ */
+.tickerCard {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  overflow: hidden;
+  position: relative;
+}
+
+.tickerTitle {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 800;
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  flex-shrink: 0;
+}
+
+.tickerWrapper {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  margin-right: 15px; 
+  direction: ltr; 
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+.tickerContent {
+  display: flex;
+  width: max-content;
+  animation: marqueeLTR 50s linear infinite;
+}
+
+.tickerContent:hover {
+  animation-play-state: paused;
+}
+
+.tickerText {
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff; 
+  direction: rtl; 
+  padding-left: 30px; 
+}
+
+.tickerSeparator {
+  color: #f59e0b;
+  margin: 0 12px;
+  font-size: 13px;
+}
+
+@keyframes marqueeLTR {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+/* ------------------------------------------------ */
+/* تصویر پایین صفحه */
+/* ------------------------------------------------ */
+.footerImageWrapper {
+  width: 100%;
+}
+
+.footerImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ------------------------------------------------ */
+/* ریسپانسیو اختصاصی موبایل */
+/* ------------------------------------------------ */
+@media (max-width: 480px) {
+  .hero {
+    padding: 60px 15px 30px;
+  }
+
+  .bannerContainer {
+    padding: 60px 15px 30px;
+    border-radius: 32px;
+    gap: 22px;
+  }
+
+  .topBar {
+    padding: 0 10px;
+    font-size: 11px;
+    border-radius: 32px 32px 0 0;
+  }
+  
+  .bannerHeader h1 {
+    font-size: 20px;
+  }
+  
+  .scopeContainer {
+    gap: 8px;
+  }
+
+  .scopeItem {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  .imageWrapper {
+    width: 125px;
+    height: 125px;
+  }
+  
+  .actionButtons {
+    flex-direction: row; 
+    gap: 10px;
+  }
+  
+  .btnPrimary, .btnSecondary {
+    width: 50%;
+    padding: 12px 6px;
+    border-radius: 16px;
+    font-size: 13px;
+  }
+
+  .bottomCardsGrid {
+    gap: 10px;
+  }
+
+  .bottomCard {
+    padding: 15px 6px;
+    border-radius: 20px;
+  }
+
+  .bottomCardIcon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+  }
+
+  .bottomCard span {
+    font-size: 11px;
+  }
+
+  .tickerCard {
+    padding: 8px 10px;
+    border-radius: 20px;
+  }
+
+  .tickerTitle {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+
+  .tickerText {
+    font-size: 13px;
+  }
+}
+
+.bannerShineLine {
+  position: absolute;
+  top: -80%;
+  left: -30%;
+  width: 70px;
+  height: 260%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.65),
+    transparent
+  );
+  transform: rotate(25deg);
+  animation: bannerShineLineMove 8s ease-in-out infinite;
+  z-index: 3;
+  pointer-events: none;
+}
+
+@keyframes bannerShineLineMove {
+  0% { left: -30%; }
+  100% { left: 130%; }
+}
+
+.bannerHeader,
+.presidentSection,
+.actionButtons {
+  position: relative;
+  z-index: 4;
+}
+
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    direction:rtl;
+    scroll-behavior:smooth;
+    -webkit-text-size-adjust:100%;
+}
+
+body{
+    font-family:"Vazirmatn",sans-serif;
+    background:var(--background);
+    color:var(--text);
+    overflow-x:hidden;
+    line-height:1.8;
+    min-height:100vh;
+    text-rendering:optimizeLegibility;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+img{
+    display:block;
+    max-width:100%;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,
+input,
+textarea,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+    border:none;
+    outline:none;
+    background:none;
+}
+
+input,
+textarea,
+select{
+    outline:none;
+}
+
+ul{
+    list-style:none;
+}
+
+#root{
+    min-height:100vh;
+}</style></head>
+  <body>
+    <div id="root"><div class="homeWrapper"><main class="hero"><div class="animatedBg"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div><div class="contentWrapper"><div class="bannerContainer"><div class="topBar"><div class="topBarRight">سامانه ارتباط با ریاست بنیاد مسکن</div><div class="topBarLeft">📅 1405/06/13   |   🕒 20:02:49</div></div><div class="bannerInnerGlow"></div><div class="bannerShineLine"></div><div class="bannerHeader"><div class="logoWrapper"><img alt="لوگو بنیاد مسکن" class="bannerLogo" src="./logo.png"></div><h1>سامانه ارتباط کارکنان با ریاست</h1><div class="scopeContainer"><div class="scopeItem"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building2 lucide-building-2" aria-hidden="true"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg> <span>ستاد مرکزی</span></div><div class="scopeItem"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg> <span>استان‌ها و شعب</span></div><div class="scopeItem"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-network" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg> <span>شرکت‌های تابعه</span></div></div></div><div class="presidentSection"><div class="imageWrapper"><div class="imageRings"></div><img alt="منوچهر خواجه‌دلویی" class="bossImage" src="./boss.jpg"></div><div class="presidentInfo"><h2>منوچهر خواجه‌دلویی</h2><p>رئیس بنیاد مسکن انقلاب اسلامی</p></div></div><div class="actionButtons"><button class="btnPrimary"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send" aria-hidden="true"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path><path d="m21.854 2.147-10.94 10.939"></path></svg><span>ثبت پیام جدید</span></button><button class="btnSecondary"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-check" aria-hidden="true"><path d="m8 11 2 2 4-4"></path><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><span>رهگیری پیام</span></button></div></div><div class="bottomCardsGrid"><button class="bottomCard"><div class="bottomCardIcon bg-dark"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-quote" aria-hidden="true"><path d="M14 14a2 2 0 0 0 2-2V8h-2"></path><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"></path><path d="M8 14a2 2 0 0 0 2-2V8H8"></path></svg></div><span>پیام ریاست</span></button><button class="bottomCard"><div class="bottomCardIcon bg-gold"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-question-mark" aria-hidden="true"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"></path><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg></div><span>پرسش‌های متداول</span></button><button class="bottomCard"><div class="bottomCardIcon bg-blue"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open" aria-hidden="true"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg></div><span>راهنمای سامانه</span></button></div><div class="tickerCard"><div class="tickerTitle"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg><span> </span></div><div class="tickerWrapper"><div class="tickerContent"><div class="tickerText">به سامانه ارتباط مستقیم کارکنان با ریاست بنیاد مسکن انقلاب اسلامی خوش آمدید. <span class="tickerSeparator">🔸</span>این سامانه با هدف تقویت ارتباط مستقیم میان کارکنان و مدیریت عالی بنیاد، شناسایی فرصت‌های بهبود و ارتقای مستمر عملکرد سازمانی راه‌اندازی شده است. <span class="tickerSeparator">🔸</span>همکاران گرامی می‌توانند نظرات، پیشنهادات، انتقادات، درخواست‌ها و دیدگاه‌های خود را از طریق این سامانه ثبت و پیگیری نمایند. <span class="tickerSeparator">🔸</span>کلیه مطالب، اطلاعات و پیام‌های ثبت‌شده در این سامانه محرمانه تلقی شده و صرفاً در چارچوب فرآیندهای مدیریتی، نظارتی و عدالت سازمانی مورد بررسی قرار خواهند گرفت. <span class="tickerSeparator">🔸</span>از همراهی، اعتماد و مشارکت ارزشمند شما در این مسیر سپاسگزاریم. <span class="tickerSeparator">🔸</span></div><div class="tickerText">به سامانه ارتباط مستقیم کارکنان با ریاست بنیاد مسکن انقلاب اسلامی خوش آمدید. <span class="tickerSeparator">🔸</span>این سامانه با هدف تقویت ارتباط مستقیم میان کارکنان و مدیریت عالی بنیاد، شناسایی فرصت‌های بهبود و ارتقای مستمر عملکرد سازمانی راه‌اندازی شده است. <span class="tickerSeparator">🔸</span>همکاران گرامی می‌توانند نظرات، پیشنهادات، انتقادات، درخواست‌ها و دیدگاه‌های خود را از طریق این سامانه ثبت و پیگیری نمایند. <span class="tickerSeparator">🔸</span>کلیه مطالب، اطلاعات و پیام‌های ثبت‌شده در این سامانه محرمانه تلقی شده و صرفاً در چارچوب فرآیندهای مدیریتی، نظارتی و عدالت سازمانی مورد بررسی قرار خواهند گرفت. <span class="tickerSeparator">🔸</span>از همراهی، اعتماد و مشارکت ارزشمند شما در این مسیر سپاسگزاریم. <span class="tickerSeparator">🔸</span></div></div></div></div><div class="footerImageWrapper"><img alt="توسعه و پشتیبانی بنیاد مسکن" class="footerImage" src="./RiasatFooter.png"></div></div></main></div></div>
+    <script type="module" src="./main_SL8U.jsx"></script>
+  
+
+</body></html>
