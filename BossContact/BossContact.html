@@ -1,38 +1,30 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="fa" dir="rtl"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
-injectIntoGlobalHook(window);
-window.$RefreshReg$ = () => {};
-window.$RefreshSig$ = () => (type) => type;</script>
-
-    <script type="module" src="./client_SL8U"></script>
-
     <meta charset="UTF-8">
-    <link rel="icon" type="image/svg+xml" href="http://localhost:5173/favicon.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>bonyad-communication</title>
   <style type="text/css" data-vite-dev-id="D:/Project/bonyad-communication/src/styles/global.css">@font-face {
     font-family: "Vazirmatn";
-    src: url("../CSS/Fonts//Vazirmatn-Regular.woff2") format("woff2");
+    src: url("./CSS/Fonts/Vazirmatn-Regular.woff2") format("woff2"), url("../CSS/Fonts/Vazirmatn-Regular.woff2") format("woff2");
     font-weight: 400;
 }
 
 @font-face {
     font-family: "Vazirmatn";
-    src: url("../CSS/Fonts//Vazirmatn-Medium.woff2") format("woff2");
+    src: url("./CSS/Fonts/Vazirmatn-Medium.woff2") format("woff2"), url("../CSS/Fonts/Vazirmatn-Medium.woff2") format("woff2");
     font-weight: 500;
 }
 
 @font-face {
     font-family: "Vazirmatn";
-    src: url("../CSS/Fonts//Vazirmatn-SemiBold.woff2") format("woff2");
+    src: url("./CSS/Fonts/Vazirmatn-SemiBold.woff2") format("woff2"), url("../CSS/Fonts/Vazirmatn-SemiBold.woff2") format("woff2");
     font-weight: 600;
 }
 
 @font-face {
     font-family: "Vazirmatn";
-    src: url("../CSS/Fonts//Vazirmatn-Bold.woff2") format("woff2");
+    src: url("./CSS/Fonts/Vazirmatn-Bold.woff2") format("woff2"), url("../CSS/Fonts/Vazirmatn-Bold.woff2") format("woff2");
     font-weight: 700;
 }
 /* styles/variables.css */
@@ -242,9 +234,9 @@ window.$RefreshSig$ = () => (type) => type;</script>
   position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 70px 15px 50px;
+  padding: 28px 15px 50px;
 }
 
 .contentWrapper {
@@ -356,6 +348,59 @@ window.$RefreshSig$ = () => (type) => type;</script>
   white-space: pre; /* حفظ فاصله‌های خالی فرمت تاریخ */
 }
 
+/* نمایش صحیح و مستقل تاریخ و ساعت */
+.topBarLeft {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  direction: ltr;
+  white-space: nowrap;
+  font-family: Arial, Helvetica, sans-serif;
+  font-variant-numeric: tabular-nums;
+  unicode-bidi: isolate;
+  letter-spacing: 0.2px;
+}
+
+.dateDisplay,
+.timeDisplay {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  direction: ltr;
+  white-space: nowrap;
+}
+
+.dateValue,
+.timeValue {
+  display: inline-block;
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 0.3px;
+  font-variant-numeric: tabular-nums;
+  min-width: 84px;
+ /* text-align: center; */
+}
+
+.timeValue {
+  min-width: 68px;
+}
+
+.dateSeparator {
+  opacity: 0.65;
+  margin: 0 2px;
+}
+
+@media (max-width: 480px) {
+  .topBarLeft {
+    gap: 5px;
+    font-size: 10px;
+  }
+  .dateValue { min-width: 70px; }
+  .timeValue { min-width: 60px; }
+}
+
 @keyframes bannerShine {
   0% { background-position: 0% center; }
   100% { background-position: 200% center; }
@@ -391,7 +436,7 @@ window.$RefreshSig$ = () => (type) => type;</script>
 }
 
 .bannerLogo {
-  width: 150px;
+  width: 170px;
   height: auto;
   filter: drop-shadow(0 8px 16px rgba(0,0,0,0.08));
 }
@@ -435,7 +480,7 @@ window.$RefreshSig$ = () => (type) => type;</script>
   position: relative;
   z-index: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   gap: 15px;
   margin-top: 15px;
@@ -473,6 +518,7 @@ window.$RefreshSig$ = () => (type) => type;</script>
 
 .presidentInfo {
   text-align: center;
+  margin-right: 10px;
 }
 
 .presidentInfo h2 {
@@ -515,7 +561,7 @@ window.$RefreshSig$ = () => (type) => type;</script>
 
 .btnPrimary {
   background: linear-gradient(135deg, #0F4C81, #1D4ED8);
-  color: white;
+  color: white !important;
   box-shadow: 0 12px 30px -8px rgba(15, 76, 129, 0.5);
 }
 
@@ -578,7 +624,7 @@ window.$RefreshSig$ = () => (type) => type;</script>
 }
 
 .bottomCard:hover .bottomCardIcon {
-  transform: scale(1.1) rotate(-5deg);
+  transform: translateY(-4px) scale(1.08);
 }
 
 .bg-dark { background: linear-gradient(135deg, #1e293b, #0f172a); }
@@ -637,7 +683,7 @@ window.$RefreshSig$ = () => (type) => type;</script>
 .tickerContent {
   display: flex;
   width: max-content;
-  animation: marqueeLTR 50s linear infinite;
+  animation: marqueeLTR 80s linear infinite;
 }
 
 .tickerContent:hover {
@@ -682,7 +728,7 @@ window.$RefreshSig$ = () => (type) => type;</script>
 /* ------------------------------------------------ */
 @media (max-width: 480px) {
   .hero {
-    padding: 60px 15px 30px;
+    padding: 22px 15px 30px;
   }
 
   .bannerContainer {
@@ -807,8 +853,8 @@ html{
 
 body{
     font-family:"Vazirmatn",sans-serif;
-    background:var(--background);
-    color:var(--text);
+    background:var(--cream-50);
+    color:var(--ink-900);
     overflow-x:hidden;
     line-height:1.8;
     min-height:100vh;
@@ -853,10 +899,74 @@ ul{
 
 #root{
     min-height:100vh;
-}</style></head>
+}
+/* لینک‌ها در نقش دکمه/کارت */
+.btnPrimary,
+.btnSecondary,
+.bottomCard {
+  text-decoration: none;
+  color: inherit;
+}
+</style></head>
   <body>
-    <div id="root"><div class="homeWrapper"><main class="hero"><div class="animatedBg"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div><div class="contentWrapper"><div class="bannerContainer"><div class="topBar"><div class="topBarRight">سامانه ارتباط با ریاست بنیاد مسکن</div><div class="topBarLeft">📅 1405/06/13   |   🕒 20:02:49</div></div><div class="bannerInnerGlow"></div><div class="bannerShineLine"></div><div class="bannerHeader"><div class="logoWrapper"><img alt="لوگو بنیاد مسکن" class="bannerLogo" src="./logo.png"></div><h1>سامانه ارتباط کارکنان با ریاست</h1><div class="scopeContainer"><div class="scopeItem"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building2 lucide-building-2" aria-hidden="true"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg> <span>ستاد مرکزی</span></div><div class="scopeItem"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg> <span>استان‌ها و شعب</span></div><div class="scopeItem"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-network" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg> <span>شرکت‌های تابعه</span></div></div></div><div class="presidentSection"><div class="imageWrapper"><div class="imageRings"></div><img alt="منوچهر خواجه‌دلویی" class="bossImage" src="./boss.jpg"></div><div class="presidentInfo"><h2>منوچهر خواجه‌دلویی</h2><p>رئیس بنیاد مسکن انقلاب اسلامی</p></div></div><div class="actionButtons"><button class="btnPrimary"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send" aria-hidden="true"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path><path d="m21.854 2.147-10.94 10.939"></path></svg><span>ثبت پیام جدید</span></button><button class="btnSecondary"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-check" aria-hidden="true"><path d="m8 11 2 2 4-4"></path><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><span>رهگیری پیام</span></button></div></div><div class="bottomCardsGrid"><button class="bottomCard"><div class="bottomCardIcon bg-dark"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-quote" aria-hidden="true"><path d="M14 14a2 2 0 0 0 2-2V8h-2"></path><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"></path><path d="M8 14a2 2 0 0 0 2-2V8H8"></path></svg></div><span>پیام ریاست</span></button><button class="bottomCard"><div class="bottomCardIcon bg-gold"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-question-mark" aria-hidden="true"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"></path><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg></div><span>پرسش‌های متداول</span></button><button class="bottomCard"><div class="bottomCardIcon bg-blue"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open" aria-hidden="true"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg></div><span>راهنمای سامانه</span></button></div><div class="tickerCard"><div class="tickerTitle"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg><span> </span></div><div class="tickerWrapper"><div class="tickerContent"><div class="tickerText">به سامانه ارتباط مستقیم کارکنان با ریاست بنیاد مسکن انقلاب اسلامی خوش آمدید. <span class="tickerSeparator">🔸</span>این سامانه با هدف تقویت ارتباط مستقیم میان کارکنان و مدیریت عالی بنیاد، شناسایی فرصت‌های بهبود و ارتقای مستمر عملکرد سازمانی راه‌اندازی شده است. <span class="tickerSeparator">🔸</span>همکاران گرامی می‌توانند نظرات، پیشنهادات، انتقادات، درخواست‌ها و دیدگاه‌های خود را از طریق این سامانه ثبت و پیگیری نمایند. <span class="tickerSeparator">🔸</span>کلیه مطالب، اطلاعات و پیام‌های ثبت‌شده در این سامانه محرمانه تلقی شده و صرفاً در چارچوب فرآیندهای مدیریتی، نظارتی و عدالت سازمانی مورد بررسی قرار خواهند گرفت. <span class="tickerSeparator">🔸</span>از همراهی، اعتماد و مشارکت ارزشمند شما در این مسیر سپاسگزاریم. <span class="tickerSeparator">🔸</span></div><div class="tickerText">به سامانه ارتباط مستقیم کارکنان با ریاست بنیاد مسکن انقلاب اسلامی خوش آمدید. <span class="tickerSeparator">🔸</span>این سامانه با هدف تقویت ارتباط مستقیم میان کارکنان و مدیریت عالی بنیاد، شناسایی فرصت‌های بهبود و ارتقای مستمر عملکرد سازمانی راه‌اندازی شده است. <span class="tickerSeparator">🔸</span>همکاران گرامی می‌توانند نظرات، پیشنهادات، انتقادات، درخواست‌ها و دیدگاه‌های خود را از طریق این سامانه ثبت و پیگیری نمایند. <span class="tickerSeparator">🔸</span>کلیه مطالب، اطلاعات و پیام‌های ثبت‌شده در این سامانه محرمانه تلقی شده و صرفاً در چارچوب فرآیندهای مدیریتی، نظارتی و عدالت سازمانی مورد بررسی قرار خواهند گرفت. <span class="tickerSeparator">🔸</span>از همراهی، اعتماد و مشارکت ارزشمند شما در این مسیر سپاسگزاریم. <span class="tickerSeparator">🔸</span></div></div></div></div><div class="footerImageWrapper"><img alt="توسعه و پشتیبانی بنیاد مسکن" class="footerImage" src="./RiasatFooter.png"></div></div></main></div></div>
-    <script type="module" src="./main_SL8U.jsx"></script>
+    <div id="root"><div class="homeWrapper"><main class="hero"><div class="animatedBg"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div><div class="contentWrapper"><div class="bannerContainer"><div class="topBar"><div class="topBarRight">سامانه ارتباط با ریاست بنیاد مسکن</div><div class="topBarLeft" aria-label="تاریخ و زمان">
+            <span class="dateDisplay"><span class="dateIcon" aria-hidden="true">📅</span> <span id="jalaliDate" class="dateValue">۱۴۰۵/۰۶/۱۴</span></span>
+            <span class="dateSeparator" aria-hidden="true">|</span>
+            <span class="timeDisplay"><span class="timeIcon" aria-hidden="true">🕒</span> <time id="liveTime" class="timeValue" datetime="">۰۸:۰۹:۰۰</time></span>
+          </div></div><div class="bannerInnerGlow"></div><div class="bannerShineLine"></div><div class="bannerHeader"><div class="logoWrapper"><img alt="لوگو بنیاد مسکن" class="bannerLogo" src="./logo.png"></div><h1>سامانه ارتباط کارکنان با ریاست</h1><div class="scopeContainer"><div class="scopeItem"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building2 lucide-building-2" aria-hidden="true"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg> <span>ستاد مرکزی</span></div><div class="scopeItem"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg> <span>استان‌ها و شعب</span></div><div class="scopeItem"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-network" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg> <span>شرکت‌های تابعه</span></div></div></div><div class="presidentSection"><div class="imageWrapper"><div class="imageRings"></div><img alt="منوچهر خواجه‌دلویی" class="bossImage" src="./boss.jpg"></div><div class="presidentInfo"><h2>منوچهر خواجه‌دلویی</h2><p>رئیس بنیاد مسکن انقلاب اسلامی</p></div></div><div class="actionButtons"><a href="#" target="_blank" rel="noopener noreferrer" class="btnPrimary"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send" aria-hidden="true"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path><path d="m21.854 2.147-10.94 10.939"></path></svg><span>ثبت پیام جدید</span></a><a href="#" target="_blank" rel="noopener noreferrer" class="btnSecondary"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-check" aria-hidden="true"><path d="m8 11 2 2 4-4"></path><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><span>رهگیری پیام</span></a></div></div><div class="bottomCardsGrid"><a href="#" target="_blank" rel="noopener noreferrer" class="bottomCard"><div class="bottomCardIcon bg-dark"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-quote" aria-hidden="true"><path d="M14 14a2 2 0 0 0 2-2V8h-2"></path><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"></path><path d="M8 14a2 2 0 0 0 2-2V8H8"></path></svg></div><span>پیام ریاست</span></a><a href="#" target="_blank" rel="noopener noreferrer" class="bottomCard"><div class="bottomCardIcon bg-gold"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-question-mark" aria-hidden="true"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"></path><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg></div><span>پرسش‌های متداول</span></a><a href="#" target="_blank" rel="noopener noreferrer" class="bottomCard"><div class="bottomCardIcon bg-blue"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open" aria-hidden="true"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg></div><span>راهنمای سامانه</span></a></div><div class="tickerCard"><div class="tickerTitle"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg><span> </span></div><div class="tickerWrapper"><div class="tickerContent"><div class="tickerText">به سامانه ارتباط مستقیم کارکنان با ریاست بنیاد مسکن انقلاب اسلامی خوش آمدید. <span class="tickerSeparator">🔸</span>این سامانه با هدف تقویت ارتباط مستقیم میان کارکنان و مدیریت عالی بنیاد، شناسایی فرصت‌های بهبود و ارتقای مستمر عملکرد سازمانی راه‌اندازی شده است. <span class="tickerSeparator">🔸</span>همکاران گرامی می‌توانند نظرات، پیشنهادات، انتقادات، درخواست‌ها و دیدگاه‌های خود را از طریق این سامانه ثبت و پیگیری نمایند. <span class="tickerSeparator">🔸</span>کلیه مطالب، اطلاعات و پیام‌های ثبت‌شده در این سامانه محرمانه تلقی شده و صرفاً در چارچوب فرآیندهای مدیریتی، نظارتی و عدالت سازمانی مورد بررسی قرار خواهند گرفت. <span class="tickerSeparator">🔸</span>از همراهی، اعتماد و مشارکت ارزشمند شما در این مسیر سپاسگزاریم. <span class="tickerSeparator">🔸</span></div><div class="tickerText">به سامانه ارتباط مستقیم کارکنان با ریاست بنیاد مسکن انقلاب اسلامی خوش آمدید. <span class="tickerSeparator">🔸</span>این سامانه با هدف تقویت ارتباط مستقیم میان کارکنان و مدیریت عالی بنیاد، شناسایی فرصت‌های بهبود و ارتقای مستمر عملکرد سازمانی راه‌اندازی شده است. <span class="tickerSeparator">🔸</span>همکاران گرامی می‌توانند نظرات، پیشنهادات، انتقادات، درخواست‌ها و دیدگاه‌های خود را از طریق این سامانه ثبت و پیگیری نمایند. <span class="tickerSeparator">🔸</span>کلیه مطالب، اطلاعات و پیام‌های ثبت‌شده در این سامانه محرمانه تلقی شده و صرفاً در چارچوب فرآیندهای مدیریتی، نظارتی و عدالت سازمانی مورد بررسی قرار خواهند گرفت. <span class="tickerSeparator">🔸</span>از همراهی، اعتماد و مشارکت ارزشمند شما در این مسیر سپاسگزاریم. <span class="tickerSeparator">🔸</span></div></div></div></div><!--
+<div class="footerImageWrapper"><img alt="توسعه و پشتیبانی بنیاد مسکن" class="footerImage" src="./RiasatFooter.png"></div>
+--></div></main></div></div>
   
+    <script>
+      (function () {
+        "use strict";
+
+        const dateEl = document.getElementById("jalaliDate");
+        const timeEl = document.getElementById("liveTime");
+
+        function toJalali(gy, gm, gd) {
+          const g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+          let gy2 = gm > 2 ? gy + 1 : gy;
+          let days = 355666 + (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) + gd + g_d_m[gm - 1];
+          let jy = -1595 + (33 * Math.floor(days / 12053));
+          days %= 12053;
+          jy += 4 * Math.floor(days / 1461);
+          days %= 1461;
+          if (days > 365) {
+            jy += Math.floor((days - 1) / 365);
+            days = (days - 1) % 365;
+          }
+          const jm = days < 186 ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
+          const jd = 1 + (days < 186 ? days % 31 : (days - 186) % 30);
+          return [jy, jm, jd];
+        }
+
+        function faDigits(value) {
+    return String(value);
+  }
+
+        function pad2(value) {
+          return String(value).padStart(2, "0");
+        }
+
+        function updateDateTime() {
+          const now = new Date();
+          const jalali = toJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
+          const y = jalali[0];
+          const m = pad2(jalali[1]);
+          const d = pad2(jalali[2]);
+          const h = pad2(now.getHours());
+          const min = pad2(now.getMinutes());
+          const sec = pad2(now.getSeconds());
+
+          dateEl.textContent = faDigits(y + "/" + m + "/" + d);
+          timeEl.textContent = faDigits(h + ":" + min + ":" + sec);
+          timeEl.dateTime = now.toISOString();
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+      })();
+    </script>
 
 </body></html>
