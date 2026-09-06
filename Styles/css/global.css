@@ -1,0 +1,71 @@
+@import "./fonts.css";
+@import "./variables.css";
+@import "./animations.css";
+@import "./responsive.css";
+@import "./header.css";
+@import "./footer.css";
+@import "./home.css";
+
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    direction:rtl;
+    scroll-behavior:smooth;
+    -webkit-text-size-adjust:100%;
+}
+
+body{
+    font-family:"Vazirmatn",sans-serif;
+    background:var(--background);
+    color:var(--text);
+    overflow-x:hidden;
+    line-height:1.8;
+    min-height:100vh;
+    text-rendering:optimizeLegibility;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+img{
+    display:block;
+    max-width:100%;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,
+input,
+textarea,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+    border:none;
+    outline:none;
+    background:none;
+}
+
+input,
+textarea,
+select{
+    outline:none;
+}
+
+ul{
+    list-style:none;
+}
+
+#root{
+    min-height:100vh;
+}
