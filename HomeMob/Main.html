@@ -149,7 +149,7 @@
             border-radius: 30px;
             overflow: hidden;
 			
-			margin-top: -5px;
+			margin-top: 15px;
         }
     
      
@@ -539,7 +539,8 @@
             </a>
 
             <!-- ردیف 6 -->
-            <a href="../BossContact/BossContact.html" target="_blank" class="card" style="--i:10">
+            
+            <a href="#" onclick="openPopup('BossContact'); return false;" class="card" style="--i:10">
                 <span class="sweep"></span>
                 <div class="icon-mark"><i class="fa-solid fa-comments"></i></div>
                 <p>ارتباط با ریاست</p>
@@ -626,10 +627,18 @@
                     { text: "امور اراضی و املاک", link: "../LegalMob/Land_Affairs.html" },
                     { text: "امور حقوقی و قضائی", link: "../LegalMob/Legal_Affairs.html" }
                 ]
+            },
+            
+            BossContact: {
+                title: "ارتباط با ریاست",
+                buttons: [
+                    { text: "ارتباط با کارکنان", link: "../BossContact/BossContact.html" },
+                    { text: "ارتباطات مردمی", link: "#" },
+                    { text: "ارتباطات پارلمانی و دولتی", link: "#" },
+                    { text: "ارتباط با سایر سازمانها و نهادها", link: "#" }
+                ]
             }
-            
-            
-            
+                        
         };
 
         // نمایش پاپ‌آپ
@@ -662,7 +671,7 @@
         }
     </script>
 
-<script src="tracker.js?v=103"></script>
+<script src="tracker.js?v=102"></script>
 
 </body>
 </html>
