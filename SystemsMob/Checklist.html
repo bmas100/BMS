@@ -64,6 +64,17 @@ main{max-width:1320px;margin:auto;padding:18px 18px 70px}
 @media(max-width:620px){h1{font-size:22px}.meta-grid,.field-row{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}main{padding:12px 10px 50px}.top{padding:20px 12px 22px}.toolbar-inner{padding:8px 10px}.search{max-width:none;min-width:100%}.sys-actions{width:100%}.system-body,.system-top{padding:11px 10px}}
 @media print{body{background:#fff}.top{box-shadow:none;padding:12px 14px}.toolbar{display:none!important}main{padding:10px}.summary{break-after:page;box-shadow:none}.system{box-shadow:none;break-inside:avoid;margin-bottom:10px}.section-head{box-shadow:none}.kpis{grid-template-columns:repeat(4,1fr)}textarea,input,select{border:1px solid #cfd6e0;box-shadow:none!important}.action-table{min-width:0}}
 </style>
+<style>
+.export-group{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap}
+.btn.excel{background:#edf9f1;border-color:#bfe5cb;color:#176b35}
+.btn.danger{background:#fff1f2;border-color:#fecdd3;color:#b42318}
+.btn.dark{background:#eef1f5;border-color:#d6dbe4;color:#27364d}
+.form-state{font-size:10.5px;font-weight:900;color:#667085;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 9px}
+.modal-backdrop{position:fixed;inset:0;background:rgba(9,18,35,.45);display:none;align-items:center;justify-content:center;z-index:2000;padding:18px}
+.modal{max-width:520px;width:100%;background:#fff;border-radius:18px;box-shadow:0 24px 70px rgba(0,0,0,.25);padding:18px}
+.modal h3{margin:0 0 8px;font-size:16px}.modal p{margin:0 0 14px;font-size:11px;color:#667085}.modal .modal-actions{display:flex;gap:8px;justify-content:flex-start}
+@media(max-width:620px){.export-group{width:100%}.export-group .btn{flex:1}.form-state{margin-right:0}}
+</style>
 </head>
 <body>
 <header class="top"><div class="wrap top-grid">
@@ -76,13 +87,13 @@ main{max-width:1320px;margin:auto;padding:18px 18px 70px}
 </div></div></header>
 
 <div class="toolbar"><div class="toolbar-inner">
-<button class="btn primary" id="saveBtn">ذخیره اطلاعات</button><button class="btn gold" id="printBtn">چاپ / PDF</button><button class="btn" id="exportBtn">خروجی اطلاعات</button><button class="btn" id="importBtn">ورود اطلاعات</button><input type="file" id="importFile" accept="application/json" class="hidden">
+<button class="btn primary" id="saveBtn">ذخیره موقت</button><button class="btn gold" id="exportAllBtn">ذخیره Excel / JSON</button><button class="btn dark" id="importBtn">ورود JSON</button><input type="file" id="importFile" accept="application/json" class="hidden"><span class="form-state" id="formState">حالت فرم: آماده تکمیل</span>
 <div class="spacer"></div><div class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg><input id="search" placeholder="جست‌وجوی سامانه، بهره‌بردار یا حوزه..."></div>
 <select id="deptFilter" class="filter"><option value="">همه حوزه‌ها</option></select><select id="statusFilter" class="filter"><option value="">همه وضعیت‌ها</option><option value="operational">عملیاتی</option><option value="ready">آماده بهره‌برداری</option><option value="developing">در حال تکمیل</option><option value="stop">غیرعملیاتی / متوقف</option><option value="static">ثابت / خارج از توسعه</option></select>
 </div></div>
 
 <main>
-<div class="note">مبنای اولیه از فایل وضعیت سامانه‌ها تا ۱۵ تیر ۱۴۰۵ استخراج شده است. این فرم، وضعیت آن تاریخ را فقط به‌عنوان «مبنای مقایسه» نگه می‌دارد و وضعیت فعلی باید توسط واحد مربوط تکمیل شود. ساختار مبنا شامل ۳۵ سامانه در ۵ حوزه است.</div>
+<div class="note">مبنای اولیه از فایل وضعیت سامانه‌ها تا ۱۵ تیر ۱۴۰۵ استخراج شده است. این فرم، وضعیت آن تاریخ را فقط به‌عنوان «مبنای مقایسه» نگه می‌دارد و وضعیت فعلی باید توسط واحد مربوط تکمیل شود. ساختار مبنا شامل ۳۵ سامانه در ۵ حوزه است. برای تحویل اطلاعات، «ذخیره Excel / JSON» را بزنید. با یک کلیک، بسته JSON، Excel کل جزئیات و Excel مدیریتی تولید می‌شوند.</div>
 <div class="kpis" id="kpis"></div>
 <section class="summary"><div class="summary-head"><div><h2>داشبورد مدیریتی</h2><p>خلاصه وضعیت کل سامانه‌ها پس از تکمیل فرم‌ها.</p></div><span class="completion" id="completion">۰٪ تکمیل</span></div>
 <div class="table-wrap"><table><thead><tr><th>حوزه</th><th>سامانه</th><th>وضعیت مبنا</th><th>وضعیت فعلی</th><th>تاریخ بهره‌برداری</th><th>روند</th><th>مهم‌ترین چالش</th></tr></thead><tbody id="summaryBody"></tbody></table></div></section>
@@ -167,15 +178,152 @@ function systemCard(s){return `<article class="system" data-id="${s.id}" data-st
 function renderSections(){const root=document.getElementById('sections');root.innerHTML=BASE.map((d,di)=>{const color=['#4f46e5','#7c3aed','#059669','#b45309','#be123c'][di]||'#2563eb';const list=state.systems.filter(s=>s.deptIndex===di);return `<section class="section" data-dept-index="${di}"><div class="section-head" style="--c:${color}"><span class="section-dot"></span><div class="section-name">${esc(d.name)}</div><div class="section-count">${list.length} سامانه</div></div><div class="cards">${list.map(systemCard).join('')}</div></section>`}).join('')}
 function syncVisible(){document.querySelectorAll('.system').forEach(card=>{const s=state.systems.find(x=>x.id===card.dataset.id);if(!s)return;card.querySelectorAll('[data-field]').forEach(el=>s[el.dataset.field]=el.value);[['it','itDone'],['op','opDone']].forEach(([role,key])=>{const rows=[...card.querySelectorAll(`tr[data-role="${role}"]`)];if(rows.length)s[key]=rows.map(r=>({text:r.querySelector('.a-text').value,date:r.querySelector('.a-date').value,result:r.querySelector('.a-result').value}))})})}
 function collectActions(card,s,role,key){const rows=[...card.querySelectorAll(`.action-box button[data-add-action="${role}"]`)[0]?.closest('.action-box')?.querySelectorAll('tbody tr')||[]];s[key]=rows.map(r=>({text:r.querySelector('.a-text').value,date:r.querySelector('.a-date').value,result:r.querySelector('.a-result').value}))}
+function makeBaseFileName(ext){syncHeader();let u=(state.unitName||'واحد').trim().replace(/[\\/:*?"<>|]+/g,'_').replace(/\s+/g,'_');let d=(state.dateCurrent||new Date().toLocaleDateString('fa-IR')).replace(/[\\/:*?"<>| ]+/g,'_');return `ارزیابی_سامانه‌ها_${u}_${d}.${ext}`}
+function preparePackage(){syncHeader();syncAll();return {schemaVersion:'1.0',formTitle:'چک‌لیست پایش و ارزیابی وضعیت سامانه‌های بنیاد مسکن',generatedAt:new Date().toISOString(),dateBaseline:state.dateBaseline,dateCurrent:state.dateCurrent,unitName:state.unitName,repName:state.repName,systems:state.systems}}
+function downloadBlob(blob,filename){
+ const a=document.createElement('a');
+ a.href=URL.createObjectURL(blob);
+ a.download=filename;
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ setTimeout(()=>URL.revokeObjectURL(a.href),1200);
+}
+function xlsxXmlSafe(v){
+ return String(v??'').replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
+}
+function colName(n){let s='';while(n>0){let r=(n-1)%26;s=String.fromCharCode(65+r)+s;n=Math.floor((n-1)/26)}return s}
+function crc32(bytes){
+ let table=crc32.table;if(!table){table=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);table[n]=c>>>0}crc32.table=table}
+ let c=0xFFFFFFFF;for(let i=0;i<bytes.length;i++)c=table[(c^bytes[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0;
+}
+function u16(n){const b=new Uint8Array(2);const d=new DataView(b.buffer);d.setUint16(0,n,true);return b}
+function u32(n){const b=new Uint8Array(4);const d=new DataView(b.buffer);d.setUint32(0,n>>>0,true);return b}
+function cat(...parts){let len=0;for(const p of parts)len+=p.length;const out=new Uint8Array(len);let o=0;for(const p of parts){out.set(p,o);o+=p.length}return out}
+function zipStore(entries){
+ const enc=new TextEncoder(), locals=[], centrals=[];let offset=0;
+ for(const e of entries){
+   const name=enc.encode(e.name), data=typeof e.data==='string'?enc.encode(e.data):e.data, crc=crc32(data);
+   const local=cat(u32(0x04034b50),u16(20),u16(0x800),u16(0),u16(0),u16(0),u32(crc),u32(data.length),u32(data.length),u16(name.length),u16(0),name,data);
+   locals.push(local);
+   const central=cat(u32(0x02014b50),u16(20),u16(20),u16(0x800),u16(0),u16(0),u16(0),u32(crc),u32(data.length),u32(data.length),u16(name.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(offset),name);
+   centrals.push(central);offset+=local.length;
+ }
+ const centralData=cat(...centrals),localData=cat(...locals);
+ const end=cat(u32(0x06054b50),u16(0),u16(0),u16(entries.length),u16(entries.length),u32(centralData.length),u32(localData.length),u16(0));
+ return cat(localData,centralData,end);
+}
+function worksheetXml(rows,widths){
+ const cols=widths&&widths.length?'<cols>'+widths.map((w,i)=>`<col min="${i+1}" max="${i+1}" width="${Math.max(8,Math.min(70,w))}" customWidth="1"/>`).join('')+'</cols>':'';
+ const maxCols=Math.max(1,...rows.map(r=>r.length)); const maxRow=Math.max(1,rows.length);
+ const body=rows.map((r,ri)=>`<row r="${ri+1}">${r.map((v,ci)=>{
+   const value=v??''; const isNum=typeof value==='number' && Number.isFinite(value);
+   return `<c r="${colName(ci+1)}${ri+1}"${ri===0?' s="1"':''} t="${isNum?'n':'inlineStr'}">${isNum?`<v>${value}</v>`:`<is><t xml:space="preserve">${xlsxXmlSafe(value)}</t></is>`}</c>`;
+ }).join('')}</row>`).join('');
+ return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><?mso-application progid="Excel.Sheet"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><dimension ref="A1:${colName(maxCols)}${maxRow}"/><sheetViews><sheetView workbookViewId="0" rightToLeft="1"/></sheetViews>${cols}<sheetData>${body}</sheetData><autoFilter ref="A1:${colName(maxCols)}${maxRow}"/></worksheet>`;
+}
+function buildXlsx(sheets){
+ const esc=xlsxXmlSafe;
+ const sheetEntries=[];
+ sheets.forEach((sh,i)=>{
+   sheetEntries.push({name:sh.name,xml:worksheetXml(sh.rows,sh.widths||[])});
+ });
+ const workbook=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><bookViews><workbookView/></bookViews><sheets>${sheetEntries.map((sh,i)=>`<sheet name="${esc(sh.name).slice(0,31)}" sheetId="${i+1}" r:id="rId${i+1}"/>`).join('')}</sheets></workbook>`;
+ const rels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`;
+ const wbRels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${sheetEntries.map((sh,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join('')}<Relationship Id="rId${sheetEntries.length+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`;
+ const styles=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;
+ const content=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${sheetEntries.map((_,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')}</Types>`;
+ const entries=[{name:'[Content_Types].xml',data:content},{name:'_rels/.rels',data:rels},{name:'xl/workbook.xml',data:workbook},{name:'xl/_rels/workbook.xml.rels',data:wbRels},{name:'xl/styles.xml',data:styles},...sheetEntries.map((sh,i)=>({name:`xl/worksheets/sheet${i+1}.xml`,data:sh.xml}))];
+ const bytes=zipStore(entries);return new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+}
+function rowsFromObjects(arr){
+ const rows=arr||[];if(!rows.length)return [['پیام'],['اطلاعاتی ثبت نشده است']];
+ const headers=[...new Set(rows.flatMap(o=>Object.keys(o||{})))];return [headers,...rows.map(o=>headers.map(h=>o?.[h]??''))];
+}
+function makeSheet(name,arr,widths){return {name,rows:rowsFromObjects(arr),widths}}
+function makeInfoRows(pkg){return [
+ {فیلد:'عنوان فرم',مقدار:pkg.formTitle},{فیلد:'نسخه ساختار',مقدار:pkg.schemaVersion},{فیلد:'تاریخ مبنا',مقدار:pkg.dateBaseline},{فیلد:'تاریخ ارزیابی',مقدار:pkg.dateCurrent},{فیلد:'نام واحد / حوزه',مقدار:pkg.unitName},{فیلد:'نماینده تکمیل‌کننده',مقدار:pkg.repName},{فیلد:'زمان تولید فایل',مقدار:new Date().toLocaleString('fa-IR')}
+];}
+function flattenSystem(s){
+ return {
+  شناسه:s.id||'',
+  حوزه:s.dept||'',
+  سامانه:s.title||'',
+  مالک:s.owner||'',
+  بهره‌بردار:s.operator||'',
+  وضعیت_مبنا:BASE_LABEL[s.baselineStatus]||s.baselineStatus||'',
+  توضیح_مبنا:s.baselineNote||'',
+  وضعیت_فعلی:STATUS_LABEL[s.currentStatus]||s.currentStatus||'',
+  تاریخ_آخرین_تغییر_وضعیت:s.currentStatusDate||'',
+  تاریخ_بهره‌برداری:s.operationDate||'',
+  روند:trend(s)[0],
+  وضعیت_فنی:s.techStatus||'',
+  وضعیت_بهره‌برداری:s.opStatus||'',
+  جمع‌بندی:s.summary||'',
+  اقدامات_فنی:(s.itDone||[]).filter(x=>x.text||x.date||x.result).map(x=>x.text).join(' | '),
+  اقدامات_بهره‌برداری:(s.opDone||[]).filter(x=>x.text||x.date||x.result).map(x=>x.text).join(' | '),
+  گام_بعدی_IT:s.itNext||'',
+  موعد_IT:s.itNextDate||'',
+  گام_بعدی_بهره‌بردار:s.opNext||'',
+  موعد_بهره‌بردار:s.opNextDate||'',
+  تصمیم_مورد_انتظار:s.decision||'',
+  چالش_اصلی:majorChallenge(s),
+  درصد_تکمیل:completeness(s)+'٪'
+ };
+}
+function getActionRows(pkg){const actions=[];pkg.systems.forEach(s=>{(s.itDone||[]).forEach((x,i)=>{if(x.text||x.date||x.result)actions.push({شناسه:s.id,حوزه:s.dept,سامانه:s.title,نقش:'فناوری اطلاعات',ردیف:i+1,اقدام:x.text||'',تاریخ:x.date||'',نتیجه_مستند:x.result||''})});(s.opDone||[]).forEach((x,i)=>{if(x.text||x.date||x.result)actions.push({شناسه:s.id,حوزه:s.dept,سامانه:s.title,نقش:'واحد بهره‌بردار',ردیف:i+1,اقدام:x.text||'',تاریخ:x.date||'',نتیجه_مستند:x.result||''})})});return actions;}
+function getChallengeRows(pkg){const ch=[];pkg.systems.forEach(s=>{(s.techChallenges||[]).forEach((x,i)=>{if(x.checked)ch.push({شناسه:s.id,حوزه:s.dept,سامانه:s.title,نوع:'فنی',چالش:TECH_CHALLENGES[i],جزئیات:x.detail||''})});(s.opChallenges||[]).forEach((x,i)=>{if(x.checked)ch.push({شناسه:s.id,حوزه:s.dept,سامانه:s.title,نوع:'بهره‌برداری',چالش:OP_CHALLENGES[i],جزئیات:x.detail||''})})});return ch;}
+function exportAll(){
+ const pkg=preparePackage();
+ const jsonBlob=new Blob([JSON.stringify(pkg,null,2)],{type:'application/json;charset=utf-8'});
+ downloadBlob(jsonBlob,'SystemsData.Json');
+ const systems=pkg.systems,total=systems.length;
+ const op=systems.filter(s=>s.currentStatus==='operational').length;
+ const ready=systems.filter(s=>s.currentStatus==='ready').length;
+ const dev=systems.filter(s=>s.currentStatus==='developing').length;
+ const stop=systems.filter(s=>s.currentStatus==='stop').length;
+ const staticN=systems.filter(s=>s.currentStatus==='static').length;
+ const kpis=[
+  {فیلد:'نام واحد',مقدار:pkg.unitName},
+  {فیلد:'نماینده',مقدار:pkg.repName},
+  {فیلد:'تاریخ ارزیابی',مقدار:pkg.dateCurrent},
+  {فیلد:'تاریخ مبنا',مقدار:pkg.dateBaseline},
+  {فیلد:'کل سامانه‌ها',مقدار:total},
+  {فیلد:'عملیاتی',مقدار:op},
+  {فیلد:'آماده بهره‌برداری',مقدار:ready},
+  {فیلد:'در حال تکمیل / توسعه',مقدار:dev},
+  {فیلد:'غیرعملیاتی / متوقف',مقدار:stop},
+  {فیلد:'ثابت / خارج از توسعه',مقدار:staticN},
+  {فیلد:'درصد تکمیل متوسط',مقدار:Math.round(systems.reduce((a,s)=>a+completeness(s),0)/Math.max(total,1))+'٪'}
+ ];
+ const summary=systems.map(s=>({حوزه:s.dept,سامانه:s.title,بهره‌بردار:s.operator,'وضعیت فعلی':STATUS_LABEL[s.currentStatus]||s.currentStatus,'روند':trend(s)[0],'تاریخ بهره‌برداری':s.operationDate||'','مهم‌ترین چالش':majorChallenge(s),'گام بعدی IT':s.itNext||'','گام بعدی بهره‌بردار':s.opNext||'','تصمیم مورد انتظار':s.decision||'','درصد تکمیل':completeness(s)+'٪'}));
+ const byDept={};systems.forEach(s=>(byDept[s.dept]??=[]).push(s));
+ const deptRows=Object.entries(byDept).map(([dept,list])=>({حوزه:dept,'تعداد سامانه':list.length,'عملیاتی':list.filter(s=>s.currentStatus==='operational').length,'آماده بهره‌برداری':list.filter(s=>s.currentStatus==='ready').length,'در حال توسعه':list.filter(s=>s.currentStatus==='developing').length,'متوقف':list.filter(s=>s.currentStatus==='stop').length,'ثابت':list.filter(s=>s.currentStatus==='static').length,'متوسط تکمیل':Math.round(list.reduce((a,s)=>a+completeness(s),0)/Math.max(list.length,1))+'٪'}));
+ const counter={};
+ systems.forEach(s=>{(s.techChallenges||[]).forEach((x,i)=>{if(x.checked){const k='فنی: '+TECH_CHALLENGES[i];counter[k]=(counter[k]||0)+1}});(s.opChallenges||[]).forEach((x,i)=>{if(x.checked){const k='بهره‌برداری: '+OP_CHALLENGES[i];counter[k]=(counter[k]||0)+1}})});
+ const chRows=Object.entries(counter).sort((a,b)=>b[1]-a[1]).map(([c,n])=>({چالش:c,'تعداد تکرار':n,'سهم از سامانه‌ها':Math.round(n/Math.max(total,1)*100)+'٪'}));
+ const blob=buildXlsx([
+  makeSheet('کل جزئیات',systems.map(flattenSystem),[10,30,34,24,28,20,34,24,22,22,18,38,38,42,52,18,42,20,42,20,48,44,16]),
+  makeSheet('اقدامات',getActionRows(pkg).length?getActionRows(pkg):[{پیام:'اقدامی ثبت نشده است'}],[10,30,34,20,9,46,18,44]),
+  makeSheet('چالش‌ها',getChallengeRows(pkg).length?getChallengeRows(pkg):[{پیام:'چالشی ثبت نشده است'}],[10,30,34,20,58,70]),
+  makeSheet('شاخص‌ها',kpis,[28,32]),
+  makeSheet('خلاصه مدیریتی',summary,[30,34,30,26,18,20,62,42,42,50,16]),
+  makeSheet('تحلیل حوزه‌ها',deptRows,[38,16,14,20,16,14,14,18]),
+  makeSheet('چالش‌های پرتکرار',chRows.length?chRows:[{چالش:'چالشی ثبت نشده است','تعداد تکرار':0,'سهم از سامانه‌ها':'۰٪'}],[74,18,22])
+ ]);
+ downloadBlob(blob,'SystemsData.xlsx');
+ updateFormState('فایل‌های SystemsData.xlsx و SystemsData.Json تولید شد');
+ toast('دو فایل SystemsData.xlsx و SystemsData.Json ایجاد شد.');
+}
+function updateFormState(txt='آماده تکمیل'){const el=document.getElementById('formState');if(el)el.textContent='حالت فرم: '+txt}
 function bind(){
- document.getElementById('saveBtn').onclick=()=>{syncHeader();syncAll();localStorage.setItem(STORAGE,JSON.stringify(state));toast('اطلاعات با موفقیت ذخیره شد.');renderAll()};
- document.getElementById('printBtn').onclick=()=>window.print();
- document.getElementById('exportBtn').onclick=()=>{syncHeader();syncAll();const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='چک_لیست_وضعیت_سامانه_های_بنیاد_۱۴۰۵.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+ document.getElementById('saveBtn').onclick=()=>{syncHeader();syncAll();localStorage.setItem(STORAGE,JSON.stringify(state));toast('اطلاعات ذخیره شد.');updateFormState('ذخیره‌شده');renderAll()};
+ document.getElementById('exportAllBtn').onclick=()=>{syncHeader();syncAll();exportAll()};
  document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
- document.getElementById('importFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(x?.systems?.length){state=x;localStorage.setItem(STORAGE,JSON.stringify(state));renderAll();toast('اطلاعات وارد شد.')}else toast('فایل اطلاعات معتبر نیست.')}catch(_ ){toast('فایل JSON معتبر نیست.')}};r.readAsText(f)};
+ document.getElementById('importFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(x?.systems?.length){state={dateBaseline:x.dateBaseline||'۱۴۰۵/۰۴/۱۵',dateCurrent:x.dateCurrent||'',unitName:x.unitName||'',repName:x.repName||'',systems:x.systems};localStorage.setItem(STORAGE,JSON.stringify(state));renderAll();updateFormState('JSON وارد شد');toast('اطلاعات وارد شد.')}else toast('فایل اطلاعات معتبر نیست.')}catch(_){toast('فایل JSON معتبر نیست.')}};r.readAsText(f)};
  document.getElementById('search').oninput=applyFilters;document.getElementById('deptFilter').onchange=applyFilters;document.getElementById('statusFilter').onchange=applyFilters;
- document.getElementById('sections').addEventListener('input',e=>{const card=e.target.closest('.system');if(!card)return;const s=state.systems.find(x=>x.id===card.dataset.id);if(e.target.dataset.field)s[e.target.dataset.field]=e.target.value;if(e.target.dataset.actionRole){const role=e.target.dataset.actionRole,key=role==='it'?'itDone':'opDone';const i=Number(e.target.dataset.actionI);s[key]=s[key]||[];s[key][i]=s[key][i]||{};if(e.target.classList.contains('a-text'))s[key][i].text=e.target.value;if(e.target.classList.contains('a-date'))s[key][i].date=e.target.value;if(e.target.classList.contains('a-result'))s[key][i].result=e.target.value}if(e.target.dataset.chDetail){const k=e.target.dataset.chDetail==='tech'?'techChallenges':'opChallenges';const i=Number(e.target.dataset.chI);s[k][i].detail=e.target.value}});
- document.getElementById('sections').addEventListener('change',e=>{const card=e.target.closest('.system');if(!card)return;const s=state.systems.find(x=>x.id===card.dataset.id);if(e.target.dataset.field)s[e.target.dataset.field]=e.target.value;if(e.target.matches('[data-ch-kind]')){const k=e.target.dataset.chKind==='tech'?'techChallenges':'opChallenges';const i=Number(e.target.dataset.chI);s[k][i].checked=e.target.checked;e.target.closest('.challenge-item').classList.toggle('checked',e.target.checked);if(!e.target.checked)s[k][i].detail=''}if(e.target.classList.contains('status-select')){card.dataset.status=s.currentStatus;renderKpis();renderSummary();applyFilters()}});
+ document.getElementById('sections').addEventListener('input',e=>{const card=e.target.closest('.system');if(!card)return;const s=state.systems.find(x=>x.id===card.dataset.id);if(e.target.dataset.field)s[e.target.dataset.field]=e.target.value;if(e.target.dataset.actionRole){const role=e.target.dataset.actionRole,key=role==='it'?'itDone':'opDone',i=Number(e.target.dataset.actionI);s[key]=s[key]||[];s[key][i]=s[key][i]||{};if(e.target.classList.contains('a-text'))s[key][i].text=e.target.value;if(e.target.classList.contains('a-date'))s[key][i].date=e.target.value;if(e.target.classList.contains('a-result'))s[key][i].result=e.target.value}if(e.target.dataset.chDetail){const k=e.target.dataset.chDetail==='tech'?'techChallenges':'opChallenges',i=Number(e.target.dataset.chI);s[k][i].detail=e.target.value}});
+ document.getElementById('sections').addEventListener('change',e=>{const card=e.target.closest('.system');if(!card)return;const s=state.systems.find(x=>x.id===card.dataset.id);if(e.target.dataset.field)s[e.target.dataset.field]=e.target.value;if(e.target.matches('[data-ch-kind]')){const k=e.target.dataset.chKind==='tech'?'techChallenges':'opChallenges',i=Number(e.target.dataset.chI);s[k][i].checked=e.target.checked;e.target.closest('.challenge-item').classList.toggle('checked',e.target.checked);if(!e.target.checked)s[k][i].detail=''}if(e.target.classList.contains('status-select')){card.dataset.status=s.currentStatus;renderKpis();renderSummary();applyFilters()}});
  document.getElementById('sections').addEventListener('click',e=>{const add=e.target.closest('[data-add-action]');if(add){const card=add.closest('.system'),s=state.systems.find(x=>x.id===card.dataset.id),role=add.dataset.addAction,key=role==='it'?'itDone':'opDone';s[key]=s[key]||[];s[key].push({text:'',date:'',result:''});renderCardPreserveFocus(card,s.id);return}const rem=e.target.closest('[data-remove-action]');if(rem){const card=rem.closest('.system'),s=state.systems.find(x=>x.id===card.dataset.id),role=rem.dataset.removeAction,key=role==='it'?'itDone':'opDone';s[key].splice(Number(rem.dataset.i),1);renderCardPreserveFocus(card,s.id)}});
 }
 function renderCardPreserveFocus(card,id){const oldScroll=window.scrollY;renderSections();applyFilters();window.scrollTo(0,oldScroll)}
