@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>گزارش مدیریتی ارتباطات مردمی بنیاد مسکن</title>
+<meta name="description" content="سامانه هوشمند مدیریتی ریاست بنیاد مسکن | گزارش مدیریتی ارتباطات مردمی بنیاد مسکن">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --navy:#0b2344; --navy2:#12365d; --blue:#1677c8; --cyan:#0ea5b7; --green:#13946b;
+  --gold:#d29a2e; --red:#c83b55; --orange:#ed8b22; --purple:#7656bd;
+  --bg:#f4f7fb; --card:#ffffff; --text:#172238; --muted:#6b778c; --line:#e5ebf3;
+  --shadow:0 16px 40px rgba(11,35,68,.09); --shadow2:0 8px 24px rgba(11,35,68,.07); --radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#f7f9fc 0,#f1f5fa 100%);color:var(--text);font-family:Vazirmatn,Tahoma,Arial,sans-serif;line-height:1.75}
+button,select{font:inherit}
+.container{width:min(1480px,94%);margin:auto}
+.topline{padding:26px 0 10px;text-align:right;color:#4c5e77;font-size:14px;font-weight:700;letter-spacing:.2px}
+.banner{position:relative;overflow:hidden;border-radius:30px;padding:32px 36px;color:#fff;background:
+ radial-gradient(circle at 85% 20%,rgba(255,255,255,.16),transparent 28%),
+ radial-gradient(circle at 15% 120%,rgba(14,165,183,.28),transparent 38%),
+ linear-gradient(135deg,var(--navy),#164e83 58%,#0e728b);box-shadow:0 20px 50px rgba(11,35,68,.18)}
+.banner:after{content:"";position:absolute;width:360px;height:360px;border:1px solid rgba(255,255,255,.12);border-radius:50%;left:-150px;bottom:-200px}
+.banner-grid{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;position:relative;z-index:1}
+.kicker{font-size:14px;opacity:.82;margin-bottom:6px}.title{margin:0;font-size:34px;line-height:1.35;font-weight:900;letter-spacing:-.6px}.subtitle{margin:10px 0 0;color:rgba(255,255,255,.84);font-size:14px;max-width:850px}
+.banner-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.pill{padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.13);font-size:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:12px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.25);color:#fff;text-decoration:none;font-weight:800;font-size:13px;background:rgba(255,255,255,.09);backdrop-filter:blur(10px);transition:.2s}
+.btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.16)}
+.btn-light{background:#fff;color:var(--navy);border-color:#fff}.btn-light:hover{background:#f0f4fa}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin:-24px auto 24px;position:relative;z-index:3}.kpi{background:var(--card);border:1px solid rgba(229,235,243,.85);border-radius:20px;padding:18px 18px 16px;box-shadow:var(--shadow2);min-height:136px;position:relative;overflow:hidden}.kpi:before{content:"";position:absolute;inset:auto 0 0;height:4px;background:linear-gradient(90deg,var(--blue),var(--cyan))}.kpi.green:before{background:linear-gradient(90deg,#129c6b,#49c58f)}.kpi.gold:before{background:linear-gradient(90deg,#c98c24,#efbf59)}.kpi.red:before{background:linear-gradient(90deg,#bf3a4f,#e26c7d)}.kpi.purple:before{background:linear-gradient(90deg,#6d52af,#9c7fe5)}
+.kpi-label{color:var(--muted);font-size:12px;font-weight:700}.kpi-value{font-size:31px;font-weight:900;letter-spacing:-.8px;margin:6px 0 2px}.kpi-foot{font-size:11px;color:#8792a4}.kpi-icon{position:absolute;left:15px;top:15px;width:40px;height:40px;border-radius:13px;background:#eef6fd;color:var(--blue);display:grid;place-items:center;font-size:19px}.green .kpi-icon{background:#ebf9f2;color:var(--green)}.gold .kpi-icon{background:#fff6e6;color:var(--gold)}.red .kpi-icon{background:#fff0f2;color:var(--red)}.purple .kpi-icon{background:#f3f0fb;color:var(--purple)}
+.section{margin:28px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:14px}.section-head h2{margin:0;font-size:22px;font-weight:900}.section-head p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.filters{display:flex;flex-wrap:wrap;gap:10px}.select{background:#fff;border:1px solid var(--line);border-radius:13px;padding:9px 12px;color:var(--text);min-width:190px;outline:none}.select:focus{border-color:#91c5ea;box-shadow:0 0 0 4px rgba(22,119,200,.08)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow2);padding:20px}.card-title{font-size:15px;font-weight:900;margin-bottom:3px}.card-sub{font-size:11px;color:var(--muted);margin-bottom:14px}.chart-wrap{position:relative;height:340px}.chart-wrap.sm{height:290px}.chart-wrap.xs{height:240px}
+.insight{padding:18px;border-radius:18px;background:linear-gradient(180deg,#fbfcfe,#f7f9fc);border:1px solid var(--line);height:100%}.insight .tag{display:inline-block;font-size:10px;font-weight:900;padding:5px 8px;border-radius:999px;background:#eef6fd;color:var(--blue);margin-bottom:8px}.insight.red .tag{background:#fff0f2;color:var(--red)}.insight.gold .tag{background:#fff7e8;color:#a87313}.insight.green .tag{background:#ebf9f2;color:var(--green)}.insight h3{margin:0 0 8px;font-size:15px}.insight p{margin:0;color:#526178;font-size:12px}
+.hero-strip{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.scorebox{background:linear-gradient(135deg,#0f2e55,#1677c8);border-radius:22px;color:#fff;padding:24px;position:relative;overflow:hidden}.scorebox:after{content:"";position:absolute;width:250px;height:250px;border-radius:50%;border:1px solid rgba(255,255,255,.12);left:-90px;top:-90px}.score-line{display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;z-index:1}.score-main{font-size:54px;font-weight:900;line-height:1}.score-label{font-size:12px;opacity:.8}.score-desc{font-size:12px;opacity:.86;margin-top:14px;position:relative;z-index:1}.meter{height:11px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;margin-top:16px;position:relative;z-index:1}.meter span{display:block;height:100%;width:70.1%;background:linear-gradient(90deg,#66dcae,#e7be54);border-radius:999px}
+.rank-list{display:flex;flex-direction:column;gap:11px}.rank-row{display:grid;grid-template-columns:150px 1fr 54px;gap:10px;align-items:center}.rank-label{font-size:11px;font-weight:800}.bar{height:10px;border-radius:999px;background:#edf1f6;overflow:hidden}.bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#1677c8,#0ea5b7)}.rank-num{text-align:left;font-weight:900;font-size:12px;color:#24354f}
+.topic-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.topic{padding:16px;border:1px solid var(--line);border-radius:18px;background:#fff;position:relative;overflow:hidden}.topic:after{content:"";position:absolute;inset:auto 0 0;height:3px;background:var(--accent,#1677c8)}.topic-count{font-size:24px;font-weight:900}.topic-pct{font-size:11px;color:var(--muted)}.topic-title{font-weight:800;font-size:12px;margin-top:8px}.topic-note{font-size:10px;color:#78859a;margin-top:5px;line-height:1.7}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px}.table{width:100%;border-collapse:collapse;min-width:860px;background:#fff}.table th,.table td{padding:12px 14px;border-bottom:1px solid var(--line);font-size:11px;text-align:right;vertical-align:middle}.table th{background:#f7f9fc;color:#536177;font-weight:900}.table tr:last-child td{border-bottom:none}.badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 8px;font-size:10px;font-weight:800}.badge.blue{background:#eef6fd;color:#17669e}.badge.red{background:#fff0f2;color:#b62f45}.badge.gold{background:#fff6e5;color:#9d6b13}.badge.green{background:#ebf9f2;color:#157252}
+.action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.action-card{padding:18px;border-radius:18px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow2)}.num{width:34px;height:34px;border-radius:11px;background:#eaf4fd;color:var(--blue);display:grid;place-items:center;font-weight:900;margin-bottom:12px}.action-card:nth-child(2) .num{background:#fff4df;color:#b37a19}.action-card:nth-child(3) .num{background:#ebf9f2;color:var(--green)}.action-card h3{font-size:14px;margin:0 0 7px}.action-card p{font-size:11px;color:#617087;margin:0}
+.data-note{padding:14px 16px;border-radius:16px;background:#fff9eb;border:1px solid #f0deae;color:#795d1f;font-size:11px}.data-note strong{font-weight:900}
+.footer{margin:36px 0 24px;padding:18px 0;color:#738096;font-size:10px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.num-en,.latin{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate;display:inline-block}
+.fade{animation:fade .8s ease both}@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (max-width:1150px){.kpis{grid-template-columns:repeat(3,1fr)}.topic-grid{grid-template-columns:repeat(3,1fr)}.hero-strip,.grid-2,.grid-3,.action-grid{grid-template-columns:1fr}}
+@media (max-width:720px){.container{width:min(96%,1480px)}.banner{padding:24px 20px}.banner-grid{grid-template-columns:1fr}.title{font-size:27px}.kpis{grid-template-columns:repeat(2,1fr);margin-top:14px}.topic-grid{grid-template-columns:repeat(2,1fr)}.kpi-value{font-size:27px}.rank-row{grid-template-columns:120px 1fr 45px}.chart-wrap{height:280px}}
+@media (max-width:430px){.kpis,.topic-grid{grid-template-columns:1fr}.select{width:100%}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="banner fade" id="top">
+    <div class="banner-grid">
+      <div>
+        <div class="kicker">داشبورد تحلیلی ارتباطات مردمی ریاست بنیاد مسکن</div>
+        <h1 class="title">گزارش مدیریتی ارتباطات مردمی بنیاد مسکن</h1>
+        <p class="subtitle">تحلیل جامع مطالبات، وضعیت رسیدگی، تمرکز موضوعی و استانی، چالش‌های اجرایی و اولویت‌های پیشنهادی برای تصمیم‌گیری در سطح ریاست بنیاد مسکن</p>
+        <div class="banner-meta">
+          <span class="pill">بازه داده: مهر ۱۴۰۴ تا ۱۷ شهریور ۱۴۰۵</span>
+          <span class="pill">تاریخ گزارش: ۸ سپتامبر ۲۰۲۶ | ۱۷ شهریور ۱۴۰۵</span>
+        </div>
+      </div>
+      <div><a class="btn btn-light" href="#" target="_blank" rel="noopener">▦ جزئیات گزارش</a></div>
+    </div>
+  </header>
+
+  <section class="kpis">
+    <div class="kpi fade"><div class="kpi-icon">◉</div><div class="kpi-label">کل پرونده‌های ثبت‌شده</div><div class="kpi-value count" data-target="242">0</div><div class="kpi-foot">فقره درخواست ملاقات مردمی</div></div>
+    <div class="kpi green fade"><div class="kpi-icon">✓</div><div class="kpi-label">پرونده‌های تعیین‌تکلیف‌شده</div><div class="kpi-value count" data-target="169">0</div><div class="kpi-foot">معادل <span class="num-en">70.1%</span> کل پرونده‌ها</div></div>
+    <div class="kpi red fade"><div class="kpi-icon">!</div><div class="kpi-label">پرونده‌های در دست اقدام</div><div class="kpi-value count" data-target="72">0</div><div class="kpi-foot">معادل <span class="num-en">29.9%</span> کل پرونده‌ها</div></div>
+    <div class="kpi gold fade"><div class="kpi-icon">⌂</div><div class="kpi-label">نهضت ملی مسکن</div><div class="kpi-value count" data-target="115">0</div><div class="kpi-foot">معادل <span class="num-en">47.52%</span> کل مطالبات</div></div>
+    <div class="kpi purple fade"><div class="kpi-icon">⌖</div><div class="kpi-label">سه استان پرتکرار</div><div class="kpi-value count" data-target="108">0</div><div class="kpi-foot">گیلان، قزوین و تهران | داده خام اکسل</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div><h2>نمای مدیریتی وضعیت پرونده‌ها</h2><p>ترکیب وضعیت رسیدگی و تمرکز موضوعی، مهم‌ترین سیگنال‌های مدیریتی را نشان می‌دهد.</p></div>
+      <div class="filters"><select class="select" id="provinceFilter"><option value="all">همه استان‌ها</option></select><select class="select" id="topicFilter"><option value="all">همه محورها</option></select></div>
+    </div>
+    <div class="hero-strip">
+      <div class="scorebox card">
+        <div class="score-line"><div><div class="score-main num-en">70.1%</div><div class="score-label">نرخ تعیین‌تکلیف پرونده‌ها</div></div><div style="font-size:38px;opacity:.92">◔</div></div>
+        <div class="meter"><span></span></div>
+        <div class="score-desc">از مجموع 242 پرونده، 169 پرونده مختومه/اختتام یافته و 72 پرونده همچنان در دست اقدام است. یک رکورد با وضعیت «مختم» در داده خام نیز در سبد پرونده‌های بسته نرمال‌سازی شده است.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">تمرکز جغرافیایی مطالبات</div><div class="card-sub">بر مبنای داده خام اکسل</div>
+        <div class="rank-list" id="provinceRanks"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid-2">
+      <div class="card"><div class="card-title">توزیع مطالبات در محورهای اصلی</div><div class="card-sub">طبقه‌بندی مدیریتی مندرج در گزارش تحلیلی Word</div><div class="chart-wrap"><canvas id="topicChart"></canvas></div></div>
+      <div class="card"><div class="card-title">استان‌های دارای بیشترین حجم مراجعه</div><div class="card-sub">10 استان نخست بر اساس داده خام اکسل</div><div class="chart-wrap"><canvas id="provinceChart"></canvas></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><h2>محورهای اصلی مطالبه مردم</h2><p>دو محور نخست، بخش غالب بار مراجعات را به خود اختصاص داده‌اند.</p></div></div>
+    <div class="topic-grid">
+      <div class="topic" style="--accent:#1677c8"><div class="topic-count num-en">115</div><div class="topic-pct num-en">47.52%</div><div class="topic-title">نهضت ملی مسکن</div><div class="topic-note">پروژه‌ها، ثبت‌نام، زمین، تسهیلات، تخصیص و مسائل پیشرفت پروژه</div></div>
+      <div class="topic" style="--accent:#0ea5b7"><div class="topic-count num-en">67</div><div class="topic-pct num-en">27.69%</div><div class="topic-title">حوزه روستایی و زمین</div><div class="topic-note">مسکن روستایی، زمین روستایی، طرح هادی و صدور سند</div></div>
+      <div class="topic" style="--accent:#7656bd"><div class="topic-count num-en">26</div><div class="topic-pct num-en">10.74%</div><div class="topic-title">دعاوی، مطالبات و شکایات پرسنلی</div><div class="topic-note">شکایات، پیمانکاران، استخدام، دفاتر مهندسی و منابع انسانی</div></div>
+      <div class="topic" style="--accent:#d29a2e"><div class="topic-count num-en">21</div><div class="topic-pct num-en">8.68%</div><div class="topic-title">تسهیلات و وام‌های حمایتی</div><div class="topic-note">وام بلاعوض و وام‌های مرتبط با مسکن روستایی</div></div>
+      <div class="topic" style="--accent:#c83b55"><div class="topic-count num-en">13</div><div class="topic-pct num-en">5.37%</div><div class="topic-title">خدمات اداری و متفرقه</div><div class="topic-note">درخواست مسکن، مجوز ساخت، تخفیف و تقسیط و موارد متفرقه</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid-3">
+      <div class="insight card red"><span class="tag">گلوگاه شماره 1</span><h3>نهضت ملی مسکن، کانون اصلی مراجعه است</h3><p>با 115 پرونده و سهم <span class="num-en">47.52%</span>، تقریباً نیمی از مراجعات در این حوزه متمرکز است. تکرار پرسش‌ها و مسائل پروژه‌ای، نشانه نیاز به گزارش‌دهی شفاف و پاسخ‌گویی پیش‌دستانه است.</p></div>
+      <div class="insight card gold"><span class="tag">گلوگاه شماره 2</span><h3>تمرکز بالای استانی، هشدار برای پاسخ‌گویی در مبدأ</h3><p>سه استان گیلان، قزوین و تهران در داده خام اکسل به‌ترتیب 49، 36 و 23 پرونده دارند؛ یعنی <span class="num-en">108</span> پرونده و حدود <span class="num-en">44.6%</span> کل مراجعات.</p></div>
+      <div class="insight card green"><span class="tag">گلوگاه شماره 3</span><h3>کیفیت ثبت داده، خود یک موضوع مدیریتی است</h3><p>اختلاف برخی اعداد بین داده خام اکسل و خلاصه Word نشان می‌دهد که استانداردسازی کد موضوع، وضعیت پرونده و محاسبه شاخص‌ها برای داشبورد ریاست ضروری است.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid-2">
+      <div class="card"><div class="card-title">تحلیل استانی؛ کجا نیازمند ورود ویژه است؟</div><div class="card-sub">نمای اولویت‌بندی مدیریتی بر اساس حجم مراجعات و موضوع غالب</div><div class="table-wrap"><table class="table"><thead><tr><th>استان</th><th>پرونده</th><th>سهم</th><th>موضوع غالب</th><th>پیام مدیریتی</th></tr></thead><tbody id="provinceTable"></tbody></table></div></div>
+      <div class="card"><div class="card-title">محورهای قابل توجه در داده خام</div><div class="card-sub">موضوعات با تکرار بیشتر در ثبت‌های Excel</div><div class="chart-wrap sm"><canvas id="rawSubjectChart"></canvas></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><h2>تحلیل چالش‌ها و ریسک‌های مدیریتی</h2><p>ترجمه داده‌ها به تصمیم‌های اجرایی برای سطح ریاست.</p></div></div>
+    <div class="grid-3">
+      <div class="insight card"><span class="tag">عملیاتی</span><h3>پرونده‌های باز، نقطه ریسک ثانویه‌اند</h3><p>وجود 72 پرونده در دست اقدام، در صورت نبود زمان‌بندی، مسئول مشخص و بازخورد دوره‌ای می‌تواند به موج دوم نارضایتی منجر شود.</p></div>
+      <div class="insight card"><span class="tag">بین‌دستگاهی</span><h3>بخشی از پاسخ‌گویی خارج از کنترل مستقیم بنیاد است</h3><p>در شرح پرونده‌ها به نقش بانک‌ها، راه و شهرسازی و سایر دستگاه‌های خدمات‌رسان اشاره شده است؛ بنابراین پیگیری بین‌دستگاهی باید به‌صورت سیستمی دیده شود.</p></div>
+      <div class="insight card"><span class="tag">ساختاری</span><h3>مراجعه به مرکز، نشانه ضعف مسیر حل مسئله در مبدأ است</h3><p>تمرکز مراجعات استان‌های پرتکرار، ضرورت تقویت میز خدمت و اختیار حل‌وفصل در اداره‌کل‌های استانی را برجسته می‌کند.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="card">
+      <div class="card-title">اولویت‌های پیشنهادی برای تصمیم‌گیری ریاست بنیاد</div>
+      <div class="card-sub">اقدامات پیشنهادی بر اساس داده‌های دو فایل و جهت تبدیل ارتباط مردمی به ابزار پایش مدیریتی</div>
+      <div class="action-grid">
+        <div class="action-card"><div class="num">01</div><h3>ایجاد داشبورد یکپارچه ارتباط مردمی</h3><p>کد رهگیری یکتا، تاریخ ورود، مهلت پاسخ، مسئول پرونده، علت تأخیر و وضعیت لحظه‌ای هر مطالبه در یک سامانه واحد ثبت شود.</p></div>
+        <div class="action-card"><div class="num">02</div><h3>تمرکز ویژه بر نهضت ملی مسکن</h3><p>کارگروه مشترک و گزارش شفاف پیشرفت، هزینه، وضعیت زمین و موانع پروژه‌ها برای کاهش مراجعات تکراری و پاسخ‌های موردی.</p></div>
+        <div class="action-card"><div class="num">03</div><h3>پاسخ‌گویی در مبدأ برای استان‌های پرتکرار</h3><p>اجرای میز خدمت استانی با اولویت گیلان، قزوین و تهران و تفویض اختیار برای حل مسائل قابل رسیدگی در همان استان.</p></div>
+        <div class="action-card"><div class="num">04</div><h3>پایش پرونده‌های باز با هشدار مدیریتی</h3><p>تعریف سطح هشدار برای پرونده‌های نزدیک به سررسید و ارسال گزارش هفتگی پرونده‌های معوق یا پرریسک به حوزه ریاست.</p></div>
+        <div class="action-card"><div class="num">05</div><h3>سنجش رضایت پس از پاسخ</h3><p>پس از مختومه شدن پرونده، رضایت متقاضی به‌صورت پیامکی یا الکترونیکی سنجیده شود تا «بسته شدن پرونده» با «رفع واقعی مسئله» اشتباه نشود.</p></div>
+        <div class="action-card"><div class="num">06</div><h3>استانداردسازی داده برای تصمیم‌گیری</h3><p>کد موضوع، استان، نوع درخواست، وضعیت، علت بازماندن پرونده و دستگاه وابسته به‌صورت استاندارد ثبت شود تا آمار مدیریتی همیشه قابل اتکا باشد.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="data-note"><strong>یادداشت داده‌ای:</strong> در فایل خام اکسل، «نهضت ملی مسکن» به‌صورت صریح 109 مورد ثبت شده و 6 مورد نیز با عنوان «مسکن» آمده است؛ گزارش تحلیلی Word این دو را در یک محور مدیریتی با جمع 115 مورد طبقه‌بندی کرده است. همچنین Word برای گیلان و قزوین اعداد 48 و 35 را ذکر می‌کند، در حالی که اکسل خام 49 و 36 را نشان می‌دهد. در این داشبورد، برای نمودارها و رتبه‌بندی استانی از داده خام اکسل و برای محورهای کلان از طبقه‌بندی تحلیلی Word استفاده شده است.</div>
+  </section>
+
+  <footer class="footer"><div>منبع: فایل «گزارش موضوعی ارتباط مردمی» و فایل «تحلیل و آسیب‌شناسی مطالبات ارتباط مردمی»</div><div>تهیه‌شده برای ارائه مدیریتی به رئیس بنیاد مسکن | ۸ سپتامبر ۲۰۲۶</div></footer>
+</div>
+
+<script>
+const provinceData = [
+  {name:'گیلان', count:49, top:'نهضت ملی مسکن'}, {name:'قزوین', count:36, top:'نهضت ملی مسکن'}, {name:'تهران', count:23, top:'نهضت ملی مسکن'},
+  {name:'فارس', count:14, top:'نهضت ملی مسکن'}, {name:'مرکزی', count:10, top:'نهضت ملی مسکن'}, {name:'مازندران', count:9, top:'زمین روستایی'},
+  {name:'خوزستان', count:8, top:'صدور سند / جنگ'}, {name:'آذربایجان شرقی', count:7, top:'نهضت ملی مسکن'}, {name:'اردبیل', count:7, top:'نهضت ملی مسکن'}, {name:'لرستان', count:7, top:'وام / مسکن روستایی'},
+  {name:'کرمان', count:7, top:'زمین روستایی'}, {name:'اصفهان', count:6, top:'نهضت ملی مسکن'}, {name:'کرمانشاه', count:6, top:'طرح هادی'}, {name:'بوشهر', count:5, top:'نهضت ملی مسکن'},
+  {name:'هرمزگان', count:5, top:'زمین / مسکن'}, {name:'البرز', count:4, top:'نهضت ملی مسکن'}, {name:'چهارمحال و بختیاری', count:4, top:'نهضت ملی مسکن'}, {name:'خراسان رضوی', count:4, top:'نهضت ملی مسکن'},
+  {name:'یزد', count:4, top:'وام روستایی'}, {name:'گلستان', count:3, top:'طرح هادی'}, {name:'سیستان و بلوچستان', count:3, top:'زمین روستایی'}, {name:'همدان', count:3, top:'زمین / سند'},
+  {name:'ایلام', count:2, top:'وام روستایی'}, {name:'زنجان', count:2, top:'طرح هادی'}, {name:'سمنان', count:2, top:'زمین روستایی'}, {name:'کهگیلویه و بویراحمد', count:2, top:'نهضت ملی مسکن'},
+  {name:'کردستان', count:1, top:'نهضت ملی مسکن'}, {name:'خراسان شمالی', count:1, top:'مسکن روستایی'}, {name:'دفتر مرکزی', count:1, top:'منابع انسانی'}, {name:'خراسان جنوبی', count:0, top:'—'}, {name:'قم', count:0, top:'—'}
+];
+const rawSubjects = [
+ ['نهضت ملی مسکن',109],['زمین روستایی',23],['طرح هادی',14],['مسکن روستایی',11],['صدور سند',9],['وام روستایی',6],['مسکن',6],['جنگ رمضان',5],['زمین',4],['وام بلاعوض',4]
+];
+const topicData = [['نهضت ملی مسکن',115,'47.52'],['حوزه روستایی و زمین',67,'27.69'],['دعاوی، مطالبات و شکایات پرسنلی',26,'10.74'],['تسهیلات و وام های حمایتی',21,'8.68'],['خدمات اداری و متفرقه',13,'5.37']];
+const total=242;
+
+function faToEn(str){ return str.replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)); }
+function fillSelects(){
+ const pf=document.getElementById('provinceFilter'); provinceData.forEach(p=>{const o=document.createElement('option');o.value=p.name;o.textContent=p.name;pf.appendChild(o)});
+ const tf=document.getElementById('topicFilter'); topicData.forEach(t=>{const o=document.createElement('option');o.value=t[0];o.textContent=t[0];tf.appendChild(o)});
+}
+function drawProvinceRanks(){
+ const el=document.getElementById('provinceRanks'), max=provinceData[0].count; el.innerHTML=''; provinceData.slice(0,6).forEach(p=>{el.insertAdjacentHTML('beforeend',`<div class="rank-row"><div class="rank-label">${p.name}</div><div class="bar"><span style="width:${(p.count/max*100).toFixed(1)}%"></span></div><div class="rank-num num-en">${p.count}</div></div>`)});
+}
+function drawProvinceTable(){
+ const tb=document.getElementById('provinceTable'); tb.innerHTML=''; provinceData.slice(0,12).forEach(p=>{let share=(p.count/total*100).toFixed(1); let cls=p.count>=20?'red':(p.count>=7?'gold':'blue'); let msg=p.count>=20?'نیازمند ورود و پایش ویژه':(p.count>=7?'پایش دوره‌ای و تقویت پاسخ‌گویی':'رسیدگی عادی / استانی'); tb.insertAdjacentHTML('beforeend',`<tr><td><strong>${p.name}</strong></td><td class="num-en">${p.count}</td><td class="num-en">${share}%</td><td><span class="badge ${cls}">${p.top}</span></td><td>${msg}</td></tr>`)});
+}
+let topicChart, provinceChart, rawSubjectChart;
+function buildCharts(){
+ Chart.defaults.font.family='Vazirmatn, Tahoma, sans-serif'; Chart.defaults.color='#526178';
+ topicChart=new Chart(document.getElementById('topicChart'),{type:'doughnut',data:{labels:topicData.map(x=>x[0]),datasets:[{data:topicData.map(x=>x[1]),backgroundColor:['#1677c8','#0ea5b7','#7656bd','#d29a2e','#c83b55'],borderWidth:0,hoverOffset:7}]},options:{responsive:true,maintainAspectRatio:false,cutout:'64%',plugins:{legend:{position:'bottom',rtl:true,labels:{padding:14,usePointStyle:true,font:{size:11}}},tooltip:{rtl:true,callbacks:{label:(ctx)=>`${ctx.label}: ${ctx.raw}`}}}}});
+ provinceChart=new Chart(document.getElementById('provinceChart'),{type:'bar',data:{labels:provinceData.slice(0,10).map(x=>x.name),datasets:[{label:'تعداد پرونده',data:provinceData.slice(0,10).map(x=>x.count),backgroundColor:'#1677c8',borderRadius:8,maxBarThickness:28}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{rtl:true}},scales:{x:{beginAtZero:true,grid:{color:'#edf1f6'},ticks:{precision:0}},y:{grid:{display:false}}}}});
+ rawSubjectChart=new Chart(document.getElementById('rawSubjectChart'),{type:'bar',data:{labels:rawSubjects.map(x=>x[0]),datasets:[{label:'ثبت خام',data:rawSubjects.map(x=>x[1]),backgroundColor:'#0ea5b7',borderRadius:8,maxBarThickness:24}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{rtl:true}},scales:{x:{grid:{display:false},ticks:{maxRotation:45,minRotation:25}},y:{beginAtZero:true,grid:{color:'#edf1f6'},ticks:{precision:0}}}}});
+}
+function animateCounters(){ document.querySelectorAll('.count').forEach(el=>{const target=+el.dataset.target;let start=0;const dur=1200;const t0=performance.now();function tick(t){const p=Math.min(1,(t-t0)/dur);const e=1-Math.pow(1-p,3);el.textContent=Math.round(target*e).toLocaleString('en-US');if(p<1)requestAnimationFrame(tick)}requestAnimationFrame(tick)})}
+function applyFilters(){
+ const province=document.getElementById('provinceFilter').value; const topic=document.getElementById('topicFilter').value;
+ document.querySelectorAll('.kpi').forEach(k=>k.style.opacity=(province==='all'&&topic==='all')?'1':'.92');
+}
+fillSelects();drawProvinceRanks();drawProvinceTable();buildCharts();animateCounters();
+document.getElementById('provinceFilter').addEventListener('change',applyFilters);document.getElementById('topicFilter').addEventListener('change',applyFilters);
+</script>
+</body>
+</html>
