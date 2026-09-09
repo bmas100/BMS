@@ -11,42 +11,42 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
 :root{
-  --navy:#0b2344; --navy2:#12365d; --blue:#1677c8; --cyan:#0ea5b7; --green:#13946b;
+  --navy:#033b2d; --navy2:#055f47; --blue:#07875f; --cyan:#0ca977; --green:#087652;
   --gold:#d29a2e; --red:#c83b55; --orange:#ed8b22; --purple:#7656bd;
-  --bg:#f4f7fb; --card:#ffffff; --text:#172238; --muted:#6b778c; --line:#e5ebf3;
-  --shadow:0 16px 40px rgba(11,35,68,.09); --shadow2:0 8px 24px rgba(11,35,68,.07); --radius:22px;
+  --bg:#e5f0eb; --card:#f7fbf9; --text:#123128; --muted:#536a61; --line:#c2d8cf;
+  --shadow:0 16px 40px rgba(2,58,43,.16); --shadow2:0 8px 24px rgba(2,58,43,.12); --radius:22px;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:linear-gradient(180deg,#f7f9fc 0,#f1f5fa 100%);color:var(--text);font-family:Vazirmatn,Tahoma,Arial,sans-serif;line-height:1.75}
+body{margin:0;background:linear-gradient(180deg,#eef5f2 0,#dfece6 100%);color:var(--text);font-family:Vazirmatn,Tahoma,Arial,sans-serif;line-height:1.75}
 button,select{font:inherit}
 .container{width:min(1480px,94%);margin:auto}
 .topline{padding:26px 0 10px;text-align:right;color:#4c5e77;font-size:14px;font-weight:700;letter-spacing:.2px}
 .banner{position:relative;overflow:hidden;border-radius:30px;padding:32px 36px;color:#fff;background:
- radial-gradient(circle at 85% 20%,rgba(255,255,255,.16),transparent 28%),
- radial-gradient(circle at 15% 120%,rgba(14,165,183,.28),transparent 38%),
- linear-gradient(135deg,var(--navy),#164e83 58%,#0e728b);box-shadow:0 20px 50px rgba(11,35,68,.18)}
-.banner:after{content:"";position:absolute;width:360px;height:360px;border:1px solid rgba(255,255,255,.12);border-radius:50%;left:-150px;bottom:-200px}
+linear-gradient(135deg,#087e5d 0%,#055840 52%,#022f24 100%) ;box-shadow:0 22px 54px rgba(2,58,43,.30);border:1px solid rgba(255,255,255,.16)}
+.banner:after{content:"";position:absolute;width:360px;height:360px;border:1px solid rgba(255,255,255,.18);border-radius:50%;left:-150px;bottom:-200px}
 .banner-grid{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;position:relative;z-index:1}
-.kicker{font-size:14px;opacity:.82;margin-bottom:6px}.title{margin:0;font-size:30px;line-height:1.35;font-weight:900;letter-spacing:-.6px}.subtitle{margin:10px 0 0;color:rgba(255,255,255,.84);font-size:14px;max-width:850px}
-.banner-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.pill{padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.13);font-size:12px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:12px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.25);color:#fff;text-decoration:none;font-weight:800;font-size:13px;background:rgba(255,255,255,.09);backdrop-filter:blur(10px);transition:.2s}
+.kicker{font-size:15px; font-weight:bold; opacity:.95;margin-bottom:6px}.title{color: #d9f2a5; margin:0;font-size:30px;line-height:1.35;font-weight:900;letter-spacing:-.6px}.subtitle{margin:10px 0 0;color:rgba(255,255,255,.84);font-size:14px;max-width:850px}
+.banner-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.pill{padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);font-size:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:12px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.32);color:#fff;text-decoration:none;font-weight:800;font-size:13px;background:rgba(255,255,255,.09);backdrop-filter:blur(10px);transition:.2s}
 .btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.16)}
-.btn-light{background:#fff;color:var(--navy);border-color:#fff}.btn-light:hover{background:#f0f4fa}
-.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin:-24px auto 24px;position:relative;z-index:3}.kpi{background:var(--card);border:1px solid rgba(229,235,243,.85);border-radius:20px;padding:18px 18px 16px;box-shadow:var(--shadow2);min-height:136px;position:relative;overflow:hidden}.kpi:before{content:"";position:absolute;inset:auto 0 0;height:4px;background:linear-gradient(90deg,var(--blue),var(--cyan))}.kpi.green:before{background:linear-gradient(90deg,#129c6b,#49c58f)}.kpi.gold:before{background:linear-gradient(90deg,#c98c24,#efbf59)}.kpi.red:before{background:linear-gradient(90deg,#bf3a4f,#e26c7d)}.kpi.purple:before{background:linear-gradient(90deg,#6d52af,#9c7fe5)}
-.kpi-label{color:var(--muted);font-size:12px;font-weight:700}.kpi-value{font-size:31px;font-weight:900;letter-spacing:-.8px;margin:6px 0 2px}.kpi-foot{font-size:11px;color:#8792a4}.kpi-icon{position:absolute;left:15px;top:15px;width:40px;height:40px;border-radius:13px;background:#eef6fd;color:var(--blue);display:grid;place-items:center;font-size:19px}.green .kpi-icon{background:#ebf9f2;color:var(--green)}.gold .kpi-icon{background:#fff6e6;color:var(--gold)}.red .kpi-icon{background:#fff0f2;color:var(--red)}.purple .kpi-icon{background:#f3f0fb;color:var(--purple)}
+.btn-light{background:linear-gradient(135deg,#ffffff,#ecfaf4);color:var(--navy);border-color:#fff}.btn-light:hover{background:#f0fbf7}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin:-24px auto 24px;position:relative;z-index:3}.kpi{margin-top: 10px; background:linear-gradient(145deg,#f4faf7 0%,#e0efe9 55%,#c9e1d7 100%);border:1px solid #aec9bd;border-radius:20px;padding:18px 18px 16px;box-shadow:var(--shadow2);min-height:136px;position:relative;overflow:hidden}.kpi:before{content:"";position:absolute;inset:auto 0 0;height:4px;background:linear-gradient(90deg,var(--blue),var(--cyan))}.kpi.green:before{background:linear-gradient(90deg,#129c6b,#49c58f)}.kpi.gold:before{background:linear-gradient(90deg,#c98c24,#efbf59)}.kpi.red:before{background:linear-gradient(90deg,#bf3a4f,#e26c7d)}.kpi.purple:before{background:linear-gradient(90deg,#6d52af,#9c7fe5)}
+.kpi-label{color:var(--muted);font-size:12px;font-weight:700}.kpi-value{font-size:31px;font-weight:900;letter-spacing:-.8px;margin:6px 0 2px}.kpi-foot{font-size:11px;color:#8792a4}.kpi-icon{position:absolute;left:15px;top:15px;width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#e9f8f2,#d2eee3);color:var(--blue);display:grid;place-items:center;font-size:19px}.green .kpi-icon{background:linear-gradient(135deg,#eaf9f3,#cfeee1);color:var(--green)}.gold .kpi-icon{background:linear-gradient(135deg,#fff8e8,#f3e2b8);color:var(--gold)}.red .kpi-icon{background:linear-gradient(135deg,#fff3f5,#f6dfe5);color:var(--red)}.purple .kpi-icon{background:linear-gradient(135deg,#f6f3fb,#e6e0f7);color:var(--purple)}
 .section{margin:28px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:14px}.section-head h2{margin:0;font-size:22px;font-weight:900}.section-head p{margin:4px 0 0;color:var(--muted);font-size:12px}
-.filters{display:flex;flex-wrap:wrap;gap:10px}.select{background:#fff;border:1px solid var(--line);border-radius:13px;padding:9px 12px;color:var(--text);min-width:190px;outline:none}.select:focus{border-color:#91c5ea;box-shadow:0 0 0 4px rgba(22,119,200,.08)}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow2);padding:20px}.card-title{font-size:15px;font-weight:900;margin-bottom:3px}.card-sub{font-size:11px;color:var(--muted);margin-bottom:14px}.chart-wrap{position:relative;height:340px}.chart-wrap.sm{height:290px}.chart-wrap.xs{height:240px}
-.insight{padding:18px;border-radius:18px;background:linear-gradient(180deg,#fbfcfe,#f7f9fc);border:1px solid var(--line);height:100%}.insight .tag{display:inline-block;font-size:10px;font-weight:900;padding:5px 8px;border-radius:999px;background:#eef6fd;color:var(--blue);margin-bottom:8px}.insight.red .tag{background:#fff0f2;color:var(--red)}.insight.gold .tag{background:#fff7e8;color:#a87313}.insight.green .tag{background:#ebf9f2;color:var(--green)}.insight h3{margin:0 0 8px;font-size:15px}.insight p{margin:0;color:#526178;font-size:12px}
-.hero-strip{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.scorebox{background:linear-gradient(135deg,#0f2e55,#1677c8);border-radius:22px;color:#fff;padding:24px;position:relative;overflow:hidden}.scorebox:after{content:"";position:absolute;width:250px;height:250px;border-radius:50%;border:1px solid rgba(255,255,255,.12);left:-90px;top:-90px}.score-line{display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;z-index:1}.score-main{font-size:54px;font-weight:900;line-height:1}.score-label{font-size:12px;opacity:.8}.score-desc{font-size:12px;opacity:.86;margin-top:14px;position:relative;z-index:1}.meter{height:11px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;margin-top:16px;position:relative;z-index:1}.meter span{display:block;height:100%;width:70.1%;background:linear-gradient(90deg,#66dcae,#e7be54);border-radius:999px}
-.rank-list{display:flex;flex-direction:column;gap:11px}.rank-row{display:grid;grid-template-columns:150px 1fr 54px;gap:10px;align-items:center}.rank-label{font-size:11px;font-weight:800}.bar{height:10px;border-radius:999px;background:#edf1f6;overflow:hidden}.bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#1677c8,#0ea5b7)}.rank-num{text-align:left;font-weight:900;font-size:12px;color:#24354f}
-.topic-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.topic{padding:16px;border:1px solid var(--line);border-radius:18px;background:#fff;position:relative;overflow:hidden}.topic:after{content:"";position:absolute;inset:auto 0 0;height:3px;background:var(--accent,#1677c8)}.topic-count{font-size:24px;font-weight:900}.topic-pct{font-size:11px;color:var(--muted)}.topic-title{font-weight:800;font-size:12px;margin-top:8px}.topic-note{font-size:10px;color:#78859a;margin-top:5px;line-height:1.7}
-.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px}.table{width:100%;border-collapse:collapse;min-width:860px;background:#fff}.table th,.table td{padding:12px 14px;border-bottom:1px solid var(--line);font-size:11px;text-align:right;vertical-align:middle}.table th{background:#f7f9fc;color:#536177;font-weight:900}.table tr:last-child td{border-bottom:none}.badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 8px;font-size:10px;font-weight:800}.badge.blue{background:#eef6fd;color:#17669e}.badge.red{background:#fff0f2;color:#b62f45}.badge.gold{background:#fff6e5;color:#9d6b13}.badge.green{background:#ebf9f2;color:#157252}
-.action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.action-card{padding:18px;border-radius:18px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow2)}.num{width:34px;height:34px;border-radius:11px;background:#eaf4fd;color:var(--blue);display:grid;place-items:center;font-weight:900;margin-bottom:12px}.action-card:nth-child(2) .num{background:#fff4df;color:#b37a19}.action-card:nth-child(3) .num{background:#ebf9f2;color:var(--green)}.action-card h3{font-size:14px;margin:0 0 7px}.action-card p{font-size:11px;color:#617087;margin:0}
+.filters{display:flex;flex-wrap:wrap;gap:10px}.select{background:linear-gradient(180deg,#f9fcfb,#e4f0eb);border:1px solid #adc8bd;border-radius:13px;padding:9px 12px;color:var(--text);min-width:190px;outline:none}.select:focus{border-color:#91c5ea;box-shadow:0 0 0 4px rgba(11,155,114,.10)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:linear-gradient(145deg,#f2f8f5 0%,#e1eee8 52%,#c9ddd4 100%);border:1px solid #aec8bc;border-radius:var(--radius);box-shadow:var(--shadow2);padding:20px}.card:nth-child(1){background:linear-gradient(145deg,#eef7f3 0%,#dcece6 55%,#bfd8cd 100%)}.card:nth-child(2){height: 450px; background:linear-gradient(145deg,#f1f7f4 0%,#e2eee9 50%,#cfe0d8 100%)}.grid-2>.card:nth-child(2),.grid-3>.card:nth-child(2){background:linear-gradient(145deg,#f4f7f1 0%,#e9ead9 52%,#d7d8bd 100%)}.grid-3>.card:nth-child(3){background:linear-gradient(145deg,#f3f2f8 0%,#e7e4ef 52%,#d7d1e5 100%)}.card-title{font-size:15px;font-weight:900;margin-bottom:3px}.card-sub{font-size:11px;color:var(--muted);margin-bottom:14px}.chart-wrap{position:relative;height:340px;border-radius:14px 14px 0 0;padding-top:10px}.chart-wrap.sm{height:290px;border-top-color:#05694d}.chart-wrap.xs{height:240px;border-top-color:#3b9273}
+.insight{padding:18px;border-radius:18px;background:linear-gradient(145deg,#ffffff 0%,#f4fbf8 52%,#e4f4ed 100%);border:1px solid #aec8bc;box-shadow:0 10px 26px rgba(2,58,43,.08);height:100%}.insight .tag{display:inline-block;font-size:10px;font-weight:900;padding:5px 8px;border-radius:999px;background:#eef6fd;color:var(--blue);margin-bottom:8px}.insight.red .tag{background:#fff0f2;color:var(--red)}.insight.gold .tag{background:#fff7e8;color:#a87313}.insight.green .tag{background:#ebf9f2;color:var(--green)}.insight h3{margin:0 0 8px;font-size:15px}.insight p{margin:0;color:#526178;font-size:12px}
+.hero-strip{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.scorebox{background:linear-gradient(135deg,#022c21,#04553f 58%,#087a59);border-radius:22px;color:#fff;padding:24px;position:relative;overflow:hidden}.scorebox:after{content:"";position:absolute;width:250px;height:250px;border-radius:50%;border:1px solid rgba(255,255,255,.12);left:-90px;top:-90px}.score-line{display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;z-index:1}.score-main{font-size:54px;font-weight:900;  color: green; line-height:1}.score-label{font-size:15px; font-weight: bold; opacity:.8; color: #003600;}.circle-meters{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px;position:relative;z-index:1}.circle-meter{display:flex;justify-content:center}.circle{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--accent) calc(var(--value) * 1%),rgba(255,255,255,.12) 0);position:relative;box-shadow:0 8px 20px rgba(0,0,0,.10)}.circle:after{content:"";position:absolute;inset:7px;border-radius:50%;background:linear-gradient(145deg,#075943,#064b39);border:1px solid rgba(255,255,255,.14)}.circle-inner{position:relative;z-index:1;text-align:center;color:#fff;display:flex;flex-direction:column;align-items:center;line-height:1.25}.circle-inner strong{font-size:25px;font-weight:900}.circle-inner span{font-size:12px;opacity:.82;margin-top:3px}.score-desc{font-size:14px;opacity:.95;margin-top:25px; color: black; position:relative;z-index:1}.meter{height:30px;background: rgb(205, 235, 220);border-radius:999px;overflow:hidden;margin-top:16px;position:relative;z-index:1}.meter span{display:block;height:100%;width:70.1%;background:linear-gradient(90deg,#66dcae,#e7be54);border-radius:999px}
+.rank-list{display:flex;flex-direction:column;gap:11px}.rank-row{display:grid;grid-template-columns:150px 1fr 54px;gap:10px;align-items:center}.rank-label{font-size:11px;font-weight:800}.bar{height:10px;border-radius:999px;background:#edf1f6;overflow:hidden}.bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#0a8e69,#22b58e)}.rank-num{text-align:left;font-weight:900;font-size:12px;color:#24354f}
+.topic-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.topic{padding:16px;border:1px solid #b0cabe;border-radius:18px;background:linear-gradient(145deg,#ffffff 0%,#f4fbf8 58%,#e0f3eb 100%);position:relative;overflow:hidden}.topic:after{content:"";position:absolute;inset:auto 0 0;height:3px;background:var(--accent,#0b9b72)}.topic-count{font-size:24px;font-weight:900}.topic-pct{font-size:11px;color:var(--muted)}.topic-title{font-weight:800;font-size:12px;margin-top:8px}.topic-note{font-size:10px;color:#78859a;margin-top:5px;line-height:1.7}
+.table-wrap{overflow:auto;border:1px solid #afc9be;border-radius:18px}.table{width:100%;border-collapse:collapse;min-width:860px;background:linear-gradient(180deg,#ffffff,#f5fbf8)}.table th,.table td{padding:12px 14px;border-bottom:1px solid var(--line);font-size:11px;text-align:right;vertical-align:middle}.table th{background:#eaf7f1;color:#536177;font-weight:900}.table tr:last-child td{border-bottom:none}.badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 8px;font-size:10px;font-weight:800}.badge.blue{background:#eef6fd;color:#17669e}.badge.red{background:#fff0f2;color:#b62f45}.badge.gold{background:#fff6e5;color:#9d6b13}.badge.green{background:#ebf9f2;color:#157252}
+.action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.action-card{padding:18px;border-radius:18px;background:linear-gradient(145deg,#f1f8f5 0%,#e1eee9 50%,#cadfd6 100%);border:1px solid #aec8bc;box-shadow:var(--shadow2)}.action-card:nth-child(even){background:linear-gradient(145deg,#f4f7ef 0%,#e9ecdf 48%,#d8dcc6 100%)}.action-card:nth-child(3n){background:linear-gradient(145deg,#f2f2f7 0%,#e5e4ef 50%,#d5d2e2 100%)}.num{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#e5f7ef,#c9ecde);color:var(--blue);display:grid;place-items:center;font-weight:900;margin-bottom:12px}.action-card:nth-child(2) .num{background:linear-gradient(135deg,#fff8e7,#f2dfb4);color:#a97313}.action-card:nth-child(3) .num{background:linear-gradient(135deg,#eaf9f2,#cdeee0);color:var(--green)}.action-card h3{font-size:14px;margin:0 0 7px}.action-card p{font-size:11px;color:#617087;margin:0}
 .data-note{padding:14px 16px;border-radius:16px;background:#fff9eb;border:1px solid #f0deae;color:#795d1f;font-size:11px}.data-note strong{font-weight:900}
 .footer{margin:36px 0 24px;padding:18px 0;color:#738096;font-size:10px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
 .num-en,.latin{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate;display:inline-block}
+
+.geo-wrap{height:420px;padding-top:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}.iran-map-wrap{width:100%;height:355px;display:flex;align-items:center;justify-content:center}.iran-map{margin-top: -60px; width:min(100%,420px);height:100%;overflow:visible}.iran-shape{fill:url(#iranFill);stroke:#087c60;stroke-width:3}.iran-inner{fill:none;stroke:rgba(8,124,96,.18);stroke-width:2;stroke-linecap:round}.map-point circle{fill:#0b8f68;stroke:#fff;stroke-width:3;filter:drop-shadow(0 3px 4px rgba(8,124,96,.22))}.map-point text{font-family:Vazirmatn,Tahoma,sans-serif;font-size:11px;font-weight:800;fill:#25473d;text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}.map-point .map-value{font-size:12px;font-weight:900;fill:#0a3f31}.geo-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;font-size:10px;color:#63776f;margin-top:5px}.geo-legend span{margin-top: -90px;display:inline-flex;align-items:center;gap:5px}.dot{display:inline-block;border-radius:50%;background:#0b8f68;box-shadow:0 0 0 3px rgba(11,143,104,.12)}.dot.large{width:12px;height:12px}.dot.medium{width:9px;height:9px}.dot.small{width:6px;height:6px}
 .fade{animation:fade .8s ease both}@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (max-width:1150px){.kpis{grid-template-columns:repeat(3,1fr)}.topic-grid{grid-template-columns:repeat(3,1fr)}.hero-strip,.grid-2,.grid-3,.action-grid{grid-template-columns:1fr}}
 @media (max-width:720px){
@@ -55,14 +55,14 @@ button,select{font:inherit}
   .banner{padding:22px 18px;border-radius:22px}
   .banner-grid{grid-template-columns:1fr;gap:18px}
   .kicker{font-size:12px}
-  .title{font-size:24px;line-height:1.5;letter-spacing:-.3px}
+  .title{font-size:30px;line-height:1.45;letter-spacing:-.3px;}
   .subtitle{font-size:12px;line-height:1.9}
   .banner-meta{gap:7px;margin-top:12px}
   .pill{font-size:10px;padding:6px 9px;line-height:1.7}
   .banner-grid>.btn,.banner-grid>div:last-child{width:100%}
   .btn{width:100%;padding:11px 14px;font-size:12px}
   .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px auto 18px}
-  .kpi{min-height:118px;padding:15px 13px 13px;border-radius:16px}
+  .kpi{min-height:118px;padding:15px 13px 13px;border-radius:16px;border-color:#9fbeb1}
   .kpi-label{font-size:10px;line-height:1.7;padding-left:34px;min-height:34px}
   .kpi-value{font-size:24px;margin:5px 0 1px}
   .kpi-foot{font-size:9px;line-height:1.7}
@@ -74,7 +74,7 @@ button,select{font:inherit}
   .filters{width:100%;display:grid;grid-template-columns:1fr;gap:8px}
   .select{width:100%;min-width:0;padding:10px 11px;font-size:12px}
   .hero-strip,.grid-2,.grid-3,.action-grid{grid-template-columns:1fr;gap:12px}
-  .card{padding:14px;border-radius:18px}
+  .card{padding:14px;border-radius:18px;border-color:#9fbeb1}
   .card-title{font-size:13px;line-height:1.7}
   .card-sub{font-size:10px;line-height:1.8;margin-bottom:10px}
   .scorebox{padding:18px;border-radius:18px}
@@ -82,6 +82,11 @@ button,select{font:inherit}
   .score-main{font-size:42px}
   .score-desc{font-size:10px;line-height:1.9;margin-top:11px}
   .meter{height:9px;margin-top:13px}
+  .circle-meters{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 8px;margin-top:17px}
+  .circle{width:82px;height:82px}
+  .circle:after{inset:6px}
+  .circle-inner strong{font-size:14px}
+  .circle-inner span{font-size:8px}
   .rank-list{gap:9px}
   .rank-row{grid-template-columns:minmax(82px,30%) 1fr 38px;gap:7px}
   .rank-label{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -122,6 +127,7 @@ button,select{font:inherit}
   .rank-row{grid-template-columns:90px 1fr 34px}
   .chart-wrap{height:250px}
   .chart-wrap.sm{height:235px}
+  .geo-wrap{height:330px}.iran-map-wrap{height:265px}.geo-legend{gap:9px;font-size:9px}.map-point text{font-size:8px}.map-point .map-value{font-size:9px}
   .table{min-width:700px}
 }
 </style>
@@ -131,7 +137,7 @@ button,select{font:inherit}
   <header class="banner fade" id="top">
     <div class="banner-grid">
       <div>
-        <div class="kicker">داشبورد تحلیلی ارتباطات مردمی ریاست بنیاد مسکن</div>
+        <div class="kicker">سامانه هوشمند مدیریتی ریاست</div>
         <h1 class="title">گزارش مدیریتی ارتباطات مردمی بنیاد مسکن</h1>
         <p class="subtitle">تحلیل جامع مطالبات، وضعیت رسیدگی، تمرکز موضوعی و استانی، چالش‌های اجرایی و اولویت‌های پیشنهادی برای تصمیم‌گیری در سطح ریاست بنیاد مسکن</p>
         <div class="banner-meta">
@@ -158,13 +164,39 @@ button,select{font:inherit}
     </div>
     <div class="hero-strip">
       <div class="scorebox card">
-        <div class="score-line"><div><div class="score-main num-en">70.1%</div><div class="score-label">نرخ تعیین‌تکلیف پرونده‌ها</div></div><div style="font-size:38px;opacity:.92">◔</div></div>
+        <div class="score-line"><div><div class="score-main num-en">70.1%</div><div class="score-label">نرخ تعیین‌تکلیف پرونده‌ها</div></div><div style="font-size:38px;opacity:.92; color:green;">◔</div></div>
         <div class="meter"><span></span></div>
+        <div class="circle-meters">
+          <div class="circle-meter" style="--value:70.1;--accent:#55d5a8"><div class="circle"><div class="circle-inner"><strong>70.1%</strong><span>تعیین‌تکلیف</span></div></div></div>
+          <div class="circle-meter" style="--value:29.9;--accent:#e2b24f"><div class="circle"><div class="circle-inner"><strong>29.9%</strong><span>در دست اقدام</span></div></div></div>
+          <div class="circle-meter" style="--value:47.52;--accent:#8fe0c1"><div class="circle"><div class="circle-inner"><strong>47.52%</strong><span>نهضت ملی</span></div></div></div>
+          <div class="circle-meter" style="--value:44.6;--accent:#78c9ad"><div class="circle"><div class="circle-inner"><strong>44.6%</strong><span>۳ استان اول</span></div></div></div>
+        </div>
         <div class="score-desc">از مجموع 242 پرونده، 169 پرونده مختومه/اختتام یافته و 72 پرونده همچنان در دست اقدام است. یک رکورد با وضعیت «مختم» در داده خام نیز در سبد پرونده‌های بسته نرمال‌سازی شده است.</div>
       </div>
-      <div class="card">
-        <div class="card-title">تمرکز جغرافیایی مطالبات</div><div class="card-sub">بر مبنای داده خام اکسل</div>
-        <div class="rank-list" id="provinceRanks"></div>
+      <div class="card geo-card">
+        <div class="card-title">تمرکز جغرافیایی مطالبات</div><div class="card-sub">بر مبنای داده خام اکسل | نقاط، شدت مراجعه استان‌های پرتکرار را نشان می‌دهند.</div>
+        <div class="chart-wrap geo-wrap">
+          <div class="iran-map-wrap">
+            <svg class="iran-map" viewBox="0 0 500 620" role="img" aria-label="نقشه شماتیک ایران و تمرکز جغرافیایی مطالبات">
+              <defs><linearGradient id="iranFill" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dff4eb"/><stop offset="55%" stop-color="#a6dfc9"/><stop offset="100%" stop-color="#59bf99"/></linearGradient><filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0b5c46" flood-opacity=".16"/></filter></defs>
+              <path class="iran-shape" filter="url(#softShadow)" d="M132 54 L177 45 L218 67 L264 60 L301 79 L345 73 L373 98 L408 106 L426 143 L415 176 L438 205 L429 244 L445 280 L424 312 L438 347 L416 376 L390 394 L374 427 L344 447 L333 484 L300 501 L286 540 L249 547 L218 526 L178 535 L154 505 L118 501 L103 468 L78 448 L86 413 L63 379 L81 346 L70 311 L87 278 L78 244 L95 214 L86 180 L105 151 L101 119 Z"/>
+              <path class="iran-inner" d="M138 84 L170 74 L207 90 M111 161 L150 172 L180 150 M95 278 L135 289 L165 270 M86 376 L127 370 L161 391 M154 469 L188 450 L219 472 M232 522 L250 485 L279 500 M298 463 L320 430 L349 446 M353 404 L382 376 L412 382 M391 328 L360 315 L382 285 M404 239 L372 220 L390 188 M337 127 L313 154 L326 186"/>
+              <g class="map-point" data-label="گیلان" data-value="49" transform="translate(350 128)"><circle r="12"></circle><text y="-17">گیلان</text><text class="map-value" y="28">49</text></g>
+              <g class="map-point" data-label="قزوین" data-value="36" transform="translate(313 164)"><circle r="10"></circle><text y="-15">قزوین</text><text class="map-value" y="25">36</text></g>
+              <g class="map-point" data-label="تهران" data-value="23" transform="translate(287 208)"><circle r="9"></circle><text y="-14">تهران</text><text class="map-value" y="23">23</text></g>
+              <g class="map-point" data-label="فارس" data-value="14" transform="translate(233 382)"><circle r="7"></circle><text y="-13">فارس</text><text class="map-value" y="21">14</text></g>
+              <g class="map-point" data-label="مرکزی" data-value="10" transform="translate(250 287)"><circle r="6"></circle><text y="-12">مرکزی</text><text class="map-value" y="20">10</text></g>
+              <g class="map-point" data-label="مازندران" data-value="9" transform="translate(329 111)"><circle r="6"></circle><text y="-12">مازندران</text><text class="map-value" y="20">9</text></g>
+              <g class="map-point" data-label="خوزستان" data-value="8" transform="translate(155 383)"><circle r="6"></circle><text y="-12">خوزستان</text><text class="map-value" y="20">8</text></g>
+              <g class="map-point" data-label="آذربایجان شرقی" data-value="7" transform="translate(197 116)"><circle r="5"></circle><text y="-11">آذربایجان شرقی</text><text class="map-value" y="19">7</text></g>
+              <g class="map-point" data-label="اردبیل" data-value="7" transform="translate(260 96)"><circle r="5"></circle><text y="-11">اردبیل</text><text class="map-value" y="19">7</text></g>
+              <g class="map-point" data-label="لرستان" data-value="7" transform="translate(205 330)"><circle r="5"></circle><text y="-11">لرستان</text><text class="map-value" y="19">7</text></g>
+              <g class="map-point" data-label="کرمان" data-value="7" transform="translate(317 448)"><circle r="5"></circle><text y="-11">کرمان</text><text class="map-value" y="19">7</text></g>
+            </svg>
+          </div>
+          <div class="geo-legend"><span><i class="dot large"></i> مراجعه بالا</span><span><i class="dot medium"></i> مراجعه متوسط</span><span><i class="dot small"></i> مراجعه کمتر</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -179,8 +211,8 @@ button,select{font:inherit}
   <section class="section">
     <div class="section-head"><div><h2>محورهای اصلی مطالبه مردم</h2><p>دو محور نخست، بخش غالب بار مراجعات را به خود اختصاص داده‌اند.</p></div></div>
     <div class="topic-grid">
-      <div class="topic" style="--accent:#1677c8"><div class="topic-count num-en">115</div><div class="topic-pct num-en">47.52%</div><div class="topic-title">نهضت ملی مسکن</div><div class="topic-note">پروژه‌ها، ثبت‌نام، زمین، تسهیلات، تخصیص و مسائل پیشرفت پروژه</div></div>
-      <div class="topic" style="--accent:#0ea5b7"><div class="topic-count num-en">67</div><div class="topic-pct num-en">27.69%</div><div class="topic-title">حوزه روستایی و زمین</div><div class="topic-note">مسکن روستایی، زمین روستایی، طرح هادی و صدور سند</div></div>
+      <div class="topic" style="--accent:#0b9b72"><div class="topic-count num-en">115</div><div class="topic-pct num-en">47.52%</div><div class="topic-title">نهضت ملی مسکن</div><div class="topic-note">پروژه‌ها، ثبت‌نام، زمین، تسهیلات، تخصیص و مسائل پیشرفت پروژه</div></div>
+      <div class="topic" style="--accent:#18b68a"><div class="topic-count num-en">67</div><div class="topic-pct num-en">27.69%</div><div class="topic-title">حوزه روستایی و زمین</div><div class="topic-note">مسکن روستایی، زمین روستایی، طرح هادی و صدور سند</div></div>
       <div class="topic" style="--accent:#7656bd"><div class="topic-count num-en">26</div><div class="topic-pct num-en">10.74%</div><div class="topic-title">دعاوی، مطالبات و شکایات پرسنلی</div><div class="topic-note">شکایات، پیمانکاران، استخدام، دفاتر مهندسی و منابع انسانی</div></div>
       <div class="topic" style="--accent:#d29a2e"><div class="topic-count num-en">21</div><div class="topic-pct num-en">8.68%</div><div class="topic-title">تسهیلات و وام‌های حمایتی</div><div class="topic-note">وام بلاعوض و وام‌های مرتبط با مسکن روستایی</div></div>
       <div class="topic" style="--accent:#c83b55"><div class="topic-count num-en">13</div><div class="topic-pct num-en">5.37%</div><div class="topic-title">خدمات اداری و متفرقه</div><div class="topic-note">درخواست مسکن، مجوز ساخت، تخفیف و تقسیط و موارد متفرقه</div></div>
@@ -255,25 +287,39 @@ function fillSelects(){
  const pf=document.getElementById('provinceFilter'); provinceData.forEach(p=>{const o=document.createElement('option');o.value=p.name;o.textContent=p.name;pf.appendChild(o)});
  const tf=document.getElementById('topicFilter'); topicData.forEach(t=>{const o=document.createElement('option');o.value=t[0];o.textContent=t[0];tf.appendChild(o)});
 }
-function drawProvinceRanks(){
- const el=document.getElementById('provinceRanks'), max=provinceData[0].count; el.innerHTML=''; provinceData.slice(0,6).forEach(p=>{el.insertAdjacentHTML('beforeend',`<div class="rank-row"><div class="rank-label">${p.name}</div><div class="bar"><span style="width:${(p.count/max*100).toFixed(1)}%"></span></div><div class="rank-num num-en">${p.count}</div></div>`)});
-}
 function drawProvinceTable(){
  const tb=document.getElementById('provinceTable'); tb.innerHTML=''; provinceData.slice(0,12).forEach(p=>{let share=(p.count/total*100).toFixed(1); let cls=p.count>=20?'red':(p.count>=7?'gold':'blue'); let msg=p.count>=20?'نیازمند ورود و پایش ویژه':(p.count>=7?'پایش دوره‌ای و تقویت پاسخ‌گویی':'رسیدگی عادی / استانی'); tb.insertAdjacentHTML('beforeend',`<tr><td><strong>${p.name}</strong></td><td class="num-en">${p.count}</td><td class="num-en">${share}%</td><td><span class="badge ${cls}">${p.top}</span></td><td>${msg}</td></tr>`)});
 }
 let topicChart, provinceChart, rawSubjectChart;
 function buildCharts(){
  Chart.defaults.font.family='Vazirmatn, Tahoma, sans-serif'; Chart.defaults.color='#526178';
- topicChart=new Chart(document.getElementById('topicChart'),{type:'doughnut',data:{labels:topicData.map(x=>x[0]),datasets:[{data:topicData.map(x=>x[1]),backgroundColor:['#1677c8','#0ea5b7','#7656bd','#d29a2e','#c83b55'],borderWidth:0,hoverOffset:7}]},options:{responsive:true,maintainAspectRatio:false,cutout:'64%',plugins:{legend:{position:'bottom',rtl:true,labels:{padding:14,usePointStyle:true,font:{size:11}}},tooltip:{rtl:true,callbacks:{label:(ctx)=>`${ctx.label}: ${ctx.raw}`}}}}});
- provinceChart=new Chart(document.getElementById('provinceChart'),{type:'bar',data:{labels:provinceData.slice(0,10).map(x=>x.name),datasets:[{label:'تعداد پرونده',data:provinceData.slice(0,10).map(x=>x.count),backgroundColor:'#1677c8',borderRadius:8,maxBarThickness:28}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{rtl:true}},scales:{x:{beginAtZero:true,grid:{color:'#edf1f6'},ticks:{precision:0}},y:{grid:{display:false}}}}});
- rawSubjectChart=new Chart(document.getElementById('rawSubjectChart'),{type:'bar',data:{labels:rawSubjects.map(x=>x[0]),datasets:[{label:'ثبت خام',data:rawSubjects.map(x=>x[1]),backgroundColor:'#0ea5b7',borderRadius:8,maxBarThickness:24}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{rtl:true}},scales:{x:{grid:{display:false},ticks:{maxRotation:45,minRotation:25}},y:{beginAtZero:true,grid:{color:'#edf1f6'},ticks:{precision:0}}}}});
+ const valueLabels={
+   id:'valueLabels',
+   afterDatasetsDraw(chart){
+     if(chart.canvas.id!=='provinceChart') return;
+     const {ctx} = chart;
+     ctx.save();
+     ctx.font='800 12px Vazirmatn, Tahoma, sans-serif';
+     ctx.fillStyle='#111827';
+     ctx.textBaseline='middle';
+     chart.getDatasetMeta(0).data.forEach((bar,i)=>{
+       const x=bar.x+10, y=bar.y;
+       ctx.textAlign='left';
+       ctx.fillText(String(chart.data.datasets[0].data[i]),x,y);
+     });
+     ctx.restore();
+   }
+ };
+ topicChart=new Chart(document.getElementById('topicChart'),{type:'doughnut',data:{labels:topicData.map(x=>x[0]),datasets:[{data:topicData.map(x=>x[1]),backgroundColor:['#0b9b72','#18b68a','#6c5aac','#b88a2b','#b7425b'],borderWidth:0,hoverOffset:7}]},options:{responsive:true,maintainAspectRatio:false,cutout:'64%',plugins:{legend:{position:'bottom',rtl:true,labels:{padding:14,usePointStyle:true,font:{size:11}}},tooltip:{rtl:true,callbacks:{label:(ctx)=>`${ctx.label}: ${ctx.raw}`}}}}});
+ provinceChart=new Chart(document.getElementById('provinceChart'),{type:'bar',data:{labels:provinceData.slice(0,10).map(x=>x.name),datasets:[{label:'تعداد پرونده',data:provinceData.slice(0,10).map(x=>x.count),backgroundColor:'rgba(19,148,107,.82)',borderColor:'#087c60',borderWidth:1,borderRadius:8,maxBarThickness:28}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,layout:{padding:{right:34}},plugins:{legend:{display:false},tooltip:{rtl:true},valueLabels:{}},scales:{x:{beginAtZero:true,grid:{color:'#e1eee8'},ticks:{precision:0}},y:{grid:{display:false}}}},plugins:[valueLabels]});
+ rawSubjectChart=new Chart(document.getElementById('rawSubjectChart'),{type:'bar',data:{labels:rawSubjects.map(x=>x[0]),datasets:[{label:'ثبت خام',data:rawSubjects.map(x=>x[1]),backgroundColor:'rgba(24,182,138,.82)',borderColor:'#0b8f68',borderWidth:1,borderRadius:8,maxBarThickness:24}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{rtl:true}},scales:{x:{grid:{display:false},ticks:{maxRotation:45,minRotation:25}},y:{beginAtZero:true,grid:{color:'#e1eee8'},ticks:{precision:0}}}}});
 }
 function animateCounters(){ document.querySelectorAll('.count').forEach(el=>{const target=+el.dataset.target;let start=0;const dur=1200;const t0=performance.now();function tick(t){const p=Math.min(1,(t-t0)/dur);const e=1-Math.pow(1-p,3);el.textContent=Math.round(target*e).toLocaleString('en-US');if(p<1)requestAnimationFrame(tick)}requestAnimationFrame(tick)})}
 function applyFilters(){
  const province=document.getElementById('provinceFilter').value; const topic=document.getElementById('topicFilter').value;
  document.querySelectorAll('.kpi').forEach(k=>k.style.opacity=(province==='all'&&topic==='all')?'1':'.92');
 }
-fillSelects();drawProvinceRanks();drawProvinceTable();buildCharts();animateCounters();
+fillSelects();drawProvinceTable();buildCharts();animateCounters();
 document.getElementById('provinceFilter').addEventListener('change',applyFilters);document.getElementById('topicFilter').addEventListener('change',applyFilters);
 </script>
 </body>
