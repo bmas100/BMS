@@ -47,7 +47,7 @@ body{overflow-x:hidden}
 .name{font-size:.92rem;font-weight:700;color:var(--navy);line-height:1.55}
 .badge{font-size:.7rem;color:#1d4ed8;background:#eff6ff;border-radius:999px;padding:3px 7px;display:inline-block;margin-top:4px}
 .row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;font-size:.79rem;padding:6px 8px;border-radius:7px;margin:4px 0;background:#f8fafc}
-.row strong{direction:ltr;font:700 .79rem Arial,sans-serif}
+.row strong{direction:ltr;font-family:'Vazirmatn',sans-serif!important;font-size:.79rem;font-weight:700;line-height:1.5}
 .section-label{font-size:.78rem;color:var(--muted);font-weight:700;margin-top:11px;margin-bottom:4px}
 .metric-rev{color:var(--actual)} .metric-budget{color:var(--budget)} .metric-25{color:var(--budget25)} .metric-cost{color:var(--cost)} .metric-profit{color:var(--profit)}
 .progress{margin-top:10px}
@@ -159,7 +159,11 @@ const dataLabelPlugin = {
        ctx.fillStyle='#334155';
        ctx.textAlign='center';
        ctx.textBaseline='bottom';
-       ctx.fillText((v/1000000).toFixed(1)+' همت',p.x,p.y-5);
+       ctx.translate(p.x,p.y-8);
+       ctx.rotate(-Math.PI/2);
+       ctx.textAlign='left';
+       ctx.textBaseline='middle';
+       ctx.fillText((v/10000000).toFixed(2)+' همت',0,0);
        ctx.restore();
      });
    });
@@ -179,7 +183,7 @@ function barConfig(ds, suggestedMax){
        tooltip:{rtl:true,callbacks:{label:c => `${c.dataset.label}: ${fmt(c.raw)} میلیون ریال`}}
      },
      scales:{
-       y:{beginAtZero:true,suggestedMax, ticks:{callback:v => (v/1000000)+' همت'}},
+       y:{beginAtZero:true,suggestedMax, ticks:{callback:v => (v/10000000).toFixed(0)+' همت'}},
        x:{ticks:{maxRotation:45,minRotation:45,font:{size:window.innerWidth<700?8:10}}}
      }
    }
