@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>عملکرد مالی و بودجه شرکت‌های تابعه | سامانه هوشمند مدیریتی ریاست</title>
+<script src="chart.min.js"></script>
+<style>
+*{box-sizing:border-box}
+@font-face{font-family:Vazirmatn;src:url('Vazirmatn-Regular.woff2') format('woff2');font-weight:400}
+@font-face{font-family:Vazirmatn;src:url('Vazirmatn-Bold.woff2') format('woff2');font-weight:700}
+:root{
+ --navy:#0f172a;--blue:#1e3a8a;--blue2:#2563eb;--gold:#d97706;--green:#16a34a;
+ --bg:#f8fafc;--card:#fff;--text:#334155;--muted:#64748b;--line:#e2e8f0;
+ --actual:#1e3a8a;--budget:#64748b;--budget25:#d97706;--cost:#7c3aed;--profit:#16a34a;
+}
+html,body{margin:0;padding:0;width:100%;background:var(--bg);color:var(--text);font-family:Vazirmatn,sans-serif}
+body{overflow-x:hidden}
+.header{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);color:#fff;padding:30px 18px 26px;text-align:center;border-bottom:5px solid var(--gold);box-shadow:0 4px 22px rgba(0,0,0,.14)}
+.header .top{color:#fbbf24;font-weight:700;font-size:1rem;margin-bottom:7px}
+.header h1{margin:0;font-size:1.65rem;line-height:1.5}
+.header .sub{margin-top:10px;color:#cbd5e1;font-size:.92rem}
+.container{max-width:1550px;margin:-20px auto 35px;padding:0 18px;position:relative}
+.notice{background:#fff;border:1px solid #fde68a;border-right:4px solid var(--gold);border-radius:12px;padding:13px 15px;margin:0 0 18px;box-shadow:0 4px 16px rgba(0,0,0,.03);font-size:.84rem;line-height:1.9}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:22px}
+.kpi{background:#fff;border-radius:12px;padding:15px 10px;text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.05);border-top:4px solid var(--blue);min-width:0}
+.kpi.gold{border-top-color:var(--gold);background:linear-gradient(180deg,#fffbeb,#fff)}
+.kpi.green{border-top-color:var(--green)}
+.kpi.purple{border-top-color:var(--cost)}
+.kpi-title{font-size:.76rem;color:var(--muted);font-weight:700;line-height:1.55;min-height:2.35rem}
+.kpi-value{font:700 1.45rem Arial,sans-serif;direction:ltr;color:var(--navy);margin-top:5px}
+.kpi-unit{font-size:.75rem;color:var(--muted);font-weight:700;margin-right:3px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 4px 18px rgba(0,0,0,.03);min-width:0}
+.card.full{grid-column:1/-1}
+.title{font-size:1rem;font-weight:700;color:var(--blue);padding-bottom:10px;margin-bottom:14px;border-bottom:2px solid #f1f5f9}
+.chart-wrap{position:relative;height:390px;width:100%}
+.chart-wrap.short{height:330px}
+.companies{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 4px 18px rgba(0,0,0,.03)}
+.company-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.company{border:1px solid #c7d2fe;border-radius:12px;padding:15px;background:linear-gradient(180deg,#fff,#f8fafc);cursor:pointer;transition:.2s;min-width:0}
+.company:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(0,0,0,.06)}
+.company-top{display:flex;gap:12px;align-items:center;padding-bottom:10px;margin-bottom:10px;border-bottom:1px dashed var(--line)}
+.icon{width:48px;height:48px;flex:0 0 48px;border-radius:10px;background:#f1f5f9;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.icon img{width:100%;height:100%;object-fit:cover}
+.icon.empty::after{content:"↔";color:#94a3b8;font-size:20px}
+.name{font-size:.92rem;font-weight:700;color:var(--navy);line-height:1.55}
+.badge{font-size:.7rem;color:#1d4ed8;background:#eff6ff;border-radius:999px;padding:3px 7px;display:inline-block;margin-top:4px}
+.row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;font-size:.79rem;padding:6px 8px;border-radius:7px;margin:4px 0;background:#f8fafc}
+.row strong{direction:ltr;font:700 .79rem Arial,sans-serif}
+.section-label{font-size:.78rem;color:var(--muted);font-weight:700;margin-top:11px;margin-bottom:4px}
+.metric-rev{color:var(--actual)} .metric-budget{color:var(--budget)} .metric-25{color:var(--budget25)} .metric-cost{color:var(--cost)} .metric-profit{color:var(--profit)}
+.progress{margin-top:10px}
+.progress-label{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted);margin-bottom:5px}
+.bar{height:7px;background:#e2e8f0;border-radius:8px;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,#3b82f6,var(--green));border-radius:8px}
+.footer-note{font-size:.75rem;color:#64748b;line-height:1.9;margin-top:16px}
+@media(max-width:1250px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:950px){.grid{grid-template-columns:1fr}.card.full{grid-column:auto}}
+@media(max-width:700px){
+ .header{padding:22px 12px 20px}.header h1{font-size:1.24rem}.header .top{font-size:.86rem}.header .sub{font-size:.78rem}
+ .container{padding:0 10px;margin-top:-12px}.kpis{grid-template-columns:repeat(2,1fr);gap:9px}
+ .kpi{padding:11px 7px}.kpi-title{font-size:.68rem;min-height:2.15rem}.kpi-value{font-size:1.18rem}
+ .grid{gap:12px}.card{padding:12px 10px}.chart-wrap{height:350px}.chart-wrap.short{height:290px}
+ .company-grid{grid-template-columns:1fr}.companies{padding:14px 10px}
+}
+@media(max-width:420px){.kpis{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="header">
+ <div class="top">سامانه هوشمند مدیریتی ریاست بنیاد مسکن</div>
+ <h1>گزارش مقایسه‌ای عملکرد مالی و بودجه شرکت‌های تابعه</h1>
+ <div class="sub">عملکرد ۱۲ ماهه سال ۱۴۰۴ در مقایسه با بودجه مصوب ۱۴۰۴ و ارقام اصلی بودجه ۱۴۰۵</div>
+</header>
+
+<main class="container">
+ <div class="notice">
+  <strong>واحد مبالغ: میلیون ریال</strong> — «سود» در این داشبورد مطابق جدول منبع، <strong>سود قبل از کسر مالیات</strong> است و با «سود خالص» اشتباه گرفته نشده است.
+  همچنین در بودجه ۱۴۰۵، شرکت عمران اکباتان از «ایجاد محیط» جدا و ذیل «نوسازی و عمران تهران» لحاظ شده است.
+ </div>
+
+ <section class="kpis">
+  <div class="kpi"><div class="kpi-title">درآمد محقق‌شده ۱۴۰۴</div><div class="kpi-value">19.30 <span class="kpi-unit">همت</span></div></div>
+  <div class="kpi green"><div class="kpi-title">تحقق درآمد نسبت به بودجه ۱۴۰۴</div><div class="kpi-value">79.4 <span class="kpi-unit">٪</span></div></div>
+  <div class="kpi purple"><div class="kpi-title">هزینه محقق‌شده ۱۴۰۴</div><div class="kpi-value">13.41 <span class="kpi-unit">همت</span></div></div>
+  <div class="kpi gold"><div class="kpi-title">سود قبل از مالیات ۱۴۰۴</div><div class="kpi-value">5.89 <span class="kpi-unit">همت</span></div></div>
+  <div class="kpi green"><div class="kpi-title">تحقق سود نسبت به بودجه ۱۴۰۴</div><div class="kpi-value">95.6 <span class="kpi-unit">٪</span></div></div>
+  <div class="kpi gold"><div class="kpi-title">بودجه درآمدی ۱۴۰۵</div><div class="kpi-value">35.97 <span class="kpi-unit">همت</span></div></div>
+ </section>
+
+ <section class="grid">
+  <div class="card full">
+   <div class="title">درآمد — عملکرد ۱۴۰۴ در مقایسه با بودجه ۱۴۰۴ و بودجه ۱۴۰۵</div>
+   <div class="chart-wrap"><canvas id="revenueChart"></canvas></div>
+  </div>
+  <div class="card full">
+   <div class="title">هزینه‌ها — عملکرد ۱۴۰۴ در مقایسه با بودجه ۱۴۰۴ و بودجه ۱۴۰۵</div>
+   <div class="chart-wrap"><canvas id="costChart"></canvas></div>
+  </div>
+  <div class="card full">
+   <div class="title">سود قبل از کسر مالیات — عملکرد ۱۴۰۴ در مقایسه با بودجه ۱۴۰۴ و بودجه ۱۴۰۵</div>
+   <div class="chart-wrap"><canvas id="profitChart"></canvas></div>
+  </div>
+  <div class="card">
+   <div class="title">سهم سود قبل از مالیات شرکت‌ها در عملکرد ۱۴۰۴</div>
+   <div class="chart-wrap short"><canvas id="profitPie"></canvas></div>
+  </div>
+  <div class="card">
+   <div class="title">نرخ تحقق درآمد ۱۴۰۴</div>
+   <div class="chart-wrap short"><canvas id="realizationChart"></canvas></div>
+  </div>
+ </section>
+
+ <section class="companies">
+  <div class="title">وضعیت تفکیکی شرکت‌های تابعه</div>
+  <div class="company-grid" id="companiesGrid"></div>
+  <div class="footer-note">
+   یادداشت منبع: با توجه به انتقال شرکت عمران اکباتان از زیرمجموعه شرکت ایجاد محیط به ذیل شرکت نوسازی و عمران تهران، عملکرد سال گذشته آن در عملکرد ۱۴۰۴ شرکت ایجاد محیط تلفیق شده، اما بودجه ۱۴۰۵ آن و شرکت‌های مستقل منتقل‌شده در بودجه کلی شرکت نوسازی و عمران تهران لحاظ شده است.
+  </div>
+ </section>
+</main>
+
+<script>
+const companiesData = [{"name":"سازمان توسعه مسکن ایران","icon":"ToseMaskan.jpg","rev1404":45640626,"budget1404":56170611,"budget1405":75085010,"cost1404":31665818,"costBudget1404":43806369,"costBudget1405":58068000,"profit1404":13974808,"profitBudget1404":12364242,"profitBudget1405":17017010},{"name":"شرکت بنیاد بتن ایران","icon":"BonyadBeton.jpg","rev1404":38885553,"budget1404":38554712,"budget1405":54240000,"cost1404":34064709,"costBudget1404":34546678,"costBudget1405":49358000,"profit1404":4820844,"profitBudget1404":4008034,"profitBudget1405":4882000},{"name":"شرکت ایجاد محیط","icon":"IjadMohit.jpg","rev1404":40679424,"budget1404":67228006,"budget1405":48308000,"cost1404":19256361,"costBudget1404":35045662,"costBudget1405":28678000,"profit1404":21423063,"profitBudget1404":32182344,"profitBudget1405":19630000},{"name":"شرکت صنایع سیمان شهرکرد","icon":"SimanShahreKord.jpg","rev1404":25051894,"budget1404":16067985,"budget1405":27000000,"cost1404":11746892,"costBudget1404":11629830,"costBudget1405":17551000,"profit1404":13305002,"profitBudget1404":4438155,"profitBudget1405":9449000},{"name":"شرکت آزادراه اهواز - بندر امام","icon":"AzadRah.jpg","rev1404":2502787,"budget1404":3073308,"budget1405":2801000,"cost1404":2452935,"costBudget1404":1874976,"costBudget1405":1801000,"profit1404":49852,"profitBudget1404":1198332,"profitBudget1405":1000000},{"name":"شرکت بازرگانی سرمایه‌گذاری مسکن","icon":"SarmayegozarieMaskan.jpg","rev1404":18270939,"budget1404":30646557,"budget1405":26842000,"cost1404":18035527,"costBudget1404":30235699,"costBudget1405":26574000,"profit1404":235412,"profitBudget1404":410858,"profitBudget1405":268000},{"name":"موسسه معین بنیاد","icon":"MoeinBonyad.jpg","rev1404":836232,"budget1404":774650,"budget1405":1132680,"cost1404":518862,"costBudget1404":470360,"costBudget1405":714480,"profit1404":317371,"profitBudget1404":304290,"profitBudget1405":418200},{"name":"شرکت عمران اکباتان","icon":"","rev1404":null,"budget1404":null,"budget1405":34492345,"cost1404":null,"costBudget1404":null,"costBudget1405":20695406,"profit1404":null,"profitBudget1404":null,"profitBudget1405":13796939},{"name":"شرکت سامان محیط","icon":"SamanMohit.jpg","rev1404":14480511,"budget1404":17035895,"budget1405":15276947,"cost1404":12187901,"costBudget1404":14130196,"costBudget1405":13029625,"profit1404":2292610,"profitBudget1404":2905699,"profitBudget1405":2247322},{"name":"شرکت سرمایه‌گذاری خانه گستر یکم","icon":"KhaneGostar1.jpg","rev1404":6386415,"budget1404":12038009,"budget1405":10430096,"cost1404":3894881,"costBudget1404":8260571,"costBudget1405":7265167,"profit1404":2491534,"profitBudget1404":3777438,"profitBudget1405":3164929},{"name":"شرکت طرح گسترش مسکن اجتماعی","icon":"MaskanEjtemaei.jpg","rev1404":267790,"budget1404":1500000,"budget1405":1402258,"cost1404":266627,"costBudget1404":1485000,"costBudget1405":1381524,"profit1404":1163,"profitBudget1404":15000,"profitBudget1405":20734},{"name":"شرکت نوسازی و عمران تهران","icon":"NosaziOmranTehran.jpg","rev1404":null,"budget1404":null,"budget1405":62700880,"cost1404":null,"costBudget1404":null,"costBudget1405":48362893,"profit1404":null,"profitBudget1404":null,"profitBudget1405":14337987}];
+const links = {"سازمان توسعه مسکن ایران":"./ToseMaskanMob.html/ToseMaskanMob.html","شرکت بنیاد بتن ایران":"./BonyadBetonMob.html/BonyadBetonMob.html","شرکت ایجاد محیط":"./IjadMohitMob.html/IjadMohitMob.html","شرکت صنایع سیمان شهرکرد":"./SimanShahreKordMob.html/SimanShahreKordMob.html","شرکت آزادراه اهواز - بندر امام":"./AzadRahMob.html/AzadRahMob.html","شرکت بازرگانی سرمایه‌گذاری مسکن":"./SarmayegozarieMaskanMob.html/SarmayegozarieMaskanMob.html","موسسه معین بنیاد":"./MoeinBonyadMob.html/MoeinBonyadMob.html","شرکت سامان محیط":"./SamanMohitMob.html/SamanMohitMob.html","شرکت سرمایه‌گذاری خانه گستر یکم":"./KhaneGostar1Mob.html/KhaneGostar1Mob.html","شرکت طرح گسترش مسکن اجتماعی":"./MaskanEjtemaeiMob.html/MaskanEjtemaeiMob.html","شرکت نوسازی و عمران تهران":"./NosaziOmranTehranMob.html/NosaziOmranTehranMob.html"};
+
+const fmt = n => n === null || n === undefined ? '—' : Number(n).toLocaleString('fa-IR');
+const shortNames = companiesData.map(c => c.name.replace(/^شرکت /,'').replace(/^موسسه /,'مؤسسه '));
+
+const totals = {
+ rev1404: 193002171,
+ budget1404: 243089733,
+ budget1405: 359711216,
+ cost1404: 134090513,
+ costBudget1404: 181485341,
+ costBudget1405: 273479095,
+ profit1404: 58911659,
+ profitBudget1404: 61604392,
+ profitBudget1405: 86232121
+};
+
+Chart.defaults.font.family='Vazirmatn';
+Chart.defaults.color='#64748b';
+Chart.defaults.maintainAspectRatio=false;
+
+const dataLabelPlugin = {
+ id:'dataLabelPlugin',
+ afterDatasetsDraw(chart){
+   const {ctx}=chart;
+   chart.data.datasets.forEach((ds,di)=>{
+     const meta=chart.getDatasetMeta(di);
+     meta.data.forEach((el,i)=>{
+       const v=ds.data[i];
+       if(v===null || v===undefined || v===0) return;
+       const p=el.tooltipPosition();
+       ctx.save();
+       ctx.font = window.innerWidth<700 ? '700 9px Vazirmatn' : '700 10px Vazirmatn';
+       ctx.fillStyle='#334155';
+       ctx.textAlign='center';
+       ctx.textBaseline='bottom';
+       ctx.fillText((v/1000000).toFixed(1)+' همت',p.x,p.y-5);
+       ctx.restore();
+     });
+   });
+ }
+};
+Chart.register(dataLabelPlugin);
+
+function barConfig(ds, suggestedMax){
+ return {
+   type:'bar',
+   data:{labels:shortNames,datasets:ds},
+   options:{
+     responsive:true,maintainAspectRatio:false,
+     layout:{padding:{top:34,right:8,left:8,bottom:8}},
+     plugins:{
+       legend:{position:'top',rtl:true},
+       tooltip:{rtl:true,callbacks:{label:c => `${c.dataset.label}: ${fmt(c.raw)} میلیون ریال`}}
+     },
+     scales:{
+       y:{beginAtZero:true,suggestedMax, ticks:{callback:v => (v/1000000)+' همت'}},
+       x:{ticks:{maxRotation:45,minRotation:45,font:{size:window.innerWidth<700?8:10}}}
+     }
+   }
+ };
+}
+
+new Chart(document.getElementById('revenueChart'),barConfig([
+ {label:'بودجه ۱۴۰۴',backgroundColor:'#64748b',data:companiesData.map(c=>c.budget1404),barPercentage:.65,categoryPercentage:.82},
+ {label:'عملکرد ۱۴۰۴',backgroundColor:'#1e3a8a',data:companiesData.map(c=>c.rev1404),barPercentage:.65,categoryPercentage:.82},
+ {label:'بودجه ۱۴۰۵',backgroundColor:'#d97706',data:companiesData.map(c=>c.budget1405),barPercentage:.65,categoryPercentage:.82}
+],80000000));
+
+new Chart(document.getElementById('costChart'),barConfig([
+ {label:'بودجه هزینه ۱۴۰۴',backgroundColor:'#94a3b8',data:companiesData.map(c=>c.costBudget1404),barPercentage:.65,categoryPercentage:.82},
+ {label:'عملکرد هزینه ۱۴۰۴',backgroundColor:'#7c3aed',data:companiesData.map(c=>c.cost1404),barPercentage:.65,categoryPercentage:.82},
+ {label:'بودجه هزینه ۱۴۰۵',backgroundColor:'#c2410c',data:companiesData.map(c=>c.costBudget1405),barPercentage:.65,categoryPercentage:.82}
+],65000000));
+
+new Chart(document.getElementById('profitChart'),barConfig([
+ {label:'بودجه سود ۱۴۰۴',backgroundColor:'#86efac',data:companiesData.map(c=>c.profitBudget1404),barPercentage:.65,categoryPercentage:.82},
+ {label:'عملکرد سود ۱۴۰۴',backgroundColor:'#16a34a',data:companiesData.map(c=>c.profit1404),barPercentage:.65,categoryPercentage:.82},
+ {label:'بودجه سود ۱۴۰۵',backgroundColor:'#d97706',data:companiesData.map(c=>c.profitBudget1405),barPercentage:.65,categoryPercentage:.82}
+],25000000));
+
+const profitPieData = companiesData.filter(c=>c.profit1404).sort((a,b)=>b.profit1404-a.profit1404).slice(0,6);
+new Chart(document.getElementById('profitPie'),{
+ type:'doughnut',
+ data:{
+   labels:profitPieData.map(c=>c.name),
+   datasets:[{data:profitPieData.map(c=>c.profit1404),backgroundColor:['#1e3a8a','#16a34a','#d97706','#7c3aed','#2563eb','#475569']}]
+ },
+ options:{
+   responsive:true,maintainAspectRatio:false,cutout:'48%',
+   plugins:{
+     legend:{position:'bottom',rtl:true,font:{size:11}},
+     tooltip:{rtl:true,callbacks:{label:c=>`${c.label}: ${fmt(c.raw)} میلیون ریال`}}
+   }
+ }
+});
+
+const realization = companiesData.map(c => c.budget1404 ? +(c.rev1404/c.budget1404*100).toFixed(1) : null);
+new Chart(document.getElementById('realizationChart'),{
+ type:'bar',
+ data:{
+   labels:shortNames,
+   datasets:[{label:'درصد تحقق',data:realization,backgroundColor:'#10b981',barPercentage:.55}]
+ },
+ options:{
+   responsive:true,maintainAspectRatio:false,
+   layout:{padding:{top:25}},
+   plugins:{
+     legend:{display:false},
+     tooltip:{rtl:true,callbacks:{label:c=>c.raw===null?'داده ندارد':c.raw+'٪'}}
+   },
+   scales:{
+     y:{beginAtZero:true,max:180,ticks:{callback:v=>v+'٪'}},
+     x:{ticks:{maxRotation:45,minRotation:45,font:{size:window.innerWidth<700?8:10}}}
+   }
+ }
+});
+
+const grid=document.getElementById('companiesGrid');
+companiesData.forEach(c=>{
+ const revRate=c.budget1404 ? c.rev1404/c.budget1404*100 : null;
+ const card=document.createElement('div');
+ card.className='company';
+ if(links[c.name]) card.addEventListener('click',()=>window.location.href=links[c.name]);
+ const iconHtml=c.icon?`<img src="${c.icon}" alt="${c.name}" onerror="this.style.display='none'">`:'';
+ card.innerHTML=`
+   <div class="company-top">
+    <div class="icon ${c.icon?'':'empty'}">${iconHtml}</div>
+    <div><div class="name">${c.name}</div>${c.name==='شرکت عمران اکباتان' ? '<span class="badge">انتقال‌یافته در بودجه ۱۴۰۵</span>':''}</div>
+   </div>
+   <div class="section-label">درآمد</div>
+   <div class="row"><span>عملکرد ۱۴۰۴</span><strong class="metric-rev">${fmt(c.rev1404)} م.ر</strong></div>
+   <div class="row"><span>بودجه ۱۴۰۴</span><strong class="metric-budget">${fmt(c.budget1404)} م.ر</strong></div>
+   <div class="row"><span>بودجه ۱۴۰۵</span><strong class="metric-25">${fmt(c.budget1405)} م.ر</strong></div>
+   <div class="progress">
+    <div class="progress-label"><span>تحقق درآمد ۱۴۰۴</span><strong>${revRate===null?'—':revRate.toFixed(1)+'٪'}</strong></div>
+    <div class="bar"><div class="fill" style="width:${Math.min(revRate||0,100)}%"></div></div>
+   </div>
+   <div class="section-label">هزینه‌ها</div>
+   <div class="row"><span>عملکرد ۱۴۰۴</span><strong class="metric-cost">${fmt(c.cost1404)} م.ر</strong></div>
+   <div class="row"><span>بودجه ۱۴۰۴</span><strong class="metric-budget">${fmt(c.costBudget1404)} م.ر</strong></div>
+   <div class="row"><span>بودجه ۱۴۰۵</span><strong class="metric-25">${fmt(c.costBudget1405)} م.ر</strong></div>
+   <div class="section-label">سود قبل از مالیات</div>
+   <div class="row"><span>عملکرد ۱۴۰۴</span><strong class="metric-profit">${fmt(c.profit1404)} م.ر</strong></div>
+   <div class="row"><span>بودجه ۱۴۰۴</span><strong class="metric-budget">${fmt(c.profitBudget1404)} م.ر</strong></div>
+   <div class="row"><span>بودجه ۱۴۰۵</span><strong class="metric-25">${fmt(c.profitBudget1405)} م.ر</strong></div>
+ `;
+ grid.appendChild(card);
+});
+</script>
+</body>
+</html>
