@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#07152f">
+<meta name="description" content="گزارش جامع، تحلیلی و مقایسه‌ای وضعیت سامانه‌های بنیاد مسکن انقلاب اسلامی؛ شهریور ۱۴۰۵">
+<title>داشبورد مدیریتی سامانه‌های بنیاد مسکن | شهریور ۱۴۰۵</title>
+<style>
+@font-face {
+  font-family:'Vazirmatn';src:url('Vazirmatn-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face {
+  font-family:'Vazirmatn';src:url('Vazirmatn-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;
+}
+@font-face {
+  font-family:'Vazirmatn';src:url('Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;
+}
+:root{
+  --navy:#07152f;--navy2:#0e2554;--blue:#2f66f6;--cyan:#10b8d8;--gold:#f2c14e;--mint:#0ea774;
+  --red:#e34f64;--orange:#eb962a;--violet:#7b61ff;--ink:#152036;--muted:#68738a;--line:#e3e8f1;
+  --bg:#f2f5fa;--card:#fff;--radius:22px;--shadow:0 12px 32px rgba(20,32,62,.08);--shadow2:0 6px 20px rgba(20,32,62,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+  radial-gradient(circle at 0% 0%,rgba(47,102,246,.07),transparent 26%),
+  radial-gradient(circle at 100% 10%,rgba(242,193,78,.08),transparent 24%),var(--bg);
+  color:var(--ink);font-family:'Vazirmatn',Tahoma,sans-serif;line-height:1.65; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility
+}
+button,input,select{font-family:inherit}
+a{color:inherit;text-decoration:none}
+.container{max-width:1240px;margin:auto;padding:0 18px 48px}
+/* HERO */
+.hero{position:relative;overflow:hidden;color:#fff;background:
+  radial-gradient(circle at 10% 20%,rgba(242,193,78,.18),transparent 24%),
+  radial-gradient(circle at 90% 10%,rgba(16,184,216,.16),transparent 26%),
+  linear-gradient(115deg,#061127 0%,#0b214a 45%,#143d84 100%);
+  border-radius:0 0 34px 34px;box-shadow:0 28px 60px rgba(7,21,47,.23)
+}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(2px);pointer-events:none}
+.hero:before{width:480px;height:480px;top:-260px;right:-160px;background:radial-gradient(circle,rgba(242,193,78,.22),transparent 65%);}
+.hero:after{width:430px;height:430px;bottom:-300px;left:-150px;background:radial-gradient(circle,rgba(47,102,246,.34),transparent 65%);}
+.hero-inner{max-width:1240px;margin:auto;padding:17px 18px 19px;position:relative;z-index:1}
+.eyebrow{display:inline-flex;gap:9px;align-items:center;color:#f9df91;font-size:11px;font-weight:700;letter-spacing:.15px}
+.eyebrow:before{content:"";width:22px;height:2px;background:#f2c14e;border-radius:99px;box-shadow:0 0 11px rgba(242,193,78,.45)}
+.hero h1{font-size:clamp(22px,3.1vw,32px);line-height:1.28;margin:7px 0 11px;max-width:900px;letter-spacing:-.45px}
+.hero p{margin:0;max-width:900px;color:rgba(255,255,255,.78);font-size:13px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.pill{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.17);background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.055));backdrop-filter:blur(10px);padding:6px 10px;border-radius:999px;font-size:10.5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 7px 18px rgba(0,0,0,.11);transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.pill strong{color:#fff}.pill:after{content:"";position:absolute;top:0;bottom:0;left:-42%;width:28%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.24),transparent);transform:skewX(-18deg);transition:left .5s ease}.pill:hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 10px 22px rgba(0,0,0,.16);background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,.07))}.pill:hover:after{left:115%}
+/* hero mini info cards */
+.hero-mini-grid{display:grid;grid-template-columns:190px minmax(280px,1fr);gap:9px;margin-top:10px;max-width:680px}
+.hero-mini-card{display:flex;align-items:center;gap:9px;min-height:50px;padding:8px 11px;border-radius:15px;background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.055));border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 9px 22px rgba(0,0,0,.09);backdrop-filter:blur(10px);transition:transform .2s ease,background .2s ease}
+.hero-mini-card:hover{transform:translateY(-2px);background:linear-gradient(145deg,rgba(255,255,255,.17),rgba(255,255,255,.07))}
+.hero-mini-card .mini-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:rgba(255,255,255,.11);color:#f7d878;font-size:18px;font-weight:700;flex:0 0 auto}
+.hero-mini-card .mini-label{display:block;font-size:9px;color:rgba(255,255,255,.62);margin-bottom:1px}
+.hero-mini-card strong{display:block;font-size:11px;color:#fff;line-height:1.45}
+.hero-mini-card.details strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero-mini-card.date{background:linear-gradient(145deg,rgba(242,193,78,.16),rgba(255,255,255,.055))}
+.hero-mini-card.details{background:linear-gradient(145deg,rgba(16,184,216,.15),rgba(255,255,255,.055))}
+/* quick nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(242,245,250,.90);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1240px;margin:auto;display:flex;gap:7px;padding:8px 18px;overflow:auto;scrollbar-width:none}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav a{position:relative;white-space:nowrap;padding:6px 10px;border:1px solid rgba(47,102,246,.12);background:linear-gradient(180deg,#fff,#f9fbff);border-radius:999px;font-size:10.5px;font-weight:700;color:#566176;box-shadow:0 4px 12px rgba(30,54,100,.06);transition:all .18s ease;overflow:hidden}.nav a:before{content:"";position:absolute;inset:auto 16% 0;height:2px;border-radius:99px;background:linear-gradient(90deg,#2f66f6,#10b8d8);transform:scaleX(0);transition:transform .2s ease}.nav a:hover{border-color:rgba(47,102,246,.25);color:#284dc2;transform:translateY(-1px);box-shadow:0 7px 16px rgba(30,54,100,.10)}.nav a:hover:before{transform:scaleX(1)}
+.nav a:hover{border-color:#9db3ff;color:#284dc2}
+/* sections */
+.section{margin-top:28px;scroll-margin-top:74px}
+.section-head{display:flex;justify-content:space-between;gap:14px;align-items:end;margin-bottom:14px}
+.section-head h2{margin:0;font-size:19px}
+.section-head p{margin:2px 0 0;color:var(--muted);font-size:12.5px}
+.kicker{color:var(--blue);font-weight:700;font-size:11px}
+/* cards / KPIs */
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:11px}
+.kpi{background:linear-gradient(145deg,#ffffff 0%,#f7faff 68%,#eef5ff 100%);border:0;border-radius:20px;padding:15px 12px;box-shadow:0 12px 28px rgba(20,47,95,.10),inset 0 1px 0 rgba(255,255,255,.95);min-height:106px;position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease}.kpi:after{content:"";position:absolute;width:92px;height:92px;top:-45px;left:-30px;background:radial-gradient(circle,rgba(47,102,246,.10),transparent 68%);pointer-events:none}.kpi:hover{transform:translateY(-4px);box-shadow:0 17px 34px rgba(20,47,95,.15),inset 0 1px 0 rgba(255,255,255,.95)}
+.kpi:before{content:"";position:absolute;inset:auto 0 0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.kpi .label{font-size:11px;color:var(--muted);font-weight:700}
+.kpi .num{font-size:28px;font-weight:700;line-height:1.25;margin:6px 0 3px;color:var(--navy)}
+.kpi small{color:var(--muted);font-size:10.5px}
+.kpi.critical:before{background:linear-gradient(90deg,#e34f64,#f27a65)}
+.kpi.success:before{background:linear-gradient(90deg,#0ea774,#34bf9e)}
+.kpi.gold:before{background:linear-gradient(90deg,#e4a922,#f5ce67)}
+.kpi.violet:before{background:linear-gradient(90deg,#7b61ff,#a08dff)}
+.grid-2{display:grid;grid-template-columns:1.08fr .92fr;gap:14px}
+.card{position:relative;background:linear-gradient(145deg,#ffffff 0%,#fbfdff 64%,#f4f8ff 100%);border:0;border-radius:var(--radius);box-shadow:0 14px 34px rgba(20,47,95,.09),inset 0 1px 0 rgba(255,255,255,.96);padding:18px;overflow:hidden}.card:before{content:"";position:absolute;inset:0 0 auto;height:4px;background:linear-gradient(90deg,#2f66f6,#10b8d8,#f2c14e);opacity:.9}.card:hover{box-shadow:0 18px 40px rgba(20,47,95,.12),inset 0 1px 0 rgba(255,255,255,.96)}
+.card h3{margin:0 0 7px;font-size:15px}
+.card p{margin:0;color:var(--muted);font-size:12px}
+/* executive alert */
+.alerts{display:grid;grid-template-columns:repeat(5,1fr);gap:11px}
+.alert{border-radius:19px;padding:15px;color:#fff;position:relative;overflow:hidden;min-height:132px;box-shadow:0 12px 24px rgba(24,32,61,.12)}
+.alert .rank{font-size:10px;font-weight:700;opacity:.78}
+.alert h3{font-size:14px;margin:6px 0 6px;line-height:1.4}
+.alert p{font-size:11px;opacity:.88;margin:0}
+.alert .date{display:inline-flex;margin-top:10px;border:1px solid rgba(255,255,255,.22);padding:5px 8px;border-radius:999px;font-size:10px}
+.alert.red{background:linear-gradient(145deg,#b82e48,#ea5b6f)}
+.alert.orange{background:linear-gradient(145deg,#b86d16,#efab3d)}
+.alert.blue{background:linear-gradient(145deg,#174aa8,#3877ee)}
+.alert.violet{background:linear-gradient(145deg,#573bbf,#8368f7)}
+.alert.green{background:linear-gradient(145deg,#0c7d5a,#22b68d)}
+/* charts */
+.chart-title{font-size:12px;font-weight:700;margin-bottom:12px}
+.bar-list{display:grid;gap:10px}
+.bar-row{display:grid;grid-template-columns:150px 1fr 36px;align-items:center;gap:10px;font-size:11px}
+.bar-label{color:#4b566c}
+.bar-track{height:10px;background:#edf1f6;border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#2f66f6,#4e8bff)}
+.bar-fill.gold{background:linear-gradient(90deg,#d99d1c,#f3c75b)}
+.bar-fill.red{background:linear-gradient(90deg,#cf3b54,#f47b88)}
+.bar-fill.mint{background:linear-gradient(90deg,#0a9068,#42c8a4)}
+.bar-fill.violet{background:linear-gradient(90deg,#6a50db,#a18cff)}
+.bar-num{font-variant-numeric:tabular-nums;font-weight:700;text-align:left}
+.donut-wrap{display:flex;align-items:center;gap:18px}
+.donut{width:170px;height:170px;border-radius:50%;background:conic-gradient(#2f66f6 0 75%,#7b61ff 75% 81.25%,#e4a923 81.25% 90.625%,#e34f64 90.625% 93.75%,#0ea774 93.75% 100%);position:relative;flex:0 0 auto}
+.donut:after{content:"";position:absolute;inset:28px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px #eef1f6}
+.donut-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;flex-direction:column}
+.donut-center strong{font-size:28px;color:var(--navy)}
+.donut-center span{font-size:10px;color:var(--muted)}
+.legend{display:grid;gap:7px;font-size:11px}
+.legend-item{display:flex;align-items:center;gap:7px}
+.dot{width:9px;height:9px;border-radius:3px;flex:0 0 auto}
+/* timeline */
+.timeline-shell{overflow:auto}
+.timeline{min-width:900px;position:relative;padding:12px 0}
+.timeline:before{content:"";position:absolute;right:0;left:0;top:44px;height:2px;background:#dfe5ef}
+.tl-row{position:relative;display:grid;grid-template-columns:200px 1fr 150px;gap:16px;align-items:center;padding:13px 0;border-bottom:1px solid #eef1f5}
+.tl-name{font-size:11px;font-weight:700}
+.tl-dept{display:block;color:#8993a8;font-size:9.5px;font-weight:400;margin-top:2px}
+.tl-track{position:relative;height:22px}
+.tl-line{position:absolute;top:9px;right:0;left:0;height:4px;background:#eef1f6;border-radius:99px}
+.tl-point{position:absolute;top:4px;width:14px;height:14px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1px #d7deea;transform:translateX(50%)}
+.tl-point.prev{right:6%;background:#aab4c5}
+.tl-point.curr{right:94%;background:#2f66f6}
+.tl-tag{position:absolute;top:17px;transform:translateX(50%);font-size:8.5px;color:#8b94a7;white-space:nowrap}
+.tl-tag.prev{right:6%}
+.tl-tag.curr{right:94%}
+.tl-target{font-size:10px;color:#4c586e;text-align:right}
+.target-badge{display:inline-block;border:1px solid var(--line);background:#f8faff;padding:4px 7px;border-radius:9px;margin-top:4px}
+/* system cards */
+.filters{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.input,.select{background:#fff;border:1px solid var(--line);border-radius:13px;padding:10px 12px;outline:none;color:var(--ink);font-size:12px;width:100%}
+.input:focus,.select:focus{border-color:#88a5ff;box-shadow:0 0 0 3px rgba(47,102,246,.08)}
+.count-info{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0 12px;font-size:11px;color:var(--muted)}
+.system-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.system-card{position:relative;background:linear-gradient(145deg,#ffffff 0%,#fbfdff 56%,#f3f7ff 100%);border:0;border-radius:22px;box-shadow:0 14px 30px rgba(20,47,95,.09),inset 0 1px 0 rgba(255,255,255,.95);overflow:hidden;transition:transform .2s ease,box-shadow .2s ease}.system-card:before{content:"";position:absolute;right:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#2f66f6,#10b8d8);opacity:.7}.system-card:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(20,47,95,.14),inset 0 1px 0 rgba(255,255,255,.95)}
+.system-head{display:flex;gap:12px;padding:15px 15px 12px;align-items:flex-start}
+.icon{width:54px;height:54px;border-radius:16px;background:linear-gradient(145deg,#eaf2ff,#ffffff);border:0;display:grid;place-items:center;overflow:hidden;flex:0 0 auto;box-shadow:0 8px 18px rgba(47,102,246,.10),inset 0 1px 0 rgba(255,255,255,.95)}
+.icon img{width:42px;height:42px;object-fit:contain}
+.icon-fallback{font-size:19px;font-weight:700;color:#2f66f6}
+.system-title{min-width:0;flex:1}
+.system-title h3{margin:0;font-size:14px;line-height:1.5}
+.system-title .dept{font-size:10px;color:#8490a5;margin-top:3px}
+.badge{font-size:10px;font-weight:700;padding:5px 8px;border-radius:999px;display:inline-block;white-space:nowrap}
+.badge.op{background:#e9f8f2;color:#0d8c67}
+.badge.dev{background:#fff4e7;color:#b66f11}
+.badge.devf{background:#eef1ff;color:#5341ca}
+.badge.pilot{background:#f7efff;color:#7045c7}
+.badge.train{background:#fff0f2;color:#c63955}
+.badge.static{background:#eef1f5;color:#657085}
+.card-section{padding:0 15px 14px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.compare-box{background:linear-gradient(145deg,#f8fbff,#f1f6ff);border:0;border-radius:13px;padding:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.95)}
+.compare-box .cap{font-size:9px;color:#8a95a8;font-weight:700}
+.compare-box .val{margin-top:3px;font-size:10.5px;font-weight:700;line-height:1.55}
+.compare-box.old .val{color:#647086}
+.compare-box.now .val{color:#213fb1}
+.dline{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.mini{border:0;border-radius:12px;padding:9px;background:linear-gradient(145deg,#ffffff,#f7faff);box-shadow:0 5px 12px rgba(20,47,95,.05)}
+.mini .cap{display:block;font-size:9px;color:#9099aa}
+.mini .val{font-size:10.5px;font-weight:700}
+.progress-row{margin-top:9px}
+.progress-top{display:flex;justify-content:space-between;gap:8px;font-size:9.5px;color:#747f93}
+.progress-track{height:8px;background:#eef1f5;border-radius:99px;overflow:hidden;margin-top:5px}
+.progress-fill{height:100%;background:linear-gradient(90deg,#2f66f6,#31b8d6);border-radius:99px}
+.progress-unknown{padding:5px 8px;border-radius:8px;background:#fafbfc;color:#8d97a9;font-size:9px;border:1px solid #eef1f5}
+.desc{font-size:10.5px;color:#566176;margin:10px 0 0}
+.grid-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.meta-box{border-radius:12px;padding:9px;background:linear-gradient(145deg,#fbfdff,#f5f8fd);border:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.96)}
+.meta-box .cap{font-size:9px;color:#8c96a7}
+.meta-box .val{font-size:10.2px;font-weight:700;margin-top:3px}
+.meta-box.risk-crit{background:#fff2f4;border-color:#ffd9df}
+.meta-box.risk-high{background:#fff7ea;border-color:#ffe4bd}
+.meta-box.risk-mid{background:#f8f9fc}
+.meta-box.risk-low{background:#eefaf5;border-color:#d9f2e9}
+.action{margin-top:10px;padding:10px 11px;border-radius:13px;background:#f4f8ff;border-right:3px solid #2f66f6;font-size:10px;color:#4b5870}
+.action strong{color:#263d80}
+.card-foot{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px 15px 12px;border-top:1px solid #f0f2f6;font-size:9px;color:#8b94a6}
+.icon-source{font-family:monospace;direction:ltr;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:210px}
+/* removed */
+.removed-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.removed{display:flex;gap:10px;align-items:center;border:1px dashed #dfe5ee;background:#fbfcfe;border-radius:17px;padding:11px}
+.removed .icon{width:42px;height:42px;border-radius:13px}
+.removed .icon img{width:32px;height:32px}
+.removed h4{margin:0;font-size:11px}
+.removed p{margin:3px 0 0;color:#8a95a7;font-size:9.5px}
+/* strengths */
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.swot-box{border:0;border-radius:20px;background:linear-gradient(145deg,#ffffff,#f6f9ff);padding:16px;box-shadow:0 12px 28px rgba(20,47,95,.08),inset 0 1px 0 rgba(255,255,255,.96)}
+.swot-box h3{font-size:14px;margin:0 0 10px}
+.swot-box ul{margin:0;padding-right:17px;color:#59657b;font-size:11px;display:grid;gap:8px}
+.swot-box.strength h3{color:#0c8b66}
+.swot-box.weak h3{color:#c63852}
+.swot-box.oppo h3{color:#3563d7}
+.swot-box.threat h3{color:#9b6717}
+/* adoption & infra */
+.adopt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.adopt{border:0;border-radius:17px;padding:13px;background:linear-gradient(145deg,#ffffff,#f5f9ff);box-shadow:0 10px 24px rgba(20,47,95,.07),inset 0 1px 0 rgba(255,255,255,.96)}
+.adopt .num{font-size:24px;font-weight:700;color:var(--navy)}
+.adopt .name{font-weight:700;font-size:12px}
+.adopt .detail{font-size:9.8px;color:#7b869b;margin-top:5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.chip{font-size:9px;border:0;background:#f4f7fb;padding:5px 8px;border-radius:999px;color:#5c687d;box-shadow:inset 0 1px 0 rgba(255,255,255,.95)}
+.decision{border:0;background:linear-gradient(145deg,#fffdf7,#fff8e7);border-radius:18px;padding:14px;box-shadow:0 10px 24px rgba(151,108,24,.08),inset 0 1px 0 rgba(255,255,255,.96)}
+.decision strong{color:#936617}
+.decision p{margin-top:5px}
+/* footer */
+.footer{margin-top:30px;border-top:1px solid var(--line);padding-top:16px;color:#8b95a7;font-size:10px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.no-results{display:none;padding:35px;text-align:center;color:#8993a6;border:1px dashed #d9dfeb;border-radius:18px;background:#fff}
+.hidden{display:none!important}
+@media(max-width:1080px){
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .alerts{grid-template-columns:repeat(2,1fr)}
+  .system-grid{grid-template-columns:1fr}
+  .grid-2{grid-template-columns:1fr}
+  .removed-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+  .container{padding:0 10px 35px}
+  .hero-inner{padding:15px 14px 17px}
+  .hero h1{font-size:23px}
+  .hero-mini-grid{grid-template-columns:1fr 1.35fr;gap:7px;margin-top:9px}
+  .hero-mini-card{min-height:46px;padding:7px 9px}
+  .hero-mini-card strong{font-size:10px}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .alerts{grid-template-columns:1fr}
+  .filters{grid-template-columns:1fr 1fr}
+  .filters .search{grid-column:1/-1}
+  .removed-grid,.swot{grid-template-columns:1fr}
+  .adopt-grid{grid-template-columns:1fr}
+  .compare,.dline,.grid-meta{grid-template-columns:1fr 1fr}
+}
+@media(max-width:460px){
+  .filters{grid-template-columns:1fr}
+  .filters .search{grid-column:auto}
+  .compare,.dline,.grid-meta{grid-template-columns:1fr}
+  .kpi .num{font-size:23px}
+  .card{padding:14px}
+}
+
+/* ===== ENHANCED VISUAL SYSTEM / PRESIDENCY DASHBOARD ===== */
+.hero{min-height:0}
+.hero-inner{padding:14px 18px 14px}
+.hero h1{font-size:clamp(19px,2.55vw,27px);margin:5px 0 9px;letter-spacing:-.35px}
+.hero-meta{gap:7px;margin-top:2px}
+.pill{font-size:10px;padding:6px 11px;border-color:rgba(255,255,255,.20);box-shadow:inset 0 1px 0 rgba(255,255,255,.17),0 8px 20px rgba(0,0,0,.12)}
+.pill:before{content:"";position:absolute;inset:1px;border-radius:inherit;background:linear-gradient(120deg,transparent 20%,rgba(255,255,255,.06) 45%,transparent 70%);opacity:.9;pointer-events:none}
+.hero-mini-grid{margin-top:8px;grid-template-columns:185px minmax(260px,1fr);max-width:700px}
+.hero-mini-card{min-height:46px;padding:7px 10px;border-color:rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 10px 25px rgba(0,0,0,.12)}
+.hero-mini-card .mini-icon{width:29px;height:29px}
+.hero-mini-card .mini-label{font-size:8.5px}
+.hero-mini-card strong{font-size:10.5px}
+.nav-inner{padding:7px 18px;gap:6px}
+.nav a{font-size:10px;padding:6px 10px;background:linear-gradient(180deg,#ffffff,#f5f8ff);box-shadow:0 5px 14px rgba(30,54,100,.07)}
+.nav a:after{content:"";position:absolute;top:0;right:-35%;width:35%;height:100%;background:linear-gradient(90deg,transparent,rgba(47,102,246,.09),transparent);transform:skewX(-18deg);transition:right .45s ease}
+.nav a:hover:after{right:115%}
+.section-head h2{font-size:18px}
+.card,.system-card,.swot-box,.adopt,.kpi{border:1px solid rgba(34,70,140,.07)}
+.card:after,.system-card:after,.kpi:after{content:"";position:absolute;pointer-events:none}
+.card:after{inset:0;background:linear-gradient(115deg,rgba(255,255,255,.28),transparent 28%,transparent 72%,rgba(47,102,246,.028));mix-blend-mode:normal}
+.kpi{transform:translateZ(0)}
+.kpi .num{font-variant-numeric:tabular-nums;letter-spacing:-.3px}
+/* Timeline upgraded */
+.timeline-shell{padding:0!important;overflow:hidden;background:linear-gradient(145deg,#fbfdff 0%,#f4f8ff 55%,#eef5ff 100%);border-radius:24px}
+.timeline-headbar{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:15px 17px 12px;background:linear-gradient(100deg,#07152f,#12346f 48%,#1a4b9a);color:#fff;position:relative;overflow:hidden}
+.timeline-headbar:before{content:"";position:absolute;width:280px;height:280px;left:-90px;top:-170px;border-radius:50%;background:radial-gradient(circle,rgba(47,102,246,.45),transparent 70%)}
+.timeline-headbar:after{content:"";position:absolute;width:220px;height:220px;right:-80px;bottom:-150px;border-radius:50%;background:radial-gradient(circle,rgba(242,193,78,.24),transparent 70%)}
+.timeline-headbar>*{position:relative;z-index:1}
+.timeline-titlewrap{display:flex;align-items:center;gap:11px;min-width:0}
+.timeline-title-icon{width:39px;height:39px;border-radius:13px;display:grid;place-items:center;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.12);font-size:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.timeline-titlewrap h3{margin:0;font-size:13px}
+.timeline-titlewrap p{margin:2px 0 0;color:rgba(255,255,255,.66);font-size:9.5px}
+.timeline-legend{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.timeline-legend .legend-pill{padding:5px 8px;border-radius:999px;font-size:8.5px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);white-space:nowrap}
+.timeline-legend .legend-pill:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-left:5px;vertical-align:1px}
+.timeline-legend .prev:before{background:#9ba9be}.timeline-legend .curr:before{background:#36c7ec}.timeline-legend .warn:before{background:#f2c14e}.timeline-legend .danger:before{background:#ff7184}
+.timeline{min-width:0!important;padding:8px 12px 14px;display:grid;gap:9px;background:transparent}
+.timeline:before{display:none}
+.tl-row{display:grid;grid-template-columns:245px minmax(260px,1fr) 220px;gap:12px;align-items:stretch;padding:0;border:0;position:relative;background:rgba(255,255,255,.76);border:1px solid rgba(34,70,140,.08);border-radius:18px;overflow:hidden;box-shadow:0 7px 17px rgba(20,47,95,.06);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.tl-row:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(20,47,95,.11);border-color:rgba(47,102,246,.17)}
+.tl-row:before{content:"";position:absolute;top:0;bottom:0;right:0;width:4px;background:var(--tl-accent,#2f66f6)}
+.tl-name{padding:11px 13px 10px 5px;font-size:11.2px;font-weight:800;color:#18263e;background:linear-gradient(90deg,#fbfdff,#f2f7ff)}
+.tl-dept{font-size:8.8px;color:#7c89a0;margin-top:4px;line-height:1.5}
+.tl-track{position:relative;height:58px;margin:8px 0;align-self:center;background:linear-gradient(180deg,#f8fbff,#f1f6fd);border:1px solid #e3e9f3;border-radius:14px;overflow:hidden}
+.tl-track:before{content:"";position:absolute;right:8%;left:8%;top:27px;height:6px;background:#e7ecf4;border-radius:999px;box-shadow:inset 0 1px 2px rgba(38,57,92,.06)}
+.tl-track:after{content:"";position:absolute;top:27px;right:8%;width:46%;height:6px;border-radius:999px;background:linear-gradient(90deg,#8a96a9,#2f66f6,#10b8d8);opacity:.92}
+.tl-point{position:absolute;top:20px;width:20px;height:20px;border-radius:50%;border:4px solid #fff;transform:translateX(50%);z-index:2;box-shadow:0 0 0 1px rgba(28,52,95,.12),0 4px 10px rgba(20,47,95,.13)}
+.tl-point.prev{right:8%;background:#98a4b7}.tl-point.curr{right:54%;background:#2f66f6}
+.tl-tag{top:auto;bottom:5px;transform:translateX(50%);font-size:8px;font-weight:700;padding:2px 6px;border-radius:999px;z-index:3;background:#fff;border:1px solid #e4e9f1;box-shadow:0 3px 7px rgba(20,47,95,.06)}
+.tl-tag.prev{right:8%;color:#68748a}.tl-tag.curr{right:54%;color:#214dbd}
+.tl-target{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:9px 11px 9px 10px;background:linear-gradient(145deg,#fffdf8,#fff9ec)}
+.tl-target>span:first-child{font-size:8.7px;color:#707c90;line-height:1.5}
+.target-badge{margin:0!important;border:0;background:#fff3cc;color:#8b6514;padding:6px 8px;border-radius:10px;font-size:8.7px;font-weight:700;line-height:1.5;box-shadow:0 4px 10px rgba(157,119,26,.08)}
+.tl-status{display:inline-flex;align-items:center;gap:5px;font-size:8.5px;font-weight:700}
+.tl-status .dotx{width:7px;height:7px;border-radius:50%;display:inline-block;background:var(--scolor,#2f66f6);box-shadow:0 0 0 4px color-mix(in srgb,var(--scolor,#2f66f6) 12%,transparent)}
+.timeline-note{padding:0 14px 14px;color:#78849a;font-size:8.5px;text-align:center}
+/* status ribbon by category */
+.tl-row[data-cat="operational"]{--tl-accent:#16a77b}.tl-row[data-cat="static"]{--tl-accent:#e2a82a}.tl-row[data-cat="devfinal"],.tl-row[data-cat="dev"]{--tl-accent:#5f6ee8}.tl-row[data-cat="train"],.tl-row[data-cat="pilot"]{--tl-accent:#e35a6f}
+@media(max-width:900px){
+  .timeline-headbar{grid-template-columns:1fr}
+  .timeline-legend{justify-content:flex-start}
+  .tl-row{grid-template-columns:1fr}
+  .tl-name{padding:11px 14px 5px;background:linear-gradient(90deg,#fbfdff,#f4f8ff)}
+  .tl-track{margin:2px 12px 5px}
+  .tl-target{display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:7px 12px 11px}
+}
+@media(max-width:700px){
+  .hero-inner{padding:12px 12px 13px}
+  .hero h1{font-size:20px}
+  .hero-meta{gap:6px}
+  .pill{font-size:9.2px;padding:5px 8px}
+  .hero-mini-grid{grid-template-columns:1fr 1fr;max-width:none}
+  .hero-mini-card.details strong{max-width:160px}
+  .timeline-headbar{padding:12px 12px 10px}
+  .timeline-title-icon{width:35px;height:35px}
+  .timeline{padding:7px 8px 11px}
+  .tl-track{height:54px}
+}
+@media(max-width:460px){
+  .hero-mini-grid{grid-template-columns:1fr}
+  .hero-mini-card.details strong{max-width:none}
+  .tl-target{grid-template-columns:1fr}
+  .timeline-titlewrap p{font-size:8.5px}
+  .timeline-legend .legend-pill{font-size:8px}
+}
+@media print{
+  .nav,.filters{display:none!important}
+  body{background:#fff}
+  .hero{border-radius:0;box-shadow:none}
+  .card,.system-card{box-shadow:none;break-inside:avoid}
+  .section{break-inside:auto}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">اداره کل حوزه ریاست</div>
+    <h1>داشبورد مدیریتی وضعیت و پیشرفت سامانه‌ها</h1>
+    <div class="hero-meta">
+      <span class="pill">مبنای مقایسه: <strong>تیرماه ۱۴۰۵</strong></span>
+      <span class="pill">آخرین وضعیت: <strong>شهریور ۱۴۰۵</strong></span>
+      <span class="pill">تعداد سامانه‌های فهرست جاری: <strong>۳۲</strong></span>
+      <span class="pill">تعداد سامانه‌های فهرست تیرماه: <strong>۳۵</strong></span>
+    </div>
+    <div class="hero-mini-grid">
+      <div class="hero-mini-card date">
+        <span class="mini-icon">◷</span>
+        <div><span class="mini-label">تاریخ گزارش</span><strong>1405/06/23</strong></div>
+      </div>
+      <div class="hero-mini-card details" title="دامنه گزارش">
+        <span class="mini-icon">▣</span>
+        <div><span class="mini-label">جزئیات گزارش</span><strong>بررسی وضعیت، پیشرفت، موعدها، گلوگاه‌ها و روند سامانه‌ها</strong></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#summary">خلاصه مدیریتی</a>
+    <a href="#priorities">اولویت ریاست</a>
+    <a href="#changes">تغییرات تیر تا شهریور</a>
+    <a href="#timeline">خط زمانی همه سامانه‌ها</a>
+    <a href="#systems">کارت سامانه‌ها</a>
+    <a href="#adoption">مقیاس بهره‌برداری</a>
+    <a href="#governance">حکمرانی، امنیت و زیرساخت</a>
+    <a href="#swot">نقاط قوت و ضعف</a>
+    <a href="#actions">پیشنهادات تصمیمی</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="summary" class="section">
+  <div class="section-head">
+    <div><h2>تصویر کلان در یک نگاه</h2></div>
+    <p>این آمار از فهرست آخرین وضعیت استخراج و وضعیت‌ها با رویکرد مدیریتی تفکیک شده‌اند.</p>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><span class="label">فهرست جاری</span><div class="num">۳۲</div><small>سامانه در شش حوزه/معاونت</small></div>
+    <div class="kpi success"><span class="label">عملیاتی خالص</span><div class="num">۲۴</div><small>بدون برچسب پایلوت/بدون توسعه</small></div>
+    <div class="kpi"><span class="label">عملیاتی؛ بدون امکان توسعه</span><div class="num">۳</div><small>سماع · سیما · قیر</small></div>
+    <div class="kpi gold"><span class="label">در مسیر توسعه/استقرار</span><div class="num">۴</div><small>۲ توسعه نهایی · ۱ توسعه · ۱ آموزش</small></div>
+    <div class="kpi critical"><span class="label">پروژه‌های نیازمند مداخله</span><div class="num">۳</div><small>پنجره واحد · جامع عمران · پی‌وب</small></div>
+    <div class="kpi violet"><span class="label">پایلوت محدود</span><div class="num">۱</div><small>حقوقی و املاک در ۳ استان + ۲ شرکت</small></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="grid-2">
+    <div class="card">
+      <div class="chart-title">توزیع وضعیت در فهرست فعلی</div>
+      <div class="donut-wrap">
+        <div class="donut">
+          <div class="donut-center"><strong>۳۲</strong><span>سامانه</span></div>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><span class="dot" style="background:#2f66f6"></span>عملیاتی: ۲۴</div>
+          <div class="legend-item"><span class="dot" style="background:#7b61ff"></span>توسعه نهایی: ۲</div>
+          <div class="legend-item"><span class="dot" style="background:#e4a923"></span>بدون امکان توسعه: ۳</div>
+          <div class="legend-item"><span class="dot" style="background:#e34f64"></span>آموزش/استقرار: ۱</div>
+          <div class="legend-item"><span class="dot" style="background:#0ea774"></span>سایر: ۲ (توسعه + پایلوت)</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="chart-title">توزیع وضعیت در فهرست تیرماه ۱۴۰۵</div>
+      <div class="bar-list">
+        <div class="bar-row"><span class="bar-label">عملیاتی</span><div class="bar-track"><div class="bar-fill" style="width:71.4%"></div></div><span class="bar-num">۲۵</span></div>
+        <div class="bar-row"><span class="bar-label">در حال توسعه</span><div class="bar-track"><div class="bar-fill gold" style="width:14.3%"></div></div><span class="bar-num">۵</span></div>
+        <div class="bar-row"><span class="bar-label">ثابت</span><div class="bar-track"><div class="bar-fill violet" style="width:14.3%"></div></div><span class="bar-num">۵</span></div>
+      </div>
+      <div class="decision" style="margin-top:18px">
+        <strong>نکته تحلیلی:</strong>
+        <p>کاهش تعداد از ۳۵ به ۳۲ به‌تنهایی نشانه عقب‌گرد نیست؛ ۳ سامانه جدید وارد فهرست جاری شده و ۶ مورد قبلی دیگر به‌صورت جداگانه درج نشده‌اند. بنابراین معیار قضاوت باید «وضعیت و تحقق برنامه» باشد، نه صرفاً تعداد سامانه‌ها.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="priorities" class="section">
+  <div class="section-head">
+    <div><h2>پنج موضوعی که باید روی میز ریاست بماند</h2></div>
+    <p>اولویت‌بندی بر اساس وضعیت زمانی، وابستگی معماری و اثر سازمانی.</p>
+  </div>
+  <div class="alerts">
+    <div class="alert red"><div class="rank">اولویت ۱</div><h3>پنجره واحد خدمات الکترونیک</h3><p>موعد ۱۳/۰۴ محقق نشده؛ موعد اصلاحی مهر ۱۴۰۵.</p><span class="date">ریسک: بحرانی</span></div>
+    <div class="alert red"><div class="rank">اولویت ۲</div><h3>جامع عمران روستایی</h3><p>موعد از ۰۱/۰۶ به ۲۵/۰۶ منتقل شده و هنوز در توسعه است.</p><span class="date">ریسک: بحرانی</span></div>
+    <div class="alert orange"><div class="rank">اولویت ۳</div><h3>پی‌وب</h3><p>موعد ۰۱/۰۴ گذشته ولی سامانه همچنان در آموزش و استقرار است.</p><span class="date">ریسک: بحرانی</span></div>
+    <div class="alert violet"><div class="rank">اولویت ۴</div><h3>حقوقی و املاک</h3><p>پیشرفت مثبت، اما «عملیاتی» فعلاً به معنای پایلوت است.</p><span class="date">۳ استان + ۲ شرکت</span></div>
+    <div class="alert blue"><div class="rank">اولویت ۵</div><h3>رصد</h3><p>از داشبورد گزارش‌دهی به مرجع رسمی هشدار و تصمیم تبدیل شود.</p><span class="date">ریسک: داده/حاکمیت</span></div>
+  </div>
+</section>
+
+<section id="changes" class="section">
+  <div class="section-head">
+    <div><h2>نقشه تغییرات سبد سامانه‌ها</h2></div>
+    <p>۲۹ سامانه بین دو فهرست قابل تطبیق‌اند؛ ۳ سامانه جدید اضافه و ۶ مورد از فهرست جدید جداگانه حذف/تجمیع شده‌اند.</p>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="chart-title">سه تغییر ساختاری سبد</div>
+      <div class="bar-list">
+        <div class="bar-row"><span class="bar-label">قابل تطبیق در هر دو فهرست</span><div class="bar-track"><div class="bar-fill mint" style="width:90.625%"></div></div><span class="bar-num">۲۹</span></div>
+        <div class="bar-row"><span class="bar-label">ورود به فهرست جاری</span><div class="bar-track"><div class="bar-fill" style="width:9.375%"></div></div><span class="bar-num">۳</span></div>
+        <div class="bar-row"><span class="bar-label">در فهرست جاری جداگانه نیستند</span><div class="bar-track"><div class="bar-fill red" style="width:18.75%"></div></div><span class="bar-num">۶</span></div>
+      </div>
+      <p style="margin-top:13px">۳ مورد افزوده‌شده: حقوقی و املاک، جامع مسکن شهری، آباد. ۶ مورد خارج‌شده از فهرست جدید: اتوماسیون همکاران، سامد، سیماد، ۱۳۶، ADLIRAN و IranFoia.</p>
+    </div>
+    <div class="card">
+      <div class="chart-title">مهم‌ترین جابه‌جایی‌های زمانی</div>
+      <div class="chips">
+        <span class="chip">پنجره واحد: ۱۳/۰۴ → مهر ۱۴۰۵</span>
+        <span class="chip">پی‌وب: ۰۱/۰۴ → هنوز همان موعد درج‌شده</span>
+        <span class="chip">جامع عمران: ۰۱/۰۶ → ۲۵/۰۶</span>
+        <span class="chip">پرتال جدید: ۰۶/۱۴۰۵ → بهره‌برداری اعلام شده</span>
+      </div>
+      <div class="decision" style="margin-top:13px"><strong>نکته مهم:</strong><p>در مورد جامع عمران، دو عدد پیشرفت ۶۰٪ و ۸۰٪ در اسناد وجود دارد. این داشبورد هر دو را نگه داشته و آن را «مسئله کیفیت گزارش» می‌داند.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline" class="section">
+  <div class="section-head">
+    <div><h2>خط زمانی همه سامانه‌های فهرست جاری</h2></div>
+    <p>نقطه خاکستری = وضعیت تیرماه · نقطه آبی = وضعیت فعلی · ستون سمت چپ/راست = هدف و موعد.</p>
+  </div>
+  <div class="card timeline-shell">
+    <div class="timeline-headbar">
+      <div class="timeline-titlewrap">
+        <div class="timeline-title-icon">⌛</div>
+        <div><h3>تصویر زمانی وضعیت سامانه‌ها</h3><p>مقایسه مرحله تیرماه، وضعیت فعلی و نقطه هدف/موعد هر سامانه</p></div>
+      </div>
+      <div class="timeline-legend">
+        <span class="legend-pill prev">وضعیت تیرماه</span>
+        <span class="legend-pill curr">وضعیت فعلی</span>
+        <span class="legend-pill warn">موعد / هدف</span>
+        <span class="legend-pill danger">نیازمند پیگیری</span>
+      </div>
+    </div>
+    <div class="timeline" id="timelineList"></div>
+    <div class="timeline-note">هر ردیف یک سامانه است؛ رنگ نوار سمت راست، سطح کلی وضعیت فعلی را نشان می‌دهد.</div>
+  </div>
+</section>
+
+<section id="adoption" class="section">
+  <div class="section-head">
+    <div><h2>شواهدی از مقیاس واقعی بهره‌برداری</h2></div>
+    <p>این اعداد نشان می‌دهند بعضی سامانه‌ها فراتر از «عملیاتی» بودن، بار واقعی سازمانی دارند.</p>
+  </div>
+  <div class="adopt-grid" id="adoptionGrid"></div>
+</section>
+
+<section id="systems" class="section">
+  <div class="section-head">
+    <div><h2>کارت تحلیلی تک‌تک سامانه‌ها</h2></div>
+    <p>در هر کارت، وضعیت قبلی، موعد قبلی، وضعیت فعلی، موعد فعلی، روند، ریسک و اقدام بعدی آمده است.</p>
+  </div>
+  <div class="filters">
+    <input id="search" class="input search" placeholder="جست‌وجوی نام سامانه، مالک، وضعیت یا اقدام..." />
+    <select id="deptFilter" class="select"><option value="">همه حوزه‌ها</option></select>
+    <select id="statusFilter" class="select"><option value="">همه وضعیت‌ها</option></select>
+    <select id="riskFilter" class="select"><option value="">همه ریسک‌ها</option></select>
+  </div>
+  <div class="count-info"><span id="countText">نمایش ۳۲ سامانه</span><span>فقط داده‌های صریح اسناد وارد کارت‌ها شده‌اند؛ درصد پیشرفتِ بدون منبع درج نشده است.</span></div>
+  <div id="systemsGrid" class="system-grid"></div>
+  <div id="noResults" class="no-results">سامانه‌ای با این فیلترها پیدا نشد.</div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div><h2>۶ موردی که در فهرست جدید جداگانه درج نشده‌اند</h2></div>
+    <p>این بخش برای جلوگیری از برداشت «حذف قطعی» تهیه شده است؛ سند جدید درباره وضعیت نهایی این موارد اظهارنظر صریح ندارد.</p>
+  </div>
+  <div id="removedGrid" class="removed-grid"></div>
+</section>
+
+<section id="governance" class="section">
+  <div class="section-head">
+    <div><h2>پشت صحنه سامانه‌ها: ظرفیت، گلوگاه و ریسک</h2></div>
+    <p>ترکیب عملکرد نرم‌افزار، قراردادها، امنیت، شبکه و مرکز داده.</p>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><span class="label">پروژه نرم‌افزاری</span><div class="num">۲۸</div><small>در ۱۰ شرکت طرف قرارداد</small></div>
+    <div class="kpi"><span class="label">خدمت زیرساخت/امنیت</span><div class="num">۱۶</div><small>در ۱۲ شرکت طرف قرارداد</small></div>
+    <div class="kpi gold"><span class="label">قرارداد سالانه</span><div class="num">۳۰+</div><small>در گزارش عملکرد فاوا</small></div>
+    <div class="kpi success"><span class="label">مرکز داده دفتر مرکزی</span><div class="num">۸۰٪</div><small>پیشرفت اعلام‌شده</small></div>
+    <div class="kpi critical"><span class="label">Disaster Site</span><div class="num">۱۰٪</div><small>پیشرفت اعلام‌شده</small></div>
+    <div class="kpi violet"><span class="label">شاخص عملکرد</span><div class="num">۱۰۰</div><small>برای پایش داده‌محور برنامه راهبردی</small></div>
+  </div>
+  <div class="grid-2" style="margin-top:14px">
+    <div class="card">
+      <h3>گلوگاه‌های زیرساخت و امنیت</h3>
+      <div class="chips">
+        <span class="chip">Backup Center</span><span class="chip">Hardening</span><span class="chip">Penetration Test</span>
+        <span class="chip">نیروی انسانی تخصصی</span><span class="chip">سرمایش مرکز داده</span><span class="chip">اطفا</span>
+        <span class="chip">ژنراتور</span><span class="chip">UPS</span><span class="chip">Rack Room</span>
+        <span class="chip">تهویه اتاق رک</span>
+      </div>
+      <p style="margin-top:12px">وجود ابزارهایی مانند PAM، SSO، SIEM، مانیتورینگ و کیهان نقاط قوت‌اند؛ اما بلوغ واقعی امنیت زمانی محقق می‌شود که بازیابی آزمون‌شده، RPO/RTO و رفع نقاط ضعف فیزیکی نیز به سطح قابل اتکا برسند.</p>
+    </div>
+    <div class="card">
+      <h3>گلوگاه حاکمیت پیمانکار و داده</h3>
+      <p>تعدد قراردادها، ریسک پراکندگی دانش، وابستگی عملیاتی و تفاوت معماری را افزایش می‌دهد. برای هر سامانه حیاتی باید مالک محصول سازمانی، SLA، کیفیت، امنیت، مستندسازی، تحویل دانش و سناریوی خروج پیمانکار تعریف شود.</p>
+      <div class="decision" style="margin-top:12px"><strong>اصل پیشنهادی:</strong><p>«یکپارچه‌سازی قبل از توسعه سامانه جدید»؛ هر پروژه تازه باید ابتدا نشان دهد قابلیت موجود قابل استفاده یا توسعه نیست.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="swot" class="section">
+  <div class="section-head">
+    <div><h2>نقاط قوت، ضعف، فرصت و تهدید</h2></div>
+  </div>
+  <div class="swot">
+    <div class="swot-box strength"><h3>نقاط قوت</h3><ul>
+      <li>پوشش وسیع عملیات سازمانی و سامانه‌های تخصصی</li>
+      <li>وجود سامانه‌های پرتراکنش و پرتعداد کاربر مانند راهبر و نظام فنی روستایی</li>
+      <li>وجود پایه‌های SSO، سینام، رصد، پنجره واحد و پرداخت</li>
+      <li>اقدامات قابل توجه در امنیت، شبکه و مرکز داده</li>
+      <li>حرکت به سمت سامانه‌های جامع و یکپارچه</li>
+    </ul></div>
+    <div class="swot-box weak"><h3>نقاط ضعف</h3><ul>
+      <li>جزیره‌ای بودن بخشی از سامانه‌ها و عدم انسجام کامل داده</li>
+      <li>وجود ورود/تبادل دستی داده در برخی جریان‌ها</li>
+      <li>تعدد پروژه‌ها و پیمانکاران و ریسک وابستگی دانشی</li>
+      <li>سه سامانه «عملیاتی ولی بدون امکان توسعه»</li>
+      <li>ناهماهنگی عدد پیشرفت جامع عمران: ۶۰٪ در یک سند و ۸۰٪ در سند دیگر</li>
+    </ul></div>
+    <div class="swot-box oppo"><h3>فرصت‌ها</h3><ul>
+      <li>تصمیم‌سازی بر پایه داده‌های ثبتی و KPI</li>
+      <li>تکمیل سامانه‌های جامع و حذف تدریجی سامانه‌های جزیره‌ای</li>
+      <li>استفاده از Core Service و API استاندارد</li>
+      <li>گسترش پنجره واحد و خدمات دیجیتال</li>
+      <li>GIS به‌عنوان لایه مشترک تصمیم‌سازی و فرآیند</li>
+    </ul></div>
+    <div class="swot-box threat"><h3>تهدیدها</h3><ul>
+      <li>حملات سایبری، باج‌افزار و اختلال سرویس</li>
+      <li>افزایش پیچیدگی در صورت ادغام بدون معماری مشترک</li>
+      <li>وابستگی بلندمدت به پیمانکاران</li>
+      <li>مقاومت سازمانی در مهاجرت و تغییر فرآیند</li>
+      <li>رشد هزینه و بدهی فنی در صورت ادامه توسعه جزیره‌ای</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="actions" class="section">
+  <div class="section-head">
+    <div><h2>پیشنهادات تصمیمی برای ریاست</h2></div>
+    <p>پیشنهادها بر اساس شواهد همین اسناد تدوین شده‌اند.</p>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>۰ تا ۱۰۰ روز</h3>
+      <div class="chips">
+        <span class="chip">شورای راهبری معماری/داده/امنیت</span>
+        <span class="chip">فهرست سامانه‌های حیاتی + مالک داده</span>
+        <span class="chip">داشبورد واحد وضعیت پروژه‌ها</span>
+        <span class="chip">یکسان‌سازی درصدهای پیشرفت</span>
+        <span class="chip">۲۰ تا ۳۰ KPI اولویت‌دار ریاست</span>
+      </div>
+      <p style="margin-top:12px">خروجی مورد انتظار: یک مرجع واحد برای تصمیم‌گیری و حذف ابهام در وضعیت پروژه‌ها.</p>
+    </div>
+    <div class="card">
+      <h3>۳ تا ۱۲ ماه</h3>
+      <div class="chips">
+        <span class="chip">Core Service + API/Identity/Logging</span>
+        <span class="chip">مهاجرت سامانه‌های جزیره‌ای بر اساس ارزش/ریسک</span>
+        <span class="chip">تکمیل Backup Center و Disaster Recovery</span>
+        <span class="chip">تکمیل Hardening و تست نفوذ</span>
+      </div>
+      <p style="margin-top:12px">خروجی مورد انتظار: کاهش اتصال نقطه‌به‌نقطه، کاهش ریسک سایبری و افزایش تداوم خدمت.</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:13px">
+    <h3>یک تغییر مهم در مدل ارزیابی فاوا</h3>
+    <p>ارزیابی آینده دفتر فناوری اطلاعات نباید فقط بر «تعداد سامانه‌های عملیاتی» استوار باشد. معیارهای پیشنهادشده عبارت‌اند از: کاهش سامانه‌های جزیره‌ای، کاهش ورود دستی داده، افزایش تبادل برخط، کاهش سامانه‌های فاقد امکان توسعه، تحقق به‌موقع پروژه‌های راهبردی، افزایش کیفیت داده و افزایش قدرت تصمیم‌سازی مدیریت ارشد.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>مبنای داده‌ای: اسناد ارسالی کاربر؛ گزارش وضعیت تیرماه ۱۴۰۵، آخرین وضعیت و برنامه اجرایی سامانه‌ها، گزارش عملکرد دفتر فاوا، و گزارش تشریح سامانه‌ها.</span>
+  <span>یادداشت: مواردی که منبع صریح ندارند، با عبارت «در اسناد اعلام نشده» نمایش داده شده‌اند؛ تحلیل‌ها استنباط مدیریتی از همین اسناد هستند.</span>
+</footer>
+</main>
+
+<script>
+const systems = [{"dept":"حوزه ریاست","name":"سامانه اتوماسیون اداری(چارگون)","owner":"کل سازمان","status":"عملیاتی","statusCat":"operational","prevName":"سامانه اتوماسیون اداری چارگون","prevStatus":"عملیاتی","prevDue":"مراحل پایانی مهاجرت به سیستم جدید","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"بدون تغییر؛ مهاجرت ناتمام","risk":"متوسط رو به بالا","action":"اعلام تاریخ قطعی پایان مهاجرت، درصد کاربران و داده‌های منتقل‌شده و صورتجلسه پذیرش نهایی.","function":"مکانیزاسیون مکاتبات، کارتابل نامه‌ها و گردش مکاتبات سازمانی؛ همراه با مهاجرت به سامانه جدید.","icon":"Chargoon.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"حوزه ریاست","name":"سامانه مدیریت جلسات آنلاین","owner":"کل سازمان","status":"عملیاتی","statusCat":"operational","prevName":"سامانه مدیریت جلسات مجازی","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت","risk":"پایین","action":"سنجش میزان استفاده، پایداری سرویس و هزینه نگهداری.","function":"برگزاری جلسات برخط امن و رمزنگاری‌شده برای ستاد مرکزی و استان‌ها.","icon":"vc2.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"حوزه ریاست","name":"بنیاد مهربانی","owner":"دفتر حساب 100","status":"عملیاتی","statusCat":"operational","prevName":"بنیاد مهربانی","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت","risk":"پایین","action":"ارتباط عمیق‌تر با حساب ۱۰۰، پرداخت و گزارش شفاف مشارکت مردمی.","function":"ارتباط با خیرین و نیازمندان، جذب کمک مردمی، شفافیت پروژه‌های حمایتی و پیوند با حساب ۱۰۰.","icon":"logo-bm.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"حوزه ریاست","name":"سامانه تخصصی حساب 100 امام(ره)","owner":"دفتر حساب 100","status":"عملیاتی","statusCat":"operational","prevName":"سامانه تخصصی حساب ۱۰۰ امام (ره)","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت","risk":"پایین","action":"توسعه گزارش‌های مدیریتی و اتصال بهتر به مالی و اطلاعات محرومین.","function":"ثبت و مدیریت کمک‌ها، اسناد فیزیکی، محرومین و سوابق دریافت/اهدا برای دفتر حساب ۱۰۰.","icon":"Bonicon.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"حوزه ریاست","name":"سامانه جدید حقوقی و املاک","owner":"اداره کل حقوقی","status":"عملیاتی — پایلوت","statusCat":"pilot","prevName":"در فهرست تیرماه نبود","prevStatus":"در فهرست تیرماه نبود","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"پیشرفت مثبت؛ پایلوت محدود","risk":"بالا","action":"تعیین شاخص قبولی پایلوت، ثبت خطاها، برنامه رفع و تاریخ rollout کشوری.","function":"یکپارچه‌سازی پرونده‌های حقوقی، قراردادها، دعاوی و املاک؛ در حال حاضر در سطح پایلوت.","icon":"Bonicon.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"حوزه ریاست","name":"پرتال استان‌ها","owner":"اداره کل روابط عمومی","status":"عملیاتی","statusCat":"operational","prevName":"سایت اینترنتی بنیاد مسکن و استان‌ها","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت / تغییر طبقه‌بندی","risk":"پایین","action":"پایش کیفیت محتوا و سطح خدمت‌رسانی استان‌ها.","function":"اطلاع‌رسانی و ارائه خدمات/محتوای سازمانی برای بنیاد و استان‌ها.","icon":"website.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"حوزه ریاست","name":"پرتال بنیاد و استان‌ها(جدید)","owner":"اداره کل روابط عمومی","status":"در حال توسعه نهایی","statusCat":"devfinal","prevName":"سایت جدید بنیاد مسکن و استان‌ها","prevStatus":"در حال توسعه","prevDue":"تاریخ بهره‌برداری: ۱۴۰۵/۰۶","currentDue":"انجام‌شده اعلام شده","trend":"پیشرفت مثبت","risk":"متوسط","action":"تمرکز بر پسا‌بهره‌برداری، تجربه کاربری، کیفیت محتوا و پایش رضایت.","function":"پیشانی جدید خدمات و محتوای دیجیتال سازمان؛ توسعه نهایی و بهره‌برداری اعلام‌شده.","icon":"new-website.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت پشتیبانی و توسعه منابع انسانی","name":"سامانه ERP منابع انسانی","owner":"اداره کل امور اداری","status":"عملیاتی","statusCat":"operational","prevName":"سامانه ERP منابع انسانی","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت عملیاتی","risk":"متوسط","action":"عبور از سنجش صرفاً «عملیاتی» به سنجش میزان استفاده واقعی و حذف ورود تکراری اطلاعات.","function":"مدیریت فرآیندهای منابع انسانی در بستر ERP و یکپارچگی اطلاعات اداری.","icon":"Rahkaran.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت پشتیبانی و توسعه منابع انسانی","name":"سامانه ERP مالی","owner":"اداره کل مالی","status":"عملیاتی","statusCat":"operational","prevName":"سامانه ERP مالی","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت عملیاتی","risk":"متوسط","action":"عبور از سنجش صرفاً «عملیاتی» به سنجش میزان استفاده واقعی و حذف ورود تکراری اطلاعات.","function":"مدیریت یکپارچه فرآیندهای مالی، حسابداری، خزانه و گزارش‌های مالی.","icon":"Rahkaran.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت پشتیبانی و توسعه منابع انسانی","name":"سامانه ERP ذیحسابی","owner":"اداره کل ذیحسابی","status":"عملیاتی","statusCat":"operational","prevName":"سامانه ERP ذیحسابی","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت عملیاتی","risk":"متوسط","action":"عبور از سنجش صرفاً «عملیاتی» به سنجش میزان استفاده واقعی و حذف ورود تکراری اطلاعات.","function":"کنترل، تأیید و پایش فرآیندهای ذیحسابی و نظارت مالی در بستر ERP.","icon":"Rahkaran.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت پشتیبانی و توسعه منابع انسانی","name":"ردیاب ناوگان ماشین آلات","owner":"پشتیبانی امور اجرایی","status":"عملیاتی","statusCat":"operational","prevName":"ردیاب ناوگان ماشین‌آلات","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت عملیاتی","risk":"متوسط","action":"عبور از سنجش صرفاً «عملیاتی» به سنجش میزان استفاده واقعی و حذف ورود تکراری اطلاعات.","function":"پایش موقعیت ماشین‌آلات، مأموریت، کارکرد و مصرف سوخت و نگهداری ناوگان.","icon":"Bonicon.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت پشتیبانی و توسعه منابع انسانی","name":"رفاهی","owner":"اداره کل امور اداری","status":"عملیاتی","statusCat":"operational","prevName":"رفاهی","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت عملیاتی","risk":"متوسط","action":"عبور از سنجش صرفاً «عملیاتی» به سنجش میزان استفاده واقعی و حذف ورود تکراری اطلاعات.","function":"مدیریت تسهیلات و خدمات رفاهی کارکنان و فرآیندهای امتیازدهی/تخصیص.","icon":"refahi.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت مسکن و عمران شهری","name":"سامانه جامع مسکن شهری","owner":"کل معاونت","status":"عملیاتی","statusCat":"operational","prevName":"در فهرست تیرماه نبود","prevStatus":"در فهرست تیرماه نبود","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"ورود به سبد فعلی","risk":"متوسط","action":"اعلام میزان استفاده، پوشش فرآیند و نسبت آن با سامانه‌های قدیمی.","function":"مدیریت چرخه عمر پروژه‌های مسکن شهری از طرح و بودجه تا طراحی، اجرا، پیشرفت و واگذاری.","icon":"Bonicon.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت مسکن و عمران شهری","name":"سامانه آباد","owner":"کل معاونت","status":"عملیاتی","statusCat":"operational","prevName":"در فهرست تیرماه نبود","prevStatus":"در فهرست تیرماه نبود","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"ورود به سبد فعلی","risk":"متوسط","action":"اعلام دامنه واقعی فرآیند، منابع داده، کیفیت داده و جایگاه در اکوسیستم مسکن شهری.","function":"تجمیع و ساماندهی داده‌های طرح نهضت ملی مسکن و ارائه گزارش‌های عملیاتی و مدیریتی.","icon":"Bonicon.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت برنامه ریزی","name":"سامانه احراز هویت یکپارچه (SSO)","owner":"کلیه سامانه‌های بنیاد","status":"عملیاتی","statusCat":"operational","prevName":"سامانه احراز هویت یکپارچه (SSO)","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت زیرساختی","risk":"متوسط","action":"اتصال کامل سامانه‌های اصلی، MFA، مدیریت متمرکز حساب‌ها و چرخه عمر کاربران.","function":"احراز هویت مرکزی و ورود یکپارچه کاربران به سامانه‌های بنیاد؛ پایه معماری دسترسی.","icon":"fingerprint.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت برنامه ریزی","name":"پنجره واحد خدمات الکترونیک","owner":"کلیه سامانه‌های بنیاد","status":"در حال توسعه نهایی","statusCat":"devfinal","prevName":"پنجره واحد خدمات الکترونیک","prevStatus":"در حال توسعه","prevDue":"۱۳/۰۴/۱۴۰۵","currentDue":"مهر ۱۴۰۵","trend":"تأخیر؛ موعد اصلاحی در پیش","risk":"بحرانی","action":"اقلام باقیمانده، مسئول هر قلم، درصد واقعی، نتیجه UAT، وضعیت اتصال سرویس‌ها و تاریخ قطعی مهرماه اعلام شود.","function":"درگاه مرکزی خدمات دیجیتال؛ تجمیع خدمات، احراز هویت، پیگیری و پرداخت و اتصال به سامانه‌های بیرونی.","icon":"vahed.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت برنامه ریزی","name":"سامانه یکپارچه نقشه و داده‌های مکانی","owner":"حوزه‌های نیازمند به نقشه و داده‌های مکانی","status":"عملیاتی","statusCat":"operational","prevName":"سامانه یکپارچه نقشه و داده‌های مکانی","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت با اولویت یکپارچه‌سازی","risk":"متوسط","action":"تبدیل سینام به مرجع واحد داده مکانی و اتصال سامانه‌های اصلی به آن.","function":"هسته GIS و منبع یکپارچه داده‌های مکانی برای سامانه‌های مکان‌محور بنیاد.","icon":"sinam.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت برنامه ریزی","name":"سامانه آماری رصد","owner":"کلیه سامانه‌های بنیاد","status":"عملیاتی","statusCat":"operational","prevName":"سامانه آماری رصد","prevStatus":"عملیاتی","prevDue":"آماده دریافت نیازمندی‌ها جهت توسعه","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت؛ توسعه محتوایی","risk":"بالا","action":"واژه‌نامه KPI، مالک شاخص، منبع واحد داده، کنترل کیفیت و حذف ورود دستی.","function":"تجمیع و نمایش داده‌های عملکردی و KPIها و فراهم‌سازی بستر پایش مدیریتی.","icon":"rasad.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت برنامه ریزی","name":"آرشیو الکترونیک اسناد","owner":"حوزه‌های نیازمند به آرشیو اسناد","status":"عملیاتی","statusCat":"operational","prevName":"آرشیو الکترونیک اسناد","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت","risk":"متوسط","action":"اتصال عمیق‌تر به اتوماسیون، حقوقی و سامانه‌های تخصصی.","function":"دیجیتال‌سازی، طبقه‌بندی، جست‌وجو و نگهداری امن اسناد سازمانی.","icon":"Bonicon.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت برنامه ریزی","name":"سامانه جامع پرداخت","owner":"کلیه فرآیندهای سازمان که نیاز به خدمت دریافت و پرداخت دارد","status":"عملیاتی","statusCat":"operational","prevName":"سامانه جامع پرداخت","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت","risk":"متوسط","action":"افزایش تطبیق خودکار تراکنش‌ها، اتصال مالی مرکزی و داشبورد جریان نقدینگی.","function":"Gateway متمرکز پرداخت، تطبیق تراکنش‌های بانکی و ارسال اسناد مالی.","icon":"Bonicon.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت برنامه ریزی","name":"سامانه مرورگر امن","owner":"دفتر مرکزی بنیاد","status":"عملیاتی","statusCat":"operational","prevName":"در فهرست تیرماه نبود","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت امنیتی","risk":"متوسط","action":"پایش کارایی و پوشش کامل نیازهای امنیتی و دسترسی کاربران.","function":"ایزوله‌سازی و امن‌سازی ارتباط اینترنت با شبکه داخلی دفتر مرکزی.","icon":"Bonicon.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت برنامه ریزی","name":"شبکه اجتماعی و ایمیل سازمانی","owner":"کل سازمان","status":"عملیاتی","statusCat":"operational","prevName":"شبکه اجتماعی و ایمیل سازمانی","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت","risk":"پایین","action":"پایش دسترس‌پذیری، امنیت و تجربه کاربری.","function":"زیرساخت ارتباطات داخلی، پیام‌رسانی و ایمیل سازمانی امن.","icon":"Bonicon.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت توسعه و عمران روستایی","name":"سامانه جامع عمران روستایی","owner":"کل معاونت","status":"در حال توسعه","statusCat":"dev","prevName":"سامانه جامع عمران روستایی","prevStatus":"در حال توسعه","prevDue":"۰۱/۰۶/۱۴۰۵","currentDue":"۲۵/۰۶/۱۴۰۵","trend":"تأخیر برنامه‌ای؛ موعد جدید نزدیک","risk":"بحرانی","action":"تطبیق درصد پیشرفت ۶۰٪/۸۰٪، فهرست اقلام باقیمانده، سناریوی پایلوت و گزارش هفتگی تا بهره‌برداری.","function":"سامانه جامع حوزه عمران روستایی برای تجمیع و یکپارچه‌سازی فرآیندها و سامانه‌های تخصصی.","icon":"Bonicon.png","progress":80,"progressLabel":"۶۰٪ در IT_Power و ۸۰٪ در گزارش جامع؛ نیازمند یکسان‌سازی مرجع."},{"dept":"معاونت توسعه و عمران روستایی","name":"ساخت و ساز روستایی راهبر","owner":"دفتر امور فنی و تهیه طرح‌ها","status":"عملیاتی","statusCat":"operational","prevName":"ساخت و ساز روستایی راهبر","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت در مقیاس بالا","risk":"متوسط","action":"تکمیل اتصال به جامع عمران، سینام و سرویس‌های متعامل.","function":"ارائه خدمات فنی مهندسی و ساخت‌وساز روستایی، پروانه، استعلامات و خدمات اصلاحی طرح هادی.","icon":"rahbar.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت توسعه و عمران روستایی","name":"خطایاب طرح‌ها","owner":"دفتر امور فنی و تهیه طرح‌ها","status":"عملیاتی","statusCat":"operational","prevName":"خطایاب طرح‌ها","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت","risk":"متوسط","action":"توسعه قواعد خطایابی و اتصال مستقیم به سینام.","function":"کنترل کیفیت و خطایابی داده‌ها و فایل‌های طرح‌های هادی پیش از ورود/تثبیت در پایگاه مکانی.","icon":"khatayab.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت توسعه و عمران روستایی","name":"مدیریت و کنترل اجرای پروژه(پی وب)","owner":"دفتر امور اجرایی","status":"آموزش و استقرار","statusCat":"train","prevName":"مدیریت و کنترل اجرای پروژه (پی‌وب)","prevStatus":"در حال توسعه","prevDue":"۰۱/۰۴/۱۴۰۵","currentDue":"۰۱/۰۴/۱۴۰۵ (موعد گذشته)","trend":"تأخیر جدی؛ موعد گذشته","risk":"بحرانی","action":"تعیین علت توقف، پیمانکار/مسئول، اقلام باقی‌مانده، برنامه جبرانی و تاریخ جدید مصوب.","function":"مدیریت و کنترل اجرای پروژه‌های عمرانی؛ در وضعیت آموزش و استقرار.","icon":"Bonicon.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت توسعه و عمران روستایی","name":"سماع","owner":"دفتر برنامه ریزی / دفتر امور زمین","status":"عملیاتی — بدون امکان توسعه","statusCat":"static","prevName":"سماع","prevStatus":"ثابت","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت عملیاتی ولی بدون امکان توسعه","risk":"بالا","action":"تصمیم معماری برای مهاجرت/ادغام در سامانه جامع عمران روستایی و جلوگیری از بانک/فرآیند موازی.","function":"سامانه مرتبط با فرآیندهای عمران روستایی/زمین؛ در وضعیت عملیاتی ولی بدون امکان توسعه.","icon":"sama.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت توسعه و عمران روستایی","name":"مدیریت انتخاب مشاوران (سیما)","owner":"دفتر امور فنی و تهیه طرح‌ها","status":"عملیاتی — بدون امکان توسعه","statusCat":"static","prevName":"مدیریت انتخاب مشاوران (سیما)","prevStatus":"ثابت","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت عملیاتی ولی بدون امکان توسعه","risk":"بالا","action":"تصمیم معماری برای مهاجرت/ادغام در سامانه جامع عمران روستایی و جلوگیری از بانک/فرآیند موازی.","function":"سامانه انتخاب و مدیریت مشاوران؛ در وضعیت عملیاتی ولی بدون امکان توسعه.","icon":"sima.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت توسعه و عمران روستایی","name":"مدیریت توزیع و مصرف قیر","owner":"دفتر امور اجرایی","status":"عملیاتی — بدون امکان توسعه","statusCat":"static","prevName":"مدیریت توزیع و مصرف قیر","prevStatus":"ثابت","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت عملیاتی ولی بدون امکان توسعه","risk":"بالا","action":"تصمیم معماری برای مهاجرت/ادغام در سامانه جامع عمران روستایی و جلوگیری از بانک/فرآیند موازی.","function":"مدیریت تخصیص، حواله، تحویل و مصرف قیر؛ در وضعیت عملیاتی ولی بدون امکان توسعه.","icon":"ghir.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت امور بازسازی و مسکن روستایی","name":"سامانه بهسازی مسکن روستایی","owner":"مسکن روستایی","status":"عملیاتی","statusCat":"operational","prevName":"سامانه بهسازی مسکن روستایی","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت عملیاتی","risk":"متوسط","action":"حرکت از وجود سامانه به یکپارچگی داده و تصمیم‌سازی.","function":"مدیریت زنجیره تسهیلات بهسازی مسکن روستایی، سهمیه، پرداخت و تعامل با بانک‌ها و نهادها.","icon":"behsazi.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت امور بازسازی و مسکن روستایی","name":"سامانه نظام فنی روستایی","owner":"مسکن روستایی/ نظارت و ارزیابی","status":"عملیاتی","statusCat":"operational","prevName":"سامانه نظام فنی روستایی","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت عملیاتی","risk":"متوسط","action":"تکمیل تعامل با راهبر/پایش و توسعه داده مکانی.","function":"مدیریت صلاحیت و ارجاع کار، کنترل فنی و نظارت ساخت‌وساز روستایی؛ با کاربران گسترده.","icon":"nfr.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"},{"dept":"معاونت امور بازسازی و مسکن روستایی","name":"سامانه پایش عملکرد بازسازی  و \nساماندهی سکونت‌گاه‌های ناکارآمد","owner":"بازسازی/ ساماندهی","status":"عملیاتی","statusCat":"operational","prevName":"پایش عملکرد بازسازی و ساماندهی","prevStatus":"عملیاتی","prevDue":"در سند تیرماه موعد درج نشده","currentDue":"در آخرین فهرست موعد مشخص نشده","trend":"تثبیت عملیاتی","risk":"متوسط","action":"ارتقای کیفیت داده، نگاشت مکانی و پیوند با تصمیم‌سازی مدیریتی.","function":"مدیریت ارزیابی خسارت و فرآیند بازسازی و ساماندهی سکونتگاه‌های ناکارآمد.","icon":"payeshbazsazi.png","progress":null,"progressLabel":"درصد رسمی در اسناد جاری اعلام نشده"}];
+const removed = [{"name":"سامانه اتوماسیون اداری همکاران)","status":"در حال توسعه","icon":"Hamkaran.png","note":"در فهرست آخرین وضعیت، جداگانه درج نشده است؛ این خروج لزوماً به‌معنی حذف سامانه از اکوسیستم نیست.","oldDue":"تاریخ بهره‌برداری: ۱۴۰۵/۰۴/۰۱"},{"name":"سامانه ارتباط مردم و دولت (سامد)","status":"عملیاتی","icon":"Samad.jpg","note":"در فهرست آخرین وضعیت، جداگانه درج نشده است؛ این خروج لزوماً به‌معنی حذف سامانه از اکوسیستم نیست.","oldDue":"دارای کاربران ستاد مرکزی و استانها"},{"name":"سامانه یکپارچه مراسلات الکترونیکی دولت (سیماد)","status":"عملیاتی","icon":"Simad.jpg","note":"در فهرست آخرین وضعیت، جداگانه درج نشده است؛ این خروج لزوماً به‌معنی حذف سامانه از اکوسیستم نیست.","oldDue":"مکاتبات ستاد مرکزی"},{"name":"سامانه رسیدگی به شکایات (136)","status":"عملیاتی","icon":"136.png","note":"در فهرست آخرین وضعیت، جداگانه درج نشده است؛ این خروج لزوماً به‌معنی حذف سامانه از اکوسیستم نیست.","oldDue":"سازمان بازرسی کل کشور"},{"name":"سامانه ADLIRAN","status":"ثابت","icon":"ADLIRAN.png","note":"در فهرست آخرین وضعیت، جداگانه درج نشده است؛ این خروج لزوماً به‌معنی حذف سامانه از اکوسیستم نیست.","oldDue":"موعد در فهرست تیرماه درج نشده"},{"name":"سامانه دسترسی آزاد به اطلاعات (IranFoia)","status":"ثابت","icon":"IranFoia.png","note":"در فهرست آخرین وضعیت، جداگانه درج نشده است؛ این خروج لزوماً به‌معنی حذف سامانه از اکوسیستم نیست.","oldDue":"موعد در فهرست تیرماه درج نشده"}];
+const adoption = [{"name":"راهبر","users":"۱۹٬۵۰۰","detail":"۲٬۲۲۳ کاربر بنیاد + ۱۷٬۲۷۷ کاربر دهیار؛ ۴٬۰۱۹٬۷۳۰ درخواست و ۴٬۷۰۰٬۷۵۴ پاسخ."},{"name":"نظام فنی روستایی","users":"۳۰٬۶۳۷","detail":"۱٬۸۲۵ کاربر فعال بنیاد + ۲۸٬۸۱۲ ناظر و طراح."},{"name":"پایش بازسازی","users":"۲٬۴۵۲","detail":"کاربر فعال در کشور."}];
+
+const statusLabels = {
+  operational:'عملیاتی', static:'عملیاتی — بدون امکان توسعه', devfinal:'در حال توسعه نهایی',
+  dev:'در حال توسعه', train:'آموزش و استقرار', pilot:'عملیاتی — پایلوت'
+};
+const statusClass = {
+  operational:'op', static:'static', devfinal:'devf', dev:'dev', train:'train', pilot:'pilot'
+};
+const priorityNames = [
+  'پنجره واحد خدمات الکترونیک','سامانه جامع عمران روستایی','مدیریت و کنترل اجرای پروژه(پی وب)','سامانه جدید حقوقی و املاک','سامانه آماری رصد'
+];
+
+function fa(v) {
+  return String(v).replace(/[0-9]/g, d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+}
+function escapeHtml(s) {
+  return String(s ?? '').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+function initials(name) {
+  const clean = String(name).replace(/^سامانه\s*/,'').trim();
+  return clean ? clean[0] : 'س';
+}
+function riskClass(r) {
+  if(r==='بحرانی') return 'risk-crit';
+  if(r==='بالا' || r==='متوسط رو به بالا') return 'risk-high';
+  if(r==='پایین') return 'risk-low';
+  return 'risk-mid';
+}
+function riskEmoji(r) {
+  return r==='بحرانی'?'🔴':(r==='بالا'||r==='متوسط رو به بالا'?'🟠':(r==='پایین'?'🟢':'🟡'));
+}
+
+function renderTimeline() {
+  const el=document.getElementById('timelineList');
+  el.innerHTML = systems.map(s=>{
+    const due = s.currentDue && s.currentDue!=='در آخرین فهرست موعد مشخص نشده' ? s.currentDue : 'موعد صریح درج نشده';
+    const accent = s.statusCat==='operational' ? '#16a77b' : (s.statusCat==='static' ? '#e2a82a' : (s.statusCat==='train'||s.statusCat==='pilot' ? '#e35a6f' : '#5f6ee8'));
+    const urgency = s.risk==='بحرانی' ? 'بحرانی' : (s.risk==='بالا'||s.risk==='متوسط رو به بالا' ? 'قابل پیگیری' : 'پایدار');
+    const urgencyColor = s.risk==='بحرانی' ? '#e34f64' : (s.risk==='بالا'||s.risk==='متوسط رو به بالا' ? '#d6921f' : '#16a77b');
+    return `<div class="tl-row" data-cat="${escapeHtml(s.statusCat)}" style="--tl-accent:${accent}">
+      <div class="tl-name">
+        ${escapeHtml(s.name)}
+        <span class="tl-dept">${escapeHtml(s.dept)} · ${escapeHtml(s.owner)}</span>
+      </div>
+      <div class="tl-track">
+        <div class="tl-point prev" title="وضعیت تیرماه"></div>
+        <div class="tl-point curr" title="وضعیت فعلی"></div>
+        <span class="tl-tag prev">تیرماه · ${escapeHtml(s.prevStatus)}</span>
+        <span class="tl-tag curr">شهریور · ${escapeHtml(s.status)}</span>
+      </div>
+      <div class="tl-target">
+        <span>موعد قبلی: ${escapeHtml(s.prevDue)}</span>
+        <span class="target-badge">موعد فعلی / نتیجه: ${escapeHtml(due)}</span>
+        <span class="tl-status" style="--scolor:${urgencyColor}"><span class="dotx"></span>${urgency} · ریسک ${escapeHtml(s.risk)}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderAdoption() {
+  document.getElementById('adoptionGrid').innerHTML = adoption.map(a=>`<div class="adopt">
+    <div class="num">${escapeHtml(a.users)}</div>
+    <div class="name">${escapeHtml(a.name)}</div>
+    <div class="detail">${escapeHtml(a.detail)}</div>
+  </div>`).join('');
+}
+
+function populateFilters() {
+  const depts=[...new Set(systems.map(s=>s.dept))];
+  const risks=[...new Set(systems.map(s=>s.risk))];
+  const stats=[...new Set(systems.map(s=>statusLabels[s.statusCat]))];
+  const dept=document.getElementById('deptFilter');
+  const risk=document.getElementById('riskFilter');
+  const stat=document.getElementById('statusFilter');
+  depts.forEach(x=>dept.insertAdjacentHTML('beforeend',`<option>${escapeHtml(x)}</option>`));
+  risks.forEach(x=>risk.insertAdjacentHTML('beforeend',`<option>${escapeHtml(x)}</option>`));
+  stats.forEach(x=>stat.insertAdjacentHTML('beforeend',`<option>${escapeHtml(x)}</option>`));
+}
+
+function renderSystems() {
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  const dept=document.getElementById('deptFilter').value;
+  const risk=document.getElementById('riskFilter').value;
+  const stat=document.getElementById('statusFilter').value;
+  const list=systems.filter(s=>{
+    const text=[s.name,s.dept,s.owner,s.status,s.prevStatus,s.trend,s.action,s.function].join(' ').toLowerCase();
+    return (!q||text.includes(q)) && (!dept||s.dept===dept) && (!risk||s.risk===risk) && (!stat||statusLabels[s.statusCat]===stat);
+  });
+  const grid=document.getElementById('systemsGrid');
+  grid.innerHTML=list.map(s=>{
+    const p = s.progress!==null && s.progress!==undefined
+      ? `<div class="progress-top"><span>پیشرفت عددی اعلام‌شده</span><b>${fa(s.progress)}٪</b></div>
+         <div class="progress-track"><div class="progress-fill" style="width:${s.progress}%"></div></div>
+         <div style="margin-top:4px;font-size:8.5px;color:#8d97a9">${escapeHtml(s.progressLabel)}</div>`
+      : `<div class="progress-unknown">${escapeHtml(s.progressLabel)}</div>`;
+    return `<article class="system-card">
+      <div class="system-head">
+        <div class="icon"><img src="${escapeHtml(s.icon)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="icon-fallback" style="display:none">${escapeHtml(initials(s.name))}</span></div>
+        <div class="system-title"><h3>${escapeHtml(s.name)}</h3><div class="dept">${escapeHtml(s.dept)} · مالک/حوزه بهره‌بردار: ${escapeHtml(s.owner)}</div></div>
+        <span class="badge ${statusClass[s.statusCat]}">${escapeHtml(statusLabels[s.statusCat])}</span>
+      </div>
+      <div class="card-section">
+        <div class="compare">
+          <div class="compare-box old"><div class="cap">وضعیت تیرماه ۱۴۰۵</div><div class="val">${escapeHtml(s.prevStatus)}</div></div>
+          <div class="compare-box now"><div class="cap">وضعیت فعلی</div><div class="val">${escapeHtml(s.status)}</div></div>
+        </div>
+        <div class="dline">
+          <div class="mini"><span class="cap">موعد قبلی</span><span class="val">${escapeHtml(s.prevDue)}</span></div>
+          <div class="mini"><span class="cap">موعد فعلی / نتیجه</span><span class="val">${escapeHtml(s.currentDue || 'در اسناد اعلام نشده')}</span></div>
+        </div>
+        <div class="progress-row">${p}</div>
+        <p class="desc"><strong>نقش/کارکرد:</strong> ${escapeHtml(s.function)}</p>
+        <div class="grid-meta">
+          <div class="meta-box"><span class="cap">روند</span><div class="val">${escapeHtml(s.trend)}</div></div>
+          <div class="meta-box ${riskClass(s.risk)}"><span class="cap">ریسک</span><div class="val">${riskEmoji(s.risk)} ${escapeHtml(s.risk)}</div></div>
+        </div>
+        <div class="action"><strong>اقدام مدیریتی بعدی:</strong> ${escapeHtml(s.action)}</div>
+      </div>
+      <div class="card-foot">
+        <span>آیکون منبع: <span class="icon-source">${escapeHtml(s.icon)}</span></span>
+        <span>${priorityNames.includes(s.name)?'★ پایش ویژه ریاست':''}</span>
+      </div>
+    </article>`;
+  }).join('');
+  document.getElementById('countText').textContent = `نمایش ${fa(list.length)} سامانه از ${fa(systems.length)} سامانه`;
+  document.getElementById('noResults').style.display = list.length ? 'none' : 'block';
+}
+function renderRemoved() {
+  document.getElementById('removedGrid').innerHTML = removed.map(r=>`<div class="removed">
+    <div class="icon"><img src="${escapeHtml(r.icon)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="icon-fallback" style="display:none">${escapeHtml(initials(r.name))}</span></div>
+    <div><h4>${escapeHtml(r.name)}</h4><p>تیرماه: ${escapeHtml(r.status)} · ${escapeHtml(r.oldDue)}</p><p>${escapeHtml(r.note)}</p></div>
+  </div>`).join('');
+}
+
+['search','deptFilter','statusFilter','riskFilter'].forEach(id=>document.getElementById(id).addEventListener('input',renderSystems));
+renderTimeline(); renderAdoption(); populateFilters(); renderSystems(); renderRemoved();
+</script>
+</body>
+</html>
