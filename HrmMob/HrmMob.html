@@ -77,12 +77,12 @@ header.hero{
   position:relative; overflow:hidden;
   background:linear-gradient(160deg,var(--navy) 0%,var(--navy-2) 55%, #0E4A50 130%);
   color:#F4F1E9;
-  padding:56px 0 46px;
+  padding:15px 0 25px;
   border-bottom:6px solid var(--gold);
 }
 .hero-top{
   display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap;
-  position:relative; z-index:2;
+  position:relative; z-index:2; margin-bottom: -15px;
 }
 .hero-org{
   display:flex; align-items:center; gap:14px;
@@ -104,7 +104,7 @@ header.hero{
   position:relative; z-index:2; margin-top:40px; max-width:820px;
 }
 .hero-title h1{
-  font-size:clamp(30px,4.4vw,30px); font-weight:800; line-height:0.7; color:#fff;
+  font-size:28px; font-weight:800; line-height:0.7; color:#fff;
 }
 .hero-title p{
   margin-top:14px; font-size:17px; color:#CBD3D4; max-width:640px; font-weight:400;
@@ -117,15 +117,15 @@ header.hero{
 
 /* ---------- KPI strip ---------- */
 .kpi-strip{
-  position:relative; z-index:2; margin-top:38px;
+  position:relative; z-index:2; margin-top:20px;
   display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px;
   background:rgba(244,241,233,.16); border-radius:var(--radius-m); overflow:hidden;
-  border:1px solid rgba(244,241,233,.18);
+  border:2px solid rgba(255, 255, 255, 0.5);
 }
 .kpi-strip .kpi{
-  background:rgba(9,26,38,.35); padding:13px 18px; text-align:center;
+  background:rgba(9,26,38,.35); padding:10px 18px; text-align:center;
 }
-.kpi-strip .kpi .num{font-size:30px; font-weight:800; color:#fff; letter-spacing:.5px;}
+.kpi-strip .kpi .num{font-size:25px; font-weight:800; color:#fff; letter-spacing:.5px; margin-bottom: -5px;}
 .kpi-strip .kpi .num small{font-size:15px; font-weight:600; margin-right:2px;}
 .kpi-strip .kpi .lbl{margin-top:6px; font-size:12.5px; color:#B9C2C4; font-weight:500;}
 
@@ -137,15 +137,15 @@ nav.jump{
 nav.jump .wrap{display:flex; gap:4px; overflow-x:auto; padding:0 28px;}
 nav.jump a{
   white-space:nowrap; font-size:13px; color:var(--ink-soft); text-decoration:none; font-weight:500;
-  padding:14px 12px; border-bottom:3px solid transparent; transition:color .15s, border-color .15s;
+  padding:14px 9px; border-bottom:3px solid transparent; transition:color .15s, border-color .15s;
 }
 nav.jump a:hover{color:var(--brick);}
 nav.jump a.active{color:var(--navy); border-bottom-color:var(--brick); font-weight:700;}
 
 /* ---------- Sections ---------- */
-section{padding:64px 0;}
+section{padding:35px 0;}
 section.alt{background:var(--paper);}
-.sec-head{margin-bottom:30px; display:flex; align-items:baseline; gap:14px;}
+.sec-head{margin-bottom:15px; display:flex; align-items:baseline; gap:14px;}
 .sec-head .idx{
   font-size:14px; font-weight:800; color:var(--brick); border:1.5px solid var(--brick);
   border-radius:50%; width:30px; height:30px; display:flex; align-items:center; justify-content:center; flex:none;
@@ -311,7 +311,7 @@ footer b{color:#fff;}
       <div class="hero-badge">نسخه 2 &nbsp;·&nbsp; شهریور ۱۴۰۵</div>
     </div>
     <div class="hero-title">
-      <h1>داشبورد جامع تحلیل منابع انسانی</h1>
+      <h1>داشبورد جامع منابع انسانی</h1>
     </div>
     <div class="hero-meta">
       <span><b>12,116</b> رکورد پرسنلی</span>
@@ -347,7 +347,6 @@ footer b{color:#fff;}
       <div class="insight warn" style="margin-top:16px;">
         <b>نکته مدیریتی: </b> اگر «بدون حکم کارگزینی» نیز نیروی در حال فعالیت تلقی شود، جامعهٔ هدف واقعی به
         <b>۱۰,۸۰۱</b> نفر می‌رسد — تفاوتی ۱,۲۲۶ نفری که باید در تعریف رسمی «نیروی شاغل» شفاف شود.
-        <span class="badge-source s2">گزارش تکمیلی</span>
       </div>
     </div>
   </div>
@@ -443,7 +442,6 @@ footer b{color:#fff;}
   <div class="insight" style="margin-top:18px;">
     <b>هشدار داده‌ای:</b> ۲۰۳ رکورد دارای تاریخ تولد ثبت‌شده «۱۴۰۳/۰۱/۰۱» و ۸۶ رکورد دارای «۱۴۰۳/۱۲/۰۱» هستند —
     این الگوی تکرار غیرطبیعی نشان می‌دهد این‌ها تاریخ‌های پیش‌فرض سامانه بوده‌اند، نه تاریخ تولد واقعی، و نباید در محاسبات سن یا بازنشستگی استفاده شوند.
-    <span class="badge-source s2">گزارش تکمیلی</span>
   </div>
  </div>
 </section>
@@ -542,7 +540,6 @@ footer b{color:#fff;}
   <div class="insight" style="margin-top:18px;">
     <b>۲,۰۳۵ رکورد</b> فاقد پست سازمانی ثبت‌شده‌اند و <b>۱,۱۷۵ نفر</b> صرفاً با عنوان کلی «شرکتی» ثبت شده‌اند که مانع تعیین دقیق شرح شغل ایشان است.
     گزارش تکمیلی نیز نشان می‌دهد ۳۱۹ عنوان/مقدار متمایز پست وجود دارد که فاقد کدینگ رسمی و استاندارد مشاغل است.
-    <span class="badge-source s2">گزارش تکمیلی</span>
   </div>
  </div>
 </section>
@@ -587,7 +584,6 @@ footer b{color:#fff;}
   <div class="insight gold" style="margin-top:18px;">
     فیلد «وضعیت ایثارگری و جانبازی» جایگزین یک شناسه رسمی «سابقه بسیج» مورد نیاز فرمول‌های حقوقی نیست و صرفاً وضعیت کلی فرد را نشان می‌دهد.
     برای محاسبه فوق‌العاده ایثارگری، حداقل مدت عضویت، نوع/درجه، مستند مبنا و تاریخ اثر باید به‌صورت مجزا ثبت شود.
-    <span class="badge-source s2">گزارش تکمیلی</span>
   </div>
  </div>
 </section>
@@ -610,7 +606,6 @@ footer b{color:#fff;}
   <div class="insight warn" style="margin-top:18px;">
     <b>نقطه قرمز:</b> در استان <b>خراسان رضوی</b>، از ۶۷۹ رکورد ثبت‌شده، <b>۳۲۶ نفر (۴۸٪)</b> در وضعیت «بدون حکم کارگزینی» قرار دارند —
     نرخی به‌مراتب بالاتر از میانگین سایر استان‌ها که پیش از هرگونه تصمیم بودجه‌ای یا تشکیلاتی باید موردبررسی قرار گیرد.
-    <span class="badge-source s2">گزارش تکمیلی</span>
   </div>
  </div>
 </section>
@@ -818,23 +813,88 @@ new Chart(document.getElementById('chartGender'), {
     datasets:[{ data:[8306, 457, 812], backgroundColor:["#122A3D", "#B5502D", "#9AA5AC"], borderWidth:2, borderColor:'#FFFDFA' }]},
   options: baseDonutOpts('نفر')
 });
+
+
+
 new Chart(document.getElementById('chartMgmtGender'), {
-  type:'bar',
-  data:{ labels:["مدیرکل", "معاون", "رئیس اداره/امور", "مدیر میانی/شهرستان", "سرپرست", "کارشناس مسئول"],
-    datasets:[
-      {label:'مرد', data:[66, 247, 708, 530, 90, 441], backgroundColor:'#122A3D', stack:'s'},
-      {label:'زن', data:[2, 2, 51, 1, 2, 55], backgroundColor:'#B5502D', stack:'s'}
-    ]},
-  options: stackedBarOpts()
+
+  type: 'bar',
+
+  data: {
+    labels: [
+      "مدیرکل",
+      "معاون",
+      "رئیس اداره/امور",
+      "مدیر میانی/شهرستان",
+      "سرپرست",
+      "کارشناس مسئول"
+    ],
+
+    datasets: [
+      {
+        label: 'مرد',
+        data: [66, 247, 708, 530, 90, 441],
+        backgroundColor: '#122A3D',
+        stack: 's'
+      },
+      {
+        label: 'زن',
+        data: [2, 2, 51, 1, 2, 55],
+        backgroundColor: '#B5502D',
+        stack: 's'
+      }
+    ]
+  },
+
+  options: {
+    ...stackedBarOpts(),
+
+    plugins: {
+      ...stackedBarOpts().plugins,
+
+      datalabels: {
+        color: '#FFD700',
+
+        // موقعیت عدد روی میله
+        anchor: 'center',
+        align: 'right',
+
+        // انتقال ۵ پیکسل به سمت راست
+        offset: 5
+      }
+    }
+  }
 });
+
+
 
 
 new Chart(document.getElementById('chartAge'), {
-  type:'bar',
-  data:{ labels:["کمتر از ۲۵", "۲۵ تا ۲۹", "۳۰ تا ۳۴", "۳۵ تا ۳۹", "۴۰ تا ۴۴", "۴۵ تا ۴۹", "۵۰ تا ۵۴", "۵۵ تا ۵۹", "۶۰ تا ۶۴", "۶۵ به بالا"],
-    datasets:[{ data:[380, 1077, 1388, 1702, 2477, 2126, 1256, 653, 183, 62], backgroundColor:'#122A3D', borderRadius:4, maxBarThickness:56 }]},
-  options: singleBarOpts()
+  type: 'bar',
+  data: { 
+    labels: ["کمتر از ۲۵", "۲۵ تا ۲۹", "۳۰ تا ۳۴", "۳۵ تا ۳۹", "۴۰ تا ۴۴", "۴۵ تا ۴۹", "۵۰ تا ۵۴", "۵۵ تا ۵۹", "۶۰ تا ۶۴", "۶۵ به بالا"],
+    datasets: [{ 
+      data: [380, 1077, 1388, 1702, 2477, 2126, 1256, 653, 183, 62], 
+      backgroundColor: '#122A3D', 
+      borderRadius: 4, 
+      maxBarThickness: 56 
+    }]
+  },
+  options: {
+    ...singleBarOpts(), // فراخوانی تنظیمات قبلی شما
+    plugins: {
+      ...(singleBarOpts().plugins || {}), // حفظ پلاگین‌های دیگر در صورت وجود
+      datalabels: {
+        anchor: 'center', // یا 'end' (بستگی دارد بخواهید عدد کجای میله باشد)
+        align: 'right',   // هدایت عدد به سمت راستِ نقطه لنگر
+        offset: 5         // جابجایی دقیق به اندازه ۵ پیکسل
+      }
+    }
+  }
 });
+
+
+
 
 
 new Chart(document.getElementById('chartTenure'), {
