@@ -885,6 +885,8 @@ new Chart(document.getElementById('chartAge'), {
     plugins: {
       ...(singleBarOpts().plugins || {}), // حفظ پلاگین‌های دیگر در صورت وجود
       datalabels: {
+        color: '#FFD700',
+        
         anchor: 'center', // یا 'end' (بستگی دارد بخواهید عدد کجای میله باشد)
         align: 'right',   // هدایت عدد به سمت راستِ نقطه لنگر
         offset: 5         // جابجایی دقیق به اندازه ۵ پیکسل
@@ -898,10 +900,43 @@ new Chart(document.getElementById('chartAge'), {
 
 
 new Chart(document.getElementById('chartTenure'), {
-  type:'bar',
-  data:{ labels:["۰ تا ۴", "۵ تا ۹", "۱۰ تا ۱۴", "۱۵ تا ۱۹", "۲۰ تا ۲۴", "۲۵ تا ۲۹", "۳۰ تا ۳۴"],
-    datasets:[{ data:[6433, 507, 655, 1468, 1887, 904, 262], backgroundColor:'#1C7A80', borderRadius:4, maxBarThickness:52 }]},
-  options: singleBarOpts()
+
+  type: 'bar',
+
+  data: {
+    labels: [
+      "۰ تا ۴",
+      "۵ تا ۹",
+      "۱۰ تا ۱۴",
+      "۱۵ تا ۱۹",
+      "۲۰ تا ۲۴",
+      "۲۵ تا ۲۹",
+      "۳۰ تا ۳۴"
+    ],
+
+    datasets: [{
+      data: [6433, 507, 655, 1468, 1887, 904, 262],
+      backgroundColor: '#1C7A80',
+      borderRadius: 4,
+      maxBarThickness: 52
+    }]
+  },
+
+  options: {
+    ...singleBarOpts(),
+
+    plugins: {
+      ...singleBarOpts().plugins,
+
+      datalabels: {
+        color: '#FFF',
+        anchor: 'center',
+        align: 'right',
+        offset: 5
+      }
+    }
+  }
+
 });
 
 
@@ -920,32 +955,160 @@ new Chart(document.getElementById('chartRetGender'), {
 
 
 new Chart(document.getElementById('chartEdu'), {
-  type:'bar',
-  data:{ labels:["ابتدایی و پایین‌تر", "سیکل", "زیر دیپلم", "دیپلم", "کاردانی", "کارشناسی", "کارشناسی ارشد", "دکتری"],
-    datasets:[{ data:[15, 54, 482, 1474, 462, 3840, 1929, 54], backgroundColor:'#2E7D4F', borderRadius:4, maxBarThickness:44 }]},
-  options: singleBarOpts()
-});
-new Chart(document.getElementById('chartField'), {
-  type:'bar',
-  data:{ labels:["عمران", "حسابداری", "نامشخص/ثبت‌نشده", "معماري", "مهندسي عمران", "ریاضی", "تکنولوژی ساختمان", "عمران - سازه", "تکنولوژي عمران", "ادبيات علوم انساني"],
-    datasets:[{ data:[1688, 935, 674, 586, 533, 322, 270, 241, 197, 186], backgroundColor:'#1B3E56', borderRadius:4, maxBarThickness:22 }]},
-  options: horizBarOpts()
+
+  type: 'bar',
+
+  data: {
+    labels: [
+      "ابتدایی و پایین‌تر",
+      "سیکل",
+      "زیر دیپلم",
+      "دیپلم",
+      "کاردانی",
+      "کارشناسی",
+      "کارشناسی ارشد",
+      "دکتری"
+    ],
+
+    datasets: [{
+      data: [15, 54, 482, 1474, 462, 3840, 1929, 54],
+      backgroundColor: '#2E7D4F',
+      borderRadius: 4,
+      maxBarThickness: 44
+    }]
+  },
+
+  options: {
+    ...singleBarOpts(),
+
+    plugins: {
+      ...singleBarOpts().plugins,
+
+      datalabels: {
+        ...singleBarOpts().plugins?.datalabels,
+
+        color: '#020047',
+
+        // مرکز میله؛ بنابراین موقعیت عمودی متناسب با ارتفاع میله باقی می‌ماند
+        anchor: 'center',
+
+        // جهت حرکت افقی
+        align: 'right',
+
+        // فاصله افقی 5 پیکسل
+        offset: 10,
+
+        // جابه‌جایی عمودی 8 پیکسل به بالا
+        rotation: 0,
+
+        formatter: function(value) {
+          return value;
+        }
+      }
+    }
+  }
+
 });
 
+
+new Chart(document.getElementById('chartField'), {
+
+  type: 'bar',
+
+  data: {
+    labels: [
+      "عمران",
+      "حسابداری",
+      "نامشخص/ثبت‌نشده",
+      "معماري",
+      "مهندسي عمران",
+      "ریاضی",
+      "تکنولوژی ساختمان",
+      "عمران - سازه",
+      "تکنولوژي عمران",
+      "ادبيات علوم انساني"
+    ],
+
+    datasets: [{
+      data: [1688, 935, 674, 586, 533, 322, 270, 241, 197, 186],
+      backgroundColor: '#1B3E56',
+      borderRadius: 4,
+      maxBarThickness: 22
+    }]
+  },
+
+  options: {
+    ...horizBarOpts(),
+
+    plugins: {
+      ...horizBarOpts().plugins,
+
+      datalabels: {
+        ...horizBarOpts().plugins?.datalabels,
+
+        color: '#020047',
+        align: 'right',
+        offset: 27
+      }
+    }
+  }
+
+});
 
 new Chart(document.getElementById('chartLevels'), {
+
   type:'bar',
+
   data:{ labels:["کارشناس", "نامشخص/فاقد پست", "نیروی شرکتی (پیمانکاری)", "کارمند عمومی", "راننده", "رئیس اداره/امور", "نگهبان/انتظامات", "مدیر (میانی/پروژه/شهرستان)", "کارشناس مسئول", "سرباز امریه", "سایر", "کارگر/خدماتی", "معاون", "متصدی اداری/مالی", "سرپرست", "مدیرکل", "مشاور", "ذیحساب", "کاردان/تکنسین"],
-    datasets:[{ data:[2878, 2035, 1175, 967, 778, 759, 624, 531, 496, 480, 382, 317, 249, 185, 92, 68, 45, 33, 22], backgroundColor:["#122A3D", "#1C7A80", "#B5502D", "#C79A2E", "#2E7D4F", "#5B7A9D", "#8E5A3C", "#A6321D", "#9AA5AC", "#3E6E5E", "#7A5C8E", "#4A7D9E", "#122A3D", "#1C7A80", "#B5502D", "#C79A2E", "#2E7D4F", "#5B7A9D", "#8E5A3C"], borderRadius:4, maxBarThickness:22 }]},
-  options: horizBarOpts()
+
+    datasets:[{ 
+      data:[2878, 2035, 1175, 967, 778, 759, 624, 531, 496, 480, 382, 317, 249, 185, 92, 68, 45, 33, 22], 
+      backgroundColor:["#122A3D", "#1C7A80", "#B5502D", "#C79A2E", "#2E7D4F", "#5B7A9D", "#8E5A3C", "#A6321D", "#9AA5AC", "#3E6E5E", "#7A5C8E", "#4A7D9E", "#122A3D", "#1C7A80", "#B5502D", "#C79A2E", "#2E7D4F", "#5B7A9D", "#8E5A3C"], 
+      borderRadius:4, 
+      maxBarThickness:22 
+    }]
+  },
+
+  options: {
+    ...horizBarOpts(),
+    plugins: {
+      ...horizBarOpts().plugins,
+      datalabels: {
+        ...horizBarOpts().plugins?.datalabels,
+        align: 'right',
+        offset: 28
+      }
+    }
+  }
+
 });
 
-
 new Chart(document.getElementById('chartEmpType'), {
+
   type:'bar',
+
   data:{ labels:["ثابت", "قراردادی پروژه ای", "شرکتی", "قراردادی مصوب", "قراردادی غیرمصوب", "آزمایشی", "مشمول وظیفه", "مشاورین ساعتی", "قراردادی ساعتی", "مشاورین تمام وقت", "مشاوره حق الجلسه ای", "خدماتی"],
-    datasets:[{ data:[3348, 2093, 1396, 1253, 899, 549, 497, 21, 17, 4, 2, 2], backgroundColor:'#B5502D', borderRadius:4, maxBarThickness:20 }]},
-  options: horizBarOpts()
+
+    datasets:[{ 
+      data:[3348, 2093, 1396, 1253, 899, 549, 497, 21, 17, 4, 2, 2], 
+      backgroundColor:'#B5502D', 
+      borderRadius:4, 
+      maxBarThickness:20 
+    }]
+  },
+
+  options: {
+    ...horizBarOpts(),
+    plugins: {
+      ...horizBarOpts().plugins,
+      datalabels: {
+        ...horizBarOpts().plugins?.datalabels,
+        align: 'right',
+        offset: 27
+      }
+    }
+  }
+
 });
 new Chart(document.getElementById('chartFixed'), {
   type:'doughnut',
@@ -956,11 +1119,34 @@ new Chart(document.getElementById('chartFixed'), {
 
 
 new Chart(document.getElementById('chartVeteran'), {
+
   type:'bar',
+
   data:{ labels:["عضو بسیج", "رزمنده", "گردان عاشورا", "جانباز", "خانواده شهید", "آزاده"],
-    datasets:[{ data:[1793, 343, 123, 81, 40, 1], backgroundColor:'#B5502D', borderRadius:4, maxBarThickness:44 }]},
-  options: singleBarOpts()
+
+    datasets:[{ 
+      data:[1793, 343, 123, 81, 40, 1], 
+      backgroundColor:'#B5502D', 
+      borderRadius:4, 
+      maxBarThickness:44 
+    }]
+  },
+
+  options: {
+    ...singleBarOpts(),
+    plugins: {
+      ...singleBarOpts().plugins,
+      datalabels: {
+        ...singleBarOpts().plugins?.datalabels,
+        align: 'right',
+        offset: 10
+      }
+    }
+  }
+
 });
+
+
 new Chart(document.getElementById('chartMilitary'), {
   type:'doughnut',
   data:{ labels:["انجام داده", "معاف", "در حال انجام"],
@@ -970,24 +1156,87 @@ new Chart(document.getElementById('chartMilitary'), {
 
 
 new Chart(document.getElementById('chartProvince'), {
+
   type:'bar',
+
   data:{ labels:["استان خراسان رضوی", "استان فارس", "ستاد مرکزی", "استان اصفهان", "استان خوزستان", "استان سیستان و بلوچستان", "استان بوشهر", "استان کرمان", "استان تهران", "استان آذربایجان شرقی", "استان قم", "استان همدان", "استان گلستان", "استان گیلان", "استان مازندران"],
-    datasets:[{ data:[679, 674, 672, 593, 477, 439, 423, 416, 392, 386, 369, 360, 357, 340, 333], backgroundColor:'#1B3E56', borderRadius:4, maxBarThickness:20 }]},
-  options: horizBarOpts()
-});
-new Chart(document.getElementById('chartProvinceRate'), {
-  type:'bar',
-  data:{ labels:["استان خراسان رضوی", "استان فارس", "ستاد مرکزی", "استان اصفهان", "استان خوزستان", "استان سیستان و بلوچستان", "استان بوشهر", "استان کرمان", "استان تهران", "استان آذربایجان شرقی", "استان قم", "استان همدان", "استان گلستان", "استان گیلان", "استان مازندران"],
-    datasets:[{ data:[48.0, 14.8, 3.1, 12.8, 9.6, 8.2, 16.3, 0.2, 4.8, 10.1, 18.4, 5.3, 0.0, 8.8, 3.3], backgroundColor:["#A6321D", "#C79A2E", "#1C7A80", "#C79A2E", "#1C7A80", "#1C7A80", "#C79A2E", "#1C7A80", "#1C7A80", "#1C7A80", "#C79A2E", "#1C7A80", "#1C7A80", "#1C7A80", "#1C7A80"], borderRadius:4, maxBarThickness:20 }]},
-  options: horizBarOpts('٪')
+
+    datasets:[{ 
+      data:[679, 674, 672, 593, 477, 439, 423, 416, 392, 386, 369, 360, 357, 340, 333], 
+      backgroundColor:'#1B3E56', 
+      borderRadius:4, 
+      maxBarThickness:20 
+    }]
+  },
+
+  options: {
+    ...horizBarOpts(),
+    plugins: {
+      ...horizBarOpts().plugins,
+      datalabels: {
+        ...horizBarOpts().plugins?.datalabels,
+        align: 'right',
+        offset: 20
+      }
+    }
+  }
+
 });
 
+new Chart(document.getElementById('chartProvinceRate'), {
+
+  type:'bar',
+
+  data:{ labels:["استان خراسان رضوی", "استان فارس", "ستاد مرکزی", "استان اصفهان", "استان خوزستان", "استان سیستان و بلوچستان", "استان بوشهر", "استان کرمان", "استان تهران", "استان آذربایجان شرقی", "استان قم", "استان همدان", "استان گلستان", "استان گیلان", "استان مازندران"],
+
+    datasets:[{ 
+      data:[48.0, 14.8, 3.1, 12.8, 9.6, 8.2, 16.3, 0.2, 4.8, 10.1, 18.4, 5.3, 0.0, 8.8, 3.3], 
+      backgroundColor:["#A6321D", "#C79A2E", "#1C7A80", "#C79A2E", "#1C7A80", "#1C7A80", "#C79A2E", "#1C7A80", "#1C7A80", "#1C7A80", "#C79A2E", "#1C7A80", "#1C7A80", "#1C7A80", "#1C7A80"], 
+      borderRadius:4, 
+      maxBarThickness:20 
+    }]
+  },
+
+  options: {
+    ...horizBarOpts('٪'),
+    plugins: {
+      ...horizBarOpts('٪').plugins,
+      datalabels: {
+        ...horizBarOpts('٪').plugins?.datalabels,
+        align: 'right',
+        offset: 25
+      }
+    }
+  }
+
+});
 
 new Chart(document.getElementById('chartMissing'), {
+
   type:'bar',
-  data:{ labels:["وضعیت ایثارگری و جانبازی", "سابقه استخدام غیر بنیادی (به روز)", "تاریخ اخذ مدرک تحصیلی", "تاریخ صدور شناسنامه", "وضعیت سربازی", "نوع استخدام", "عنوان شغل", "پست سازمانی", "مدرک تحصیلی", "استان محل خدمت", "کد ملی", "جنسیت", "تاریخ تولد"],
-    datasets:[{ data:[80.3, 50.1, 36.6, 22.1, 21.1, 16.8, 16.8, 16.8, 13.6, 8.0, 7.0, 6.7, 6.7], backgroundColor:'#A6321D', borderRadius:4, maxBarThickness:20 }]},
-  options: horizBarOpts('٪')
+
+  data:{ labels:["سابقه استخدام غیر بنیادی (به روز)", "تاریخ اخذ مدرک تحصیلی", "تاریخ صدور شناسنامه", "وضعیت سربازی", "نوع استخدام", "عنوان شغل", "پست سازمانی", "مدرک تحصیلی", "استان محل خدمت", "کد ملی", "جنسیت", "تاریخ تولد"],
+
+    datasets:[{ 
+      data:[50.1, 36.6, 22.1, 21.1, 16.8, 16.8, 16.8, 13.6, 8.0, 7.0, 6.7, 6.7], 
+      backgroundColor:'#A6321D', 
+      borderRadius:4, 
+      maxBarThickness:20 
+    }]
+  },
+
+  options: {
+    ...horizBarOpts('٪'),
+    plugins: {
+      ...horizBarOpts('٪').plugins,
+      datalabels: {
+        ...horizBarOpts('٪').plugins?.datalabels,
+        align: 'right',
+        offset: 28
+      }
+    }
+  }
+
 });
 
 </script>
