@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سامانه هوشمند مدیریتی ریاست | گزارش جامع رصد رسانه‌ای</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+<style>
+*{box-sizing:border-box}
+:root{
+ --ink:#172b4d;--muted:#667085;--bg:#f4f7fb;--white:rgba(255,255,255,.78);
+ --blue:#246bce;--red:#d93636;--green:#15966f;--purple:#7352b9;--pink:#c65383;
+ --shadow:0 12px 35px rgba(29,55,88,.10);
+}
+body{
+ margin:0;background:
+ radial-gradient(circle at 10% 0%,rgba(36,107,206,.08),transparent 28%),
+ radial-gradient(circle at 90% 15%,rgba(21,150,111,.07),transparent 25%),var(--bg);
+ color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif;
+}
+.container{width:min(1440px,94%);margin:auto}
+.hero{
+ position:relative;overflow:hidden;margin:18px auto 22px;padding:30px;
+ border-radius:26px;color:#fff;
+ background:linear-gradient(135deg,#173d73,#246bce 48%,#1a8d78);
+ box-shadow:0 18px 45px rgba(20,61,112,.22);
+}
+.hero:after{
+ content:"";position:absolute;width:380px;height:380px;border-radius:50%;
+ left:-130px;bottom:-250px;background:rgba(255,255,255,.08)
+}
+.hero-top{position:relative;z-index:2;display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+.brand{display:flex;gap:14px;align-items:center}
+.brand-icon{
+ width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+ background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.24);font-size:25px
+}
+.eyebrow{font-size:12px;opacity:.82;margin-bottom:4px}
+h1{margin:0;font-size:27px;font-weight:900}
+.hero-sub{margin:7px 0 0;font-size:14px;opacity:.9}
+.period{
+ background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);
+ padding:10px 14px;border-radius:14px;font-size:12px;white-space:nowrap
+}
+.topic-pills{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.topic-pill{
+ display:flex;align-items:center;gap:9px;color:#fff;border-radius:999px;padding:7px 12px;
+ font-size:11px;font-weight:800;border:1px solid rgba(255,255,255,.28);
+ box-shadow:0 7px 18px rgba(0,0,0,.12)
+}
+.topic-pill .num{
+ min-width:31px;height:31px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+ background:rgba(255,255,255,.22);font-size:10px
+}
+.topic-pill.war{background:#c72d35}.topic-pill.parl{background:#315fa8}
+.topic-pill.hope{background:#118564}.topic-pill.sat{background:#b34875}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.card{
+ position:relative;overflow:hidden;border-radius:18px;padding:18px;
+ background:linear-gradient(135deg,rgba(255,255,255,.88),rgba(232,241,251,.62));
+ border:1px solid rgba(255,255,255,.82);border-top:3px solid var(--accent,#246bce);
+ backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);box-shadow:var(--shadow)
+}
+.card-icon{
+ width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+ background:color-mix(in srgb,var(--accent,#246bce) 12%,transparent);
+ color:var(--accent,#246bce);font-size:17px;margin-bottom:10px
+}
+.kpi-value{font-size:27px;font-weight:900;letter-spacing:-.7px}
+.kpi-title{font-size:12px;color:var(--muted);margin-top:3px}
+.kpi-note{font-size:10px;color:#8a95a5;margin-top:8px}
+
+.section{margin:28px 0}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.section-head .sec-icon{
+ width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+ background:rgba(36,107,206,.10);color:#246bce
+}
+.section-head h2{font-size:20px;margin:0;font-weight:900}
+.section-head p{margin:3px 0 0;color:var(--muted);font-size:11px}
+
+.report{
+ --accent:#246bce;margin-bottom:30px
+}
+.report.war{--accent:var(--red)} .report.parl{--accent:#3568b8}
+.report.hope{--accent:var(--green)} .report.sat{--accent:var(--pink)}
+
+.report-head{
+ display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:12px
+}
+.report-title{display:flex;align-items:center;gap:11px}
+.report-title .big-icon{
+ width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;
+ color:#fff;background:var(--accent);box-shadow:0 8px 18px color-mix(in srgb,var(--accent) 25%,transparent)
+}
+.report-title h3{margin:0;font-size:19px}
+.report-title small{color:var(--muted);font-size:11px}
+.report-badge{
+ background:color-mix(in srgb,var(--accent) 10%,white);color:var(--accent);
+ padding:7px 12px;border-radius:999px;font-size:11px;font-weight:800
+}
+.report-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.charts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.chart-card{min-width:0}
+.chart-title{display:flex;align-items:center;gap:9px;font-weight:800;font-size:13px;margin-bottom:5px}
+.chart-title i{color:var(--accent)}
+.chart-sub{font-size:10px;color:var(--muted);margin-bottom:9px}
+.canvas-wrap{height:315px;position:relative}
+.canvas-wrap.tall{height:350px}
+
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.insight{min-height:145px}
+.insight h3{font-size:13px;margin:0 0 7px}
+.insight p{font-size:11px;line-height:2;color:#526174;margin:0}
+.insight .tag{
+ display:inline-flex;gap:6px;align-items:center;font-size:10px;font-weight:800;
+ color:var(--accent,#246bce);margin-bottom:8px
+}
+
+.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.summary-list{margin:0;padding:0 19px 0 0}
+.summary-list li{margin:10px 0;font-size:12px;line-height:1.9;color:#526174}
+.footer{
+ text-align:center;color:#7b8798;font-size:10px;padding:25px 0 35px
+}
+.note{
+ background:rgba(255,250,235,.78);border:1px solid rgba(219,170,67,.24);
+ border-right:4px solid #d8a62f;border-radius:14px;padding:13px 16px;
+ font-size:11px;color:#6b5a30;line-height:2
+}
+
+@media(max-width:1050px){
+ .kpi-grid,.report-kpis{grid-template-columns:repeat(3,1fr)}
+ .insights{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+ .container{width:94%}.hero{padding:21px;border-radius:20px}
+ .hero-top{display:block}.period{display:inline-block;margin-top:12px}
+ h1{font-size:21px}.hero-sub{font-size:11px}
+ .kpi-grid,.report-kpis{grid-template-columns:repeat(2,1fr);gap:10px}
+ .charts-grid{grid-template-columns:1fr;gap:11px}
+ .canvas-wrap{height:300px}.canvas-wrap.tall{height:325px}
+ .insights,.summary-grid{grid-template-columns:1fr}
+ .report-title h3{font-size:16px}
+ .report-head{align-items:flex-start}.report-badge{font-size:9px}
+ .kpi-value{font-size:22px}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header class="hero">
+ <div class="hero-top">
+  <div class="brand">
+   <div class="brand-icon"><i class="fa-solid fa-chart-line"></i></div>
+   <div>
+    <div class="eyebrow">داشبورد مدیریتی و رصد رسانه‌ای</div>
+    <h1>سامانه هوشمند مدیریتی ریاست</h1>
+    <div class="hero-sub">گزارش جامع رصد و تحلیل رسانه‌ای بنیاد مسکن</div>
+   </div>
+  </div>
+  <div class="period"><i class="fa-regular fa-calendar-days"></i> گزارش‌های یک‌ماهه منتهی به ۲۴ شهریور ۱۴۰۵</div>
+ </div>
+
+ <div class="topic-pills">
+  <div class="topic-pill war"><span class="num">1,754</span><i class="fa-solid fa-house-chimney-crack"></i><span>بازسازی جنگ</span></div>
+  <div class="topic-pill parl"><span class="num">2,236</span><i class="fa-solid fa-landmark"></i><span>مجلس</span></div>
+  <div class="topic-pill hope"><span class="num">1,506</span><i class="fa-solid fa-house-chimney-user"></i><span>خانه امید</span></div>
+  <div class="topic-pill sat"><span class="num">3,462</span><i class="fa-solid fa-heart"></i><span>رضایت مردمی</span></div>
+ </div>
+</header>
+
+<section class="section">
+ <div class="section-head">
+  <div class="sec-icon"><i class="fa-solid fa-gauge-high"></i></div>
+  <div><h2>نمای کلی رصد</h2><p>تجمیع چهار گزارش موضوعی؛ اعداد چهار گزارش با یکدیگر جمع شده‌اند.</p></div>
+ </div>
+ <div class="kpi-grid">
+  <div class="card" style="--accent:#246bce"><div class="card-icon"><i class="fa-solid fa-newspaper"></i></div><div class="kpi-value">8,958</div><div class="kpi-title">محتوای رصدشده</div><div class="kpi-note">مجموع چهار گزارش</div></div>
+  <div class="card" style="--accent:#15966f"><div class="card-icon"><i class="fa-solid fa-eye"></i></div><div class="kpi-value">6,430,621</div><div class="kpi-title">بازدید</div><div class="kpi-note">مجموع بازدید ثبت‌شده</div></div>
+  <div class="card" style="--accent:#7352b9"><div class="card-icon"><i class="fa-solid fa-retweet"></i></div><div class="kpi-value">77,233</div><div class="kpi-title">بازنشر</div><div class="kpi-note">مجموع بازنشر ثبت‌شده</div></div>
+  <div class="card" style="--accent:#c77718"><div class="card-icon"><i class="fa-solid fa-database"></i></div><div class="kpi-value">5,135</div><div class="kpi-title">منبع</div><div class="kpi-note">مجموع منابع گزارش‌ها</div></div>
+ </div>
+</section>
+
+<section class="section">
+ <div class="section-head"><div class="sec-icon"><i class="fa-solid fa-scale-balanced"></i></div><div><h2>مقایسه چهار موضوع</h2><p>مقایسه حجم محتوا، بازدید و بازنشر بر اساس داده‌های گزارش‌های منبع.</p></div></div>
+ <div class="charts-grid">
+  <div class="card chart-card" style="--accent:#246bce"><div class="chart-title"><i class="fa-solid fa-chart-column"></i> حجم محتوای رصدشده</div><div class="chart-sub">تعداد محتوای ثبت‌شده در هر گزارش</div><div class="canvas-wrap"><canvas id="overviewContent"></canvas></div></div>
+  <div class="card chart-card" style="--accent:#15966f"><div class="chart-title"><i class="fa-solid fa-chart-line"></i> بازدید رسانه‌ای</div><div class="chart-sub">تعداد بازدید ثبت‌شده</div><div class="canvas-wrap"><canvas id="overviewViews"></canvas></div></div>
+ </div>
+</section>
+
+<!-- REPORT 1 -->
+<section class="report war">
+ <div class="report-head">
+  <div class="report-title"><div class="big-icon"><i class="fa-solid fa-house-chimney-crack"></i></div><div><h3>بازسازی جنگ</h3><small>گزارش یک‌ماهه منتهی به ۲۴ شهریور ۱۴۰۵</small></div></div>
+  <div class="report-badge"><i class="fa-solid fa-bullhorn"></i> ۱,۷۵۴ محتوا</div>
+ </div>
+ <div class="report-kpis">
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-newspaper"></i></div><div class="kpi-value">1,754</div><div class="kpi-title">محتوا</div></div>
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-retweet"></i></div><div class="kpi-value">35,598</div><div class="kpi-title">بازنشر</div></div>
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-eye"></i></div><div class="kpi-value">1,962,206</div><div class="kpi-title">بازدید</div></div>
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-database"></i></div><div class="kpi-value">1,113</div><div class="kpi-title">منبع</div></div>
+ </div>
+ <div class="charts-grid">
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-chart-pie"></i> ترکیب موضوعی محتوا</div><div class="chart-sub">درصد دسته‌های اصلی گزارش</div><div class="canvas-wrap"><canvas id="warCategory"></canvas></div></div>
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-face-smile"></i> احساس رسانه‌ای به تفکیک بستر</div><div class="chart-sub">مثبت، خنثی و منفی</div><div class="canvas-wrap"><canvas id="warSentiment"></canvas></div></div>
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-key"></i> کلیدواژه‌های پرتکرار</div><div class="chart-sub">تعداد موارد ثبت‌شده برای کلیدواژه‌های گزارش</div><div class="canvas-wrap tall"><canvas id="warKeywords"></canvas></div></div>
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-chart-bar"></i> ترکیب اجتماعی و اقتصادی</div><div class="chart-sub">زیرگروه‌های اصلی گزارش</div><div class="canvas-wrap"><canvas id="warSub"></canvas></div></div>
+ </div>
+</section>
+
+<!-- REPORT 2 -->
+<section class="report parl">
+ <div class="report-head">
+  <div class="report-title"><div class="big-icon"><i class="fa-solid fa-landmark"></i></div><div><h3>مجلس</h3><small>گزارش یک‌ماهه منتهی به ۲۴ شهریور ۱۴۰۵</small></div></div>
+  <div class="report-badge"><i class="fa-solid fa-bullhorn"></i> ۲,۲۳۶ محتوا</div>
+ </div>
+ <div class="report-kpis">
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-newspaper"></i></div><div class="kpi-value">2,236</div><div class="kpi-title">محتوا</div></div>
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-retweet"></i></div><div class="kpi-value">8,006</div><div class="kpi-title">بازنشر</div></div>
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-eye"></i></div><div class="kpi-value">1,420,203</div><div class="kpi-title">بازدید</div></div>
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-database"></i></div><div class="kpi-value">1,190</div><div class="kpi-title">منبع</div></div>
+ </div>
+ <div class="charts-grid">
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-chart-pie"></i> ترکیب موضوعی محتوا</div><div class="chart-sub">درصد دسته‌های اصلی گزارش</div><div class="canvas-wrap"><canvas id="parlCategory"></canvas></div></div>
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-face-smile"></i> احساس رسانه‌ای به تفکیک بستر</div><div class="chart-sub">مثبت، خنثی و منفی</div><div class="canvas-wrap"><canvas id="parlSentiment"></canvas></div></div>
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-key"></i> کلیدواژه‌های پرتکرار</div><div class="chart-sub">تعداد موارد ثبت‌شده برای کلیدواژه‌های گزارش</div><div class="canvas-wrap tall"><canvas id="parlKeywords"></canvas></div></div>
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-map-location-dot"></i> زیرگروه‌های اجتماعی</div><div class="chart-sub">سهم زیرگروه‌های اجتماعی گزارش</div><div class="canvas-wrap"><canvas id="parlSub"></canvas></div></div>
+ </div>
+</section>
+
+<!-- REPORT 3 -->
+<section class="report hope">
+ <div class="report-head">
+  <div class="report-title"><div class="big-icon"><i class="fa-solid fa-house-chimney-user"></i></div><div><h3>خانه امید</h3><small>گزارش یک‌ماهه منتهی به ۲۴ شهریور ۱۴۰۵</small></div></div>
+  <div class="report-badge"><i class="fa-solid fa-bullhorn"></i> ۱,۵۰۶ محتوا</div>
+ </div>
+ <div class="report-kpis">
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-newspaper"></i></div><div class="kpi-value">1,506</div><div class="kpi-title">محتوا</div></div>
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-retweet"></i></div><div class="kpi-value">21,174</div><div class="kpi-title">بازنشر</div></div>
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-eye"></i></div><div class="kpi-value">1,064,914</div><div class="kpi-title">بازدید</div></div>
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-database"></i></div><div class="kpi-value">860</div><div class="kpi-title">منبع</div></div>
+ </div>
+ <div class="charts-grid">
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-chart-pie"></i> ترکیب موضوعی محتوا</div><div class="chart-sub">درصد دسته‌های اصلی گزارش</div><div class="canvas-wrap"><canvas id="hopeCategory"></canvas></div></div>
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-face-smile"></i> احساس رسانه‌ای به تفکیک بستر</div><div class="chart-sub">مثبت، خنثی و منفی</div><div class="canvas-wrap"><canvas id="hopeSentiment"></canvas></div></div>
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-key"></i> کلیدواژه‌های پرتکرار</div><div class="chart-sub">تعداد موارد ثبت‌شده برای کلیدواژه‌های گزارش</div><div class="canvas-wrap tall"><canvas id="hopeKeywords"></canvas></div></div>
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-coins"></i> ترکیب اقتصادی</div><div class="chart-sub">سهم زیرگروه‌های اقتصادی گزارش</div><div class="canvas-wrap"><canvas id="hopeSub"></canvas></div></div>
+ </div>
+</section>
+
+<!-- REPORT 4 -->
+<section class="report sat">
+ <div class="report-head">
+  <div class="report-title"><div class="big-icon"><i class="fa-solid fa-heart"></i></div><div><h3>رضایت مردمی</h3><small>گزارش یک‌ماهه منتهی به ۲۴ شهریور ۱۴۰۵</small></div></div>
+  <div class="report-badge"><i class="fa-solid fa-bullhorn"></i> ۳,۴۶۲ محتوا</div>
+ </div>
+ <div class="report-kpis">
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-newspaper"></i></div><div class="kpi-value">3,462</div><div class="kpi-title">محتوا</div></div>
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-retweet"></i></div><div class="kpi-value">12,455</div><div class="kpi-title">بازنشر</div></div>
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-eye"></i></div><div class="kpi-value">1,983,298</div><div class="kpi-title">بازدید</div></div>
+  <div class="card"><div class="card-icon"><i class="fa-solid fa-database"></i></div><div class="kpi-value">1,972</div><div class="kpi-title">منبع</div></div>
+ </div>
+ <div class="charts-grid">
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-chart-pie"></i> ترکیب موضوعی محتوا</div><div class="chart-sub">درصد دسته‌های اصلی گزارش</div><div class="canvas-wrap"><canvas id="satCategory"></canvas></div></div>
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-face-smile"></i> احساس رسانه‌ای به تفکیک بستر</div><div class="chart-sub">مثبت، خنثی و منفی</div><div class="canvas-wrap"><canvas id="satSentiment"></canvas></div></div>
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-key"></i> کلیدواژه‌های پرتکرار</div><div class="chart-sub">تعداد موارد ثبت‌شده برای کلیدواژه‌های گزارش</div><div class="canvas-wrap tall"><canvas id="satKeywords"></canvas></div></div>
+  <div class="card chart-card"><div class="chart-title"><i class="fa-solid fa-users"></i> ترکیب اجتماعی</div><div class="chart-sub">سهم زیرگروه‌های اجتماعی گزارش</div><div class="canvas-wrap"><canvas id="satSub"></canvas></div></div>
+ </div>
+</section>
+
+<section class="section">
+ <div class="section-head"><div class="sec-icon"><i class="fa-solid fa-lightbulb"></i></div><div><h2>برداشت‌های مدیریتی</h2><p>تحلیل توصیفی بر اساس داده‌های همین چهار گزارش؛ بدون رتبه‌بندی سیاسی یا ساخت شاخص تأییدنشده.</p></div></div>
+ <div class="insights">
+  <div class="card insight" style="--accent:#15966f"><div class="tag"><i class="fa-solid fa-bullseye"></i> فرصت رسانه‌ای</div><h3>روایت خدمت</h3><p>در هر چهار گزارش، سهم محتوای اجتماعی و استانی قابل توجه است؛ بنابراین پروژه‌های ملموس و خدمت‌رسانی استانی ظرفیت بالایی برای روایت‌سازی مستند دارند.</p></div>
+  <div class="card insight" style="--accent:#15966f"><div class="tag"><i class="fa-solid fa-house"></i> کانون موضوعی</div><h3>خانه امید</h3><p>محتوای این حوزه عمدتاً در قالب اجتماعی و اقتصادی ثبت شده و نمونه‌هایی از مشارکت خیرین و پروژه‌های مسکن در گزارش دیده می‌شود.</p></div>
+  <div class="card insight" style="--accent:#3568b8"><div class="tag"><i class="fa-solid fa-landmark"></i> پیوند نهادی</div><h3>مجلس و مسائل استانی</h3><p>کلیدواژه‌های مرتبط با نمایندگان، شهرستان‌ها و موضوعات استانی در گزارش مجلس برجسته‌اند و این موضوع، اهمیت پایش منظم مسائل حوزه انتخابیه را نشان می‌دهد.</p></div>
+  <div class="card insight" style="--accent:#d93636"><div class="tag"><i class="fa-solid fa-triangle-exclamation"></i> نکته رصد</div><h3>محتوای منفی</h3><p>در هر چهار گزارش سهم محتوای خنثی غالب است؛ در عین حال، بخش منفی باید جداگانه و موردی بررسی شود و صرفاً از درصد احساس رسانه‌ای نتیجه‌گیری درباره عملکرد نشود.</p></div>
+  <div class="card insight" style="--accent:#c65383"><div class="tag"><i class="fa-solid fa-heart"></i> سنجش رضایت</div><h3>رضایت رسانه‌ای ≠ رضایت واقعی</h3><p>احساس رسانه‌ای فقط تصویری از محتوای منتشرشده است و جایگزین پیمایش مستقیم رضایت مردم، شکایات ثبت‌شده یا سنجش تجربه خدمت نمی‌شود.</p></div>
+  <div class="card insight" style="--accent:#7352b9"><div class="tag"><i class="fa-solid fa-bolt"></i> اقدام‌پذیری</div><h3>اتصال رصد به اقدام</h3><p>برای مدیریت ریاستی، بهتر است موضوع، استان، منبع، شدت انتشار و وضعیت پاسخ در یک زنجیره واحد ثبت شوند تا هر موج رسانه‌ای به یک اقدام مشخص متصل شود.</p></div>
+ </div>
+</section>
+
+<div class="note">
+ <strong><i class="fa-solid fa-circle-info"></i> نکته روش‌شناختی:</strong>
+ اعداد این صفحه از چهار گزارش یک‌ماهه منتهی به ۲۴ شهریور ۱۴۰۵ استخراج و برای نمایش مدیریتی تجمیع شده‌اند.
+ «احساس رسانه‌ای» با «رضایت واقعی مردم» یکسان نیست. همچنین مجموع منابع/محتواها به معنی تعداد یکتای افراد، خبرها یا منابع نیست.
+</div>
+
+<div class="footer">سامانه هوشمند مدیریتی ریاست | گزارش جامع رصد و تحلیل رسانه‌ای بنیاد مسکن | ۱۴۰۵/۰۶/۲۴</div>
+</div>
+
+<script>
+const FONT = 'Vazirmatn';
+
+const colors = {
+ war:'#d93636', parl:'#3568b8', hope:'#15966f', sat:'#c65383',
+ positive:'#15966f', neutral:'#8b98a9', negative:'#d93636'
+};
+
+// پلاگین مستقل: عدد هر میله دقیقاً روی همان میله و عدد هر قطعه دقیقاً روی همان قطعه نمایش داده می‌شود.
+const valueLabels = {
+ id:'valueLabels',
+ afterDatasetsDraw(chart){
+   const {ctx} = chart;
+   ctx.save();
+   ctx.font = '800 11px Vazirmatn, Tahoma, sans-serif';
+   ctx.textAlign = 'center';
+   ctx.textBaseline = 'middle';
+
+   chart.data.datasets.forEach((dataset, di)=>{
+     const meta = chart.getDatasetMeta(di);
+     if(meta.hidden) return;
+
+     meta.data.forEach((element, i)=>{
+       const raw = dataset.data[i];
+       if(raw === null || raw === undefined) return;
+       const value = Number(raw);
+       const label = Number.isFinite(value)
+         ? (Number.isInteger(value) ? value.toLocaleString('fa-IR') : value.toLocaleString('fa-IR',{maximumFractionDigits:2}))
+         : String(raw);
+
+       let x = element.x, y = element.y;
+       let tx=x, ty=y-16;
+
+       if(chart.config.type === 'bar'){
+         if(chart.options.indexAxis === 'y'){
+           tx = element.x + 23;
+           ty = element.y;
+         } else {
+           tx = element.x;
+           ty = element.y - 17;
+         }
+       } else if(chart.config.type === 'doughnut' || chart.config.type === 'pie'){
+         const p = element.getProps(['x','y','startAngle','endAngle','innerRadius','outerRadius'], true);
+         const angle = (p.startAngle+p.endAngle)/2;
+         const radius = (p.innerRadius+p.outerRadius)/2;
+         tx = p.x + Math.cos(angle)*radius;
+         ty = p.y + Math.sin(angle)*radius;
+       }
+
+       const padX=5,padY=3;
+       const w=ctx.measureText(label).width+padX*2, h=18+padY;
+       ctx.fillStyle='rgba(255,255,255,.95)';
+       ctx.shadowColor='rgba(25,50,80,.16)';
+       ctx.shadowBlur=7;
+       ctx.shadowOffsetY=2;
+       if(chart.config.type==='doughnut'||chart.config.type==='pie'){
+         // عدد داخل خود قطعه، با زمینه سفید نیمه‌شفاف
+       }
+       const r=6;
+       ctx.beginPath();
+       ctx.roundRect(tx-w/2,ty-h/2,w,h,r);
+       ctx.fill();
+       ctx.shadowColor='transparent';
+       ctx.fillStyle='#243447';
+       ctx.fillText(label,tx,ty+1);
+     });
+   });
+   ctx.restore();
+ }
+};
+
+Chart.register(valueLabels);
+
+function baseOptions(type='bar', extra={}){
+ return {
+   responsive:true, maintainAspectRatio:false,
+   animation:{duration:650},
+   layout:{padding:{top:35,right:35,bottom:28,left:35}},
+   plugins:{
+     legend:{position:'bottom',labels:{font:{family:FONT,size:10},usePointStyle:true,padding:14}},
+     tooltip:{rtl:true,bodyFont:{family:FONT},titleFont:{family:FONT}},
+   },
+   scales:type==='doughnut'||type==='pie'?{}:{
+     x:{grid:{display:false},ticks:{font:{family:FONT,size:9}}},
+     y:{beginAtZero:true,grid:{color:'rgba(100,120,145,.10)'},ticks:{font:{family:FONT,size:9}}}
+   },
+   ...extra
+ };
+}
+function bar(id, labels, data, color, horizontal=false){
+ new Chart(document.getElementById(id),{
+  type:'bar',
+  data:{labels,datasets:[{data,backgroundColor:color,borderColor:color,borderWidth:1,borderRadius:7,maxBarThickness:34}]},
+  options:baseOptions('bar',horizontal?{indexAxis:'y',scales:{x:{beginAtZero:true,grid:{color:'rgba(100,120,145,.10)'},ticks:{font:{family:FONT,size:9}}},y:{grid:{display:false},ticks:{font:{family:FONT,size:9}}}}}:{} )
+ });
+}
+function doughnut(id, labels, data, color){
+ const shades=[color, color+'CC', color+'99', color+'66', color+'44'];
+ new Chart(document.getElementById(id),{
+  type:'doughnut',
+  data:{labels,datasets:[{data,backgroundColor:shades,borderColor:'#fff',borderWidth:3}]},
+  options:baseOptions('doughnut',{cutout:'58%',plugins:{legend:{position:'bottom',labels:{font:{family:FONT,size:9},usePointStyle:true,padding:10}}}})
+ });
+}
+function sentiment(id, labels, pos, neu, neg){
+ new Chart(document.getElementById(id),{
+  type:'bar',
+  data:{labels,datasets:[
+   {label:'مثبت',data:pos,backgroundColor:colors.positive,borderRadius:6,maxBarThickness:25},
+   {label:'خنثی',data:neu,backgroundColor:colors.neutral,borderRadius:6,maxBarThickness:25},
+   {label:'منفی',data:neg,backgroundColor:colors.negative,borderRadius:6,maxBarThickness:25}
+  ]},
+  options:baseOptions('bar',{scales:{x:{grid:{display:false},ticks:{font:{family:FONT,size:9}}},y:{beginAtZero:true,max:100,grid:{color:'rgba(100,120,145,.10)'},ticks:{font:{family:FONT,size:9},callback:v=>v+'%'}}}})
+ });
+}
+
+// مقایسه کلی
+bar('overviewContent',['بازسازی جنگ','مجلس','خانه امید','رضایت مردمی'],[1754,2236,1506,3462],[colors.war,colors.parl,colors.hope,colors.sat][0]);
+bar('overviewViews',['بازسازی جنگ','مجلس','خانه امید','رضایت مردمی'],[1962206,1420203,1064914,1983298],colors.hope);
+
+// بازسازی جنگ
+doughnut('warCategory',['سیاسی','اجتماعی','فرهنگی','بین‌الملل','اقتصادی'],[1.1,72.2,1.7,.5,24.5],colors.war);
+sentiment('warSentiment',['اخبار','تلگرام','اینستاگرام'],[4.64,3.74,8.16],[92.88,94.39,91.84],[2.48,1.87,0]);
+bar('warKeywords',['بنیاد مسکن','بنیاد_مسکن_گلستان','بنیاد مسکن انقلاب اسلامی','جنگ رمضان','مسکن','هفته دولت','استانی-اقتصادی'],[26,19,16,16,13,13,9],colors.war,true);
+bar('warSub',['استان‌ها','بلایای طبیعی','شهری','عمومی اقتصادی','صنعت و انرژی','مالی'],[59.26,31.15,8.28,80.77,17.95,1.28],colors.war,true);
+
+// مجلس
+doughnut('parlCategory',['سیاسی','اجتماعی','فرهنگی','بین‌الملل','اقتصادی'],[4.3,66.4,.9,0,28.4],colors.parl);
+sentiment('parlSentiment',['اخبار','تلگرام','اینستاگرام'],[4.05,8.09,9.52],[94.14,91.33,89.29],[1.80,.58,1.19]);
+bar('parlKeywords',['شهرستان_طبس','محم','روستای_محمدآباد','نماینده','کانال_طبس_گلشن','دولت_پای_کار_مردم','هفته_دولت'],[125,125,123,70,70,24,23],colors.parl,true);
+bar('parlSub',['استان‌ها','شهری','بلایای طبیعی','آموزش و پرورش','دانشگاهی و پژوهشی','قضایی و حقوق','حوادث'],[62.14,21.07,12.86,1.43,1.07,1.07,.36],colors.parl,true);
+
+// خانه امید
+doughnut('hopeCategory',['سیاسی','اجتماعی','فرهنگی','بین‌الملل','اقتصادی'],[.3,69.8,.3,0,29.6],colors.hope);
+sentiment('hopeSentiment',['اخبار','تلگرام','اینستاگرام'],[2.69,1.64,6.25],[97.31,98.36,93.75],[0,0,0]);
+bar('hopeKeywords',['بنیاد مسکن','نهضت ملی مسکن','مسکن','خانه امید','ساخت مسکن','هفته دولت','بنیاد مسکن انقلاب اسلامی','بوشهر'],[16,12,11,9,9,9,7,7],colors.hope,true);
+bar('hopeSub',['عمومی اقتصادی','صنعت و انرژی','مالی','استان‌ها','بلایای طبیعی','شهری'],[90.57,8.49,.94,72.40,15.20,12.40],colors.hope,true);
+
+// رضایت مردمی
+doughnut('satCategory',['سیاسی','اجتماعی','فرهنگی','بین‌الملل','اقتصادی'],[3.2,69.0,1.1,.2,26.5],colors.sat);
+sentiment('satSentiment',['اخبار','تلگرام','اینستاگرام'],[5.15,9.32,12.12],[91.98,88.17,87.12],[2.86,2.51,.76]);
+bar('satKeywords',['بنیاد مسکن انقلاب اسلامی','بنیاد مسکن','مجلس شورای اسلامی','هفته دولت','خسروی','مدیرکل بنیاد مسکن گلستان','طرح هادی','گلستان','ایتا','روبیکا'],[137,61,53,41,35,34,30,27,26,24],colors.sat,true);
+bar('satSub',['استان‌ها','شهری','بلایای طبیعی','دینی و مذهبی','عمومی فرهنگی','زیارت و گردشگری'],[68.23,15.67,15.37,63.64,27.27,9.09],colors.sat,true);
+</script>
+</body>
+</html>
