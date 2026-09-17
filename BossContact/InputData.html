@@ -1,0 +1,3146 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#12324A" />
+  <meta name="description" content="سامانه ارتباط با کارکنان بنیاد مسکن انقلاب اسلامی" />
+
+  <title>سامانه ارتباط با کارکنان | بنیاد مسکن انقلاب اسلامی</title>
+
+  <!-- Vazirmatn -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root{
+      --navy:#12324A;
+      --navy-dark:#0B2538;
+      --navy-soft:#1D4D6B;
+      --teal:#187B7F;
+      --teal-soft:#E9F7F6;
+      --gold:#C99B2E;
+      --gold-soft:#FBF5E5;
+      --red:#A9412D;
+      --red-soft:#FCEFEB;
+
+      --bg:#F3F6F9;
+      --surface:#FFFFFF;
+      --surface-soft:#F8FAFC;
+
+      --text:#1D2A34;
+      --text-soft:#60707C;
+      --muted:#8B98A2;
+
+      --border:#E2E8EE;
+      --border-focus:#9DB5C6;
+
+      --success:#2E7D59;
+      --success-soft:#EDF8F2;
+
+      --shadow:0 12px 36px rgba(12, 37, 56, .08);
+      --shadow-soft:0 6px 20px rgba(12, 37, 56, .06);
+
+      --radius-xl:26px;
+      --radius-lg:18px;
+      --radius-md:13px;
+      --radius-sm:10px;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:"Vazirmatn", Tahoma, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(24,123,127,.05), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(201,155,46,.04), transparent 25%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      line-height:1.8;
+    }
+
+    button,
+    input,
+    select,
+    textarea{
+      font-family:inherit;
+    }
+
+    button{
+      border:0;
+      cursor:pointer;
+    }
+
+    svg{
+      width:22px;
+      height:22px;
+      display:block;
+      flex:none;
+    }
+
+    /* =========================================================
+       ICON SPRITE
+    ========================================================= */
+    .icon-sprite{
+      position:absolute;
+      width:0;
+      height:0;
+      overflow:hidden;
+    }
+
+    /* =========================================================
+       PAGE
+    ========================================================= */
+    .page{
+      width:min(1180px, calc(100% - 32px));
+      margin:0 auto;
+      padding:22px 0 40px;
+    }
+
+    /* =========================================================
+       TOP BAR
+    ========================================================= */
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:18px;
+      padding:0 4px;
+    }
+
+    .brand-mini{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:var(--navy);
+      font-weight:700;
+      font-size:14px;
+    }
+
+    .brand-mini .brand-icon{
+      width:36px;
+      height:36px;
+      border-radius:11px;
+      display:grid;
+      place-items:center;
+      color:#fff;
+      background:linear-gradient(145deg, var(--navy), var(--navy-soft));
+      box-shadow:0 7px 18px rgba(18,50,74,.18);
+    }
+
+    .top-time{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:var(--text-soft);
+      font-size:13px;
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(226,232,238,.85);
+      padding:8px 13px;
+      border-radius:999px;
+      box-shadow:var(--shadow-soft);
+      backdrop-filter:blur(10px);
+    }
+
+    .top-time .live-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#38A169;
+      box-shadow:0 0 0 5px rgba(56,161,105,.12);
+    }
+
+    /* =========================================================
+       HERO / BANNER
+    ========================================================= */
+    .hero{
+      position:relative;
+      overflow:hidden;
+      min-height:245px;
+      border-radius:var(--radius-xl);
+      padding:30px 34px;
+      color:#fff;
+      background:
+        linear-gradient(135deg, rgba(8,31,47,.98), rgba(20,71,94,.96) 58%, rgba(19,102,106,.95)),
+        var(--navy);
+      box-shadow:
+        0 22px 45px rgba(8,31,47,.18),
+        inset 0 1px 0 rgba(255,255,255,.08);
+      isolation:isolate;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-80px -60px auto auto;
+      width:380px;
+      height:380px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.13), transparent 65%);
+      z-index:-1;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:-90px;
+      bottom:-110px;
+      width:340px;
+      height:340px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(201,155,46,.16), transparent 68%);
+      z-index:-1;
+    }
+
+    .hero-pattern{
+      position:absolute;
+      inset:0;
+      opacity:.10;
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      max-width:760px;
+    }
+
+    .hero-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(255,255,255,.15);
+      background:rgba(255,255,255,.08);
+      border-radius:999px;
+      padding:6px 11px;
+      font-size:12px;
+      margin-bottom:14px;
+      backdrop-filter:blur(8px);
+    }
+
+    .hero-kicker svg{
+      width:17px;
+      height:17px;
+      color:#E9C75A;
+    }
+
+    .hero h1{
+      font-size:clamp(24px, 4vw, 36px);
+      line-height:1.45;
+      font-weight:800;
+      margin-bottom:8px;
+      letter-spacing:-.5px;
+    }
+
+    .hero p{
+      color:rgba(255,255,255,.80);
+      font-size:14px;
+      max-width:670px;
+      margin-bottom:18px;
+    }
+
+    .hero-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .hero-chip{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 11px;
+      border-radius:10px;
+      color:rgba(255,255,255,.88);
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      font-size:12px;
+    }
+
+    .hero-chip svg{
+      width:17px;
+      height:17px;
+      color:#E8C45E;
+    }
+
+    .hero-datetime{
+      position:absolute;
+      left:26px;
+      top:26px;
+      width:190px;
+      padding:14px 15px;
+      border-radius:17px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(12px);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+      z-index:2;
+    }
+
+    .hero-datetime .dt-label{
+      color:rgba(255,255,255,.58);
+      font-size:11px;
+      margin-bottom:3px;
+    }
+
+    .hero-datetime .dt-date{
+      font-size:13px;
+      color:#fff;
+      font-weight:600;
+    }
+
+    .hero-datetime .dt-time{
+      font-size:22px;
+      line-height:1.35;
+      color:#E9C75A;
+      font-weight:800;
+      margin-top:2px;
+      direction:ltr;
+      text-align:right;
+    }
+
+    /* =========================================================
+       NOTICE
+    ========================================================= */
+    .notice{
+      margin-top:18px;
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:16px;
+      background:linear-gradient(90deg, #EEF7FA, #F8FBFC);
+      border:1px solid #DCEBF0;
+      color:#31505F;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .notice-icon{
+      width:38px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      border-radius:12px;
+      background:#DFF1F2;
+      color:var(--teal);
+      flex:none;
+    }
+
+    .notice strong{
+      display:block;
+      font-size:13px;
+      margin-bottom:2px;
+    }
+
+    .notice span{
+      font-size:12px;
+      color:#6A7D88;
+    }
+
+    /* =========================================================
+       FORM CARD
+    ========================================================= */
+    .form-card{
+      margin-top:20px;
+      background:rgba(255,255,255,.93);
+      border:1px solid rgba(226,232,238,.95);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .form-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      padding:23px 26px;
+      border-bottom:1px solid var(--border);
+      background:linear-gradient(180deg,#fff,#FBFCFD);
+    }
+
+    .section-heading{
+      display:flex;
+      align-items:center;
+      gap:13px;
+    }
+
+    .section-heading-icon{
+      width:44px;
+      height:44px;
+      border-radius:13px;
+      display:grid;
+      place-items:center;
+      background:var(--navy);
+      color:#fff;
+      box-shadow:0 8px 18px rgba(18,50,74,.16);
+    }
+
+    .section-heading h2{
+      font-size:17px;
+      font-weight:800;
+      color:var(--navy);
+    }
+
+    .section-heading p{
+      font-size:11px;
+      color:var(--muted);
+      margin-top:1px;
+    }
+
+    .required-note{
+      font-size:11px;
+      color:#7B8790;
+    }
+
+    .required-note b{
+      color:var(--red);
+    }
+
+    .form-body{
+      padding:26px;
+    }
+
+    /* =========================================================
+       FORM SECTIONS
+    ========================================================= */
+    .form-section{
+      margin-bottom:26px;
+    }
+
+    .form-section:last-child{
+      margin-bottom:0;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      margin-bottom:17px;
+      padding-bottom:11px;
+      border-bottom:1px dashed #E5EAF0;
+      color:var(--navy);
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .section-title::before{
+      content:"";
+      width:4px;
+      height:19px;
+      border-radius:4px;
+      background:linear-gradient(var(--teal), var(--gold));
+    }
+
+    .section-title svg{
+      width:18px;
+      height:18px;
+      color:var(--teal);
+    }
+
+    .field-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:17px;
+    }
+
+    .field.full{
+      grid-column:1 / -1;
+    }
+
+    .field{
+      min-width:0;
+    }
+
+    .field-label{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size:12px;
+      font-weight:700;
+      color:#354753;
+      margin-bottom:8px;
+    }
+
+    .field-label svg{
+      width:16px;
+      height:16px;
+      color:#7A8A95;
+    }
+
+    .required{
+      color:var(--red);
+      font-weight:800;
+    }
+
+    .field-help{
+      color:#8B98A2;
+      font-size:10px;
+      margin-top:6px;
+      line-height:1.7;
+    }
+
+    .input-wrap{
+      position:relative;
+    }
+
+    .input-icon{
+      position:absolute;
+      right:14px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#8A99A4;
+      pointer-events:none;
+      z-index:2;
+    }
+
+    .input-icon svg{
+      width:19px;
+      height:19px;
+    }
+
+    .form-control{
+      width:100%;
+      min-height:48px;
+      border:1px solid var(--border);
+      border-radius:var(--radius-md);
+      background:#fff;
+      color:var(--text);
+      outline:none;
+      padding:0 45px 0 14px;
+      font-size:13px;
+      transition:.18s ease;
+      box-shadow:0 2px 4px rgba(18,50,74,.02);
+    }
+
+    select.form-control{
+      appearance:none;
+      -webkit-appearance:none;
+      cursor:pointer;
+      padding-left:42px;
+    }
+
+    .select-arrow{
+      position:absolute;
+      left:13px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#83929D;
+      pointer-events:none;
+      z-index:2;
+    }
+
+    .form-control::placeholder{
+      color:#A7B2BA;
+    }
+
+    .form-control:hover{
+      border-color:#CFD9E1;
+    }
+
+    .form-control:focus{
+      border-color:var(--border-focus);
+      box-shadow:
+        0 0 0 4px rgba(157,181,198,.12),
+        0 7px 16px rgba(18,50,74,.04);
+    }
+
+    textarea.form-control{
+      min-height:155px;
+      resize:vertical;
+      padding:14px;
+      line-height:1.9;
+    }
+
+    .ltr{
+      direction:ltr;
+      text-align:right;
+    }
+
+    .field.error .form-control{
+      border-color:#D66A55;
+      box-shadow:0 0 0 4px rgba(166,65,45,.07);
+    }
+
+    .field.success .form-control{
+      border-color:#8DC6A7;
+    }
+
+    .error-message{
+      display:none;
+      align-items:center;
+      gap:5px;
+      color:#B13D26;
+      font-size:10px;
+      margin-top:5px;
+    }
+
+    .field.error .error-message{
+      display:flex;
+    }
+
+    .info-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-size:10px;
+      color:#56717E;
+      background:#F1F7F9;
+      border:1px solid #DFEDF1;
+      padding:5px 8px;
+      border-radius:8px;
+      margin-top:7px;
+    }
+
+    .info-pill svg{
+      width:14px;
+      height:14px;
+      color:var(--teal);
+    }
+
+    /* =========================================================
+       CONDITIONAL GROUP
+    ========================================================= */
+    .conditional-box{
+      display:none;
+      margin-top:17px;
+      padding:17px;
+      border:1px solid #E6ECEF;
+      border-radius:16px;
+      background:linear-gradient(180deg,#FAFCFD,#F8FAFB);
+    }
+
+    .conditional-box.show{
+      display:block;
+      animation:fadeIn .25s ease;
+    }
+
+    .conditional-title{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      color:#44606D;
+      font-weight:800;
+      margin-bottom:13px;
+    }
+
+    .conditional-title svg{
+      width:17px;
+      height:17px;
+      color:var(--teal);
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(4px)}
+      to{opacity:1; transform:none}
+    }
+
+    /* =========================================================
+       MESSAGE
+    ========================================================= */
+    .message-meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-top:7px;
+      color:#8D9AA3;
+      font-size:10px;
+    }
+
+    .counter{
+      direction:ltr;
+      white-space:nowrap;
+    }
+
+    /* =========================================================
+       ATTACHMENT
+    ========================================================= */
+    .upload-box{
+      position:relative;
+      border:1.5px dashed #C9D7DF;
+      border-radius:17px;
+      background:linear-gradient(180deg,#FBFDFE,#F8FBFC);
+      padding:25px 18px;
+      text-align:center;
+      transition:.18s ease;
+      cursor:pointer;
+    }
+
+    .upload-box:hover{
+      border-color:#8AB2BD;
+      background:#F6FBFC;
+    }
+
+    .upload-box.dragover{
+      border-color:var(--teal);
+      background:var(--teal-soft);
+    }
+
+    .upload-icon{
+      width:52px;
+      height:52px;
+      display:grid;
+      place-items:center;
+      margin:0 auto 10px;
+      border-radius:16px;
+      background:var(--teal-soft);
+      color:var(--teal);
+    }
+
+    .upload-icon svg{
+      width:26px;
+      height:26px;
+    }
+
+    .upload-box strong{
+      display:block;
+      color:#38515F;
+      font-size:13px;
+      margin-bottom:3px;
+    }
+
+    .upload-box span{
+      display:block;
+      color:#8D9BA4;
+      font-size:10px;
+    }
+
+    .upload-input{
+      display:none;
+    }
+
+    .file-list{
+      display:grid;
+      gap:8px;
+      margin-top:12px;
+    }
+
+    .file-item{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      padding:9px 11px;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:10px;
+      color:#536773;
+      font-size:10px;
+    }
+
+    .file-item svg{
+      width:17px;
+      height:17px;
+      color:var(--teal);
+    }
+
+    .file-item .remove-file{
+      margin-right:auto;
+      width:25px;
+      height:25px;
+      display:grid;
+      place-items:center;
+      border-radius:7px;
+      background:#F8EEEB;
+      color:var(--red);
+    }
+
+    .file-item .remove-file svg{
+      width:14px;
+      height:14px;
+    }
+
+    /* =========================================================
+       ACTIONS
+    ========================================================= */
+    .actions{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:28px;
+      padding-top:22px;
+      border-top:1px solid var(--border);
+    }
+
+    .actions-right{
+      display:flex;
+      gap:10px;
+    }
+
+    .btn{
+      min-height:49px;
+      border-radius:13px;
+      padding:0 18px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      font-size:12px;
+      font-weight:700;
+      transition:.18s ease;
+    }
+
+    .btn svg{
+      width:19px;
+      height:19px;
+    }
+
+    .btn-primary{
+      min-width:165px;
+      color:#fff;
+      background:linear-gradient(135deg,#12324A,#1D5871);
+      box-shadow:0 10px 22px rgba(18,50,74,.18);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-1px);
+      box-shadow:0 13px 27px rgba(18,50,74,.23);
+    }
+
+    .btn-secondary{
+      color:#5E6E78;
+      background:#F4F7F9;
+      border:1px solid #E2E8ED;
+    }
+
+    .btn-secondary:hover{
+      background:#EDF2F5;
+    }
+
+    .btn-guide{
+      color:var(--teal);
+      background:var(--teal-soft);
+      border:1px solid #D4EDEC;
+    }
+
+    .btn-guide:hover{
+      background:#DFF2F1;
+    }
+
+    .btn:disabled{
+      opacity:.65;
+      cursor:not-allowed;
+      transform:none !important;
+    }
+
+    .submit-spinner{
+      width:17px;
+      height:17px;
+      border:2px solid rgba(255,255,255,.35);
+      border-top-color:#fff;
+      border-radius:50%;
+      animation:spin .8s linear infinite;
+      display:none;
+    }
+
+    .loading .submit-spinner{
+      display:block;
+    }
+
+    .loading .submit-icon{
+      display:none;
+    }
+
+    @keyframes spin{
+      to{transform:rotate(360deg)}
+    }
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+    .footer{
+      margin-top:18px;
+      text-align:center;
+      color:#8A98A1;
+      font-size:10px;
+      padding:10px;
+    }
+
+    /* =========================================================
+       SUCCESS MODAL
+    ========================================================= */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(6,25,37,.58);
+      backdrop-filter:blur(8px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:1000;
+    }
+
+    .overlay.show{
+      display:flex;
+      animation:fadeOverlay .2s ease;
+    }
+
+    @keyframes fadeOverlay{
+      from{opacity:0}
+      to{opacity:1}
+    }
+
+    .modal{
+      width:min(510px,100%);
+      background:#fff;
+      border-radius:24px;
+      box-shadow:0 30px 75px rgba(6,25,37,.28);
+      overflow:hidden;
+      animation:modalIn .25s ease;
+    }
+
+    @keyframes modalIn{
+      from{opacity:0; transform:translateY(18px) scale(.98)}
+      to{opacity:1; transform:none}
+    }
+
+    .success-top{
+      padding:30px 28px 20px;
+      text-align:center;
+      background:linear-gradient(180deg,#F2FBF5,#FFFFFF);
+    }
+
+    .success-icon{
+      width:72px;
+      height:72px;
+      margin:0 auto 14px;
+      border-radius:21px;
+      display:grid;
+      place-items:center;
+      color:#fff;
+      background:linear-gradient(145deg,#2E7D59,#4A9B73);
+      box-shadow:0 13px 30px rgba(46,125,89,.19);
+    }
+
+    .success-icon svg{
+      width:34px;
+      height:34px;
+    }
+
+    .success-top h3{
+      color:#1D4D3B;
+      font-size:20px;
+      margin-bottom:4px;
+    }
+
+    .success-top p{
+      color:#75867F;
+      font-size:11px;
+    }
+
+    .tracking-card{
+      margin:0 24px;
+      background:#F8FAFC;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:15px;
+    }
+
+    .tracking-label{
+      color:#87949D;
+      font-size:10px;
+      margin-bottom:5px;
+    }
+
+    .tracking-row{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .tracking-code{
+      direction:ltr;
+      flex:1;
+      min-width:0;
+      padding:10px 11px;
+      border-radius:10px;
+      background:#fff;
+      border:1px solid #DDE5EA;
+      color:var(--navy);
+      font-size:18px;
+      font-weight:800;
+      letter-spacing:1px;
+      text-align:center;
+    }
+
+    .copy-btn{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      color:var(--teal);
+      background:var(--teal-soft);
+      border:1px solid #D6EBEA;
+      border-radius:10px;
+    }
+
+    .copy-btn:hover{
+      background:#DDF1F0;
+    }
+
+    .registered-info{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      padding:18px 24px 0;
+    }
+
+    .info-card{
+      background:#FBFCFD;
+      border:1px solid #E9EEF2;
+      border-radius:12px;
+      padding:11px 12px;
+    }
+
+    .info-card .small{
+      color:#919DA5;
+      font-size:9px;
+      display:block;
+      margin-bottom:3px;
+    }
+
+    .info-card strong{
+      color:#455964;
+      font-size:11px;
+    }
+
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      padding:22px 24px 24px;
+    }
+
+    .modal-actions .btn{
+      flex:1;
+    }
+
+    /* =========================================================
+       GUIDE MODAL
+    ========================================================= */
+    .guide-modal .modal-content{
+      padding:25px;
+    }
+
+    .guide-head{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      margin-bottom:17px;
+    }
+
+    .guide-head-icon{
+      width:44px;
+      height:44px;
+      display:grid;
+      place-items:center;
+      border-radius:13px;
+      background:var(--teal-soft);
+      color:var(--teal);
+    }
+
+    .guide-head h3{
+      color:var(--navy);
+      font-size:17px;
+    }
+
+    .guide-list{
+      display:grid;
+      gap:11px;
+      margin-bottom:20px;
+    }
+
+    .guide-item{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:11px 12px;
+      border:1px solid #E8EDF1;
+      border-radius:12px;
+      background:#FBFCFD;
+    }
+
+    .guide-number{
+      width:25px;
+      height:25px;
+      border-radius:8px;
+      display:grid;
+      place-items:center;
+      background:#EEF5F7;
+      color:var(--teal);
+      font-size:10px;
+      font-weight:800;
+      flex:none;
+    }
+
+    .guide-item strong{
+      display:block;
+      color:#415764;
+      font-size:11px;
+    }
+
+    .guide-item p{
+      color:#86949D;
+      font-size:10px;
+      margin-top:1px;
+    }
+
+    .close-guide{
+      width:100%;
+    }
+
+    /* =========================================================
+       TOAST
+    ========================================================= */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:24px;
+      transform:translate(-50%, 20px);
+      background:#173B51;
+      color:#fff;
+      padding:10px 15px;
+      border-radius:11px;
+      font-size:11px;
+      box-shadow:0 14px 30px rgba(12,37,56,.2);
+      opacity:0;
+      pointer-events:none;
+      transition:.22s ease;
+      z-index:1500;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translate(-50%,0);
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+    @media (max-width: 900px){
+      .hero-datetime{
+        position:static;
+        width:100%;
+        margin-top:18px;
+        display:flex;
+        align-items:center;
+        gap:14px;
+      }
+
+      .hero-datetime .dt-label{
+        margin:0;
+      }
+
+      .hero-datetime .dt-time{
+        margin-right:auto;
+      }
+
+      .hero{
+        min-height:auto;
+      }
+    }
+
+    @media (max-width: 720px){
+      .page{
+        width:min(100% - 18px, 680px);
+        padding-top:10px;
+      }
+
+      .topbar{
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .top-time{
+        justify-content:center;
+      }
+
+      .hero{
+        padding:23px 20px;
+        border-radius:20px;
+      }
+
+      .hero h1{
+        font-size:23px;
+      }
+
+      .hero p{
+        font-size:12px;
+      }
+
+      .hero-chip{
+        width:100%;
+      }
+
+      .hero-datetime{
+        padding:12px 13px;
+        border-radius:14px;
+      }
+
+      .form-card{
+        margin-top:14px;
+        border-radius:20px;
+      }
+
+      .form-header{
+        padding:18px;
+      }
+
+      .form-body{
+        padding:18px;
+      }
+
+      .field-grid{
+        grid-template-columns:1fr;
+        gap:14px;
+      }
+
+      .field.full{
+        grid-column:auto;
+      }
+
+      .actions{
+        flex-direction:column-reverse;
+        align-items:stretch;
+      }
+
+      .actions-right{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+      }
+
+      .actions-right .btn{
+        width:100%;
+      }
+
+      .btn-primary{
+        width:100%;
+      }
+
+      .registered-info{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 470px){
+      .brand-mini{
+        font-size:12px;
+      }
+
+      .brand-mini .brand-icon{
+        width:32px;
+        height:32px;
+      }
+
+      .hero-meta{
+        display:grid;
+        gap:7px;
+      }
+
+      .hero-chip{
+        padding:6px 9px;
+      }
+
+      .section-heading h2{
+        font-size:15px;
+      }
+
+      .required-note{
+        display:none;
+      }
+
+      .actions-right{
+        grid-template-columns:1fr;
+      }
+
+      .tracking-row{
+        align-items:stretch;
+      }
+
+      .copy-btn{
+        width:44px;
+        flex:none;
+      }
+
+      .tracking-code{
+        font-size:16px;
+      }
+
+      .modal-actions{
+        flex-direction:column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     SVG ICON SPRITE
+========================================================= -->
+<svg class="icon-sprite" aria-hidden="true">
+  <symbol id="i-user" viewBox="0 0 24 24">
+    <circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    <path d="M5 20c.8-3.6 3-5.5 7-5.5s6.2 1.9 7 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="i-phone" viewBox="0 0 24 24">
+    <path d="M7.2 4.3l2.2-.8c.6-.2 1.2.1 1.5.6l1.1 2.6c.2.5.1 1-.3 1.4l-1.5 1.4c1.1 2.1 2.4 3.4 4.5 4.5l1.4-1.5c.4-.4.9-.5 1.4-.3l2.6 1.1c.5.2.8.8.6 1.5l-.8 2.2c-.2.7-.8 1.1-1.5 1.1C10.5 18.6 5.4 13.5 4.2 5.8c-.1-.7.3-1.3 1-1.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="i-map" viewBox="0 0 24 24">
+    <path d="M8 5.5L16 3l5 2v13.5L16 21l-8-2.5-5 2V7l5-2.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+    <path d="M8 5.5v13M16 3v18" fill="none" stroke="currentColor" stroke-width="1.7"/>
+  </symbol>
+
+  <symbol id="i-building" viewBox="0 0 24 24">
+    <path d="M4 20V5.5c0-.8.6-1.5 1.5-1.5H15c.8 0 1.5.7 1.5 1.5V20M16.5 9.5h3c.8 0 1.5.7 1.5 1.5V20M8 7.5h2M12 7.5h2M8 11h2M12 11h2M8 14.5h2M12 14.5h2M8 20v-2.5h3V20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="i-briefcase" viewBox="0 0 24 24">
+    <rect x="3" y="7" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    <path d="M8 7V5.5C8 4.7 8.7 4 9.5 4h5c.8 0 1.5.7 1.5 1.5V7M3 11h18M10 11v2h4v-2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="i-city" viewBox="0 0 24 24">
+    <path d="M4 20V8.5L12 5v15M12 20V3l8 3.5V20M7 11h2M7 14h2M7 17h2M15 9h2M15 12h2M15 15h2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="i-tag" viewBox="0 0 24 24">
+    <path d="M4 5.5V10l9.5 9.5c.6.6 1.5.6 2.1 0l3.9-3.9c.6-.6.6-1.5 0-2.1L10 4H5.5C4.7 4 4 4.7 4 5.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+    <circle cx="7.5" cy="7.5" r="1" fill="currentColor"/>
+  </symbol>
+
+  <symbol id="i-file-text" viewBox="0 0 24 24">
+    <path d="M7 3.5h7l4 4V20c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V4.5c0-.6.4-1 1-1z" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    <path d="M14 3.5V8h4M9 12h6M9 15h6M9 18h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="i-message" viewBox="0 0 24 24">
+    <path d="M5 5h14c1.1 0 2 .9 2 2v8c0 1.1-.9 2-2 2H11l-5 4v-4H5c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="i-paperclip" viewBox="0 0 24 24">
+    <path d="M8.5 12.5l5.7-5.7a3 3 0 1 1 4.2 4.2L10 19.4a4.5 4.5 0 1 1-6.4-6.4l8-8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="i-send" viewBox="0 0 24 24">
+    <path d="M4 4l16 7-16 7 3.5-7L4 4zM7.5 11h8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="i-x" viewBox="0 0 24 24">
+    <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="i-help" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    <path d="M9.7 9a2.4 2.4 0 1 1 4.4 1.3c-.8 1-2.1 1.3-2.1 2.7M12 16.5v.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="i-clock" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    <path d="M12 7.5V12l3 1.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="i-calendar" viewBox="0 0 24 24">
+    <rect x="3.5" y="5" width="17" height="15.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    <path d="M7 3.5v3M17 3.5v3M3.5 9h17M7.5 12.5h.1M11.9 12.5h.1M16.3 12.5h.1M7.5 16h.1M11.9 16h.1M16.3 16h.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="i-check" viewBox="0 0 24 24">
+    <path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="i-copy" viewBox="0 0 24 24">
+    <rect x="8" y="8" width="11" height="12" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    <path d="M16 8V5.8c0-1-.8-1.8-1.8-1.8H5.8C4.8 4 4 4.8 4 5.8v9.4c0 1 .8 1.8 1.8 1.8H8" fill="none" stroke="currentColor" stroke-width="1.7"/>
+  </symbol>
+
+  <symbol id="i-chevron" viewBox="0 0 24 24">
+    <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="i-info" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    <path d="M12 10.5v5M12 7.5v.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="i-link" viewBox="0 0 24 24">
+    <path d="M9.5 14.5l5-5M7.5 17.5l-2 2a3.2 3.2 0 1 1-4.5-4.5l4-4A3.2 3.2 0 0 1 9.5 11M14.5 9.5l2-2A3.2 3.2 0 1 1 21 12l-4 4a3.2 3.2 0 0 1-4.5 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<div class="page">
+
+  <!-- =======================================================
+       TOP BAR
+  ======================================================== -->
+  <div class="topbar">
+    <div class="brand-mini">
+      <div class="brand-icon">
+        <svg><use href="#i-building"></use></svg>
+      </div>
+      <span>بنیاد مسکن انقلاب اسلامی</span>
+    </div>
+
+    <div class="top-time">
+      <span class="live-dot"></span>
+      <svg style="width:16px;height:16px;"><use href="#i-clock"></use></svg>
+      <span id="topDateTime">در حال دریافت تاریخ و زمان...</span>
+    </div>
+  </div>
+
+  <!-- =======================================================
+       HERO
+  ======================================================== -->
+  <section class="hero">
+
+    <svg class="hero-pattern" viewBox="0 0 800 300" preserveAspectRatio="none">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-width=".8"/>
+        </pattern>
+      </defs>
+      <rect width="800" height="300" fill="url(#grid)"/>
+    </svg>
+
+    <div class="hero-content">
+
+      <div class="hero-kicker">
+        <svg><use href="#i-link"></use></svg>
+        سامانه ارتباط با کارکنان
+      </div>
+
+      <h1>ثبت درخواست و پیام کارکنان</h1>
+
+      <p>
+        درخواست‌ها، پیشنهادها، انتقادها، شکایات و سایر پیام‌های خود را
+        از طریق این فرم برای بررسی و پیگیری ثبت نمایید.
+      </p>
+
+      <div class="hero-meta">
+        <div class="hero-chip">
+          <svg><use href="#i-check"></use></svg>
+          ثبت الکترونیکی درخواست
+        </div>
+
+        <div class="hero-chip">
+          <svg><use href="#i-file-text"></use></svg>
+          اختصاص کد رهگیری
+        </div>
+
+        <div class="hero-chip">
+          <svg><use href="#i-clock"></use></svg>
+          ثبت تاریخ و ساعت درخواست
+        </div>
+      </div>
+
+      <!-- Date & Time in Banner -->
+      <div class="hero-datetime">
+        <div>
+          <div class="dt-label">تاریخ جاری</div>
+          <div class="dt-date" id="heroDate">---</div>
+        </div>
+
+        <div>
+          <div class="dt-label">ساعت</div>
+          <div class="dt-time" id="heroTime">--:--:--</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =======================================================
+       NOTICE
+  ======================================================== -->
+  <div class="notice">
+    <div class="notice-icon">
+      <svg><use href="#i-info"></use></svg>
+    </div>
+    <div>
+      <strong>توجه</strong>
+      <span>
+        فیلدهای دارای علامت <b style="color:#A9412D">*</b> الزامی هستند.
+        پس از ثبت موفق درخواست، کد رهگیری و تاریخ و ساعت ثبت به شما نمایش داده خواهد شد.
+      </span>
+    </div>
+  </div>
+
+  <!-- =======================================================
+       FORM
+  ======================================================== -->
+  <form id="employeeForm" class="form-card" novalidate>
+
+    <div class="form-header">
+      <div class="section-heading">
+        <div class="section-heading-icon">
+          <svg><use href="#i-file-text"></use></svg>
+        </div>
+
+        <div>
+          <h2>فرم ثبت درخواست</h2>
+          <p>لطفاً اطلاعات مورد نیاز را با دقت تکمیل نمایید.</p>
+        </div>
+      </div>
+
+      <div class="required-note">
+        <b>*</b> الزامی
+      </div>
+    </div>
+
+    <div class="form-body">
+
+      <!-- ===================================================
+           SECTION 1 : PERSONAL INFO
+      ==================================================== -->
+      <section class="form-section">
+
+        <div class="section-title">
+          <svg><use href="#i-user"></use></svg>
+          اطلاعات فردی
+        </div>
+
+        <div class="field-grid">
+
+          <!-- Name -->
+          <div class="field" id="fieldName">
+            <label class="field-label" for="name">
+              <svg><use href="#i-user"></use></svg>
+              نام و نام خانوادگی <span class="required">*</span>
+            </label>
+
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg><use href="#i-user"></use></svg>
+              </span>
+
+              <input
+                type="text"
+                id="name"
+                class="form-control"
+                placeholder="نام و نام خانوادگی را وارد کنید"
+                autocomplete="name"
+                maxlength="100"
+                required
+              />
+            </div>
+
+            <div class="error-message">
+              <svg style="width:13px;height:13px;"><use href="#i-info"></use></svg>
+              وارد کردن نام و نام خانوادگی الزامی است.
+            </div>
+          </div>
+
+          <!-- Mobile -->
+          <div class="field" id="fieldPhone">
+            <label class="field-label" for="phone">
+              <svg><use href="#i-phone"></use></svg>
+              تلفن همراه <span class="required">*</span>
+            </label>
+
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg><use href="#i-phone"></use></svg>
+              </span>
+
+              <input
+                type="tel"
+                id="phone"
+                class="form-control ltr"
+                placeholder="09xxxxxxxxx"
+                inputmode="numeric"
+                autocomplete="tel"
+                maxlength="11"
+                required
+              />
+            </div>
+
+            <div class="field-help">
+              شماره همراه را به صورت ۱۱ رقمی و با 09 وارد کنید.
+            </div>
+
+            <div class="error-message">
+              <svg style="width:13px;height:13px;"><use href="#i-info"></use></svg>
+              شماره تلفن همراه معتبر وارد کنید.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===================================================
+           SECTION 2 : SERVICE LOCATION
+      ==================================================== -->
+      <section class="form-section">
+
+        <div class="section-title">
+          <svg><use href="#i-building"></use></svg>
+          محل خدمت
+        </div>
+
+        <div class="field-grid">
+
+          <!-- Province -->
+          <div class="field" id="fieldProvince">
+            <label class="field-label" for="province">
+              <svg><use href="#i-map"></use></svg>
+              استان <span class="required">*</span>
+            </label>
+
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg><use href="#i-map"></use></svg>
+              </span>
+
+              <select id="province" class="form-control" required>
+                <option value="">استان را انتخاب کنید</option>
+              </select>
+
+              <span class="select-arrow">
+                <svg><use href="#i-chevron"></use></svg>
+              </span>
+            </div>
+
+            <div class="error-message">
+              <svg style="width:13px;height:13px;"><use href="#i-info"></use></svg>
+              انتخاب استان الزامی است.
+            </div>
+          </div>
+
+          <!-- Service Location -->
+          <div class="field" id="fieldServiceLocation">
+            <label class="field-label" for="serviceLocation">
+              <svg><use href="#i-building"></use></svg>
+              محل خدمت <span class="required">*</span>
+            </label>
+
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg><use href="#i-building"></use></svg>
+              </span>
+
+              <select id="serviceLocation" class="form-control" required>
+                <option value="">محل خدمت را انتخاب کنید</option>
+                <option value="central">دفتر مرکزی</option>
+                <option value="province">بنیاد مسکن استان‌ها</option>
+                <option value="subsidiary">شرکت‌های تابعه</option>
+              </select>
+
+              <span class="select-arrow">
+                <svg><use href="#i-chevron"></use></svg>
+              </span>
+            </div>
+
+            <div class="error-message">
+              <svg style="width:13px;height:13px;"><use href="#i-info"></use></svg>
+              انتخاب محل خدمت الزامی است.
+            </div>
+          </div>
+
+          <!-- County -->
+          <div class="field" id="fieldCounty">
+            <label class="field-label" for="county">
+              <svg><use href="#i-city"></use></svg>
+              شهرستان
+            </label>
+
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg><use href="#i-city"></use></svg>
+              </span>
+
+              <select id="county" class="form-control" disabled>
+                <option value="">ابتدا استان را انتخاب کنید</option>
+              </select>
+
+              <span class="select-arrow">
+                <svg><use href="#i-chevron"></use></svg>
+              </span>
+            </div>
+
+            <div class="field-help">
+              در حالت «بنیاد مسکن استان‌ها»، شهرستان متناسب با استان انتخابی بارگذاری می‌شود.
+            </div>
+          </div>
+
+          <!-- Central / Province Organizational Unit -->
+          <div class="field" id="fieldOrgUnit">
+            <label class="field-label" for="orgUnit">
+              <svg><use href="#i-briefcase"></use></svg>
+              واحد سازمانی <span class="required">*</span>
+            </label>
+
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg><use href="#i-briefcase"></use></svg>
+              </span>
+
+              <select id="orgUnit" class="form-control" required disabled>
+                <option value="">ابتدا محل خدمت را انتخاب کنید</option>
+              </select>
+
+              <span class="select-arrow">
+                <svg><use href="#i-chevron"></use></svg>
+              </span>
+            </div>
+
+            <div class="error-message">
+              <svg style="width:13px;height:13px;"><use href="#i-info"></use></svg>
+              انتخاب واحد سازمانی الزامی است.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- =================================================
+             SUBSIDIARY : HOLDING / COMPANY
+        ================================================== -->
+        <div id="subsidiaryBox" class="conditional-box">
+
+          <div class="conditional-title">
+            <svg><use href="#i-building"></use></svg>
+            ساختار شرکت‌های تابعه
+          </div>
+
+          <div class="field-grid">
+
+            <!-- Holding -->
+            <div class="field" id="fieldHolding">
+              <label class="field-label" for="holding">
+                هلدینگ / مجموعه <span class="required">*</span>
+              </label>
+
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <svg><use href="#i-building"></use></svg>
+                </span>
+
+                <select id="holding" class="form-control">
+                  <option value="">هلدینگ / مجموعه را انتخاب کنید</option>
+                </select>
+
+                <span class="select-arrow">
+                  <svg><use href="#i-chevron"></use></svg>
+                </span>
+              </div>
+
+              <div class="error-message">
+                <svg style="width:13px;height:13px;"><use href="#i-info"></use></svg>
+                انتخاب هلدینگ / مجموعه الزامی است.
+              </div>
+            </div>
+
+            <!-- Company -->
+            <div class="field" id="fieldCompany">
+              <label class="field-label" for="company">
+                شرکت تابعه <span class="required">*</span>
+              </label>
+
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <svg><use href="#i-building"></use></svg>
+                </span>
+
+                <select id="company" class="form-control" disabled>
+                  <option value="">ابتدا هلدینگ را انتخاب کنید</option>
+                </select>
+
+                <span class="select-arrow">
+                  <svg><use href="#i-chevron"></use></svg>
+                </span>
+              </div>
+
+              <div class="error-message">
+                <svg style="width:13px;height:13px;"><use href="#i-info"></use></svg>
+                انتخاب شرکت تابعه الزامی است.
+              </div>
+            </div>
+
+          </div>
+
+          <div class="info-pill">
+            <svg><use href="#i-info"></use></svg>
+            ساختار شرکت‌های تابعه به‌صورت «هلدینگ ← شرکت» نمایش داده می‌شود.
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           SECTION 3 : REQUEST
+      ==================================================== -->
+      <section class="form-section">
+
+        <div class="section-title">
+          <svg><use href="#i-message"></use></svg>
+          اطلاعات درخواست
+        </div>
+
+        <div class="field-grid">
+
+          <!-- Category -->
+          <div class="field" id="fieldCategory">
+            <label class="field-label" for="category">
+              <svg><use href="#i-tag"></use></svg>
+              دسته‌بندی <span class="required">*</span>
+            </label>
+
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg><use href="#i-tag"></use></svg>
+              </span>
+
+              <select id="category" class="form-control" required>
+                <option value="">دسته‌بندی را انتخاب کنید</option>
+                <option value="request">درخواست</option>
+                <option value="complaint">شکایت</option>
+                <option value="criticism">انتقاد</option>
+                <option value="suggestion">پیشنهاد</option>
+                <option value="idea">طرح و ایده</option>
+                <option value="violation">گزارش تخلف</option>
+                <option value="appreciation">تقدیر و تشکر</option>
+              </select>
+
+              <span class="select-arrow">
+                <svg><use href="#i-chevron"></use></svg>
+              </span>
+            </div>
+
+            <div class="error-message">
+              <svg style="width:13px;height:13px;"><use href="#i-info"></use></svg>
+              انتخاب دسته‌بندی الزامی است.
+            </div>
+          </div>
+
+          <!-- Subject -->
+          <div class="field" id="fieldSubject">
+            <label class="field-label" for="subject">
+              <svg><use href="#i-file-text"></use></svg>
+              موضوع <span class="required">*</span>
+            </label>
+
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg><use href="#i-file-text"></use></svg>
+              </span>
+
+              <input
+                type="text"
+                id="subject"
+                class="form-control"
+                placeholder="موضوع درخواست یا پیام را وارد کنید"
+                maxlength="180"
+                required
+              />
+            </div>
+
+            <div class="error-message">
+              <svg style="width:13px;height:13px;"><use href="#i-info"></use></svg>
+              وارد کردن موضوع الزامی است.
+            </div>
+          </div>
+
+          <!-- Message -->
+          <div class="field full" id="fieldMessage">
+            <label class="field-label" for="message">
+              <svg><use href="#i-message"></use></svg>
+              متن پیام <span class="required">*</span>
+            </label>
+
+            <textarea
+              id="message"
+              class="form-control"
+              placeholder="متن کامل پیام، درخواست، پیشنهاد یا شرح موضوع را وارد کنید..."
+              maxlength="5000"
+              required
+            ></textarea>
+
+            <div class="message-meta">
+              <span>حداکثر ۵۰۰۰ کاراکتر</span>
+              <span class="counter"><span id="messageCount">0</span> / 5000</span>
+            </div>
+
+            <div class="error-message">
+              <svg style="width:13px;height:13px;"><use href="#i-info"></use></svg>
+              متن پیام الزامی است.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===================================================
+           SECTION 4 : ATTACHMENT
+      ==================================================== -->
+      <section class="form-section">
+
+        <div class="section-title">
+          <svg><use href="#i-paperclip"></use></svg>
+          پیوست مدارک
+        </div>
+
+        <div
+          id="uploadBox"
+          class="upload-box"
+          role="button"
+          tabindex="0"
+        >
+          <div class="upload-icon">
+            <svg><use href="#i-paperclip"></use></svg>
+          </div>
+
+          <strong>برای انتخاب فایل کلیک کنید یا فایل را اینجا رها کنید</strong>
+
+          <span>
+            PDF، JPG، PNG، DOC، DOCX و سایر مدارک مرتبط
+          </span>
+
+          <input
+            type="file"
+            id="attachments"
+            class="upload-input"
+            multiple
+            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xlsx,.xls"
+          />
+        </div>
+
+        <div id="fileList" class="file-list"></div>
+
+        <div class="field-help">
+          پیوست مدارک اختیاری است.
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           ACTIONS
+      ==================================================== -->
+      <div class="actions">
+
+        <div class="actions-right">
+
+          <button type="button" class="btn btn-secondary" id="cancelBtn">
+            <svg><use href="#i-x"></use></svg>
+            انصراف
+          </button>
+
+          <button type="button" class="btn btn-guide" id="guideBtn">
+            <svg><use href="#i-help"></use></svg>
+            راهنمای سامانه
+          </button>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submitBtn">
+          <span class="submit-icon">
+            <svg><use href="#i-send"></use></svg>
+          </span>
+
+          <span class="submit-spinner"></span>
+
+          ثبت درخواست
+        </button>
+
+      </div>
+
+    </div>
+  </form>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    سامانه ارتباط با کارکنان بنیاد مسکن انقلاب اسلامی
+  </div>
+
+</div>
+
+<!-- =========================================================
+     SUCCESS MODAL
+========================================================= -->
+<div id="successOverlay" class="overlay">
+
+  <div class="modal">
+
+    <div class="success-top">
+      <div class="success-icon">
+        <svg><use href="#i-check"></use></svg>
+      </div>
+
+      <h3>درخواست با موفقیت ثبت شد</h3>
+
+      <p>
+        اطلاعات درخواست شما دریافت و برای پیگیری ثبت گردید.
+      </p>
+    </div>
+
+    <div class="tracking-card">
+
+      <div class="tracking-label">
+        کد رهگیری درخواست
+      </div>
+
+      <div class="tracking-row">
+
+        <div id="trackingCode" class="tracking-code">
+          -----
+        </div>
+
+        <button type="button" id="copyTrackingBtn" class="copy-btn" title="کپی کد رهگیری">
+          <svg><use href="#i-copy"></use></svg>
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="registered-info">
+
+      <div class="info-card">
+        <span class="small">تاریخ ثبت</span>
+        <strong id="registeredDate">---</strong>
+      </div>
+
+      <div class="info-card">
+        <span class="small">ساعت ثبت</span>
+        <strong id="registeredTime" dir="ltr">---</strong>
+      </div>
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button type="button" class="btn btn-secondary" id="closeSuccessBtn">
+        بستن
+      </button>
+
+      <button type="button" class="btn btn-primary" id="newRequestBtn">
+        <svg><use href="#i-file-text"></use></svg>
+        ثبت درخواست جدید
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- =========================================================
+     GUIDE MODAL
+========================================================= -->
+<div id="guideOverlay" class="overlay">
+
+  <div class="modal guide-modal">
+
+    <div class="modal-content">
+
+      <div class="guide-head">
+        <div class="guide-head-icon">
+          <svg><use href="#i-help"></use></svg>
+        </div>
+
+        <div>
+          <h3>راهنمای ثبت درخواست</h3>
+        </div>
+      </div>
+
+      <div class="guide-list">
+
+        <div class="guide-item">
+          <div class="guide-number">۱</div>
+          <div>
+            <strong>اطلاعات فردی</strong>
+            <p>نام و نام خانوادگی و شماره تلفن همراه خود را وارد کنید.</p>
+          </div>
+        </div>
+
+        <div class="guide-item">
+          <div class="guide-number">۲</div>
+          <div>
+            <strong>محل خدمت</strong>
+            <p>استان، محل خدمت و واحد سازمانی مرتبط را انتخاب کنید.</p>
+          </div>
+        </div>
+
+        <div class="guide-item">
+          <div class="guide-number">۳</div>
+          <div>
+            <strong>اطلاعات درخواست</strong>
+            <p>دسته‌بندی، موضوع و متن کامل پیام را با دقت تکمیل کنید.</p>
+          </div>
+        </div>
+
+        <div class="guide-item">
+          <div class="guide-number">۴</div>
+          <div>
+            <strong>ثبت نهایی</strong>
+            <p>پس از ثبت موفق، کد رهگیری و تاریخ و ساعت درخواست نمایش داده می‌شود.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <button type="button" class="btn btn-primary close-guide" id="closeGuideBtn">
+        متوجه شدم
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast">کد رهگیری کپی شد.</div>
+
+<script>
+  /* =========================================================
+     DATA
+  ========================================================= */
+
+  const PROVINCES = [
+    "آذربایجان شرقی",
+    "آذربایجان غربی",
+    "اردبیل",
+    "اصفهان",
+    "البرز",
+    "ایلام",
+    "بوشهر",
+    "تهران",
+    "چهارمحال و بختیاری",
+    "خراسان جنوبی",
+    "خراسان رضوی",
+    "خراسان شمالی",
+    "خوزستان",
+    "زنجان",
+    "سمنان",
+    "سیستان و بلوچستان",
+    "فارس",
+    "قزوین",
+    "قم",
+    "کردستان",
+    "کرمان",
+    "کرمانشاه",
+    "کهگیلویه و بویراحمد",
+    "گلستان",
+    "گیلان",
+    "لرستان",
+    "مازندران",
+    "مرکزی",
+    "هرمزگان",
+    "همدان",
+    "یزد"
+  ];
+
+  /*
+    ساختار شرکت‌ها را عمداً داده‌محور قرار داده‌ایم تا بعداً
+    فقط این بخش تغییر کند و HTML اصلی دست‌نخورده بماند.
+  */
+  const HOLDINGS = {
+    "هلدینگ توسعه مسکن": [
+      "شرکت توسعه مسکن اردبیل",
+      "سایر"
+    ],
+
+    "هلدینگ نوسازی و عمران تهران": [
+      "شرکت سامان محیط",
+      "سایر"
+    ]
+
+    // هلدینگ‌های بعدی و شرکت‌های زیرمجموعه در این ساختار اضافه می‌شوند.
+  };
+
+  const CENTRAL_UNITS = [
+    "دفتر نمایندگی ولی فقیه",
+    "حوزه ریاست",
+    "معاونت پشتیبانی و توسعه مدیریت",
+    "معاونت امور بازسازی",
+    "معاونت مسکن شهری",
+    "معاونت برنامه ریزی",
+    "معاونت توسعه و عمران روستایی",
+    "اداره کل امور مالی",
+    "اداره کل اداری و پشتیبانی",
+    "اداره کل روابط عمومی",
+    "اداره کل حراست",
+    "اداره کل ذی حسابی",
+    "دفتر برنامه ریزی و بودجه",
+    "دفتر فناوری اطلاعات",
+    "دفتر مسکن روستایی",
+    "دفتر امور بازسازی",
+    "دفتر مسکن شهری",
+    "دفتر حساب 100 امام",
+    "دفتر امور ماشین آلات",
+    "دفتر ارزیابی عملکرد",
+    "هیئت گزینش"
+  ];
+
+  const PROVINCE_UNITS = [
+    "دفتر نمایندگی ولی فقیه",
+    "دفتر مدیرکل",
+    "دفتر معاونت پشتیبانی",
+    "دفتر معاونت امور بازسازی",
+    "دفتر معاونت مسکن شهری",
+    "دفتر معاونت برنامه ریزی",
+    "امور مالی",
+    "امور اداری",
+    "روابط عمومی",
+    "حراست",
+    "امور ذی حسابی",
+    "امور برنامه ریزی و بودجه",
+    "دفتر فناوری اطلاعات",
+    "دفتر حساب 100 امام",
+    "دفتر امور ماشین آلات",
+    "سایر"
+  ];
+
+  /*
+    برای مرحله فعلی UI، چند نمونه شهرستان در نظر گرفته شده است.
+    بعداً می‌توان این بخش را با فهرست رسمی کامل شهرستان‌ها جایگزین کرد.
+  */
+  const COUNTY_SAMPLES = {
+    "آذربایجان شرقی":["تبریز","مراغه","مرند","میانه","اهر"],
+    "آذربایجان غربی":["ارومیه","خوی","میاندوآب","مهاباد","بوکان"],
+    "اردبیل":["اردبیل","مشگین‌شهر","پارس‌آباد","خلخال"],
+    "اصفهان":["اصفهان","کاشان","خمینی‌شهر","نجف‌آباد","فلاورجان"],
+    "البرز":["کرج","ساوجبلاغ","نظرآباد","طالقان"],
+    "ایلام":["ایلام","دهلران","مهران","آبدانان"],
+    "بوشهر":["بوشهر","دشتستان","کنگان","گناوه"],
+    "تهران":["تهران","ری","شمیرانات","شهریار","دماوند"],
+    "چهارمحال و بختیاری":["شهرکرد","بروجن","فارسان","لردگان"],
+    "خراسان جنوبی":["بیرجند","قائنات","فردوس","طبس"],
+    "خراسان رضوی":["مشهد","نیشابور","سبزوار","تربت حیدریه","گناباد"],
+    "خراسان شمالی":["بجنورد","شیروان","اسفراین","جاجرم"],
+    "خوزستان":["اهواز","دزفول","آبادان","خرمشهر","اندیمشک"],
+    "زنجان":["زنجان","ابهر","خرمدره","طارم"],
+    "سمنان":["سمنان","شاهرود","دامغان","گرمسار"],
+    "سیستان و بلوچستان":["زاهدان","زابل","چابهار","ایرانشهر"],
+    "فارس":["شیراز","مرودشت","جهرم","لارستان","فسا"],
+    "قزوین":["قزوین","تاکستان","آبیک","بوئین‌زهرا"],
+    "قم":["قم"],
+    "کردستان":["سنندج","سقز","مریوان","بانه","قروه"],
+    "کرمان":["کرمان","رفسنجان","سیرجان","جیرفت","بم"],
+    "کرمانشاه":["کرمانشاه","اسلام‌آباد غرب","سنقر","کنگاور"],
+    "کهگیلویه و بویراحمد":["یاسوج","دهدشت","گچساران"],
+    "گلستان":["گرگان","گنبدکاووس","علی‌آباد کتول","بندر ترکمن"],
+    "گیلان":["رشت","انزلی","لاهیجان","رودسر"],
+    "لرستان":["خرم‌آباد","بروجرد","دورود","الیگودرز"],
+    "مازندران":["ساری","بابل","آمل","قائم‌شهر","نوشهر"],
+    "مرکزی":["اراک","ساوه","خمین","محلات"],
+    "هرمزگان":["بندرعباس","قشم","میناب","بندر لنگه"],
+    "همدان":["همدان","ملایر","نهاوند","تویسرکان"],
+    "یزد":["یزد","میبد","اردکان","بافق"]
+  };
+
+  /* =========================================================
+     DOM
+  ========================================================= */
+
+  const form = document.getElementById("employeeForm");
+
+  const nameInput = document.getElementById("name");
+  const phoneInput = document.getElementById("phone");
+  const provinceSelect = document.getElementById("province");
+  const serviceLocationSelect = document.getElementById("serviceLocation");
+  const countySelect = document.getElementById("county");
+  const orgUnitSelect = document.getElementById("orgUnit");
+
+  const subsidiaryBox = document.getElementById("subsidiaryBox");
+  const holdingSelect = document.getElementById("holding");
+  const companySelect = document.getElementById("company");
+
+  const categorySelect = document.getElementById("category");
+  const subjectInput = document.getElementById("subject");
+  const messageInput = document.getElementById("message");
+
+  const uploadBox = document.getElementById("uploadBox");
+  const attachmentsInput = document.getElementById("attachments");
+  const fileList = document.getElementById("fileList");
+
+  const submitBtn = document.getElementById("submitBtn");
+  const cancelBtn = document.getElementById("cancelBtn");
+  const guideBtn = document.getElementById("guideBtn");
+
+  const successOverlay = document.getElementById("successOverlay");
+  const guideOverlay = document.getElementById("guideOverlay");
+
+  const closeSuccessBtn = document.getElementById("closeSuccessBtn");
+  const newRequestBtn = document.getElementById("newRequestBtn");
+  const closeGuideBtn = document.getElementById("closeGuideBtn");
+
+  const trackingCodeEl = document.getElementById("trackingCode");
+  const registeredDateEl = document.getElementById("registeredDate");
+  const registeredTimeEl = document.getElementById("registeredTime");
+  const copyTrackingBtn = document.getElementById("copyTrackingBtn");
+
+  const messageCount = document.getElementById("messageCount");
+  const toast = document.getElementById("toast");
+
+  /* =========================================================
+     UTILITIES
+  ========================================================= */
+
+  function toEnglishDigits(value){
+    if (!value) return "";
+    return value
+      .replace(/[۰-۹]/g, d => String("۰۱۲۳۴۵۶۷۸۹".indexOf(d)))
+      .replace(/[٠-٩]/g, d => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
+  }
+
+  function formatPersianDate(date = new Date()){
+    return new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    }).format(date);
+  }
+
+  function formatPersianDateTime(date = new Date()){
+    const datePart = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+      year:"numeric",
+      month:"2-digit",
+      day:"2-digit"
+    }).format(date);
+
+    const timePart = new Intl.DateTimeFormat("fa-IR", {
+      hour:"2-digit",
+      minute:"2-digit",
+      second:"2-digit",
+      hour12:false
+    }).format(date);
+
+    return {
+      date: datePart,
+      time: timePart
+    };
+  }
+
+  function pad2(value){
+    return String(value).padStart(2,"0");
+  }
+
+  function generateTrackingCode(){
+    const d = new Date();
+
+    const year = new Intl.DateTimeFormat("en-US-u-ca-persian", {
+      year:"numeric"
+    }).format(d);
+
+    const stamp =
+      pad2(d.getMonth() + 1) +
+      pad2(d.getDate()) +
+      pad2(d.getHours()) +
+      pad2(d.getMinutes()) +
+      pad2(d.getSeconds());
+
+    const random = Math.floor(100 + Math.random() * 900);
+
+    return `${year}-REQ-${stamp}-${random}`;
+  }
+
+  function showToast(text){
+    toast.textContent = text;
+    toast.classList.add("show");
+
+    clearTimeout(showToast.timer);
+
+    showToast.timer = setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2200);
+  }
+
+  function setFieldError(fieldId, hasError){
+    const field = document.getElementById(fieldId);
+
+    if (!field) return;
+
+    field.classList.toggle("error", hasError);
+    field.classList.toggle("success", !hasError);
+  }
+
+  function resetFieldState(fieldId){
+    const field = document.getElementById(fieldId);
+
+    if (!field) return;
+
+    field.classList.remove("error","success");
+  }
+
+  function populateSelect(select, items, placeholder){
+    select.innerHTML = "";
+
+    const first = document.createElement("option");
+    first.value = "";
+    first.textContent = placeholder;
+    select.appendChild(first);
+
+    items.forEach(item => {
+      const option = document.createElement("option");
+      option.value = item;
+      option.textContent = item;
+      select.appendChild(option);
+    });
+
+    select.disabled = false;
+  }
+
+  /* =========================================================
+     CLOCK
+  ========================================================= */
+
+  function updateDateTime(){
+    const now = new Date();
+
+    const top = formatPersianDateTime(now);
+
+    document.getElementById("topDateTime").textContent =
+      `${top.date} | ${top.time}`;
+
+    document.getElementById("heroDate").textContent =
+      formatPersianDate(now);
+
+    document.getElementById("heroTime").textContent =
+      new Intl.DateTimeFormat("fa-IR", {
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit",
+        hour12:false
+      }).format(now);
+  }
+
+  updateDateTime();
+  setInterval(updateDateTime, 1000);
+
+  /* =========================================================
+     LOAD PROVINCES
+  ========================================================= */
+
+  populateSelect(
+    provinceSelect,
+    PROVINCES,
+    "استان را انتخاب کنید"
+  );
+
+  /* =========================================================
+     LOAD HOLDINGS
+  ========================================================= */
+
+  populateSelect(
+    holdingSelect,
+    Object.keys(HOLDINGS),
+    "هلدینگ / مجموعه را انتخاب کنید"
+  );
+
+  holdingSelect.disabled = false;
+
+  /* =========================================================
+     PROVINCE CHANGE
+  ========================================================= */
+
+  provinceSelect.addEventListener("change", function(){
+
+    resetFieldState("fieldProvince");
+    resetFieldState("fieldCounty");
+
+    const province = this.value;
+
+    if (!province){
+      countySelect.innerHTML =
+        '<option value="">ابتدا استان را انتخاب کنید</option>';
+
+      countySelect.disabled = true;
+      return;
+    }
+
+    /*
+      فعلاً فهرست نمونه است و بعداً با داده رسمی کامل
+      جایگزین خواهد شد.
+    */
+
+    const counties = COUNTY_SAMPLES[province] || [];
+
+    if (serviceLocationSelect.value === "province"){
+
+      populateSelect(
+        countySelect,
+        counties,
+        "شهرستان را انتخاب کنید"
+      );
+
+    } else {
+
+      countySelect.innerHTML =
+        '<option value="">در صورت انتخاب بنیاد مسکن استان‌ها، شهرستان را انتخاب کنید</option>';
+
+      countySelect.disabled = true;
+    }
+
+  });
+
+  /* =========================================================
+     SERVICE LOCATION CHANGE
+  ========================================================= */
+
+  serviceLocationSelect.addEventListener("change", function(){
+
+    resetFieldState("fieldServiceLocation");
+    resetFieldState("fieldOrgUnit");
+    resetFieldState("fieldCounty");
+    resetFieldState("fieldHolding");
+    resetFieldState("fieldCompany");
+
+    const location = this.value;
+
+    subsidiaryBox.classList.remove("show");
+
+    orgUnitSelect.innerHTML = "";
+    orgUnitSelect.disabled = true;
+
+    holdingSelect.value = "";
+
+    companySelect.innerHTML =
+      '<option value="">ابتدا هلدینگ را انتخاب کنید</option>';
+
+    companySelect.disabled = true;
+
+    if (!location){
+
+      countySelect.innerHTML =
+        '<option value="">ابتدا محل خدمت را انتخاب کنید</option>';
+
+      countySelect.disabled = true;
+
+      return;
+    }
+
+    /* دفتر مرکزی */
+    if (location === "central"){
+
+      populateSelect(
+        orgUnitSelect,
+        CENTRAL_UNITS,
+        "واحد سازمانی را انتخاب کنید"
+      );
+
+      countySelect.innerHTML =
+        '<option value="">برای دفتر مرکزی کاربرد ندارد</option>';
+
+      countySelect.disabled = true;
+    }
+
+    /* بنیاد مسکن استان‌ها */
+    if (location === "province"){
+
+      populateSelect(
+        orgUnitSelect,
+        PROVINCE_UNITS,
+        "واحد سازمانی را انتخاب کنید"
+      );
+
+      const province = provinceSelect.value;
+
+      if (province){
+
+        const counties = COUNTY_SAMPLES[province] || [];
+
+        populateSelect(
+          countySelect,
+          counties,
+          "شهرستان را انتخاب کنید"
+        );
+
+      } else {
+
+        countySelect.innerHTML =
+          '<option value="">ابتدا استان را انتخاب کنید</option>';
+
+        countySelect.disabled = true;
+      }
+    }
+
+    /* شرکت‌های تابعه */
+    if (location === "subsidiary"){
+
+      subsidiaryBox.classList.add("show");
+
+      countySelect.innerHTML =
+        '<option value="">برای شرکت‌های تابعه اختیاری است</option>';
+
+      countySelect.disabled = true;
+
+      /*
+        در ساختار هلدینگ/شرکت،
+        واحد سازمانی مستقل نمایش داده نمی‌شود.
+      */
+      orgUnitSelect.innerHTML =
+        '<option value="subsidiary-company">شرکت تابعه</option>';
+
+      orgUnitSelect.disabled = false;
+      orgUnitSelect.value = "subsidiary-company";
+    }
+
+  });
+
+  /* =========================================================
+     HOLDING CHANGE
+  ========================================================= */
+
+  holdingSelect.addEventListener("change", function(){
+
+    resetFieldState("fieldHolding");
+    resetFieldState("fieldCompany");
+
+    const holding = this.value;
+
+    if (!holding){
+
+      companySelect.innerHTML =
+        '<option value="">ابتدا هلدینگ را انتخاب کنید</option>';
+
+      companySelect.disabled = true;
+
+      return;
+    }
+
+    populateSelect(
+      companySelect,
+      HOLDINGS[holding] || [],
+      "شرکت تابعه را انتخاب کنید"
+    );
+  });
+
+  /* =========================================================
+     MESSAGE COUNTER
+  ========================================================= */
+
+  messageInput.addEventListener("input", function(){
+    messageCount.textContent = this.value.length;
+  });
+
+  /* =========================================================
+     PHONE NORMALIZATION
+  ========================================================= */
+
+  phoneInput.addEventListener("input", function(){
+
+    this.value = toEnglishDigits(this.value)
+      .replace(/\D/g,"")
+      .slice(0,11);
+  });
+
+  phoneInput.addEventListener("blur", function(){
+
+    const value = toEnglishDigits(this.value).trim();
+
+    const valid = /^09\d{9}$/.test(value);
+
+    setFieldError("fieldPhone", !valid);
+  });
+
+  /* =========================================================
+     GENERIC FIELD VALIDATION
+  ========================================================= */
+
+  [
+    [nameInput, "fieldName"],
+    [subjectInput, "fieldSubject"],
+    [messageInput, "fieldMessage"],
+    [provinceSelect, "fieldProvince"],
+    [serviceLocationSelect, "fieldServiceLocation"],
+    [orgUnitSelect, "fieldOrgUnit"],
+    [categorySelect, "fieldCategory"]
+  ].forEach(([element, fieldId]) => {
+
+    element.addEventListener("blur", function(){
+
+      let valid = true;
+
+      if (this.required){
+        valid = String(this.value || "").trim() !== "";
+      }
+
+      setFieldError(fieldId, !valid);
+    });
+  });
+
+  /* =========================================================
+     ATTACHMENTS
+  ========================================================= */
+
+  let selectedFiles = [];
+
+  function renderFiles(){
+
+    fileList.innerHTML = "";
+
+    selectedFiles.forEach((file, index) => {
+
+      const item = document.createElement("div");
+      item.className = "file-item";
+
+      item.innerHTML = `
+        <svg><use href="#i-file-text"></use></svg>
+        <span>${escapeHtml(file.name)}</span>
+        <button type="button" class="remove-file" data-index="${index}" title="حذف فایل">
+          <svg><use href="#i-x"></use></svg>
+        </button>
+      `;
+
+      fileList.appendChild(item);
+    });
+
+    fileList.querySelectorAll(".remove-file").forEach(btn => {
+
+      btn.addEventListener("click", function(e){
+
+        e.stopPropagation();
+
+        const index = Number(this.dataset.index);
+
+        selectedFiles.splice(index,1);
+
+        renderFiles();
+      });
+    });
+  }
+
+  function addFiles(fileArray){
+
+    const incoming = Array.from(fileArray);
+
+    incoming.forEach(file => {
+
+      const exists = selectedFiles.some(
+        existing =>
+          existing.name === file.name &&
+          existing.size === file.size &&
+          existing.lastModified === file.lastModified
+      );
+
+      if (!exists){
+        selectedFiles.push(file);
+      }
+    });
+
+    renderFiles();
+  }
+
+  function escapeHtml(value){
+    return value
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+
+  uploadBox.addEventListener("click", () => {
+    attachmentsInput.click();
+  });
+
+  uploadBox.addEventListener("keydown", e => {
+
+    if (e.key === "Enter" || e.key === " "){
+      e.preventDefault();
+      attachmentsInput.click();
+    }
+  });
+
+  attachmentsInput.addEventListener("change", function(){
+    addFiles(this.files);
+    this.value = "";
+  });
+
+  ["dragenter","dragover"].forEach(eventName => {
+
+    uploadBox.addEventListener(eventName, e => {
+
+      e.preventDefault();
+      uploadBox.classList.add("dragover");
+    });
+  });
+
+  ["dragleave","drop"].forEach(eventName => {
+
+    uploadBox.addEventListener(eventName, e => {
+
+      e.preventDefault();
+      uploadBox.classList.remove("dragover");
+    });
+  });
+
+  uploadBox.addEventListener("drop", e => {
+    addFiles(e.dataTransfer.files);
+  });
+
+  /* =========================================================
+     VALIDATION
+  ========================================================= */
+
+  function validateForm(){
+
+    let valid = true;
+
+    /* Name */
+    if (!nameInput.value.trim()){
+      setFieldError("fieldName", true);
+      valid = false;
+    } else {
+      setFieldError("fieldName", false);
+    }
+
+    /* Phone */
+    const phone = toEnglishDigits(phoneInput.value.trim());
+
+    if (!/^09\d{9}$/.test(phone)){
+      setFieldError("fieldPhone", true);
+      valid = false;
+    } else {
+      phoneInput.value = phone;
+      setFieldError("fieldPhone", false);
+    }
+
+    /* Province */
+    if (!provinceSelect.value){
+      setFieldError("fieldProvince", true);
+      valid = false;
+    } else {
+      setFieldError("fieldProvince", false);
+    }
+
+    /* Service location */
+    if (!serviceLocationSelect.value){
+      setFieldError("fieldServiceLocation", true);
+      valid = false;
+    } else {
+      setFieldError("fieldServiceLocation", false);
+    }
+
+    /* Organization */
+    if (serviceLocationSelect.value !== "subsidiary"){
+
+      if (!orgUnitSelect.value){
+        setFieldError("fieldOrgUnit", true);
+        valid = false;
+      } else {
+        setFieldError("fieldOrgUnit", false);
+      }
+    }
+
+    /* Province service => county */
+    if (serviceLocationSelect.value === "province"){
+
+      if (!countySelect.value){
+        setFieldError("fieldCounty", true);
+        valid = false;
+      } else {
+        setFieldError("fieldCounty", false);
+      }
+    }
+
+    /* Subsidiary */
+    if (serviceLocationSelect.value === "subsidiary"){
+
+      if (!holdingSelect.value){
+        setFieldError("fieldHolding", true);
+        valid = false;
+      } else {
+        setFieldError("fieldHolding", false);
+      }
+
+      if (!companySelect.value){
+        setFieldError("fieldCompany", true);
+        valid = false;
+      } else {
+        setFieldError("fieldCompany", false);
+      }
+    }
+
+    /* Category */
+    if (!categorySelect.value){
+      setFieldError("fieldCategory", true);
+      valid = false;
+    } else {
+      setFieldError("fieldCategory", false);
+    }
+
+    /* Subject */
+    if (!subjectInput.value.trim()){
+      setFieldError("fieldSubject", true);
+      valid = false;
+    } else {
+      setFieldError("fieldSubject", false);
+    }
+
+    /* Message */
+    if (!messageInput.value.trim()){
+      setFieldError("fieldMessage", true);
+      valid = false;
+    } else {
+      setFieldError("fieldMessage", false);
+    }
+
+    return valid;
+  }
+
+  /* =========================================================
+     FORM SUBMIT
+  ========================================================= */
+
+  form.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    if (!validateForm()){
+
+      const firstError = form.querySelector(".field.error");
+
+      if (firstError){
+        firstError.scrollIntoView({
+          behavior:"smooth",
+          block:"center"
+        });
+      }
+
+      return;
+    }
+
+    /* Loading state */
+    submitBtn.disabled = true;
+    submitBtn.classList.add("loading");
+
+    /*
+      فعلاً شبیه‌سازی ثبت اطلاعات.
+      در مرحله بعد این قسمت با API / Backend جایگزین می‌شود.
+    */
+    await new Promise(resolve => setTimeout(resolve, 900));
+
+    const now = new Date();
+
+    const dateTime = formatPersianDateTime(now);
+
+    const trackingCode = generateTrackingCode();
+
+    /*
+      رکورد موقت فرم.
+      در مرحله ارتباط با Backend همین ساختار به سرور ارسال خواهد شد.
+    */
+    const requestData = {
+      trackingCode,
+      registeredAtISO: now.toISOString(),
+      registeredDate: dateTime.date,
+      registeredTime: dateTime.time,
+
+      name: nameInput.value.trim(),
+      phone: phoneInput.value.trim(),
+
+      province: provinceSelect.value,
+      serviceLocation: serviceLocationSelect.value,
+      county: countySelect.value,
+
+      organizationalUnit:
+        serviceLocationSelect.value === "subsidiary"
+          ? "شرکت تابعه"
+          : orgUnitSelect.value,
+
+      holding:
+        serviceLocationSelect.value === "subsidiary"
+          ? holdingSelect.value
+          : "",
+
+      company:
+        serviceLocationSelect.value === "subsidiary"
+          ? companySelect.value
+          : "",
+
+      category: categorySelect.value,
+      subject: subjectInput.value.trim(),
+      message: messageInput.value.trim(),
+
+      attachments: selectedFiles.map(file => file.name),
+
+      status:"ثبت شده"
+    };
+
+    /*
+      فعلاً برای تست در Console قابل مشاهده است.
+      بعداً همین آبجکت به Backend ارسال می‌شود.
+    */
+    console.log("REQUEST DATA:", requestData);
+
+    /* Success modal */
+    trackingCodeEl.textContent = trackingCode;
+    registeredDateEl.textContent = dateTime.date;
+    registeredTimeEl.textContent = dateTime.time;
+
+    successOverlay.classList.add("show");
+
+    submitBtn.disabled = false;
+    submitBtn.classList.remove("loading");
+  });
+
+  /* =========================================================
+     CANCEL
+  ========================================================= */
+
+  cancelBtn.addEventListener("click", function(){
+
+    const shouldReset = confirm(
+      "آیا از لغو فرم و پاک شدن اطلاعات واردشده اطمینان دارید؟"
+    );
+
+    if (!shouldReset) return;
+
+    resetForm();
+  });
+
+  /* =========================================================
+     RESET FORM
+  ========================================================= */
+
+  function resetForm(){
+
+    form.reset();
+
+    selectedFiles = [];
+    renderFiles();
+
+    messageCount.textContent = "0";
+
+    countySelect.innerHTML =
+      '<option value="">ابتدا استان را انتخاب کنید</option>';
+
+    countySelect.disabled = true;
+
+    orgUnitSelect.innerHTML =
+      '<option value="">ابتدا محل خدمت را انتخاب کنید</option>';
+
+    orgUnitSelect.disabled = true;
+
+    companySelect.innerHTML =
+      '<option value="">ابتدا هلدینگ را انتخاب کنید</option>';
+
+    companySelect.disabled = true;
+
+    subsidiaryBox.classList.remove("show");
+
+    document.querySelectorAll(".field").forEach(field => {
+      field.classList.remove("error","success");
+    });
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+  }
+
+  /* =========================================================
+     GUIDE
+  ========================================================= */
+
+  guideBtn.addEventListener("click", () => {
+    guideOverlay.classList.add("show");
+  });
+
+  closeGuideBtn.addEventListener("click", () => {
+    guideOverlay.classList.remove("show");
+  });
+
+  guideOverlay.addEventListener("click", e => {
+
+    if (e.target === guideOverlay){
+      guideOverlay.classList.remove("show");
+    }
+  });
+
+  /* =========================================================
+     SUCCESS MODAL
+  ========================================================= */
+
+  closeSuccessBtn.addEventListener("click", () => {
+    successOverlay.classList.remove("show");
+  });
+
+  successOverlay.addEventListener("click", e => {
+
+    if (e.target === successOverlay){
+      successOverlay.classList.remove("show");
+    }
+  });
+
+  /* =========================================================
+     NEW REQUEST
+  ========================================================= */
+
+  newRequestBtn.addEventListener("click", () => {
+
+    successOverlay.classList.remove("show");
+
+    setTimeout(() => {
+      resetForm();
+    }, 120);
+  });
+
+  /* =========================================================
+     COPY TRACKING CODE
+  ========================================================= */
+
+  copyTrackingBtn.addEventListener("click", async function(){
+
+    const code = trackingCodeEl.textContent.trim();
+
+    try{
+
+      await navigator.clipboard.writeText(code);
+
+      showToast("کد رهگیری کپی شد.");
+
+    }catch(error){
+
+      const temp = document.createElement("textarea");
+
+      temp.value = code;
+
+      document.body.appendChild(temp);
+
+      temp.select();
+
+      document.execCommand("copy");
+
+      temp.remove();
+
+      showToast("کد رهگیری کپی شد.");
+    }
+
+  });
+
+  /* =========================================================
+     ESCAPE KEY FOR MODALS
+  ========================================================= */
+
+  document.addEventListener("keydown", function(e){
+
+    if (e.key !== "Escape") return;
+
+    successOverlay.classList.remove("show");
+    guideOverlay.classList.remove("show");
+  });
+
+</script>
+
+</body>
+</html>
