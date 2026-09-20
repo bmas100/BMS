@@ -1,209 +1,961 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="داشبورد مدیریتی و تحلیلی طرح خانه امید - گزارش 1405/06/09">
-<title>طرح خانه امید | داشبورد مدیریتی 1405/06/09</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0b1220" />
+<title>گزارش جامع و دوره‌ای خانه امید | مسکن محرومین</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+
 <style>
-:root{--navy:#09284f;--blue:#1e63a8;--cyan:#188aa8;--teal:#158978;--green:#15966b;--orange:#e58c2b;--red:#d94d4d;--purple:#7257b6;--ink:#172033;--muted:#718097;--bg:#f4f7fb;--surface:#fff;--border:#e1e8f0;--shadow:0 10px 30px rgba(20,49,82,.075);--shadow2:0 5px 18px rgba(20,49,82,.055);--radius:20px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 100% 0,rgba(30,99,168,.08),transparent 28%),radial-gradient(circle at 0 10%,rgba(24,138,168,.06),transparent 24%),var(--bg);color:var(--ink);font-family:"Vazirmatn",Tahoma,Arial,sans-serif;line-height:1.8}button{font:inherit}.container{width:min(1440px,calc(100% - 32px));margin:auto}
-.hero{position:relative;overflow:hidden;color:#fff;background:linear-gradient(135deg,#08254a,#123c6c 52%,#1584a3);border-radius:0 0 25px 25px;box-shadow:0 18px 55px rgba(7,35,68,.18)}.hero:before,.hero:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.11);border-radius:50%;pointer-events:none}.hero:before{width:400px;height:400px;left:-200px;top:-180px;box-shadow:0 0 0 55px rgba(255,255,255,.025),0 0 0 110px rgba(255,255,255,.02)}.hero:after{width:560px;height:560px;right:-300px;bottom:-340px;box-shadow:0 0 0 60px rgba(255,255,255,.022)}.hero-inner{position:relative;z-index:2;padding:10px 0 28px}.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:28px;flex-wrap:wrap}.brand{display:flex;gap:15px;align-items:flex-start}.mark{width:68px;height:68px;border-radius:20px;display:grid;place-items:center;font-size:30px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.18)}.eyebrow{font-size:13px;font-weight:700;opacity:.78}.hero h1{margin:2px 0 0;font-size:clamp(25px,2vw,40px);line-height:1.25;font-weight:900;letter-spacing:-.8px}.hero-sub{margin:9px 0 0;color:rgba(255,255,255,.82);font-size:12px}.date{padding:11px 16px;border-radius:15px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);white-space:nowrap;font-size:13px}.hero-bottom{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:15px;  margin-bottom:-15px; :wrap}.tags{display:flex;gap:8px;flex-wrap:wrap}.tag{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.5); font-weight:600; font-size:10px;color:rgba(255,255,255,.9) }.actions{display:flex;gap:8px}.action{cursor:pointer;color:#fff;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:7px 11px;font-size:11px}.action:hover{background:rgba(255,255,255,.15)}
-main{padding:27px 0 48px}.section{margin-top:28px}.section:first-child{margin-top:0}.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:15px;margin-bottom:13px;flex-wrap:wrap}.section-title{margin:0;color:var(--navy);font-size:20px;font-weight:900}.note{font-size:11px;color:var(--muted)}
-.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.kpi{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:16px 14px;box-shadow:var(--shadow2);min-height:143px}.kpi:after{content:"";position:absolute;width:110px;height:110px;border-radius:50%;top:-65px;left:-45px;background:currentColor;opacity:.05}.kpi .ico{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;background:rgba(30,99,168,.09);margin-bottom:9px}.kpi-label{font-size:11px;color:var(--muted);font-weight:600}.kpi-value{margin-top:2px;font-size:25px;line-height:1.2;font-weight:900}.unit{font-size:10px;color:var(--muted);margin-right:3px}.kpi-sub{font-size:10px;color:var(--muted);margin-top:7px}.blue{color:var(--blue)}.green{color:var(--green)}.orange{color:var(--orange)}.red{color:var(--red)}.purple{color:var(--purple)}.teal{color:var(--teal)}
-.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow2);min-width:0}.card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}.card-title{margin:0;color:var(--navy);font-size:15px;font-weight:900;line-height:1.45}.card-desc{font-size:10px;color:var(--muted);margin-top:3px}.chip{display:inline-flex;align-items:center;border:1px solid #e3e9f1;background:#f5f7fa;color:#617087;border-radius:999px;padding:4px 8px;font-size:9px;font-weight:800;white-space:nowrap}.chip.g{color:#0c7655;background:#e8f7f1;border-color:#c8eee1}.chip.o{color:#9a6212;background:#fff4df;border-color:#f6dfb2}.chip.r{color:#a72d2d;background:#fff0f0;border-color:#f4d0d0}.chip.b{color:#1d5c98;background:#eaf3ff;border-color:#d4e6fb}.chart{height:330px;position:relative}.chart.tall{height:395px}.chart.small{height:250px}
-.insights{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.insight{padding:15px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(180deg,#fff,#fbfdff);box-shadow:var(--shadow2)}.insight.good{border-top:4px solid var(--green)}.insight.warn{border-top:4px solid var(--orange)}.insight.danger{border-top:4px solid var(--red)}.insight.info{border-top:4px solid var(--blue)}.itop{display:flex;align-items:center;gap:9px}.iicon{width:37px;height:37px;border-radius:11px;display:grid;place-items:center;background:#eef4fb;color:var(--blue);font-size:16px;font-weight:900;flex:none}.insight h3{margin:0;font-size:13px;font-weight:900;color:var(--navy)}.insight p{font-size:11px;line-height:2;margin:10px 0 0;color:#59677c}.insight strong{color:var(--ink)}
-.metric{text-align:center;padding:16px 8px 8px}.metric .num{font-size:54px;line-height:1;font-weight:900;color:var(--navy);letter-spacing:-2px}.metric .caption{font-size:11px;color:var(--muted);margin-top:8px}.minirow{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:13px}.mini{min-width:95px;border:1px solid var(--border);background:#fbfcfe;border-radius:12px;padding:8px}.mini b{display:block;font-size:15px}.mini span{display:block;font-size:9px;color:var(--muted)}
-.funnel{display:grid;gap:9px}.frow{display:grid;grid-template-columns:125px 1fr 72px;align-items:center;gap:9px}.flabel{font-size:10px;font-weight:700;color:#536177}.track{height:14px;background:#edf2f7;border-radius:99px;overflow:hidden}.fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--cyan))}.fval{text-align:left;direction:ltr;font-size:10px;font-weight:900;color:var(--navy)}.small-note{font-size:9px;color:var(--muted);margin-top:9px}
-.alert{border:1px solid #efd0d0;background:linear-gradient(180deg,#fff7f7,#fff);border-radius:19px;padding:16px}.alert h3{margin:0;color:#9d2929;font-size:14px;font-weight:900}.alert p{margin:6px 0 0;font-size:10px;color:#6a5252;line-height:2}.alertgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:11px}.alertnum{padding:10px;border:1px solid #f0dada;background:#fff;border-radius:12px}.alertnum b{display:block;color:#a72d2d;font-size:17px}.alertnum span{font-size:9px;color:#755d5d}
-.tablewrap{overflow:auto;border:1px solid var(--border);border-radius:14px}table{border-collapse:collapse;width:100%;min-width:700px}th,td{padding:10px 9px;border-bottom:1px solid var(--border);font-size:10px;text-align:right}th{background:#f7f9fc;color:#56647a;font-weight:800}td{color:#334158}tr:last-child td{border-bottom:0}.status{display:inline-flex;min-width:46px;justify-content:center;border-radius:999px;padding:4px 6px;font-size:8px;font-weight:900}.s1{background:#e9f7f2;color:#0b7453}.s2{background:#fff4df;color:#976016}.s3{background:#fff0f0;color:#a72d2d}.s4{background:#eaf3ff;color:#1d5c98}
-.rank{display:grid;gap:9px}.rrow{display:grid;grid-template-columns:24px 1fr 56px;gap:8px;align-items:center}.rno{width:24px;height:24px;border-radius:8px;background:#eef3f9;display:grid;place-items:center;font-size:9px;font-weight:900;color:var(--navy)}.rname{font-size:10px;color:#445168;font-weight:700}.rbar{height:8px;background:#edf2f7;border-radius:99px;overflow:hidden;margin-top:3px}.rbar span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:99px}.rval{text-align:left;font-size:9px;font-weight:900;color:var(--navy)}
-.timeline{position:relative;padding-right:6px}.timeline:before{content:"";position:absolute;right:15px;top:7px;bottom:7px;width:2px;background:#dfe6ef}.t{position:relative;padding-right:38px;margin-bottom:13px}.t:last-child{margin-bottom:0}.dot{position:absolute;right:7px;top:4px;width:17px;height:17px;border-radius:50%;background:#fff;border:4px solid var(--blue);box-shadow:0 0 0 4px #eaf3ff}.td{font-size:9px;color:var(--blue);font-weight:900}.tt{font-size:10px;color:#58667a}
-footer{border-top:1px solid var(--border);padding:20px 0 30px;color:var(--muted);font-size:9px}.footerin{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.footerin strong{color:var(--ink)}
-@media(max-width:1200px){.kpis{grid-template-columns:repeat(3,1fr)}.insights{grid-template-columns:repeat(2,1fr)}}@media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}.alertgrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.container{width:calc(100% - 16px)}.kpis{grid-template-columns:1fr 1fr;gap:8px}.kpi{padding:13px 11px;min-height:128px}.kpi-value{font-size:21px}.insights{grid-template-columns:1fr}.chart{height:285px}.chart.tall{height:340px}.hero{border-radius:0 0 24px 24px}.date{width:100%;text-align:center}.frow{grid-template-columns:88px 1fr 54px}.alertgrid{grid-template-columns:1fr 1fr}}
-@media print{body{background:#fff}.actions{display:none}.hero{border-radius:0;box-shadow:none}.card,.kpi,.insight{box-shadow:none;break-inside:avoid}}
+:root{
+  --bg:#f5f7fb;
+  --surface:#ffffff;
+  --surface-2:#f9fbff;
+  --ink:#152238;
+  --muted:#6e7b8f;
+  --line:#e7edf5;
+  --brand:#173d73;
+  --brand2:#0f6a92;
+  --cyan:#16a5c7;
+  --green:#15a77a;
+  --amber:#f4a62a;
+  --red:#de5c5c;
+  --purple:#7957d5;
+  --shadow:0 12px 40px rgba(20,45,90,.08);
+  --shadow2:0 8px 22px rgba(20,45,90,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(22,165,199,.06), transparent 26%),
+    radial-gradient(circle at 90% 10%, rgba(121,87,213,.06), transparent 24%),
+    var(--bg);
+  color:var(--ink);
+}
+a{color:inherit}
+button,.btn{font:inherit}
+.container{width:min(1440px,calc(100% - 32px));margin:auto}
+.topbar{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:rgba(245,247,251,.88);border-bottom:1px solid rgba(231,237,245,.9)}
+.topbar-inner{height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand-mini{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--brand)}
+.brand-mini .sig{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--cyan));display:grid;place-items:center;color:#fff;box-shadow:var(--shadow2)}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{text-decoration:none;padding:9px 12px;border-radius:10px;color:#526176;font-size:13px}
+.nav a:hover{background:#fff;color:var(--brand);box-shadow:var(--shadow2)}
+.hero{
+  margin-top:20px;
+  padding:22px 24px;
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255,255,255,.15), transparent 25%),
+    radial-gradient(circle at 80% 100%, rgba(22,165,199,.20), transparent 26%),
+    linear-gradient(120deg,#0e2041 0%,#173d73 52%,#0e6a8e 100%);
+  color:#fff;
+  box-shadow:0 20px 55px rgba(15,43,86,.22);
+  position:relative;
+  overflow:hidden;
+}
+.hero:after{
+  content:"";
+  position:absolute;inset:auto -80px -110px auto;
+  width:350px;height:350px;border-radius:50%;
+  background:rgba(255,255,255,.06);filter:blur(2px)
+}
+.hero-grid{display:grid;grid-template-columns:1.6fr .9fr;gap:24px;align-items:center;position:relative;z-index:1}
+.hero h1{margin:0 0 8px;font-size:clamp(23px,2.7vw,38px);letter-spacing:-.4px}
+.hero p{margin:0;color:rgba(255,255,255,.82);font-size:14px;line-height:2}
+.hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.hero-chip,.hero-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  min-height:38px;border-radius:12px;padding:8px 12px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.09);color:#fff;text-decoration:none;
+  font-size:12px;font-weight:600;
+}
+.hero-btn{background:#fff;color:var(--brand);border-color:#fff;cursor:pointer}
+.hero-btn:hover{transform:translateY(-1px)}
+.hero-side{display:grid;gap:10px}
+.date-stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.date-card{
+  padding:12px;border-radius:15px;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.13)
+}
+.date-card span{display:block;font-size:11px;color:rgba(255,255,255,.68);margin-bottom:4px}
+.date-card strong{font-size:14px}
+.section{margin:24px 0}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:14px}
+.section-head h2{margin:0;font-size:21px}
+.section-head p{margin:0;color:var(--muted);font-size:12px}
+.grid{display:grid;gap:16px}
+.grid.kpi{grid-template-columns:repeat(6,minmax(0,1fr))}
+.grid.two{grid-template-columns:1.25fr .75fr}
+.grid.equal{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:18px;
+  box-shadow:var(--shadow2);padding:18px
+}
+.kpi-card{position:relative;overflow:hidden;min-height:138px}
+.kpi-card .icon{
+  width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+  background:#eff5fb;color:var(--brand);margin-bottom:12px
+}
+.kpi-card .value{font-size:29px;font-weight:900;letter-spacing:-1px}
+.kpi-card .label{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi-card .foot{display:flex;justify-content:space-between;gap:8px;margin-top:12px;font-size:11px;color:#728197}
+.kpi-card .accent{position:absolute;inset:auto 0 0 0;height:4px}
+.accent.blue{background:linear-gradient(90deg,var(--brand),var(--cyan))}
+.accent.green{background:linear-gradient(90deg,#0e8667,#24c99a)}
+.accent.amber{background:linear-gradient(90deg,#d88b14,#f4b84a)}
+.accent.red{background:linear-gradient(90deg,#bc4b4b,#ef7f7f)}
+.accent.purple{background:linear-gradient(90deg,#6041bd,#9679ee)}
+.accent.teal{background:linear-gradient(90deg,#007f89,#21c5c9)}
+.metric-card{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.metric-main strong{display:block;font-size:22px}
+.metric-main span{font-size:11px;color:var(--muted)}
+.progress{
+  height:9px;background:#edf2f7;border-radius:999px;overflow:hidden;margin-top:11px
+}
+.progress > span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--cyan))}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:99px;
+  font-size:10px;font-weight:700
+}
+.badge.blue{background:#ebf4ff;color:#2f64a6}
+.badge.green{background:#e8f8f1;color:#1f8c6c}
+.badge.amber{background:#fff5df;color:#a46d0e}
+.badge.red{background:#fff0f0;color:#ad5151}
+.badge.gray{background:#f0f3f7;color:#637186}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:15px}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{padding:11px 12px;border-bottom:1px solid var(--line);font-size:12px;text-align:right;white-space:nowrap}
+th{background:#f7f9fc;color:#5d6a7e;font-weight:700}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;font-weight:700}
+td.muted{color:var(--muted)}
+.insight{
+  border:1px solid #e4ebf4;border-radius:16px;padding:15px;background:
+  linear-gradient(180deg,#fff,#f9fbff)
+}
+.insight .head{display:flex;align-items:center;gap:9px;font-weight:800;margin-bottom:8px}
+.insight .head i{width:31px;height:31px;border-radius:10px;display:grid;place-items:center;background:#edf4ff;color:var(--brand)}
+.insight p{margin:0;color:#5f6d82;line-height:1.95;font-size:12px}
+.alert{
+  background:#fff9ea;border:1px solid #f4dfae;border-radius:16px;padding:15px;color:#795d22
+}
+.alert strong{color:#61480d}
+.danger{
+  background:#fff3f3;border:1px solid #f1cfcf;border-radius:16px;padding:15px;color:#8c4545
+}
+.timeline{position:relative;padding-right:16px}
+.timeline:before{content:"";position:absolute;right:5px;top:5px;bottom:5px;width:2px;background:#e4eaf2}
+.tl-item{position:relative;padding:0 0 15px 0;margin-right:0}
+.tl-item:before{content:"";position:absolute;right:0;top:4px;width:11px;height:11px;background:#fff;border:3px solid var(--brand);border-radius:50%;z-index:2}
+.tl-item .tl-body{padding-right:22px}
+.tl-item .tl-title{font-weight:800;font-size:12px}
+.tl-item .tl-text{font-size:11px;color:var(--muted);line-height:1.9;margin-top:3px}
+.chart-card{min-height:410px}
+.chart-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:9px}
+.chart-head h3{margin:0;font-size:14px}
+.chart-head p{margin:4px 0 0;color:var(--muted);font-size:10px}
+.chart-box{height:335px;position:relative}
+.chart-box.tall{height:390px}
+.small-note{color:var(--muted);font-size:10px;line-height:1.9}
+.compare-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.compare-box{background:#f7faff;border:1px solid #e5edf7;border-radius:13px;padding:12px}
+.compare-box strong{display:block;font-size:18px}
+.compare-box span{font-size:10px;color:var(--muted)}
+.mini-bar{height:8px;border-radius:999px;background:#edf2f6;overflow:hidden;margin-top:7px}
+.mini-bar span{display:block;height:100%;border-radius:999px}
+.footer{margin:30px 0 45px;color:#78869b;font-size:11px;text-align:center}
+.sticky-index{
+  position:fixed;left:18px;bottom:18px;z-index:30;background:#fff;border:1px solid var(--line);
+  box-shadow:var(--shadow);border-radius:14px;padding:8px;display:flex;gap:6px;flex-wrap:wrap;max-width:330px
+}
+.sticky-index a{font-size:10px;text-decoration:none;color:#526176;padding:7px 8px;border-radius:9px}
+.sticky-index a:hover{background:#edf4fb;color:var(--brand)}
+.glass-label{font-size:11px;color:rgba(255,255,255,.68)}
+.kpi-ring{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--cyan) var(--p), rgba(255,255,255,.1) 0);position:relative}
+.kpi-ring:after{content:"";width:66px;height:66px;border-radius:50%;background:#16376b;position:absolute}
+.kpi-ring span{position:relative;z-index:1;font-weight:900}
+@media (max-width:1200px){.grid.kpi{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:900px){
+ .hero-grid,.grid.two,.grid.equal,.grid.three{grid-template-columns:1fr}
+ .nav{display:none}
+ .grid.kpi{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .date-stack{grid-template-columns:1fr 1fr}
+}
+@media (max-width:580px){
+ .container{width:min(100% - 18px,1440px)}
+ .hero{padding:18px 15px;border-radius:18px}
+ .hero-meta{gap:7px}
+ .hero-chip,.hero-btn{font-size:10px;min-height:34px}
+ .grid.kpi{grid-template-columns:1fr}
+ .date-stack{grid-template-columns:1fr}
+ .kpi-card .value{font-size:26px}
+ .sticky-index{display:none}
+}
+
+.hero-stats{gap:10px}
+.hero-stat{
+  min-height:105px;
+  padding:12px 13px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.055)),
+    rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 25px rgba(0,0,0,.08);
+  transition:transform .25s ease,background .25s ease;
+}
+.hero-stat:hover{transform:translateY(-2px);background:rgba(255,255,255,.12)}
+.hero-stat span{font-size:10px;color:rgba(255,255,255,.72);margin-bottom:3px}
+.hero-stat strong{font-size:26px;line-height:1;font-weight:900;letter-spacing:-.8px;color:#fff;display:block}
+.hero-stat small{display:block;margin-top:6px;color:rgba(255,255,255,.62);font-size:9px}
+
 </style>
 </head>
 <body>
-<header class="hero">
-  <div class="container hero-inner">
-    <div class="hero-top">
-      <div class="brand">
-        <div class="mark">🏠</div>
-        <div>
-          <div class="eyebrow">داشبورد مدیریتی و تحلیلی</div>
-          <h1>طرح «خانه امید» — مسکن محرومین</h1>
-          <p class="hero-sub">نمای جامع پیشرفت فیزیکی، تأمین زمین، منابع مالی، تسهیلات و عملکرد استانی</p>
-        </div>
-      </div>
-      <div class="date">📅 تاریخ گزارش: <strong>1405/06/09</strong></div>
+
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand-mini">
+      <div class="sig"><i class="fa-solid fa-house-chimney-window"></i></div>
+      <span>گزارش مدیریتی خانه امید</span>
     </div>
-    <div class="hero-bottom">
-      <div class="tags"><span class="tag">9 جلسه ستاد هماهنگی</span><span class="tag">155 هزار روستایی</span><span class="tag">65 هزار شهری</span><span class="tag">239 همت منابع کل</span><span class="tag">120,000 ابلاغ تسهیلات بانکی </span></div>
-      <div class="actions"><button class="action" onclick="window.open('./HopeHouse.pdf', '_blank')"> 📄 جزئیات گزارش </button><button class="action" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">↓ انتهای گزارش</button></div>
+    <div class="nav">
+      <a href="#overview">نمای کلی</a>
+      <a href="#physical">پیشرفت فیزیکی</a>
+      <a href="#banks">بانک‌ها</a>
+      <a href="#audit">کنترل داده</a>
+      <a href="#actions">اقدامات</a>
     </div>
-  </div>
-</header>
-<main class="container">
-
-<section class="section">
-  <div class="kpis">
-    <div class="kpi blue"><div class="ico">🎯</div><div class="kpi-label">هدف برنامه سال 1405</div><div class="kpi-value counter" data-v="220000">۰</div><div class="kpi-sub">155 هزار روستایی + 65 هزار شهری</div></div>
-    <div class="kpi green"><div class="ico">🏗️</div><div class="kpi-label">واحدهای در دست اجرا</div><div class="kpi-value counter" data-v="67180">۰</div><div class="kpi-sub">عدد اعلام‌شده در جدول تجمیعی</div></div>
-    <div class="kpi orange"><div class="ico">📈</div><div class="kpi-label">تحقق اعلام‌شده</div><div class="kpi-value"><span class="counter" data-v="78">۰</span><span class="unit">٪</span></div><div class="kpi-sub">در برابر برنامه تا 1405/06/07</div></div>
-    <div class="kpi purple"><div class="ico">💰</div><div class="kpi-label">منابع مالی کل برنامه</div><div class="kpi-value"><span class="counter" data-v="239">۰</span><span class="unit">همت</span></div><div class="kpi-sub">شامل تسهیلات، زمین، آورده و منابع دیگر</div></div>
-    <div class="kpi teal"><div class="ico">🤝</div><div class="kpi-label">کمک بلاعوض پرداخت‌شده</div><div class="kpi-value"><span class="counter" data-v="9231">۰</span><span class="unit">میلیارد ریال</span></div><div class="kpi-sub">کل کشور</div></div>
-    <div class="kpi red"><div class="ico">🏦</div><div class="kpi-label">جذب تسهیلات بانکی</div><div class="kpi-value"><span class="counter" data-v="7852">۰</span><span class="unit">میلیارد ریال</span></div><div class="kpi-sub">در جدول عملکرد بانک‌ها</div></div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section-head"><h2 class="section-title">برداشت تحلیلی مدیران</h2><div class="note">تمرکز بر نقاطی که برای تصمیم‌گیری مهم‌ترند</div></div>
-  <div class="insights">
-    <article class="insight danger"><div class="itop"><div class="iicon">🏦</div><h3>گلوگاه بانکی</h3></div><p>از <strong>37,656</strong> معرفی‌شده، فقط <strong>7,171</strong> قرارداد ثبت شده؛ نرخ تبدیل معرفی به قرارداد حدود <strong>19٪</strong> است.</p></article>
-    <article class="insight good"><div class="itop"><div class="iicon">🏗️</div><h3>شروع عملیات مناسب</h3></div><p>در جدول تجمیعی، <strong>94٪</strong> واحدهای در دست اجرا دارای شروع عملیات هستند؛ پس مسئله اصلی، تبدیل ظرفیت به تکمیل است.</p></article>
-  </div>
-</section>
-
-<section class="section"><div class="grid2">
-  <div class="card"><div class="card-head"><div><h3 class="card-title">ترکیب واحدهای در دست اجرا</h3><div class="card-desc">روستایی در برابر شهری</div></div><span class="chip b">64٪ / 36٪</span></div><div class="chart"><canvas id="mix"></canvas></div></div>
-  <div class="card"><div class="card-head"><div><h3 class="card-title">عملکرد محورها در برابر برنامه</h3><div class="card-desc">درصد تحقق اعلام‌شده در گزارش</div></div><span class="chip g">شاخص تحقق</span></div><div class="chart"><canvas id="axis"></canvas></div></div>
-</div></section>
-
-<section class="section"><div class="section-head"><h2 class="section-title">زنجیره اجرای واحدها</h2><div class="note">.</div></div><div class="grid2">
-  <div class="card"><div class="card-head"><div><h3 class="card-title">ظرفیت اجرا: ۶۷,۱۸۰ واحد</h3><div class="card-desc">شهری + روستایی</div></div><span class="chip">روند پیشرفت واحدها</span></div>
-    <div class="funnel">
-      <div class="frow"><div class="flabel">در دست اجرا</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="fval">67,180</div></div>
-      <div class="frow"><div class="flabel">معرفی به بانک</div><div class="track"><div class="fill" style="width:85.9%"></div></div><div class="fval">57,701</div></div>
-      <div class="frow"><div class="flabel">عقد قرارداد</div><div class="track"><div class="fill" style="width:37.1%"></div></div><div class="fval">24,944</div></div>
-      <div class="frow"><div class="flabel">پی‌کنی</div><div class="track"><div class="fill" style="width:94.4%"></div></div><div class="fval">63,447</div></div>
-      <div class="frow"><div class="flabel">فونداسیون</div><div class="track"><div class="fill" style="width:51.7%"></div></div><div class="fval">34,723</div></div>
-      <div class="frow"><div class="flabel">اسکلت</div><div class="track"><div class="fill" style="width:35.5%"></div></div><div class="fval">23,874</div></div>
-      <div class="frow"><div class="flabel">سفت‌کاری</div><div class="track"><div class="fill" style="width:25.3%"></div></div><div class="fval">17,023</div></div>
-      <div class="frow"><div class="flabel">نازک‌کاری</div><div class="track"><div class="fill" style="width:10.9%"></div></div><div class="fval">7,316</div></div>
-    </div><div class="small-note">ردیف‌ها مراحل/وضعیت‌های مرحله‌ای‌اند و نباید با یکدیگر جمع شوند.</div>
-  </div>
-</div></section>
-
-<section class="section"><div class="section-head"><h2 class="section-title">گلوگاه بانکی</h2><div class="note">اعتبار طرح ویژه نوسازی و بهسازی مسکن روستایی — اعتبار سال 1404</div></div>
-  <div class="grid2">
-    <div class="card"><div class="card-head"><div><h3 class="card-title">زنجیره عملکرد بانکی: سهمیه تا قرارداد و جذب</h3><div class="card-desc">اعداد اصلی جدول بانک‌ها</div></div><span class="chip r">گلوگاه</span></div><div class="chart"><canvas id="bankFunnel"></canvas></div></div>
-    <div class="card"><div class="card-head"><div><h3 class="card-title">معرفی و قرارداد بانک‌ها</h3><div class="card-desc">مقایسه تعداد پرونده</div></div><span class="chip b">بانک‌ها</span></div><div class="chart tall"><canvas id="banks"></canvas></div></div>
-  </div>
-  <div class="card" style="margin-top:15px"><div class="card-head"><div><h3 class="card-title">جدول عملکرد بانک‌های عامل</h3><div class="card-desc">بدون تعدیل اعداد مندرج در گزارش</div></div></div>
-    <div class="tablewrap"><table><thead><tr><th>بانک</th><th>سهمیه</th><th>ابلاغ</th><th>معرفی</th><th>قرارداد</th><th>قرارداد/معرفی</th><th>جذب (میلیارد ریال)</th><th>وضعیت</th></tr></thead><tbody>
-      <tr><td>تجارت</td><td>24,000</td><td>24,000</td><td>16,126</td><td>4,034</td><td>25٪</td><td>4,813</td><td><span class="status s1">بهتر</span></td></tr>
-      <tr><td>رفاه</td><td>12,545</td><td>12,545</td><td>9,420</td><td>1,938</td><td>21٪</td><td>2,176</td><td><span class="status s4">متوسط</span></td></tr>
-      <tr><td>سپه</td><td>5,455</td><td>5,455</td><td>3,397</td><td>389</td><td>11٪</td><td>330</td><td><span class="status s2">ضعیف</span></td></tr>
-      <tr><td>صادرات</td><td>24,000</td><td>24,000</td><td>8,655</td><td>810</td><td>9٪</td><td>533</td><td><span class="status s3">بحرانی</span></td></tr>
-      <tr><td>پست بانک</td><td>6,000</td><td>6,000</td><td>58</td><td>0</td><td>0٪</td><td>0</td><td><span class="status s3">بحرانی</span></td></tr>
-      <tr><td>ملت</td><td>24,000</td><td>24,000</td><td>0</td><td>0</td><td>—</td><td>0</td><td><span class="status s3">بدون معرفی</span></td></tr>
-      <tr><td>ملی</td><td>24,000</td><td>0</td><td>0</td><td>0</td><td>—</td><td>0</td><td><span class="status s3">بدون ابلاغ</span></td></tr>
-      <tr><td><strong>مجموع</strong></td><td><strong>120,000</strong></td><td><strong>96,000</strong></td><td><strong>37,656</strong></td><td><strong>7,171</strong></td><td><strong>19٪</strong></td><td><strong>7,852</strong></td><td><span class="status s2">گلوگاه</span></td></tr>
-    </tbody></table></div>
-  </div>
-</section>
-
-<section class="section"><div class="section-head"><h2 class="section-title">تأمین زمین؛ دومین گلوگاه راهبردی</h2><div class="note">قیف 128 هزار قطعه/واحد تا مراحل اجرایی</div></div><div class="grid2">
-  <div class="card"><div class="card-head"><div><h3 class="card-title">قیف تأمین و آماده‌سازی زمین</h3><div class="card-desc">اعداد مندرج در گزارش</div></div><span class="chip o">ریسک زمین</span></div><div class="chart tall"><canvas id="land"></canvas></div></div>
-  <div class="card"><div class="metric"><div class="num">36٪</div><div class="caption">از برنامه 128 هزار واحد، در مرحله شناسایی و تخصیص گزارش شده است.</div><div class="minirow"><div class="mini"><b>46,000</b><span>شناسایی و تخصیص</span></div><div class="mini"><b>25,000</b><span>تحویل</span></div><div class="mini"><b>17,400</b><span>دستور نقشه</span></div><div class="mini"><b>10,500</b><span>پروانه</span></div></div></div><div class="alert" style="margin-top:12px"><h3>برداشت مدیریتی</h3><p>برای جلوگیری از تبدیل زمین به گلوگاه، «زمان توقف در هر مرحله» باید KPI مستقل شود و برای هر استان ظرفیت زمین از شناسایی تا شروع عملیات دنبال شود.</p><div class="alertgrid"><div class="alertnum"><b>128k</b><span>برنامه</span></div><div class="alertnum"><b>46k</b><span>شناسایی/تخصیص</span></div><div class="alertnum"><b>19,337</b><span>قرارداد واگذاری</span></div><div class="alertnum"><b>10k</b><span>شروع عملیات</span></div></div></div></div>
-</div></section>
-
-<section class="section"><div class="section-head"><h2 class="section-title">معماری منابع مالی</h2><div class="note">واحد نمودار: همت</div></div><div class="grid2">
-  <div class="card"><div class="card-head"><div><h3 class="card-title">ترکیب منابع مالی کل برنامه</h3><div class="card-desc">عدد 239 همت اعلام‌شده در اسلاید منابع مالی</div></div><span class="chip b">239 همت</span></div><div class="chart tall"><canvas id="finance"></canvas></div></div>
-  <div class="card"><div class="card-head"><div><h3 class="card-title">خوانش صحیح منابع</h3><div class="card-desc">تفکیک منابع کل برنامه از گردش منابع در بنیاد</div></div><span class="chip">نکته مالی</span></div>
-    <div class="insights" style="grid-template-columns:1fr 1fr;gap:9px">
-      <article class="insight good"><div class="itop"><div class="iicon">💰</div><h3>گردش در بنیاد</h3></div><p>در یک اسلاید حدود <strong>16 همت</strong> برای «گردش حساب در بنیاد» آمده است.</p></article>
-      <article class="insight info"><div class="itop"><div class="iicon">🏦</div><h3>منابع کل برنامه</h3></div><p>عدد <strong>239 همت</strong> شامل تسهیلات، زمین، آورده و سایر منابع است.</p></article>
-      <article class="insight warn"><div class="itop"><div class="iicon">🌍</div><h3>زمین 99 ساله</h3></div><p>ارزش اعلام‌شده این سرفصل در اسلاید منابع <strong>66 همت</strong> است.</p></article>
-      <article class="insight danger"><div class="itop"><div class="iicon">👤</div><h3>آورده متقاضی</h3></div><p>آورده متقاضی در تصویر منابع مالی <strong>69 همت</strong> درج شده است.</p></article>
-    </div>
-    <div class="alert" style="margin-top:12px"><h3>هشدار خوانش مالی</h3><p>239 همت را نباید معادل «نقدینگی قابل تخصیص بنیاد» دانست؛ بخشی از آن تسهیلات، ارزش زمین و آورده متقاضی است.</p></div>
   </div>
 </div>
-<div class="card" style="margin-top:15px"><div class="card-head"><div><h3 class="card-title">برنامه منابع تا پایان سال و مبلغ اعلامی تا آذر</h3><div class="card-desc">چهار سرفصل اصلی اعتباری</div></div></div><div class="chart"><canvas id="resourcePlan"></canvas></div></div>
+
+<main class="container">
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="glass-label">گزارش جامع و دوره‌ای عملکرد</div>
+      <h1>طرح «خانه امید» ـ مسکن محرومین</h1>
+      <p>
+        داشبورد مدیریتی تجمیعی از نمای کلی، پیشرفت فیزیکی و عملکرد بانکی.
+      </p>
+      <div class="hero-meta">
+        <span class="hero-chip"><i class="fa-regular fa-calendar"></i> تاریخ گزارش: ۱۴۰۵/۰۶/۲۱</span>
+        <a class="hero-btn" href="./HopeHouseSource.pdf" target="_blank" rel="noopener">
+          <i class="fa-regular fa-file-pdf"></i> جزئیات گزارش
+        </a>
+        <span class="hero-chip"><i class="fa-solid fa-building-columns"></i> اداره کل حوزه ریاست</span>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div class="date-stack hero-stats">
+        <div class="date-card hero-stat">
+          <span>حجم سبد</span>
+          <strong class="counter" data-value="81272" data-decimals="0">۰</strong>
+          <small>واحد</small>
+        </div>
+        <div class="date-card hero-stat">
+          <span>تحقق برنامه</span>
+          <strong class="counter" data-value="83.8" data-decimals="1" data-suffix="٪">۰</strong>
+          <small>از برنامه ۹۷٬۰۰۰</small>
+        </div>
+        <div class="date-card hero-stat">
+          <span>پیشرفت اجرایی</span>
+          <strong class="counter" data-value="78254" data-decimals="0">۰</strong>
+          <small>واحد پی‌کنی</small>
+        </div>
+        <div class="date-card hero-stat">
+          <span>قرارداد بانکی</span>
+          <strong class="counter" data-value="9413" data-decimals="0">۰</strong>
+          <small>قرارداد</small>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="section"><div class="section-head"><h2 class="section-title">تحلیل استانی و توزیع منابع</h2><div class="note">نمونه‌ای از داده‌های استانی گزارش</div></div><div class="grid2">
-  <div class="card"><div class="card-head"><div><h3 class="card-title">رتبه‌های منتخب در محور بنیاد ساخت روستایی</h3><div class="card-desc">نسبت عملکرد به برنامه در داده استانی گزارش</div></div><span class="chip g">تحقق</span></div><div class="rank">
-    <div class="rrow"><div class="rno">1</div><div><div class="rname">چهارمحال و بختیاری</div><div class="rbar"><span style="width:100%"></span></div></div><div class="rval">100٪</div></div>
-    <div class="rrow"><div class="rno">2</div><div><div class="rname">قزوین</div><div class="rbar"><span style="width:100%"></span></div></div><div class="rval">100٪</div></div>
-    <div class="rrow"><div class="rno">3</div><div><div class="rname">کردستان</div><div class="rbar"><span style="width:100%"></span></div></div><div class="rval">100٪</div></div>
-    <div class="rrow"><div class="rno">4</div><div><div class="rname">کرمانشاه</div><div class="rbar"><span style="width:100%"></span></div></div><div class="rval">100٪</div></div>
-    <div class="rrow"><div class="rno">5</div><div><div class="rname">ایلام</div><div class="rbar"><span style="width:98.4%"></span></div></div><div class="rval">98.4٪</div></div>
-    <div class="rrow"><div class="rno">6</div><div><div class="rname">هفت/هشت استان دیگر در دامنه بالای 90٪ یا نزدیک آن</div><div class="rbar"><span style="width:90%"></span></div></div><div class="rval">~90٪+</div></div>
-  </div></div>
-  <div class="card"><div class="card-head"><div><h3 class="card-title">بیشترین کمک بلاعوض تخصیص‌یافته</h3><div class="card-desc">میلیارد ریال</div></div><span class="chip b">توزیع منابع</span></div><div class="chart small"><canvas id="grants"></canvas></div></div>
-</div></section>
+<section class="section" id="overview">
+  <div class="section-head">
+    <div>
+      <h2>داشبورد اجرایی در یک نگاه</h2>
+      <p>نمای کلی طرح ـ آخرین به‌روزرسانی این بخش: ۱۴۰۵/۰۶/۲۱</p>
+    </div>
+    <span class="badge blue"><i class="fa-solid fa-gauge-high"></i> وضعیت مدیریتی</span>
+  </div>
 
-<section class="section"><div class="section-head"><h2 class="section-title">تفاهم‌نامه‌های اصلی</h2><div class="note">محورهای دارای KPI مستقیم در گزارش</div></div><div class="grid3">
-  <div class="card"><div class="card-head"><div><h3 class="card-title">کمیته امداد — روستایی</h3><div class="card-desc">تفاهم‌نامه 8 هزار واحدی</div></div><span class="chip r">54٪</span></div><div class="metric"><div class="num" style="font-size:42px">267</div><div class="caption">عملکرد بر اساس سفت‌کاری</div><div class="minirow"><div class="mini"><b>497</b><span>برنامه مرداد</span></div><div class="mini"><b>1,491</b><span>برنامه سال</span></div></div></div></div>
-  <div class="card"><div class="card-head"><div><h3 class="card-title">کمیته امداد — شهری</h3><div class="card-desc">شهرهای زیر 25 هزار نفر</div></div><span class="chip g">73٪</span></div><div class="metric"><div class="num" style="font-size:42px">1,389</div><div class="caption">عملکرد تا پایان مرداد</div><div class="minirow"><div class="mini"><b>1,900</b><span>برنامه مرداد</span></div><div class="mini"><b>2,500</b><span>برنامه سال</span></div></div></div></div>
-  <div class="card"><div class="card-head"><div><h3 class="card-title">بهزیستی — شهری و روستایی</h3><div class="card-desc">تفاهم‌نامه 8 هزار واحدی</div></div><span class="chip g">70٪</span></div><div class="metric"><div class="num" style="font-size:42px">1,576</div><div class="caption">عملکرد بر اساس سفت‌کاری</div><div class="minirow"><div class="mini"><b>2,236</b><span>برنامه مرداد</span></div><div class="mini"><b>4,000</b><span>برنامه سال</span></div></div></div></div>
-</div></section>
+  <div class="grid kpi">
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-house"></i></div><div class="value counter" data-value="81272" data-decimals="0">۰</div><div class="label">واحد در نمای کلی طرح</div><div class="foot"><span>مبنای روکش کلی</span><span class="badge blue">کل سبد</span></div><div class="accent blue"></div></div>
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-bullseye"></i></div><div class="value counter" data-value="83.8" data-decimals="1" data-suffix="٪">۰</div><div class="label">تحقق نسبت به برنامه ۹۷٬۰۰۰ واحد</div><div class="foot"><span>فاصله: ۱۵٬۷۲۸</span><span class="badge amber">نیازمند پیگیری</span></div><div class="accent amber"></div></div>
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-helmet-safety"></i></div><div class="value counter" data-value="78254" data-decimals="0">۰</div><div class="label">پی‌کنی / شروع عملیات اجرایی</div><div class="foot"><span>شیت پیشرفت فیزیکی</span><span class="badge green">۹۶٫۲٪</span></div><div class="accent green"></div></div>
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-paint-roller"></i></div><div class="value counter" data-value="8291" data-decimals="0">۰</div><div class="label">واحد دارای نازک‌کاری</div><div class="foot"><span>نسبت به جمع ۸۱٬۳۷۹</span><span class="badge red">۱۰٫۲٪</span></div><div class="accent red"></div></div>
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-file-signature"></i></div><div class="value counter" data-value="9413" data-decimals="0">۰</div><div class="label">قرارداد بانکی</div><div class="foot"><span>از ۴۲٬۲۸۳ معرفی</span><span class="badge purple">۲۲٫۳٪</span></div><div class="accent purple"></div></div>
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-sack-dollar"></i></div><div class="value counter" data-value="1.199" data-decimals="3">۰</div><div class="label">همت جذب ریالی</div><div class="foot"><span>۱۱٬۹۸۸٫۸۵ میلیارد ریال</span><span class="badge green">ثبت‌شده</span></div><div class="accent teal"></div></div>
+  </div>
 
-<section class="section"><div class="section-head"><h2 class="section-title">کنترل کیفیت داده</h2><div class="note">اعداد متناقض گزارش در این بخش پنهان نشده‌اند</div></div><div class="alert"><h3>⚠️ مغایرت‌های مهم که پیش از تصمیم‌گیری باید کنترل شوند</h3><p>این اختلاف‌ها می‌تواند ناشی از تفاوت مبنا، حذف هم‌پوشانی یا زمان به‌روزرسانی باشد؛ اما گزارش مدیریتی باید مبنای نهایی عدد را صریح کند.</p><div class="alertgrid"><div class="alertnum"><b>67,180</b><span>کل واحد اعلامی</span></div><div class="alertnum"><b>71,103</b><span>جمع مستقیم روستایی + شهری جدول</span></div><div class="alertnum"><b>3,923</b><span>اختلاف جمع مستقیم</span></div><div class="alertnum"><b>79.5٪</b><span>67,180 ÷ 84,500؛ در گزارش 78٪ آمده</span></div></div></div></section>
+  <div class="grid two" style="margin-top:16px">
+    <div class="card">
+      <div class="chart-head">
+        <div><h3>ترکیب سبد خانه امید</h3><p>روستایی در برابر شهری</p></div>
+        <span class="badge blue">۸۱٬۲۷۲ واحد</span>
+      </div>
+      <div class="chart-box"><canvas id="mixChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="chart-head">
+        <div><h3>تحقق برنامه</h3><p>عملکرد ثبت‌شده در برابر برنامه اعلام‌شده</p></div>
+        <span class="badge amber">برنامه: ۹۷٬۰۰۰</span>
+      </div>
+      <div class="chart-box"><canvas id="planChart"></canvas></div>
+    </div>
+  </div>
 
-<section class="section"><div class="grid2">
-  <div class="card"><div class="card-head"><div><h3 class="card-title">جلسات ستاد هماهنگی</h3><div class="card-desc">از آغاز اجرای طرح تا گزارش نهم</div></div><span class="chip b">9 جلسه</span></div><div class="timeline">
-    <div class="t"><div class="dot"></div><div class="td">1405/03/23</div><div class="tt">نخستین جلسه ستاد هماهنگی</div></div>
-    <div class="t"><div class="dot"></div><div class="td">1405/04/02</div><div class="tt">دومین جلسه</div></div>
-    <div class="t"><div class="dot"></div><div class="td">1405/04/06</div><div class="tt">سومین جلسه</div></div>
-    <div class="t"><div class="dot"></div><div class="td">1405/04/20</div><div class="tt">چهارمین جلسه</div></div>
-    <div class="t"><div class="dot"></div><div class="td">1405/04/27</div><div class="tt">پنجمین جلسه</div></div>
-    <div class="t"><div class="dot"></div><div class="td">1405/05/03</div><div class="tt">ششمین جلسه</div></div>
-    <div class="t"><div class="dot"></div><div class="td">1405/05/10</div><div class="tt">هفتمین جلسه</div></div>
-    <div class="t"><div class="dot"></div><div class="td">1405/05/24</div><div class="tt">هشتمین جلسه</div></div>
-    <div class="t"><div class="dot"></div><div class="td">1405/06/09</div><div class="tt">نهمین جلسه ستاد هماهنگی</div></div>
-  </div></div>
-  <div class="card"><div class="card-head"><div><h3 class="card-title">اولویت‌های مدیریتی پیشنهادی</h3><div class="card-desc">تبدیل گزارش به سیستم تصمیم‌گیری</div></div><span class="chip r">اقدام</span></div><div class="insights" style="grid-template-columns:1fr 1fr;gap:9px">
-    <article class="insight danger"><div class="itop"><div class="iicon">1</div><h3>بانک</h3></div><p>زنجیره <strong>ابلاغ → معرفی → قرارداد → پرداخت</strong> با زمان توقف هر مرحله پایش شود.</p></article>
-    <article class="insight danger"><div class="itop"><div class="iicon">2</div><h3>زمین</h3></div><p>برای هر استان، مراحل <strong>شناسایی تا شروع عملیات</strong> جداگانه سنجیده شود.</p></article>
-    <article class="insight info"><div class="itop"><div class="iicon">3</div><h3>داده</h3></div><p>هر واحد یک <strong>شناسه یکتا</strong> داشته باشد تا شمارش دوباره رخ ندهد.</p></article>
-  </div></div>
-</div></section>
+  <div class="grid equal" style="margin-top:16px">
+    <div class="insight">
+      <div class="head"><i class="fa-solid fa-location-dot"></i> ساختار جغرافیایی سبد</div>
+      <p>بخش روستایی با <strong>۵۶٬۴۹۳ واحد</strong> حدود ۶۹٫۵٪ کل روکش را تشکیل می‌دهد و بخش شهری با <strong>۲۴٬۷۷۹ واحد</strong> حدود ۳۰٫۵٪ را به خود اختصاص داده است.</p>
+    </div>
+    <div class="insight">
+      <div class="head"><i class="fa-solid fa-bullseye"></i> شکاف برنامه</div>
+      <p>بر اساس مقادیر ثبت‌شده در شیت روکش کلی، عملکرد <strong>۱۵٬۷۲۸ واحد</strong> با برنامه ۹۷٬۰۰۰ واحدی فاصله دارد؛ این مقایسه باید با تاریخ هدف برنامه نیز همراه باشد.</p>
+    </div>
+  </div>
 
-<section class="section"><div class="card" style="background:linear-gradient(135deg,#fff,#f4f9ff)"><div class="card-head"><div><h3 class="card-title">جمع‌بندی مدیریتی</h3><div class="card-desc">حاصل خوانش کل گزارش</div></div><span class="chip b">خلاصه اجرایی</span></div><div class="grid3">
-  <div><div class="note">قدرت اصلی</div><div style="font-size:17px;font-weight:900;color:var(--navy)">تنوع منابع و مقیاس ملی</div><p style="font-size:10px;color:#58667a">ترکیب زمین، تسهیلات، حساب 100، نهادهای حمایتی، خیرین و منابع دولتی ظرفیت اهرمی قابل‌توجهی ایجاد می‌کند.</p></div>
-  <div><div class="note">ریسک اصلی</div><div style="font-size:17px;font-weight:900;color:#a72d2d">بانک + زمین + داده</div><p style="font-size:10px;color:#58667a">گلوگاه تبدیل معرفی بانکی به قرارداد، محدودیت pipeline زمین و مغایرت‌های عددی باید در اولویت باشد.</p></div>
-  <div><div class="note">نیاز مدیریتی</div><div style="font-size:17px;font-weight:900;color:#195e98">مدیریت از زمین تا تحویل</div><p style="font-size:10px;color:#58667a">داشبورد آینده باید سرنوشت هر واحد را از زمین تا قرارداد، پرداخت، ساخت و تحویل با شناسه یکتا دنبال کند.</p></div>
-</div></div></section>
+  <div class="grid equal" style="margin-top:16px">
+    <div class="card">
+      <div class="chart-head"><div><h3>مهم‌ترین برنامه‌های روستایی</h3><p>تعداد واحد</p></div></div>
+      <div class="chart-box tall"><canvas id="ruralProgramsChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="chart-head"><div><h3>مهم‌ترین برنامه‌های شهری</h3><p>تعداد واحد</p></div></div>
+      <div class="chart-box tall"><canvas id="urbanProgramsChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="physical">
+  <div class="section-head">
+    <div>
+      <h2>پیشرفت فیزیکی و ساخت</h2>
+      <p>آخرین به‌روزرسانی این بخش: ۱۴۰۵/۰۶/۲۱</p>
+    </div>
+    <span class="badge green"><i class="fa-solid fa-person-digging"></i> مسیر اجرا</span>
+  </div>
+
+  <div class="grid kpi">
+    <div class="card metric-card"><div class="metric-main"><strong class="counter" data-value="78254" data-decimals="0">۰</strong><span>پی‌کنی</span><div class="progress"><span style="width:96.2%"></span></div></div><span class="badge green">۹۶٫۲٪</span></div>
+    <div class="card metric-card"><div class="metric-main"><strong class="counter" data-value="45267" data-decimals="0">۰</strong><span>فونداسیون</span><div class="progress"><span style="width:55.6%"></span></div></div><span class="badge blue">۵۵٫۶٪</span></div>
+    <div class="card metric-card"><div class="metric-main"><strong class="counter" data-value="32799" data-decimals="0">۰</strong><span>اسکلت</span><div class="progress"><span style="width:40.3%"></span></div></div><span class="badge blue">۴۰٫۳٪</span></div>
+    <div class="card metric-card"><div class="metric-main"><strong class="counter" data-value="23457" data-decimals="0">۰</strong><span>سفت‌کاری</span><div class="progress"><span style="width:28.8%"></span></div></div><span class="badge amber">۲۸٫۸٪</span></div>
+    <div class="card metric-card"><div class="metric-main"><strong class="counter" data-value="8291" data-decimals="0">۰</strong><span>نازک‌کاری</span><div class="progress"><span style="width:10.2%"></span></div></div><span class="badge red">۱۰٫۲٪</span></div>
+    <div class="card metric-card"><div class="metric-main"><strong class="counter" data-value="36637" data-decimals="0">۰</strong><span>عقد قرارداد در شیت پیشرفت</span><div class="progress"><span style="width:45%"></span></div></div><span class="badge purple">۴۵٫۰٪</span></div>
+  </div>
+
+  <div class="grid two" style="margin-top:16px">
+    <div class="card">
+      <div class="chart-head"><div><h3>توزیع واحدها در مراحل اجرایی</h3><p>اعداد از ردیف جمع کل شیت پیشرفت فیزیکی</p></div></div>
+      <div class="chart-box tall"><canvas id="physicalStagesChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="chart-head"><div><h3>مقایسه روستایی و شهری</h3><p>تعداد واحد در هر مرحله</p></div></div>
+      <div class="chart-box tall"><canvas id="urbanRuralPhysicalChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="chart-head">
+      <div><h3>خوانش مدیریتی پیشرفت</h3><p>وضعیت جاری؛ بدون ادعای روند زمانی</p></div>
+      <span class="badge gray">مراحل می‌توانند هم‌پوشانی داشته باشند</span>
+    </div>
+    <div class="grid three">
+      <div class="insight">
+        <div class="head"><i class="fa-solid fa-arrow-down-long"></i> تمرکز اصلی</div>
+        <p>۷۸٬۲۵۴ واحد در پی‌کنی ثبت شده، در حالی‌که نازک‌کاری برای ۸٬۲۹۱ واحد ثبت شده است. این فاصله فقط یک تصویر مقطعی از توزیع مراحل است.</p>
+      </div>
+      <div class="insight">
+        <div class="head"><i class="fa-solid fa-city"></i> روستایی / شهری</div>
+        <p>روستایی در تمام مراحل حجم مطلق بیشتری دارد، اما برای سنجش سرعت پیشرفت میان این دو بخش باید وضعیت دوره قبل و زمان آغاز پروژه‌ها وجود داشته باشد.</p>
+      </div>
+      <div class="insight">
+        <div class="head"><i class="fa-solid fa-triangle-exclamation"></i> محدودیت تفسیر</div>
+        <p>در خود شیت تصریح شده که مراحل ممکن است هم‌پوشان باشند؛ بنابراین جمع مراحل نباید به‌عنوان تعداد واحدهای منحصربه‌فرد تفسیر شود.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid equal" style="margin-top:16px">
+    <div class="card">
+      <div class="chart-head"><div><h3>جدول وضعیت مراحل فیزیکی</h3><p>مبنای درصد: ۸۱٬۳۷۹ واحد ثبت‌شده در جمع کل شیت</p></div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>مرحله</th><th>تعداد واحد</th><th>سهم از جمع کل</th><th>فاصله با کل</th></tr></thead>
+          <tbody>
+            <tr><td>پی‌کنی</td><td class="num">۷۸٬۲۵۴</td><td class="num">۹۶٫۲٪</td><td class="num">۳٬۱۲۵</td></tr>
+            <tr><td>فونداسیون</td><td class="num">۴۵٬۲۶۷</td><td class="num">۵۵٫۶٪</td><td class="num">۳۶٬۱۱۲</td></tr>
+            <tr><td>اسکلت</td><td class="num">۳۲٬۷۹۹</td><td class="num">۴۰٫۳٪</td><td class="num">۴۸٬۵۸۰</td></tr>
+            <tr><td>سفت‌کاری</td><td class="num">۲۳٬۴۵۷</td><td class="num">۲۸٫۸٪</td><td class="num">۵۷٬۹۲۲</td></tr>
+            <tr><td>نازک‌کاری</td><td class="num">۸٬۲۹۱</td><td class="num">۱۰٫۲٪</td><td class="num">۷۳٬۰۸۸</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="chart-head"><div><h3>شاخص‌های بانکی داخل شیت پیشرفت</h3><p>این اعداد با شیت عملکرد بانک‌ها دامنه یکسان ندارند</p></div></div>
+      <div class="compare-strip">
+        <div class="compare-box"><strong>۷۱٬۷۹۳</strong><span>معرفی به بانک</span><div class="mini-bar"><span style="width:88.2%;background:#16a5c7"></span></div></div>
+        <div class="compare-box"><strong>۳۶٬۶۳۷</strong><span>عقد قرارداد</span><div class="mini-bar"><span style="width:45%;background:#7957d5"></span></div></div>
+        <div class="compare-box"><strong class="counter" data-value="8291" data-decimals="0">۰</strong><span>نازک‌کاری</span><div class="mini-bar"><span style="width:10.2%;background:#de5c5c"></span></div></div>
+      </div>
+      <div class="alert" style="margin-top:14px">
+        <strong>نکته دامنه داده:</strong>
+        عدد ۷۱٬۷۹۳ مربوط به شیت پیشرفت فیزیکی است و نباید با عدد ۴۲٬۲۸۳ شیت عملکرد بانک‌ها به‌عنوان یک KPI واحد مقایسه شود.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="banks">
+  <div class="section-head">
+    <div>
+      <h2>عملکرد و زنجیره بانکی</h2>
+      <p>آخرین به‌روزرسانی این بخش: ۱۴۰۵/۰۶/۲۱</p>
+    </div>
+    <span class="badge purple"><i class="fa-solid fa-building-columns"></i> اعتبار طرح ویژه ۱۴۰۴</span>
+  </div>
+
+  <div class="grid kpi">
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-ticket"></i></div><div class="value counter" data-value="120000" data-decimals="0">۰</div><div class="label">سهمیه اختصاص‌یافته</div><div class="foot"><span>مبنای شیت بانک‌ها</span><span class="badge blue">۱۰۰٪</span></div><div class="accent blue"></div></div>
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-stamp"></i></div><div class="value counter" data-value="96000" data-decimals="0">۰</div><div class="label">سهمیه ابلاغ‌شده</div><div class="foot"><span>از ۱۲۰٬۰۰۰</span><span class="badge green">۸۰٪</span></div><div class="accent green"></div></div>
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-share-from-square"></i></div><div class="value counter" data-value="42283" data-decimals="0">۰</div><div class="label">معرفی به بانک</div><div class="foot"><span>از ابلاغ</span><span class="badge amber">۴۴٫۰٪</span></div><div class="accent amber"></div></div>
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-file-signature"></i></div><div class="value counter" data-value="9413" data-decimals="0">۰</div><div class="label">انعقاد قرارداد</div><div class="foot"><span>از معرفی</span><span class="badge purple">۲۲٫۳٪</span></div><div class="accent purple"></div></div>
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div><div class="value counter" data-value="32870" data-decimals="0">۰</div><div class="label">معرفی‌شده بدون قرارداد</div><div class="foot"><span>فاصله مرحله‌ای</span><span class="badge red">گلوگاه</span></div><div class="accent red"></div></div>
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-sack-dollar"></i></div><div class="value counter" data-value="11988.85" data-decimals="2">۰</div><div class="label">جذب ریالی ـ میلیارد ریال</div><div class="foot"><span>≈ ۱٫۱۹۹ همت</span><span class="badge green">کل</span></div><div class="accent teal"></div></div>
+  </div>
+
+  <div class="grid two" style="margin-top:16px">
+    <div class="card">
+      <div class="chart-head"><div><h3>قیف زنجیره بانکی</h3><p>سهمیه → ابلاغ → معرفی → قرارداد</p></div></div>
+      <div class="chart-box tall"><canvas id="bankFunnelChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="chart-head"><div><h3>جذب ریالی به تفکیک بانک</h3><p>میلیارد ریال</p></div></div>
+      <div class="chart-box tall"><canvas id="bankMoneyChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="chart-head"><div><h3>نرخ تبدیل و عملکرد بانک‌ها</h3><p>معرفی نسبت به سهمیه ابلاغ‌شده و قرارداد نسبت به معرفی</p></div></div>
+    <div class="chart-box tall"><canvas id="bankRateChart"></canvas></div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="chart-head"><div><h3>جدول کامل عملکرد بانک‌ها</h3><p>طبق شیت گزارش عملکرد بانک‌ها</p></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>بانک عامل</th><th>سهمیه</th><th>ابلاغ</th><th>معرفی</th><th>قرارداد</th><th>قرارداد/معرفی</th><th>جذب (میلیارد ریال)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>تجارت</td><td class="num">۲۴٬۰۰۰</td><td class="num">۲۴٬۰۰۰</td><td class="num">۱۶٬۷۵۲</td><td class="num">۵٬۲۹۷</td><td class="num">۳۱٫۶٪</td><td class="num">۷٬۴۴۳٫۵۵</td></tr>
+          <tr><td>رفاه</td><td class="num">۱۲٬۵۴۵</td><td class="num">۱۲٬۵۴۵</td><td class="num">۹٬۳۰۰</td><td class="num">۲٬۲۳۰</td><td class="num">۲۴٫۰٪</td><td class="num">۲٬۷۲۰٫۱۰</td></tr>
+          <tr><td>سپه</td><td class="num">۵٬۴۵۵</td><td class="num">۵٬۴۵۵</td><td class="num">۳٬۳۲۵</td><td class="num">۴۴۲</td><td class="num">۱۳٫۳٪</td><td class="num">۴۱۸٫۳۵</td></tr>
+          <tr><td>صادرات</td><td class="num">۲۴٬۰۰۰</td><td class="num">۲۴٬۰۰۰</td><td class="num">۱۰٬۰۷۳</td><td class="num">۱٬۴۲۴</td><td class="num">۱۴٫۱٪</td><td class="num">۱٬۳۹۶٫۳۵</td></tr>
+          <tr><td>پست بانک</td><td class="num">۶٬۰۰۰</td><td class="num">۶٬۰۰۰</td><td class="num">۷۱۱</td><td class="num">۹</td><td class="num">۱٫۳٪</td><td class="num">۳٫۰۰</td></tr>
+          <tr><td>ملت</td><td class="num">۲۴٬۰۰۰</td><td class="num">۲۴٬۰۰۰</td><td class="num">۲٬۱۲۲</td><td class="num">۱۱</td><td class="num">۰٫۵٪</td><td class="num">۷٫۵۰</td></tr>
+          <tr><td>ملی</td><td class="num">۲۴٬۰۰۰</td><td class="num">۰</td><td class="num">۰</td><td class="num">۰</td><td class="num">—</td><td class="num">۰</td></tr>
+          <tr style="background:#f8fbff"><td><strong>جمع</strong></td><td class="num"><strong>۱۲۰٬۰۰۰</strong></td><td class="num"><strong>۹۶٬۰۰۰</strong></td><td class="num"><strong>۴۲٬۲۸۳</strong></td><td class="num"><strong>۹٬۴۱۳</strong></td><td class="num"><strong>۲۲٫۳٪</strong></td><td class="num"><strong>۱۱٬۹۸۸٫۸۵</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid equal" style="margin-top:16px">
+    <div class="insight">
+      <div class="head"><i class="fa-solid fa-filter-circle-dollar"></i> بزرگ‌ترین فاصله</div>
+      <p>از ۹۶٬۰۰۰ واحد ابلاغ‌شده، <strong>۵۳٬۷۱۷ واحد</strong> هنوز در ستون معرفی به بانک ثبت نشده‌اند.</p>
+    </div>
+    <div class="insight">
+      <div class="head"><i class="fa-solid fa-file-circle-xmark"></i> فاصله معرفی تا قرارداد</div>
+      <p><strong>۳۲٬۸۷۰ واحد</strong> معرفی‌شده هنوز در ستون انعقاد قرارداد ثبت نشده‌اند؛ علت این فاصله از خود داده‌ها قابل تعیین نیست.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="analysis">
+  <div class="section-head">
+    <div>
+      <h2>کارت‌های تحلیلی و مدیریتی</h2>
+      <p>تحلیل جامع بر مبنای وضعیت ثبت‌شده فعلی؛ بدون جایگزینی حدس با داده</p>
+    </div>
+    <span class="badge blue"><i class="fa-solid fa-brain"></i> Management Insights</span>
+  </div>
+
+  <div class="grid three">
+    <div class="card insight">
+      <div class="head"><i class="fa-solid fa-layer-group"></i> سبد بزرگ، تکمیل محدودتر</div>
+      <p>عدد ۸۱٬۲۷۲ نشان‌دهنده حجم سبد است، نه خروجی نهایی. برای قضاوت مدیریتی باید به‌طور همزمان مرحله ساخت، قرارداد بانکی و نازک‌کاری دیده شوند.</p>
+    </div>
+    <div class="card insight">
+      <div class="head"><i class="fa-solid fa-tree-city"></i> وزن بالای روستا</div>
+      <p>با <strong>۵۶٬۴۹۳ واحد</strong>، بخش روستایی ۶۹٫۵٪ روکش را در اختیار دارد و بنابراین سهم بالایی در تغییرات عدد کل خواهد داشت.</p>
+    </div>
+    <div class="card insight">
+      <div class="head"><i class="fa-solid fa-cubes-stacked"></i> تمرکز روی چند برنامه بزرگ</div>
+      <p>چهار برنامه اصلی حدود <strong>۷۲٫۹٪</strong> کل ۸۱٬۲۷۲ واحد را پوشش می‌دهند؛ پایش همین چهار برنامه تصویر بخش بزرگی از وضعیت کل را می‌دهد.</p>
+    </div>
+    <div class="card insight">
+      <div class="head"><i class="fa-solid fa-landmark"></i> تمرکز جذب مالی</div>
+      <p>جذب ریالی فعلی در تعداد محدودی از بانک‌ها متمرکز است؛ دو بانک تجارت و رفاه روی‌هم سهم بسیار بزرگی از جذب ثبت‌شده را دارند.</p>
+    </div>
+    <div class="card insight">
+      <div class="head"><i class="fa-solid fa-clock-rotate-left"></i> وضعیت جاری در برابر روند</div>
+      <p>فایل حاضر یک تصویر مقطعی ارائه می‌دهد. برای اثبات افزایش یا کاهش عملکرد، باید مقدار دوره قبل و تاریخ آن نیز در اختیار باشد.</p>
+    </div>
+    <div class="card insight">
+      <div class="head"><i class="fa-solid fa-link-slash"></i> دامنه‌های متفاوت KPI</div>
+      <p>۷۱٬۷۹۳ معرفی به بانک در شیت پیشرفت فیزیکی و ۴۲٬۲۸۳ معرفی در شیت عملکرد بانک‌ها، به دلیل تفاوت دامنه داده نباید به‌عنوان یک KPI واحد تلقی شوند.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="overview-details">
+  <div class="section-head">
+    <div>
+      <h2>جداول کامل برنامه‌ها</h2>
+    </div>
+  </div>
+
+  <div class="grid equal">
+    <div class="card">
+      <div class="chart-head"><div><h3>برنامه‌های روستایی</h3><p>جمع روستایی: ۵۶٬۴۹۳</p></div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ردیف</th><th>عنوان طرح</th><th>واحد</th></tr></thead>
+          <tbody>
+            <tr><td>۱</td><td>طرح ویژه بهسازی مسکن روستایی، اعتبار ۱۴۰۴</td><td class="num">۳۲٬۴۱۷</td></tr>
+            <tr><td>۲</td><td>پروژه‌های در دست اجرای مسکن محرومین روستایی بنیاد ساخت انتقالی</td><td class="num">۱۰٬۶۶۹</td></tr>
+            <tr><td>۳</td><td>تفاهم‌نامه ۸ هزار واحدی روستایی کمیته امداد</td><td class="num">۹۸۸</td></tr>
+            <tr><td>۴</td><td>تکمیل واحدهای نیمه‌کاره مسکن محرومین روستایی</td><td class="num">۵٬۱۴۰</td></tr>
+            <tr><td>۵</td><td>واحدهای انتقالی از محل طرح تأمین مسکن محرومین، حساب ۱۰۰</td><td class="num">۳٬۷۹۲</td></tr>
+            <tr><td>۶</td><td>تفاهم‌نامه ۸ هزار واحدی بهزیستی</td><td class="num">۱٬۳۵۹</td></tr>
+            <tr><td>۷</td><td>تکمیل واحدهای نیمه‌کاره مسکن محرومین دارای مشارکت مدنی</td><td class="num">۲٬۱۲۸</td></tr>
+            <tr style="background:#f8fbff"><td></td><td><strong>جمع روستایی</strong></td><td class="num"><strong>۵۶٬۴۹۳</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="chart-head"><div><h3>برنامه‌های شهری</h3><p>جمع شهری: ۲۴٬۷۷۹</p></div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ردیف</th><th>عنوان طرح</th><th>واحد</th></tr></thead>
+          <tbody>
+            <tr><td>۱</td><td>عملکرد طرح ویژه بهسازی مسکن شهری، اعتبار ۱۴۰۴</td><td class="num">۹٬۸۶۶</td></tr>
+            <tr><td>۲</td><td>پروژه‌های در دست اجرای مسکن محرومین شهری</td><td class="num">۶٬۳۰۰</td></tr>
+            <tr><td>۳</td><td>تفاهم‌نامه ۳۰ هزار واحدی شهر زیر ۲۵ هزار نفر کمیته امداد</td><td class="num">۱٬۹۰۰</td></tr>
+            <tr><td>۴</td><td>تفاهم‌نامه ۸ هزار واحدی بهزیستی</td><td class="num">۱٬۲۵۳</td></tr>
+            <tr><td>۵</td><td>مسکن استیجار (به‌صورت پایلوت)</td><td class="num">۱۷۷</td></tr>
+            <tr><td>۶</td><td>پروژه‌های دارای پیشرفت فیزیکی در انتظار معرفی به بانک</td><td class="num">۲٬۱۲۸</td></tr>
+            <tr><td>۷</td><td>تکمیل واحدهای نیمه‌کاره مسکن محرومین دارای مشارکت مدنی</td><td class="num">۳٬۱۵۵</td></tr>
+            <tr style="background:#f8fbff"><td></td><td><strong>جمع شهری</strong></td><td class="num"><strong>۲۴٬۷۷۹</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="audit">
+  <div class="section-head">
+    <div>
+      <h2>کنترل کیفیت داده و مغایرت‌ها</h2>
+      <p>مواردی که پیش از ارائه رسمی باید بررسی و تعیین تکلیف شوند</p>
+    </div>
+    <span class="badge red"><i class="fa-solid fa-shield-halved"></i> Data Quality</span>
+  </div>
+
+  <div class="grid three">
+    <div class="danger">
+      <strong>مغایرت ۱۰۷ واحدی</strong>
+      <p style="margin:7px 0 0;font-size:12px;line-height:1.9">
+        روکش کلی: <b>۸۱٬۲۷۲</b> — جمع کل شیت پیشرفت: <b>۸۱٬۳۷۹</b>.
+        علت باید از منبع داده مشخص شود.
+      </p>
+    </div>
+    <div class="alert">
+      <strong>تفاوت تاریخ برنامه</strong>
+      <p style="margin:7px 0 0;font-size:12px;line-height:1.9">
+        عنوان برنامه در روکش کلی «تا ۱۴۰۵/۰۶/۱۵» است، در حالی که وضعیت ثبت‌شده شیت ۱۴۰۵/۰۶/۲۱ است.
+      </p>
+    </div>
+    <div class="alert">
+      <strong>دو دامنه متفاوت بانکی</strong>
+      <p style="margin:7px 0 0;font-size:12px;line-height:1.9">
+        ۷۱٬۷۹۳ معرفی در شیت پیشرفت و ۴۲٬۲۸۳ معرفی در شیت بانک‌ها باید با تعریف KPI خودشان خوانده شوند.
+      </p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="chart-head"><div><h3>فهرست کنترل قبل از انتشار</h3><p>چک‌لیست مدیریتی برای نسخه بعدی</p></div></div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-body"><div class="tl-title">۱. تعیین عدد مرجع کل</div><div class="tl-text">تعیین تکلیف ۸۱٬۲۷۲ در برابر ۸۱٬۳۷۹ و ثبت علت مغایرت.</div></div></div>
+      <div class="tl-item"><div class="tl-body"><div class="tl-title">۲. تثبیت دامنه KPIهای بانکی</div><div class="tl-text">ثبت عنوان و دامنه هر عدد معرفی/قرارداد در کنار KPI.</div></div></div>
+      <div class="tl-item"><div class="tl-body"><div class="tl-title">۳. ثبت تاریخ مستقل هر شیت</div><div class="tl-text">تاریخ روکش، پیشرفت فیزیکی و بانک‌ها باید مستقل حفظ شود.</div></div></div>
+      <div class="tl-item"><div class="tl-body"><div class="tl-title">۴. افزودن وضعیت دوره قبل</div><div class="tl-text">بدون داده دوره قبل، روند واقعی و سرعت پیشرفت قابل اثبات نیست.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="actions">
+  <div class="section-head">
+    <div>
+      <h2>اولویت‌های پیشنهادی پایش مدیریتی</h2>
+      <p>پیشنهادهای تحلیلی مبتنی بر همین داده‌ها</p>
+    </div>
+  </div>
+
+  <div class="grid three">
+    <div class="card insight">
+      <div class="head"><i class="fa-solid fa-database"></i> دفتر کل واحدها</div>
+      <p>ایجاد شناسه یکتا برای هر واحد و اتصال استان، نوع طرح، مرحله فیزیکی، بانک، قرارداد و مبلغ جذب به همان رکورد.</p>
+    </div>
+    <div class="card insight">
+      <div class="head"><i class="fa-solid fa-chart-line"></i> وضعیت جاری + روند</div>
+      <p>ثبت همزمان مقدار جاری، دوره قبل و تغییر دوره‌ای برای هر مرحله فیزیکی و هر KPI بانکی.</p>
+    </div>
+    <div class="card insight">
+      <div class="head"><i class="fa-solid fa-filter"></i> قیف بانکی</div>
+      <p>پایش مداوم سهمیه، ابلاغ، معرفی، قرارداد و جذب و محاسبه نرخ تبدیل در سطح بانک و استان.</p>
+    </div>
+    <div class="card insight">
+      <div class="head"><i class="fa-solid fa-bell"></i> فهرست استثناها</div>
+      <p>واحدهای دارای پیشرفت ولی فاقد معرفی، معرفی‌شده ولی فاقد قرارداد، واحدهای متوقف و رکوردهای مغایر باید جداگانه رصد شوند.</p>
+    </div>
+    <div class="card insight">
+      <div class="head"><i class="fa-solid fa-building"></i> چهار برنامه اصلی</div>
+      <p>تمرکز مدیریتی روی چهار برنامه بزرگ که حدود ۷۲٫۹٪ کل سبد ۸۱٬۲۷۲ واحدی را در بر می‌گیرند.</p>
+    </div>
+    <div class="card insight">
+      <div class="head"><i class="fa-solid fa-calendar-days"></i> هم‌ترازی زمانی</div>
+      <p>در هر گزارش دوره‌ای، تاریخ هدف برنامه باید در کنار تاریخ وضعیت ثبت‌شده و تاریخ آخرین به‌روزرسانی همان شیت نمایش داده شود.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="card" style="background:linear-gradient(135deg,#f7fbff,#ffffff)">
+    <div class="section-head">
+      <div>
+        <h2>جمع‌بندی نهایی</h2>
+        <p>پیام مدیریتی قابل استفاده در ارائه به ریاست</p>
+      </div>
+      <span class="badge blue">۱۴۰۵/۰۶/۲۱</span>
+    </div>
+    <div class="grid three">
+      <div class="compare-box"><strong class="counter" data-value="81272" data-decimals="0">۰</strong><span>واحد در نمای کلی</span></div>
+      <div class="compare-box"><strong class="counter" data-value="78254" data-decimals="0">۰</strong><span>واحد پی‌کنی‌شده</span></div>
+      <div class="compare-box"><strong>۸٬۲۹۱</strong><span>واحد نازک‌کاری‌شده</span></div>
+    </div>
+    <p class="small-note" style="margin-top:15px">
+      حجم سبد طرح قابل توجه است، اما برای ارزیابی واقعی عملکرد باید حرکت واحدها در مسیر پیشرفت فیزیکی، قرارداد بانکی و تکمیل همزمان دیده شود.
+      سه عدد کلیدی <strong>۸۱٬۲۷۲</strong>، <strong>۸۱٬۳۷۹</strong> و <strong>۴۲٬۲۸۳</strong> به دلیل تفاوت دامنه/تعریف نباید بدون تطبیق به‌عنوان یک KPI واحد تلفیق شوند.
+    </p>
+  </div>
+</section>
+
 
 </main>
 
+<div class="sticky-index">
+  <a href="#overview"><i class="fa-solid fa-house"></i> نمای کلی</a>
+  <a href="#physical"><i class="fa-solid fa-helmet-safety"></i> فیزیکی</a>
+  <a href="#banks"><i class="fa-solid fa-building-columns"></i> بانک‌ها</a>
+  <a href="#audit"><i class="fa-solid fa-shield"></i> کنترل</a>
+</div>
+
 <script>
 Chart.register(ChartDataLabels);
-const C={navy:'#09284f',blue:'#1e63a8',cyan:'#188aa8',teal:'#158978',green:'#15966b',orange:'#e58c2b',red:'#d94d4d',purple:'#7257b6',grid:'#e8edf3',text:'#5a687d'};
-const fa=n=>new Intl.NumberFormat('fa-IR').format(n);const pct=n=>`${new Intl.NumberFormat('fa-IR',{maximumFractionDigits:1}).format(n)}٪`;
-const common={responsive:true,maintainAspectRatio:false,animation:{duration:900,easing:'easeOutQuart'},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:9,padding:13,font:{family:'Vazirmatn',size:9}}},tooltip:{rtl:true,titleFont:{family:'Vazirmatn'},bodyFont:{family:'Vazirmatn'}}},scales:{x:{grid:{display:false},ticks:{font:{family:'Vazirmatn',size:9},color:C.text}},y:{grid:{color:C.grid},ticks:{font:{family:'Vazirmatn',size:9},color:C.text}}}};
-const dl={color:C.navy,font:{family:'Vazirmatn',size:9,weight:'800'},anchor:'end',align:'top',clamp:true,formatter:v=>fa(v)};
 
-new Chart(document.getElementById('mix'),{type:'doughnut',data:{labels:['روستایی','شهری'],datasets:[{data:[46108,24335],backgroundColor:[C.green,C.blue],borderWidth:4,borderColor:'#fff',hoverOffset:7}]},options:{...common,cutout:'67%',plugins:{...common.plugins,legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:9,padding:13,font:{family:'Vazirmatn',size:9}}},datalabels:{color:'#fff',font:{family:'Vazirmatn',size:10,weight:'900'},formatter:(v,c)=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return `${fa(v)}\n${pct(v*100/t)}`},textAlign:'center'},tooltip:{callbacks:{label:c=>`${c.label}: ${fa(c.raw)} واحد`}}}}});
+const nf = new Intl.NumberFormat('fa-IR');
 
-new Chart(document.getElementById('axis'),{type:'bar',data:{labels:['شهری انتقالی','حساب 100 انتقالی','بنیاد ساخت روستایی','کمیته امداد شهری','نیمه‌تمام روستایی','بهزیستی','کمیته امداد روستایی'],datasets:[{label:'درصد تحقق',data:[86,77,73,73,73,70,54],backgroundColor:[C.green,C.teal,C.blue,C.blue,C.blue,C.orange,C.red],borderRadius:7}]},options:{...common,indexAxis:'y',scales:{x:{min:0,max:100,grid:{color:C.grid},ticks:{font:{family:'Vazirmatn',size:9},callback:v=>fa(v)+'٪'}},y:{grid:{display:false},ticks:{font:{family:'Vazirmatn',size:8}}}},plugins:{...common.plugins,legend:{display:false},datalabels:{...dl,anchor:'end',align:'right',formatter:v=>pct(v)},tooltip:{callbacks:{label:c=>`تحقق: ${pct(c.raw)}`}}}}});
+const gridColor = 'rgba(96,113,140,.11)';
+const tickColor = '#6e7b8f';
+const baseFont = { family: 'Vazirmatn', size: 11 };
 
-new Chart(document.getElementById('startContract'),{type:'bar',data:{labels:['روستایی','شهری'],datasets:[{label:'شروع عملیات',data:[95,93],backgroundColor:C.green,borderRadius:7},{label:'قرارداد نسبت به در دست اجرا',data:[35.6,34.1],backgroundColor:C.orange,borderRadius:7}]},options:{...common,scales:{x:{grid:{display:false},ticks:{font:{family:'Vazirmatn',size:9}}},y:{min:0,max:100,grid:{color:C.grid},ticks:{font:{family:'Vazirmatn',size:9},callback:v=>fa(v)+'٪'}}},plugins:{...common.plugins,datalabels:{...dl,formatter:v=>pct(v)}}}});
+function commonScales() {
+  return {
+    x:{grid:{color:gridColor},ticks:{color:tickColor,font:baseFont}},
+    y:{grid:{color:gridColor},ticks:{color:tickColor,font:baseFont},beginAtZero:true}
+  };
+}
+function barOptions({horizontal=false, suffix=' واحد', maxTicks=7}={}) {
+  const scales = commonScales();
+  if(horizontal){
+    scales.x = {
+      ...scales.x,
+      grace:'16%',
+      beginAtZero:true
+    };
+  }else{
+    scales.y = {
+      ...scales.y,
+      grace:'14%',
+      beginAtZero:true
+    };
+  }
 
-new Chart(document.getElementById('bankFunnel'),{type:'bar',data:{labels:['سهمیه','ابلاغ‌شده','معرفی','قرارداد','جذب'],datasets:[{label:'مقدار',data:[120000,96000,37656,7171,7852],backgroundColor:[C.navy,C.blue,C.cyan,C.orange,C.green],borderRadius:8}]},options:{...common,scales:{x:{grid:{display:false},ticks:{font:{family:'Vazirmatn',size:9}}},y:{grid:{color:C.grid},ticks:{font:{family:'Vazirmatn',size:9},callback:v=>fa(v)}}},plugins:{...common.plugins,legend:{display:false},datalabels:dl,tooltip:{callbacks:{label:c=>`مقدار: ${fa(c.raw)}`}}}}});
+  return {
+    responsive:true,maintainAspectRatio:false,
+    indexAxis: horizontal ? 'y' : 'x',
+    layout:{
+      padding: horizontal
+        ? {top:10,right:18,bottom:8,left:12}
+        : {top:34,right:12,bottom:8,left:12}
+    },
+    plugins:{
+      legend:{display:false},
+      datalabels:{
+        display:true,
+        anchor:'end',
+        align: horizontal ? 'right' : 'top',
+        offset: horizontal ? 9 : 6,
+        clamp:false,
+        clip:false,
+        color:'#23354d',
+        backgroundColor:'rgba(255,255,255,.78)',
+        borderRadius:4,
+        padding:{top:1,right:3,bottom:1,left:3},
+        font:{family:'Vazirmatn',weight:'700',size:10},
+        formatter:(v)=>nf.format(v)+suffix
+      },
+      tooltip:{
+        rtl:true,
+        titleFont:baseFont,bodyFont:baseFont,
+        callbacks:{label:(ctx)=>' '+nf.format(ctx.parsed.y ?? ctx.parsed.x)+suffix}
+      }
+    },
+    scales
+  };
+}
+function donutOptions(){
+  return {
+    responsive:true,maintainAspectRatio:false,
+    cutout:'60%',
+    plugins:{
+      legend:{position:'bottom',labels:{font:baseFont,usePointStyle:true,padding:18}},
+      datalabels:{
+        color:'#fff',
+        font:{family:'Vazirmatn',weight:'800',size:11},
+        formatter:(v,ctx)=>{
+          const data=ctx.chart.data.datasets[0].data;
+          const total=data.reduce((a,b)=>a+b,0);
+          return ((v/total)*100).toFixed(1).replace('.', '٫')+'٪';
+        }
+      },
+      tooltip:{rtl:true,bodyFont:baseFont,titleFont:baseFont}
+    }
+  };
+}
 
-new Chart(document.getElementById('banks'),{type:'bar',data:{labels:['تجارت','رفاه','سپه','صادرات','پست بانک','ملت','ملی'],datasets:[{label:'معرفی',data:[16126,9420,3397,8655,58,0,0],backgroundColor:C.blue,borderRadius:6},{label:'قرارداد',data:[4034,1938,389,810,0,0,0],backgroundColor:C.orange,borderRadius:6}]},options:{...common,scales:{x:{grid:{display:false},ticks:{font:{family:'Vazirmatn',size:9}}},y:{grid:{color:C.grid},ticks:{font:{family:'Vazirmatn',size:9},callback:v=>fa(v)}}},plugins:{...common.plugins,datalabels:{...dl,formatter:v=>v?fa(v):''}}}});
+new Chart(document.getElementById('mixChart'),{
+  type:'doughnut',
+  data:{
+    labels:['روستایی','شهری'],
+    datasets:[{data:[56493,24779],backgroundColor:['#173d73','#16a5c7'],borderWidth:0,hoverOffset:8}]
+  },
+  options:donutOptions()
+});
 
-new Chart(document.getElementById('land'),{type:'bar',data:{labels:['برنامه','شناسایی/تخصیص','تحویل','دستور نقشه','پروانه','شروع عملیات','قرارداد واگذاری'],datasets:[{label:'واحد/قطعه',data:[128000,46000,25000,17400,10500,10000,19337],backgroundColor:[C.navy,C.blue,C.cyan,C.teal,C.green,C.orange,C.purple],borderRadius:8}]},options:{...common,indexAxis:'y',scales:{x:{grid:{color:C.grid},ticks:{font:{family:'Vazirmatn',size:9},callback:v=>fa(v)}},y:{grid:{display:false},ticks:{font:{family:'Vazirmatn',size:8}}}},plugins:{...common.plugins,legend:{display:false},datalabels:{...dl,anchor:'end',align:'right'}}}});
+new Chart(document.getElementById('planChart'),{
+  type:'doughnut',
+  data:{
+    labels:['عملکرد ثبت‌شده','فاصله تا برنامه'],
+    datasets:[{data:[81272,15728],backgroundColor:['#15a77a','#e9edf2'],borderWidth:0,hoverOffset:7}]
+  },
+  options:{
+    ...donutOptions(),
+    plugins:{
+      ...donutOptions().plugins,
+      datalabels:{
+        color:(ctx)=>ctx.dataIndex===0?'#fff':'#475569',
+        font:{family:'Vazirmatn',weight:'800',size:11},
+        formatter:(v,ctx)=>{
+          const total=ctx.chart.data.datasets[0].data.reduce((a,b)=>a+b,0);
+          return ((v/total)*100).toFixed(1).replace('.', '٫')+'٪';
+        }
+      }
+    }
+  }
+});
 
-new Chart(document.getElementById('finance'),{type:'bar',data:{labels:['تسهیلات','آورده متقاضی','اراضی 99 ساله','حساب 100','نهادهای حمایتی','اعتبارات دولتی','مسئولیت اجتماعی','تخفیفات نظام مهندسی','خیرین'],datasets:[{label:'همت',data:[89,69,66,3.948,3.938,2.91,1.126,2,0.526],backgroundColor:[C.blue,C.orange,C.green,C.purple,C.teal,C.navy,C.orange,C.cyan,C.red],borderRadius:8}]},options:{...common,indexAxis:'y',scales:{x:{grid:{color:C.grid},ticks:{font:{family:'Vazirmatn',size:9},callback:v=>fa(v)+' همت'}},y:{grid:{display:false},ticks:{font:{family:'Vazirmatn',size:8}}}},plugins:{...common.plugins,legend:{display:false},datalabels:{color:C.navy,font:{family:'Vazirmatn',size:8,weight:'800'},anchor:'end',align:'right', offset:30, formatter:v=>new Intl.NumberFormat('fa-IR',{maximumFractionDigits:3}).format(v)+' همت'}}}});
+new Chart(document.getElementById('ruralProgramsChart'),{
+  type:'bar',
+  data:{
+    labels:[
+      'بهسازی روستایی ۱۴۰۴',
+      'بنیاد ساخت انتقالی',
+      'تکمیل نیمه‌کاره',
+      'حساب ۱۰۰',
+      'بهزیستی',
+      'مشارکت مدنی',
+      'کمیته امداد'
+    ],
+    datasets:[{data:[32417,10669,5140,3792,1359,2128,988],backgroundColor:['#173d73','#22558f','#31709e','#3c8cb1','#56a6bf','#74bfd0','#94d1db'],borderRadius:8}]
+  },
+  options:barOptions({horizontal:true})
+});
 
-new Chart(document.getElementById('resourcePlan'),{type:'bar',data:{labels:['دولتی-ملی','دولتی-استانی','مسئولیت اجتماعی/مالیات','نیم درصد سود بانک‌ها','تخصیصی'],datasets:[{label:'برنامه تا پایان 1405',data:[1841,864,1126,50,0],backgroundColor:C.blue,borderRadius:7},{label:'مبلغ اعلامی تا پایان آذر',data:[552,259,450,10,0],backgroundColor:C.orange,borderRadius:7}]},options:{...common,scales:{x:{grid:{display:false},ticks:{font:{family:'Vazirmatn',size:8}}},y:{grid:{color:C.grid},ticks:{font:{family:'Vazirmatn',size:9},callback:v=>fa(v)}}},plugins:{...common.plugins,datalabels:{...dl,formatter:v=>fa(v)}}}});
-/* new Chart(document.getElementById('resourcePlan'),{type:'bar',data:{labels:['دولتی-ملی','دولتی-استانی','مسئولیت اجتماعی/مالیات','نیم درصد سود بانک‌ها'],datasets:[{label:'برنامه تا پایان 1405',data:[1841,864,1126,50],backgroundColor:C.blue,borderRadius:7},{label:'مبلغ اعلامی تا پایان آذر',data:[552,259,450,10],backgroundColor:C.orange,borderRadius:7}]},options:{...common,scales:{x:{grid:{display:false},ticks:{font:{family:'Vazirmatn',size:8}}},y:{grid:{color:C.grid},ticks:{font:{family:'Vazirmatn',size:9},callback:v=>fa(v)}}},plugins:{...common.plugins,datalabels:{...dl,formatter:v=>fa(v)}}}}); */
+new Chart(document.getElementById('urbanProgramsChart'),{
+  type:'bar',
+  data:{
+    labels:[
+      'بهسازی شهری ۱۴۰۴',
+      'محرومین شهری',
+      '۳۰هزار واحدی کمیته امداد',
+      'بهزیستی',
+      'مشارکت مدنی',
+      'انتظار معرفی بانک',
+      'استیجار پایلوت'
+    ],
+    datasets:[{data:[9866,6300,1900,1253,3155,2128,177],backgroundColor:['#0f6a92','#1b82a1','#2e97af','#46abbc','#67bdc9','#8acbd2','#acd9dd'],borderRadius:8}]
+  },
+  options:barOptions({horizontal:true})
+});
 
+new Chart(document.getElementById('physicalStagesChart'),{
+  type:'bar',
+  data:{
+    labels:['پی‌کنی','فونداسیون','اسکلت','سفت‌کاری','نازک‌کاری'],
+    datasets:[{data:[78254,45267,32799,23457,8291],backgroundColor:['#15a77a','#16a5c7','#2b84aa','#7957d5','#de5c5c'],borderRadius:9}]
+  },
+  options:barOptions({suffix:' واحد'})
+});
 
-new Chart(document.getElementById('grants'),{type:'bar',data:{labels:['سیستان و بلوچستان','فارس','خراسان رضوی','خراسان جنوبی','خوزستان','اصفهان','خراسان شمالی','کرمان'],datasets:[{label:'میلیارد ریال',data:[1132,682,614,479,410,406,384,364],backgroundColor:C.blue,borderRadius:7}]},options:{...common,indexAxis:'y',scales:{x:{grid:{color:C.grid},ticks:{font:{family:'Vazirmatn',size:8},callback:v=>fa(v)}},y:{grid:{display:false},ticks:{font:{family:'Vazirmatn',size:8}}}},plugins:{...common.plugins,legend:{display:false},datalabels:{...dl,anchor:'end',align:'right'}}}});
+new Chart(document.getElementById('urbanRuralPhysicalChart'),{
+  type:'bar',
+  data:{
+    labels:['پی‌کنی','فونداسیون','اسکلت','سفت‌کاری','نازک‌کاری'],
+    datasets:[
+      {label:'روستایی',data:[54483,30507,20895,15869,4812],backgroundColor:'#173d73',borderRadius:7},
+      {label:'شهری',data:[23771,14760,11904,7588,3479],backgroundColor:'#16a5c7',borderRadius:7}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    layout:{padding:{top:24,right:12,bottom:8,left:12}},
+    plugins:{
+      legend:{position:'bottom',labels:{font:baseFont,usePointStyle:true}},
+      datalabels:{
+        color:'#27364b',anchor:'end',align:'top',offset:5,
+        clamp:false,clip:false,
+        font:{family:'Vazirmatn',weight:'700',size:9},
+        formatter:(v)=>nf.format(v)
+      },
+      tooltip:{rtl:true,titleFont:baseFont,bodyFont:baseFont}
+    },
+    scales:{
+      ...commonScales(),
+      y:{...commonScales().y, grace:'16%', beginAtZero:true}
+    },
+    layout:{padding:{top:30,right:12,bottom:8,left:12}}
+  }
+});
 
-function animate(el){const target=+el.dataset.v||0,start=performance.now(),dur=1100;function t(now){const p=Math.min((now-start)/dur,1),e=1-Math.pow(1-p,4);el.textContent=fa(Math.round(target*e));if(p<1)requestAnimationFrame(t)}requestAnimationFrame(t)}document.querySelectorAll('.counter').forEach((e,i)=>setTimeout(()=>animate(e),i*70));
+new Chart(document.getElementById('bankFunnelChart'),{
+  type:'bar',
+  data:{
+    labels:['سهمیه اختصاص‌یافته','سهمیه ابلاغ‌شده','معرفی به بانک','انعقاد قرارداد'],
+    datasets:[{data:[120000,96000,42283,9413],backgroundColor:['#173d73','#16a5c7','#f4a62a','#7957d5'],borderRadius:9}]
+  },
+  options:barOptions({horizontal:true})
+});
+
+new Chart(document.getElementById('bankMoneyChart'),{
+  type:'bar',
+  data:{
+    labels:['تجارت','رفاه','صادرات','سپه','پست بانک','ملت','ملی'],
+    datasets:[{data:[7443.55,2720.10,1396.35,418.35,3,7.5,0],backgroundColor:['#173d73','#226092','#3982a7','#5599b6','#77b5c6','#98c9d2','#badcdf'],borderRadius:8}]
+  },
+  options:barOptions({horizontal:true,suffix:' میلیارد ریال'})
+});
+
+new Chart(document.getElementById('bankRateChart'),{
+  type:'bar',
+  data:{
+    labels:['تجارت','رفاه','سپه','صادرات','پست بانک','ملت','ملی'],
+    datasets:[
+      {label:'معرفی / ابلاغ',data:[69.8,74.1,61.0,42.0,11.8,8.8,0],backgroundColor:'#16a5c7',borderRadius:7},
+      {label:'قرارداد / معرفی',data:[31.6,24.0,13.3,14.1,1.3,0.5,0],backgroundColor:'#7957d5',borderRadius:7}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    layout:{padding:{top:24,right:12,bottom:8,left:12}},
+    plugins:{
+      legend:{position:'bottom',labels:{font:baseFont,usePointStyle:true}},
+      datalabels:{
+        color:'#27364b',anchor:'end',align:'top',offset:3,
+        font:{family:'Vazirmatn',weight:'700',size:9},
+        formatter:(v)=>v.toFixed(1).replace('.', '٫')+'٪'
+      },
+      tooltip:{rtl:true,titleFont:baseFont,bodyFont:baseFont}
+    },
+    scales:{
+      x:{grid:{color:gridColor},ticks:{color:tickColor,font:baseFont}},
+      y:{
+        grid:{color:gridColor},
+        ticks:{color:tickColor,font:baseFont,callback:(v)=>v+'٪'},
+        beginAtZero:true,
+        max:80,
+        grace:'10%'
+      }
+    },
+    layout:{padding:{top:34,right:12,bottom:8,left:12}}
+  }
+});
+
+function toFaNumber(value, decimals=0){
+  return new Intl.NumberFormat('fa-IR',{
+    minimumFractionDigits:decimals,
+    maximumFractionDigits:decimals
+  }).format(value);
+}
+function runCounters(){
+  const els = document.querySelectorAll('.counter');
+  const duration = 1250;
+  els.forEach(el=>{
+    const target = Number(el.dataset.value || 0);
+    const decimals = Number(el.dataset.decimals || 0);
+    const suffix = el.dataset.suffix || '';
+    const start = performance.now();
+    function tick(now){
+      const p = Math.min((now-start)/duration,1);
+      const eased = 1-Math.pow(1-p,3);
+      const current = target*eased;
+      el.textContent = toFaNumber(current,decimals) + suffix;
+      if(p<1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+}
+window.addEventListener('load', runCounters);
+
 </script>
 </body>
 </html>
