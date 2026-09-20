@@ -104,7 +104,8 @@ button,.btn{font:inherit}
 .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 .card{
   background:var(--surface);border:1px solid var(--line);border-radius:18px;
-  box-shadow:var(--shadow2);padding:18px
+  box-shadow:var(--shadow2);padding:18px;
+  min-width:0; /* Fixes grid blowout */
 }
 .kpi-card{position:relative;overflow:hidden;min-height:138px}
 .kpi-card .icon{
@@ -137,7 +138,13 @@ button,.btn{font:inherit}
 .badge.amber{background:#fff5df;color:#a46d0e}
 .badge.red{background:#fff0f0;color:#ad5151}
 .badge.gray{background:#f0f3f7;color:#637186}
-.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:15px}
+.table-wrap{
+  overflow-x:auto;
+  width:100%;
+  -webkit-overflow-scrolling:touch;
+  border:1px solid var(--line);
+  border-radius:15px;
+}
 table{width:100%;border-collapse:collapse;min-width:760px}
 th,td{padding:11px 12px;border-bottom:1px solid var(--line);font-size:12px;text-align:right;white-space:nowrap}
 th{background:#f7f9fc;color:#5d6a7e;font-weight:700}
@@ -146,7 +153,8 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
 td.muted{color:var(--muted)}
 .insight{
   border:1px solid #e4ebf4;border-radius:16px;padding:15px;background:
-  linear-gradient(180deg,#fff,#f9fbff)
+  linear-gradient(180deg,#fff,#f9fbff);
+  min-width:0;
 }
 .insight .head{display:flex;align-items:center;gap:9px;font-weight:800;margin-bottom:8px}
 .insight .head i{width:31px;height:31px;border-radius:10px;display:grid;place-items:center;background:#edf4ff;color:var(--brand)}
@@ -195,6 +203,15 @@ td.muted{color:var(--muted)}
  .nav{display:none}
  .grid.kpi{grid-template-columns:repeat(2,minmax(0,1fr))}
  .date-stack{grid-template-columns:1fr 1fr}
+ 
+ /* Force specific 2 cards to remain side-by-side on mobile */
+ .grid.grid-mobile-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+ .grid.grid-mobile-2 .compare-strip { grid-template-columns: 1fr; gap: 6px; }
+ .grid.grid-mobile-2 .compare-box { padding: 8px; }
+ .grid.grid-mobile-2 .compare-box strong { font-size: 14px; }
+ .grid.grid-mobile-2 .compare-box span { font-size: 9px; }
+ .grid.grid-mobile-2 .chart-head h3 { font-size: 11px; }
+ .grid.grid-mobile-2 .chart-head p { font-size: 8px; }
 }
 @media (max-width:580px){
  .container{width:min(100% - 18px,1440px)}
@@ -205,6 +222,9 @@ td.muted{color:var(--muted)}
  .date-stack{grid-template-columns:1fr}
  .kpi-card .value{font-size:26px}
  .sticky-index{display:none}
+ 
+ .grid.grid-mobile-2 { gap: 10px; }
+ .grid.grid-mobile-2 .card { padding: 12px; }
 }
 
 .hero-stats{gap:10px}
@@ -396,18 +416,19 @@ td.muted{color:var(--muted)}
     </div>
   </div>
 
-  <div class="grid equal" style="margin-top:16px">
+  <!-- اختصاص کلاس grid-mobile-2 برای حفظ 2 ستون در عرض موبایل -->
+  <div class="grid equal grid-mobile-2" style="margin-top:16px">
     <div class="card">
       <div class="chart-head"><div><h3>جدول وضعیت مراحل فیزیکی</h3><p>مبنای درصد: ۸۱٬۳۷۹ واحد ثبت‌شده در جمع کل شیت</p></div></div>
       <div class="table-wrap">
         <table>
           <thead><tr><th>مرحله</th><th>تعداد واحد</th><th>سهم از جمع کل</th><th>فاصله با کل</th></tr></thead>
           <tbody>
-            <tr><td>پی‌کنی</td><td class="num">۷۸٬۲۵۴</td><td class="num">۹۶٫۲٪</td><td class="num">۳٬۱۲۵</td></tr>
-            <tr><td>فونداسیون</td><td class="num">۴۵٬۲۶۷</td><td class="num">۵۵٫۶٪</td><td class="num">۳۶٬۱۱۲</td></tr>
-            <tr><td>اسکلت</td><td class="num">۳۲٬۷۹۹</td><td class="num">۴۰٫۳٪</td><td class="num">۴۸٬۵۸۰</td></tr>
-            <tr><td>سفت‌کاری</td><td class="num">۲۳٬۴۵۷</td><td class="num">۲۸٫۸٪</td><td class="num">۵۷٬۹۲۲</td></tr>
-            <tr><td>نازک‌کاری</td><td class="num">۸٬۲۹۱</td><td class="num">۱۰٫۲٪</td><td class="num">۷۳٬۰۸۸</td></tr>
+            <tr><td>پی‌کنی</td><td class="num">۷۸٬۲۵۴</td><td class="num">۹۶.۲٪</td><td class="num">۳٬۱۲۵</td></tr>
+            <tr><td>فونداسیون</td><td class="num">۴۵٬۲۶۷</td><td class="num">۵۵.۶٪</td><td class="num">۳۶٬۱۱۲</td></tr>
+            <tr><td>اسکلت</td><td class="num">۳۲٬۷۹۹</td><td class="num">۴۰.۳٪</td><td class="num">۴۸٬۵۸۰</td></tr>
+            <tr><td>سفت‌کاری</td><td class="num">۲۳٬۴۵۷</td><td class="num">۲۸.۸٪</td><td class="num">۵۷٬۹۲۲</td></tr>
+            <tr><td>نازک‌کاری</td><td class="num">۸٬۲۹۱</td><td class="num">۱۰.۲٪</td><td class="num">۷۳٬۰۸۸</td></tr>
           </tbody>
         </table>
       </div>
@@ -440,10 +461,10 @@ td.muted{color:var(--muted)}
   <div class="grid kpi">
     <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-ticket"></i></div><div class="value counter" data-value="120000" data-decimals="0">۰</div><div class="label">سهمیه اختصاص‌یافته</div><div class="foot"><span>مبنای شیت بانک‌ها</span><span class="badge blue">۱۰۰٪</span></div><div class="accent blue"></div></div>
     <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-stamp"></i></div><div class="value counter" data-value="96000" data-decimals="0">۰</div><div class="label">سهمیه ابلاغ‌شده</div><div class="foot"><span>از ۱۲۰٬۰۰۰</span><span class="badge green">۸۰٪</span></div><div class="accent green"></div></div>
-    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-share-from-square"></i></div><div class="value counter" data-value="42283" data-decimals="0">۰</div><div class="label">معرفی به بانک</div><div class="foot"><span>از ابلاغ</span><span class="badge amber">۴۴٫۰٪</span></div><div class="accent amber"></div></div>
-    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-file-signature"></i></div><div class="value counter" data-value="9413" data-decimals="0">۰</div><div class="label">انعقاد قرارداد</div><div class="foot"><span>از معرفی</span><span class="badge purple">۲۲٫۳٪</span></div><div class="accent purple"></div></div>
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-share-from-square"></i></div><div class="value counter" data-value="42283" data-decimals="0">۰</div><div class="label">معرفی به بانک</div><div class="foot"><span>از ابلاغ</span><span class="badge amber">۴۴.۰٪</span></div><div class="accent amber"></div></div>
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-file-signature"></i></div><div class="value counter" data-value="9413" data-decimals="0">۰</div><div class="label">انعقاد قرارداد</div><div class="foot"><span>از معرفی</span><span class="badge purple">۲۲.۳٪</span></div><div class="accent purple"></div></div>
     <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div><div class="value counter" data-value="32870" data-decimals="0">۰</div><div class="label">معرفی‌شده بدون قرارداد</div><div class="foot"><span>فاصله مرحله‌ای</span><span class="badge red">گلوگاه</span></div><div class="accent red"></div></div>
-    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-sack-dollar"></i></div><div class="value counter" data-value="11988.85" data-decimals="2">۰</div><div class="label">جذب ریالی ـ میلیارد ریال</div><div class="foot"><span>≈ ۱٫۱۹۹ همت</span><span class="badge green">کل</span></div><div class="accent teal"></div></div>
+    <div class="card kpi-card"><div class="icon"><i class="fa-solid fa-sack-dollar"></i></div><div class="value counter" data-value="11988.85" data-decimals="2">۰</div><div class="label">جذب ریالی ـ میلیارد ریال</div><div class="foot"><span>≈ ۱.۱۹۹ همت</span><span class="badge green">کل</span></div><div class="accent teal"></div></div>
   </div>
 
   <div class="grid two" style="margin-top:16px">
@@ -470,14 +491,14 @@ td.muted{color:var(--muted)}
           <tr><th>بانک عامل</th><th>سهمیه</th><th>ابلاغ</th><th>معرفی</th><th>قرارداد</th><th>قرارداد/معرفی</th><th>جذب (میلیارد ریال)</th></tr>
         </thead>
         <tbody>
-          <tr><td>تجارت</td><td class="num">۲۴٬۰۰۰</td><td class="num">۲۴٬۰۰۰</td><td class="num">۱۶٬۷۵۲</td><td class="num">۵٬۲۹۷</td><td class="num">۳۱٫۶٪</td><td class="num">۷٬۴۴۳٫۵۵</td></tr>
-          <tr><td>رفاه</td><td class="num">۱۲٬۵۴۵</td><td class="num">۱۲٬۵۴۵</td><td class="num">۹٬۳۰۰</td><td class="num">۲٬۲۳۰</td><td class="num">۲۴٫۰٪</td><td class="num">۲٬۷۲۰٫۱۰</td></tr>
-          <tr><td>سپه</td><td class="num">۵٬۴۵۵</td><td class="num">۵٬۴۵۵</td><td class="num">۳٬۳۲۵</td><td class="num">۴۴۲</td><td class="num">۱۳٫۳٪</td><td class="num">۴۱۸٫۳۵</td></tr>
-          <tr><td>صادرات</td><td class="num">۲۴٬۰۰۰</td><td class="num">۲۴٬۰۰۰</td><td class="num">۱۰٬۰۷۳</td><td class="num">۱٬۴۲۴</td><td class="num">۱۴٫۱٪</td><td class="num">۱٬۳۹۶٫۳۵</td></tr>
-          <tr><td>پست بانک</td><td class="num">۶٬۰۰۰</td><td class="num">۶٬۰۰۰</td><td class="num">۷۱۱</td><td class="num">۹</td><td class="num">۱٫۳٪</td><td class="num">۳٫۰۰</td></tr>
-          <tr><td>ملت</td><td class="num">۲۴٬۰۰۰</td><td class="num">۲۴٬۰۰۰</td><td class="num">۲٬۱۲۲</td><td class="num">۱۱</td><td class="num">۰٫۵٪</td><td class="num">۷٫۵۰</td></tr>
+          <tr><td>تجارت</td><td class="num">۲۴٬۰۰۰</td><td class="num">۲۴٬۰۰۰</td><td class="num">۱۶٬۷۵۲</td><td class="num">۵٬۲۹۷</td><td class="num">۳۱.۶٪</td><td class="num">۷٬۴۴۳.۵۵</td></tr>
+          <tr><td>رفاه</td><td class="num">۱۲٬۵۴۵</td><td class="num">۱۲٬۵۴۵</td><td class="num">۹٬۳۰۰</td><td class="num">۲٬۲۳۰</td><td class="num">۲۴.۰٪</td><td class="num">۲٬۷۲۰.۱۰</td></tr>
+          <tr><td>سپه</td><td class="num">۵٬۴۵۵</td><td class="num">۵٬۴۵۵</td><td class="num">۳٬۳۲۵</td><td class="num">۴۴۲</td><td class="num">۱۳.۳٪</td><td class="num">۴۱۸.۳۵</td></tr>
+          <tr><td>صادرات</td><td class="num">۲۴٬۰۰۰</td><td class="num">۲۴٬۰۰۰</td><td class="num">۱۰٬۰۷۳</td><td class="num">۱٬۴۲۴</td><td class="num">۱۴.۱٪</td><td class="num">۱٬۳۹۶.۳۵</td></tr>
+          <tr><td>پست بانک</td><td class="num">۶٬۰۰۰</td><td class="num">۶٬۰۰۰</td><td class="num">۷۱۱</td><td class="num">۹</td><td class="num">۱.۳٪</td><td class="num">۳.۰۰</td></tr>
+          <tr><td>ملت</td><td class="num">۲۴٬۰۰۰</td><td class="num">۲۴٬۰۰۰</td><td class="num">۲٬۱۲۲</td><td class="num">۱۱</td><td class="num">۰.۵٪</td><td class="num">۷.۵۰</td></tr>
           <tr><td>ملی</td><td class="num">۲۴٬۰۰۰</td><td class="num">۰</td><td class="num">۰</td><td class="num">۰</td><td class="num">—</td><td class="num">۰</td></tr>
-          <tr style="background:#f8fbff"><td><strong>جمع</strong></td><td class="num"><strong>۱۲۰٬۰۰۰</strong></td><td class="num"><strong>۹۶٬۰۰۰</strong></td><td class="num"><strong>۴۲٬۲۸۳</strong></td><td class="num"><strong>۹٬۴۱۳</strong></td><td class="num"><strong>۲۲٫۳٪</strong></td><td class="num"><strong>۱۱٬۹۸۸٫۸۵</strong></td></tr>
+          <tr style="background:#f8fbff"><td><strong>جمع</strong></td><td class="num"><strong>۱۲۰٬۰۰۰</strong></td><td class="num"><strong>۹۶٬۰۰۰</strong></td><td class="num"><strong>۴۲٬۲۸۳</strong></td><td class="num"><strong>۹٬۴۱۳</strong></td><td class="num"><strong>۲۲.۳٪</strong></td><td class="num"><strong>۱۱٬۹۸۸.۸۵</strong></td></tr>
         </tbody>
       </table>
     </div>
@@ -511,11 +532,11 @@ td.muted{color:var(--muted)}
     </div>
     <div class="card insight">
       <div class="head"><i class="fa-solid fa-tree-city"></i> وزن بالای روستا</div>
-      <p>با <strong>۵۶٬۴۹۳ واحد</strong>، بخش روستایی ۶۹٫۵٪ روکش را در اختیار دارد و بنابراین سهم بالایی در تغییرات عدد کل خواهد داشت.</p>
+      <p>با <strong>۵۶٬۴۹۳ واحد</strong>، بخش روستایی ۶۹.۵٪ روکش را در اختیار دارد و بنابراین سهم بالایی در تغییرات عدد کل خواهد داشت.</p>
     </div>
     <div class="card insight">
       <div class="head"><i class="fa-solid fa-cubes-stacked"></i> تمرکز روی چند برنامه بزرگ</div>
-      <p>چهار برنامه اصلی حدود <strong>۷۲٫۹٪</strong> کل ۸۱٬۲۷۲ واحد را پوشش می‌دهند؛ پایش همین چهار برنامه تصویر بخش بزرگی از وضعیت کل را می‌دهد.</p>
+      <p>چهار برنامه اصلی حدود <strong>۷۲.۹٪</strong> کل ۸۱٬۲۷۲ واحد را پوشش می‌دهند؛ پایش همین چهار برنامه تصویر بخش بزرگی از وضعیت کل را می‌دهد.</p>
     </div>
     <div class="card insight">
       <div class="head"><i class="fa-solid fa-landmark"></i> تمرکز جذب مالی</div>
@@ -649,7 +670,7 @@ td.muted{color:var(--muted)}
     </div>
     <div class="card insight">
       <div class="head"><i class="fa-solid fa-building"></i> چهار برنامه اصلی</div>
-      <p>تمرکز مدیریتی روی چهار برنامه بزرگ که حدود ۷۲٫۹٪ کل سبد ۸۱٬۲۷۲ واحدی را در بر می‌گیرند.</p>
+      <p>تمرکز مدیریتی روی چهار برنامه بزرگ که حدود ۷۲.۹٪ کل سبد ۸۱٬۲۷۲ واحدی را در بر می‌گیرند.</p>
     </div>
     <div class="card insight">
       <div class="head"><i class="fa-solid fa-calendar-days"></i> هم‌ترازی زمانی</div>
@@ -692,7 +713,18 @@ td.muted{color:var(--muted)}
 <script>
 Chart.register(ChartDataLabels);
 
-const nf = new Intl.NumberFormat('fa-IR');
+// استفاده از فرمتر برای تبدیل ممیز فارسی (٫) به نقطه (.)
+const nf = {
+  format: function(v) {
+    return new Intl.NumberFormat('fa-IR').format(v).replace(/٫/g, '.');
+  }
+};
+
+// تبدیل اعداد انگلیسی به فارسی (بدون تغییر ساختار ممیز)
+function toFa(str) {
+  const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  return str.toString().replace(/\d/g, x => faDigits[x]).replace(/٫/g, '.');
+}
 
 const gridColor = 'rgba(96,113,140,.11)';
 const tickColor = '#6e7b8f';
@@ -704,6 +736,7 @@ function commonScales() {
     y:{grid:{color:gridColor},ticks:{color:tickColor,font:baseFont},beginAtZero:true}
   };
 }
+
 function barOptions({horizontal=false, suffix=' واحد', maxTicks=7}={}) {
   const scales = commonScales();
   if(horizontal){
@@ -715,7 +748,7 @@ function barOptions({horizontal=false, suffix=' واحد', maxTicks=7}={}) {
   }else{
     scales.y = {
       ...scales.y,
-      grace:'14%',
+      grace:'25%', // فضای بیشتر برای جا شدن اعداد عمودی
       beginAtZero:true
     };
   }
@@ -734,7 +767,8 @@ function barOptions({horizontal=false, suffix=' واحد', maxTicks=7}={}) {
         display:true,
         anchor:'end',
         align: horizontal ? 'right' : 'top',
-        offset: horizontal ? 9 : 6,
+        offset: horizontal ? 9 : 8,
+        rotation: horizontal ? 0 : -90, // چرخش -90 برای نمودارهای عمودی
         clamp:false,
         clip:false,
         color:'#23354d',
@@ -742,17 +776,18 @@ function barOptions({horizontal=false, suffix=' واحد', maxTicks=7}={}) {
         borderRadius:4,
         padding:{top:1,right:3,bottom:1,left:3},
         font:{family:'Vazirmatn',weight:'700',size:10},
-        formatter:(v)=>nf.format(v)+suffix
+        formatter:(v)=>toFa(nf.format(v))+suffix
       },
       tooltip:{
         rtl:true,
         titleFont:baseFont,bodyFont:baseFont,
-        callbacks:{label:(ctx)=>' '+nf.format(ctx.parsed.y ?? ctx.parsed.x)+suffix}
+        callbacks:{label:(ctx)=>' '+toFa(nf.format(ctx.parsed.y ?? ctx.parsed.x))+suffix}
       }
     },
     scales
   };
 }
+
 function donutOptions(){
   return {
     responsive:true,maintainAspectRatio:false,
@@ -765,7 +800,7 @@ function donutOptions(){
         formatter:(v,ctx)=>{
           const data=ctx.chart.data.datasets[0].data;
           const total=data.reduce((a,b)=>a+b,0);
-          return ((v/total)*100).toFixed(1).replace('.', '٫')+'٪';
+          return toFa(((v/total)*100).toFixed(1))+'٪'; // فرمت 11.8%
         }
       },
       tooltip:{rtl:true,bodyFont:baseFont,titleFont:baseFont}
@@ -797,7 +832,7 @@ new Chart(document.getElementById('planChart'),{
         font:{family:'Vazirmatn',weight:'800',size:11},
         formatter:(v,ctx)=>{
           const total=ctx.chart.data.datasets[0].data.reduce((a,b)=>a+b,0);
-          return ((v/total)*100).toFixed(1).replace('.', '٫')+'٪';
+          return toFa(((v/total)*100).toFixed(1))+'٪';
         }
       }
     }
@@ -858,22 +893,22 @@ new Chart(document.getElementById('urbanRuralPhysicalChart'),{
   },
   options:{
     responsive:true,maintainAspectRatio:false,
-    layout:{padding:{top:24,right:12,bottom:8,left:12}},
+    layout:{padding:{top:30,right:12,bottom:8,left:12}},
     plugins:{
       legend:{position:'bottom',labels:{font:baseFont,usePointStyle:true}},
       datalabels:{
-        color:'#27364b',anchor:'end',align:'top',offset:5,
+        color:'#27364b',anchor:'end',align:'top',offset:8,
+        rotation: -90, // چرخش عمودی
         clamp:false,clip:false,
         font:{family:'Vazirmatn',weight:'700',size:9},
-        formatter:(v)=>nf.format(v)
+        formatter:(v)=>toFa(nf.format(v))
       },
       tooltip:{rtl:true,titleFont:baseFont,bodyFont:baseFont}
     },
     scales:{
       ...commonScales(),
-      y:{...commonScales().y, grace:'16%', beginAtZero:true}
-    },
-    layout:{padding:{top:30,right:12,bottom:8,left:12}}
+      y:{...commonScales().y, grace:'25%', beginAtZero:true} // فضای بیشتر برای چرخش
+    }
   }
 });
 
@@ -906,13 +941,14 @@ new Chart(document.getElementById('bankRateChart'),{
   },
   options:{
     responsive:true,maintainAspectRatio:false,
-    layout:{padding:{top:24,right:12,bottom:8,left:12}},
+    layout:{padding:{top:34,right:12,bottom:8,left:12}},
     plugins:{
       legend:{position:'bottom',labels:{font:baseFont,usePointStyle:true}},
       datalabels:{
-        color:'#27364b',anchor:'end',align:'top',offset:3,
+        color:'#27364b',anchor:'end',align:'top',offset:8,
+        rotation: -90, // چرخش عمودی
         font:{family:'Vazirmatn',weight:'700',size:9},
-        formatter:(v)=>v.toFixed(1).replace('.', '٫')+'٪'
+        formatter:(v)=>toFa(v.toFixed(1))+'٪'
       },
       tooltip:{rtl:true,titleFont:baseFont,bodyFont:baseFont}
     },
@@ -920,13 +956,12 @@ new Chart(document.getElementById('bankRateChart'),{
       x:{grid:{color:gridColor},ticks:{color:tickColor,font:baseFont}},
       y:{
         grid:{color:gridColor},
-        ticks:{color:tickColor,font:baseFont,callback:(v)=>v+'٪'},
+        ticks:{color:tickColor,font:baseFont,callback:(v)=>toFa(v)+'٪'},
         beginAtZero:true,
-        max:80,
-        grace:'10%'
+        max:85, // افزایش سقف برای جا شدن برچسب‌ها
+        grace:'15%'
       }
-    },
-    layout:{padding:{top:34,right:12,bottom:8,left:12}}
+    }
   }
 });
 
@@ -934,8 +969,9 @@ function toFaNumber(value, decimals=0){
   return new Intl.NumberFormat('fa-IR',{
     minimumFractionDigits:decimals,
     maximumFractionDigits:decimals
-  }).format(value);
+  }).format(value).replace(/٫/g, '.'); // جایگزینی ممیز با نقطه
 }
+
 function runCounters(){
   const els = document.querySelectorAll('.counter');
   const duration = 1250;
@@ -959,3 +995,4 @@ window.addEventListener('load', runCounters);
 </script>
 </body>
 </html>
+```eof
