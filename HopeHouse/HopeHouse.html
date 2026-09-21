@@ -497,6 +497,15 @@ const nf = {
   }
 };
 
+function toFaNumber(value, decimals=0){
+  const n = Number(value);
+  if (value === null || value === undefined || value === '' || Number.isNaN(n)) return '۰';
+  return new Intl.NumberFormat('fa-IR',{
+    minimumFractionDigits:decimals,
+    maximumFractionDigits:decimals
+  }).format(n).replace(/٫/g,'.');
+}
+
 function toFa(str) {
   if (str === undefined || str === null) return '';
   const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
