@@ -842,9 +842,13 @@ async function loadExcelData() {
     const bankData=[];
     for(let i=6;i<bankRows.length;i++){
       const r=bankRows[i];
+      const rowHasTotal = r.some(v => String(v ?? '').trim() === 'مجموع');
       const name=String(r[2]??'').trim();
-      if(name==='مجموع') totalBankRow=r;
-      else if(name) bankData.push(r);
+      if(rowHasTotal){
+        totalBankRow=r;
+      }else if(name){
+        bankData.push(r);
+      }
     }
     if(!totalBankRow) throw new Error('ردیف «مجموع» در شیت بانک‌ها پیدا نشد.');
 
