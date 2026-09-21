@@ -6,9 +6,9 @@
 <meta name="theme-color" content="#f5f8fc">
 <title>سامانه هوشمند مدیریتی ریاست | طرح «خانه امید» ـ مسکن محرومین</title>
 <style>
-@font-face{font-family:VazirmatnLocal;src:url('../../Styles/fonts/Vazirmatn-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:VazirmatnLocal;src:url('../../Styles/fonts/Vazirmatn-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
-@font-face{font-family:VazirmatnLocal;src:url('../../Styles/fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:VazirmatnLocal;src:url('./Vazirmatn-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:VazirmatnLocal;src:url('./Vazirmatn-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:VazirmatnLocal;src:url('./Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
 :root{
  --bg:#f4f7fb;--panel:#fff;--panelSoft:#f8fbfe;--line:#e3eaf2;--text:#223247;--muted:#6f8194;--muted2:#9ba9b7;
  --navy:#16364f;--teal:#10a88f;--cyan:#19b7cf;--blue:#4e78f6;--purple:#8b5cf6;--pink:#e65aa8;--orange:#f5a623;--green:#17a66f;--red:#e85c60;--yellow:#d9ad14;
@@ -72,7 +72,9 @@
   برای تست محلی در صورت نیاز، این کامنت را بردارید و listener مربوط به pickBtn/fileInput را در انتهای کد فعال کنید.
 -->
 <!--
+<!-- برای تست محلی در صورت نیاز، این بخش را از کامنت خارج کنید:
 <div class="statusbar"><button class="btnLight" id="pickBtn">انتخاب دستی فایل اکسل</button><input id="fileInput" type="file" accept=".xlsx,.xlsm"></div>
+-->
 -->
 
 <div class="errorBox" id="errorBox">
@@ -236,11 +238,12 @@ const App=(()=>{
 
   function parseModel(workbook){
     // نام شیت‌ها عمداً دقیقاً بر اساس ساختار جدید کاربر تعریف شده‌اند.
-    const overall=workbook.getSheet('OverallSummary');
-    const physical=workbook.getSheet('PhysicalProgress');
-    const banking=workbook.getSheet('BankPerformance');
-    const available=workbook.rawSheets.map(s=>`«${normalizeSheetName(s.name)}»`).join('، ');
-    if(!overall||!physical||!banking)throw new Error(`سه شیت مورد انتظار پیدا نشد. شیت‌های پیدا‌شده: ${available}`);
+    const SHEET_NAMES={overall:'OverallSummary',physical:'PhysicalProgress',banking:'BankPerformance'};
+    const overall=workbook.getSheet(SHEET_NAMES.overall);
+    const physical=workbook.getSheet(SHEET_NAMES.physical);
+    const banking=workbook.getSheet(SHEET_NAMES.banking);
+    const available=workbook.rawSheets.map(s=>`«${s.name}»`).join('، ');
+    if(!overall||!physical||!banking)throw new Error(`سه شیت مورد انتظار پیدا نشد. نام مورد انتظار: ${Object.values(SHEET_NAMES).join('، ')} | شیت‌های پیدا‌شده: ${available}`);
 
     // OverallSummary
     const or=overall.rows;DATA.cover={rows:or,date:extractDate(or),items:[],ruralTotal:0,ruralPct:0,urbanTotal:0,urbanPct:0,total:0,plan:0,achievement:0,planLabel:''};let group='روستایی';
@@ -276,7 +279,7 @@ const App=(()=>{
     const cSort=idxBy(headerMap(br[bhi+1]||[]),'سورت سامانه'),cNo=idxBy(bh,'ردیف'),cBank=idxBy(bh,'بانک عامل'),cAllocated=idxBy(bh,'تعداد سهمیه اختصاص یافته'),cDate=idxBy(bh,'تاریخ ابلاغ بانک');
     const cBankAnnounced=cAllocated+2,cBankIntro=cAllocated+4,cBankContracts=cAllocated+6,cAbsorption=cAllocated+8;
     const banks=[];let totalRow=null;
-    for(let i=bhi+2;i<br.length;i++){const r=br[i]||[];const name=clean(r[cBank]);if(!name)continue;if(name==='مجموع'){totalRow=r;continue}banks.push({sort:val(r,cSort),no:val(r,cNo),name,date:String(r[cDate]??'—'),allocated:val(r,cAllocated),announced:val(r,cAnnounced),introduced:val(r,cBankIntro),contracts:val(r,cBankContracts),absorption:val(r,cAbsorption)});}
+    for(let i=bhi+2;i<br.length;i++){const r=br[i]||[];const name=clean(r[cBank]);if(!name)continue;if(name==='مجموع'){totalRow=r;continue}banks.push({sort:val(r,cSort),no:val(r,cNo),name,date:String(r[cDate]??'—'),allocated:val(r,cAllocated),announced:val(r,cBankAnnounced),introduced:val(r,cBankIntro),contracts:val(r,cBankContracts),absorption:val(r,cAbsorption)});}
     if(!totalRow)totalRow=br.find(r=>clean(r[cBank])==='مجموع')||[];
     const bs={allocated:val(totalRow,cAllocated),announced:val(totalRow,cBankAnnounced),introduced:val(totalRow,cBankIntro),contracts:val(totalRow,cBankContracts),absorption:val(totalRow,cAbsorption)};
     bs.announcedPct=bs.announced/(bs.allocated||1);bs.introducedPct=bs.introduced/(bs.announced||1);bs.contractPct=bs.contracts/(bs.introduced||1);bs.contractAllocatedPct=bs.contracts/(bs.allocated||1);
