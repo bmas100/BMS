@@ -4560,11 +4560,11 @@ function addFiles(files){
   renderFiles();
 
   if (rejectedByCount && rejectedBySize){
-    showToast("حداکثر ۵ فایل و مجموعاً ۵۰ مگابایت مجاز است.");
+    showToast("حداکثر 4 فایل و مجموعاً 40 مگابایت مجاز است.");
   } else if (rejectedByCount){
-    showToast("حداکثر ۵ فایل مجاز است.");
+    showToast("حداکثر 5 فایل مجاز است.");
   } else if (rejectedBySize){
-    showToast("حجم مجموع فایل‌ها نمی‌تواند بیشتر از ۵۰ مگابایت باشد.");
+    showToast("حجم مجموع فایل‌ها نمی‌تواند بیشتر از 40 مگابایت باشد.");
   }
 
 }
