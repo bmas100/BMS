@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#071B1D">
+<title>سامانه هوشمند مدیریتی ریاست | طرح خانه امید</title>
+<style>
+@font-face{font-family:VazirmatnLocal;src:url('./Vazirmatn-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:VazirmatnLocal;src:url('./Vazirmatn-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:VazirmatnLocal;src:url('./Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+:root{
+  --bg:#061415;--bg2:#0a2021;--panel:#0c2628;--panel2:#0f2d2f;--line:#245155;--line2:#1a4144;
+  --text:#effcfb;--muted:#9db9b9;--dim:#719090;--accent:#34d3b0;--accent2:#21b9c7;--accent3:#a8ef68;
+  --warn:#f2bd60;--danger:#f17b7b;--shadow:0 18px 45px rgba(0,0,0,.26);--radius:22px;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:radial-gradient(1100px 500px at 10% -10%,rgba(52,211,176,.11),transparent 58%),radial-gradient(900px 500px at 100% 0%,rgba(33,185,199,.10),transparent 55%),var(--bg);color:var(--text);font-family:VazirmatnLocal,Tahoma,Arial,sans-serif;line-height:1.7}
+button,input{font-family:inherit}.app{min-height:100vh}.wrap{max-width:1500px;margin:0 auto;padding:24px 22px 40px}
+.header{position:relative;overflow:hidden;border:1px solid rgba(104,225,196,.18);background:linear-gradient(135deg,#0b2a2c 0%,#0a2224 48%,#071b1d 100%);border-radius:30px;box-shadow:var(--shadow);padding:26px 28px 22px;margin-bottom:16px}
+.header:before,.header:after{content:"";position:absolute;border-radius:999px;filter:blur(.2px);opacity:.35;pointer-events:none}.header:before{width:460px;height:460px;left:-220px;top:-270px;background:radial-gradient(circle,rgba(52,211,176,.18),transparent 70%)}.header:after{width:520px;height:520px;right:-260px;bottom:-330px;background:radial-gradient(circle,rgba(33,185,199,.16),transparent 70%)}
+.headerTop{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:16px}.logo{width:68px;height:68px;border:1px solid rgba(171,255,232,.35);background:linear-gradient(145deg,rgba(53,211,176,.20),rgba(32,188,199,.08));border-radius:20px;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.03),0 14px 30px rgba(0,0,0,.24)}
+.logo svg{width:39px;height:39px}.eyebrow{font-size:13px;color:#98c7c3;margin-bottom:2px}.mainTitle{font-size:26px;font-weight:700;letter-spacing:-.35px}.subTitle{font-size:16px;color:#d5efec;margin-top:3px}
+.linkPill{cursor:pointer;text-decoration:none;transition:.2s}.linkPill:hover{background:rgba(52,211,176,.13);transform:translateY(-1px)}
+.headerActions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 12px;border:1px solid rgba(136,229,210,.20);background:rgba(4,18,19,.36);color:#d9f5f0;font-size:12px;white-space:nowrap}.pill strong{font-weight:700;color:#fff}.btn{border:1px solid rgba(140,231,213,.24);background:rgba(255,255,255,.04);color:#eaf9f7;border-radius:12px;padding:9px 13px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:8px}.btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.07)}.btn.primary{background:linear-gradient(135deg,rgba(52,211,176,.18),rgba(33,185,199,.12));border-color:rgba(82,221,196,.34)}.btn.small{padding:7px 10px;font-size:12px}
+.metaRow{position:relative;z-index:1;display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.metaChip{min-width:170px;display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid rgba(126,220,205,.16);background:rgba(5,19,20,.32);border-radius:14px;padding:8px 12px;font-size:12px}.metaChip .label{color:var(--muted)}.metaChip .value{color:#f6ffff;font-weight:700}
+.tabs{position:sticky;top:8px;z-index:20;display:flex;gap:7px;overflow:auto;padding:7px;border:1px solid var(--line2);background:rgba(5,20,21,.84);backdrop-filter:blur(14px);border-radius:18px;margin-bottom:18px}.tab{flex:0 0 auto;border:0;background:transparent;color:var(--muted);padding:10px 13px;border-radius:12px;cursor:pointer;transition:.2s;font-size:13px}.tab.active{background:linear-gradient(135deg,rgba(52,211,176,.17),rgba(33,185,199,.12));color:#edfffb;border:1px solid rgba(82,221,196,.20)}
+.view{display:none}.view.active{display:block}.sectionTitle{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:5px 0 13px}.sectionTitle h2{font-size:22px;margin:0}.sectionTitle p{margin:0;color:var(--muted);font-size:12px}.grid{display:grid;gap:14px}.kpiGrid{grid-template-columns:repeat(6,minmax(0,1fr));margin-bottom:14px}.card{border:1px solid var(--line2);background:linear-gradient(180deg,rgba(17,45,47,.95),rgba(10,32,34,.95));border-radius:var(--radius);box-shadow:0 12px 28px rgba(0,0,0,.15);overflow:hidden}.kpi{padding:16px 16px 14px;min-height:132px;position:relative}.kpi:after{content:"";position:absolute;left:0;bottom:0;width:38%;height:2px;background:linear-gradient(90deg,var(--accent),transparent)}.kpi .kLabel{font-size:12px;color:var(--muted);margin-bottom:7px}.kpi .kValue{font-size:28px;font-weight:700;letter-spacing:.2px}.kpi .kSub{font-size:11px;color:var(--dim);margin-top:4px}.spark{height:4px;border-radius:999px;background:rgba(255,255,255,.06);margin-top:10px;overflow:hidden}.spark>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px}
+.cols2{grid-template-columns:1.15fr .85fr}.cols3{grid-template-columns:1.15fr .95fr .9fr}.panel{padding:18px}.panel h3{margin:0 0 4px;font-size:15px}.panel .desc{color:var(--muted);font-size:11px;margin-bottom:14px}.tag{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 8px;font-size:10px;color:#d9f6f0;background:rgba(52,211,176,.08);border:1px solid rgba(74,214,192,.14)}
+.chartBox{min-height:310px}.chartLegend{display:flex;flex-wrap:wrap;gap:8px 14px;color:var(--muted);font-size:11px;margin-top:10px}.legendItem{display:flex;align-items:center;gap:6px}.dot{width:9px;height:9px;border-radius:3px;background:var(--accent);box-shadow:0 0 0 2px rgba(255,255,255,.03)}.dot.a{background:var(--accent2)}.dot.b{background:var(--accent3)}.dot.w{background:var(--warn)}.dot.d{background:var(--danger)}
+.bars{display:flex;flex-direction:column;gap:11px}.barRow{display:grid;grid-template-columns:minmax(130px,1.2fr) minmax(150px,2.6fr) 76px;gap:10px;align-items:center}.barLabel{font-size:11px;color:#dbefed}.barTrack{height:14px;background:rgba(255,255,255,.055);border-radius:99px;overflow:hidden;position:relative}.barFill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent2),var(--accent));min-width:2px}.barFill.alt{background:linear-gradient(90deg,#65d0c6,#7ce59f)}.barValue{text-align:left;font-weight:700;font-size:12px;color:#f0fffc}.barNote{font-size:10px;color:var(--dim);margin-top:3px}
+.donutWrap{display:grid;grid-template-columns:160px 1fr;gap:18px;align-items:center}.donut{width:158px;height:158px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(var(--accent) 0 69%,var(--accent2) 69% 100%)}.donut:before{content:"";width:107px;height:107px;border-radius:50%;background:var(--panel2);position:absolute;inset:0;margin:auto;box-shadow:inset 0 0 0 1px rgba(255,255,255,.03)}.donutInner{position:relative;z-index:1;text-align:center}.donutInner strong{display:block;font-size:24px}.donutInner span{font-size:10px;color:var(--muted)}.legendStack{display:flex;flex-direction:column;gap:10px}.legendStack .li{display:flex;justify-content:space-between;gap:12px;padding-bottom:9px;border-bottom:1px dashed rgba(255,255,255,.07)}.legendStack .li:last-child{border-bottom:0}.liLeft{display:flex;align-items:center;gap:8px;color:#d6ebea;font-size:11px}.liRight{font-weight:700;font-size:12px}
+.insights{display:grid;gap:10px}.insight{display:grid;grid-template-columns:34px 1fr;gap:11px;padding:12px;border:1px solid rgba(112,205,195,.10);background:rgba(255,255,255,.025);border-radius:15px}.insight .ico{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:rgba(52,211,176,.10);color:#8cebd6;font-size:15px}.insight.warn .ico{background:rgba(242,189,96,.10);color:#ffd889}.insight.danger .ico{background:rgba(241,123,123,.10);color:#ffaaaa}.insight h4{margin:0 0 2px;font-size:12px}.insight p{margin:0;color:var(--muted);font-size:11px;line-height:1.9}
+.metricList{display:grid;gap:8px}.metricItem{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 12px;border:1px solid rgba(115,203,194,.09);background:rgba(255,255,255,.025);border-radius:13px}.metricItem .l{font-size:11px;color:var(--muted)}.metricItem .r{font-size:13px;font-weight:700}
+.tableWrap{overflow:auto;border:1px solid rgba(107,196,190,.10);border-radius:16px}.dataTable{width:100%;border-collapse:collapse;min-width:920px}.dataTable th,.dataTable td{padding:11px 9px;border-bottom:1px solid rgba(255,255,255,.06);text-align:right;font-size:10.5px;vertical-align:middle}.dataTable th{background:rgba(255,255,255,.035);color:#cfe8e6;font-weight:700;position:sticky;top:0}.dataTable td{color:#e6f5f3}.dataTable tbody tr:hover{background:rgba(255,255,255,.025)}.miniBar{min-width:100px}.miniTrack{height:8px;border-radius:99px;background:rgba(255,255,255,.05);overflow:hidden}.miniFill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.funnel{display:flex;flex-direction:column;gap:10px}.funnelRow{display:grid;grid-template-columns:150px 1fr 90px;align-items:center;gap:10px}.funnelLabel{font-size:11px;color:#d5e9e7}.funnelTrack{height:22px;background:rgba(255,255,255,.045);border-radius:999px;overflow:hidden}.funnelFill{height:100%;border-radius:999px;background:linear-gradient(90deg,rgba(33,185,199,.75),rgba(52,211,176,.95))}.funnelValue{font-size:11px;font-weight:700;text-align:left}.note{font-size:10px;color:var(--dim);margin-top:10px}
+.status{display:flex;align-items:center;gap:8px;font-size:11px}.statusDot{width:9px;height:9px;border-radius:50%;box-shadow:0 0 0 4px rgba(52,211,176,.06)}.statusDot.ok{background:var(--accent)}.statusDot.warn{background:var(--warn);box-shadow:0 0 0 4px rgba(242,189,96,.06)}.statusDot.danger{background:var(--danger);box-shadow:0 0 0 4px rgba(241,123,123,.06)}
+.footer{margin-top:18px;padding:14px 2px;color:var(--dim);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:10px}.loading{display:none;position:fixed;inset:0;background:rgba(3,13,14,.88);backdrop-filter:blur(8px);z-index:99;align-items:center;justify-content:center}.loading.show{display:flex}.loadCard{width:min(420px,calc(100vw - 36px));padding:22px;border-radius:20px;border:1px solid var(--line);background:var(--panel);text-align:center;box-shadow:var(--shadow)}.spinner{width:35px;height:35px;border:3px solid rgba(255,255,255,.10);border-top-color:var(--accent);border-radius:50%;margin:0 auto 12px;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.errorBox{display:none;padding:16px;border-radius:18px;background:rgba(241,123,123,.08);border:1px solid rgba(241,123,123,.22);color:#ffd6d6;margin-bottom:14px;font-size:12px}.errorBox.show{display:block}.errorBox .code{direction:ltr;text-align:left;display:block;margin:8px 0 0;padding:10px;border-radius:10px;background:rgba(0,0,0,.20);color:#ffbebe;font-family:Consolas,monospace;font-size:11px;overflow:auto}.hiddenInput{display:none}
+@media (max-width:1250px){.kpiGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:900px){.wrap{padding:15px 12px 28px}.header{padding:20px 17px;border-radius:24px}.headerTop{align-items:flex-start;flex-direction:column}.headerActions{justify-content:flex-start}.mainTitle{font-size:22px}.subTitle{font-size:14px}.cols2,.cols3{grid-template-columns:1fr}.donutWrap{grid-template-columns:1fr;justify-items:center}.legendStack{width:100%}.kpiGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.barRow{grid-template-columns:minmax(100px,1.2fr) minmax(100px,2.2fr) 68px}.tabs{top:5px}}
+@media (max-width:540px){.wrap{padding-inline:10px}.header{padding:16px 14px}.logo{width:56px;height:56px;border-radius:17px}.mainTitle{font-size:18px}.subTitle{font-size:12px}.metaChip{min-width:145px;flex:1}.kpiGrid{grid-template-columns:1fr 1fr;gap:9px}.kpi{min-height:116px;padding:13px}.kpi .kValue{font-size:22px}.panel{padding:14px}.barRow{grid-template-columns:1fr 1fr 66px;gap:7px}.funnelRow{grid-template-columns:100px 1fr 68px}.sectionTitle{align-items:flex-start;flex-direction:column}.btn.small{width:100%}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="wrap">
+  <header class="header">
+    <div class="headerTop">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none">
+            <path d="M12 29 32 12l20 17v20.5a2.5 2.5 0 0 1-2.5 2.5h-35A2.5 2.5 0 0 1 12 49.5V29Z" stroke="#7ce8cd" stroke-width="3.4"/>
+            <path d="M24 52V34h16v18M18 29l14-12 14 12M27 28h10" stroke="#38cdb1" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="eyebrow">بنیاد مسکن انقلاب اسلامی</div>
+          <div class="mainTitle">سامانه هوشمند مدیریتی ریاست</div>
+          <div class="subTitle">طرح «خانه امید» ـ مسکن محرومین</div><div style="color:#9fe2d5;font-size:11px;margin-top:4px;letter-spacing:.15px">نمای کلی · پیشرفت فیزیکی · عملکرد بانکی</div>
+        </div>
+      </div>
+      <div class="headerActions">
+        <div class="pill"><span>تاریخ گزارش</span><strong id="bannerDate">—</strong></div>
+        <a class="pill linkPill" href="./HopeHouseDetail.pdf" target="_blank" rel="noopener"><span>جزئیات گزارش</span><strong>↗</strong></a>
+        <button class="btn" id="refreshBtn">↻ به‌روزرسانی</button>
+      </div>
+    </div>
+    <div class="metaRow">
+      <div class="metaChip"><span class="label">منبع داده</span><span class="value">HopeHouseSource.xlsx</span></div>
+      <div class="metaChip"><span class="label">روش به‌روزرسانی</span><span class="value">واکشی مستقیم هنگام اجرا</span></div>
+      <div class="metaChip"><span class="label">آخرین دریافت</span><span class="value" id="refreshStamp">—</span></div>
+      <div class="metaChip"><span class="label">وضعیت داده</span><span class="value" id="sourceStatus">در حال خواندن…</span></div>
+    </div>
+  </header>
+
+  <div class="errorBox" id="errorBox">
+    <strong>واکنش‌پذیری منبع داده نیاز به توجه دارد.</strong>
+    <div id="errorText"></div>
+    <code class="code" id="errorCode"></code>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn small" id="pickBtn">انتخاب دستی فایل اکسل</button>
+      <input class="hiddenInput" id="fileInput" type="file" accept=".xlsx,.xlsm,.xlsb,.xls">
+    </div>
+  </div>
+
+  <nav class="tabs" aria-label="داشبوردها">
+    <button class="tab active" data-view="overview">نمای کلی</button>
+    <button class="tab" data-view="progress">پیشرفت فیزیکی</button>
+    <button class="tab" data-view="banking">عملکرد بانکی</button>
+    <button class="tab" data-view="quality">کنترل داده و جمع‌بندی</button>
+  </nav>
+
+  <main>
+    <section class="view active" id="overview">
+      <div class="sectionTitle"><div><h2>نمای مدیریتی طرح «خانه امید»</h2><p id="overviewDate">تاریخ شیت: —</p></div><span class="tag">روکش کلی</span></div>
+      <div class="grid kpiGrid">
+        <div class="card kpi"><div class="kLabel">مجموع واحدهای در دست اجرا</div><div class="kValue" id="kTotal">—</div><div class="kSub">بر اساس شیت «روکش کلی»</div><div class="spark"><i id="kTotalSpark" style="width:84%"></i></div></div>
+        <div class="card kpi"><div class="kLabel">برنامه تا تاریخ اعلامی</div><div class="kValue" id="kPlan">—</div><div class="kSub">برنامه واحدی</div></div>
+        <div class="card kpi"><div class="kLabel">درصد تحقق برنامه</div><div class="kValue" id="kAch">—</div><div class="kSub">مجموع کل ÷ برنامه</div><div class="spark"><i id="kAchSpark"></i></div></div>
+        <div class="card kpi"><div class="kLabel">روستایی</div><div class="kValue" id="kRural">—</div><div class="kSub" id="kRuralPct">—</div></div>
+        <div class="card kpi"><div class="kLabel">شهری</div><div class="kValue" id="kUrban">—</div><div class="kSub" id="kUrbanPct">—</div></div>
+        <div class="card kpi"><div class="kLabel">فاصله تا برنامه</div><div class="kValue" id="kGap">—</div><div class="kSub">واحد</div></div>
+      </div>
+
+      <div class="grid cols2">
+        <article class="card panel">
+          <h3>ترکیب جغرافیایی واحدهای در دست اجرا</h3><div class="desc">سهم روستایی و شهری از «مجموع کل» شیت روکش کلی</div>
+          <div class="donutWrap"><div class="donut" id="ruralUrbanDonut"><div class="donutInner"><strong id="donutCenter">—</strong><span>مجموع واحد</span></div></div><div class="legendStack" id="ruralUrbanLegend"></div></div>
+        </article>
+        <article class="card panel">
+          <h3>پرتفوی برنامه‌های خانه امید</h3><div class="desc">تعداد واحد در هر برنامه، تفکیک‌شده از ساختار شیت «روکش کلی»</div>
+          <div class="bars" id="coverBars"></div>
+        </article>
+      </div>
+
+      <div class="grid cols3" style="margin-top:14px">
+        <article class="card panel">
+          <h3>کارت تحلیل 01 | تحقق برنامه</h3><div class="desc">برداشت مستقیم از ارقام منبع</div>
+          <div class="insights" id="overviewInsights1"></div>
+        </article>
+        <article class="card panel">
+          <h3>کارت تحلیل 02 | وضعیت عملیات</h3><div class="desc">از شیت «پیشرفت فیزیکی»</div>
+          <div class="insights" id="overviewInsights2"></div>
+        </article>
+        <article class="card panel">
+          <h3>کارت تحلیل 03 | زنجیره بانکی</h3><div class="desc">از شیت «گزارش عملکرد بانک ها»</div>
+          <div class="insights" id="overviewInsights3"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="view" id="progress">
+      <div class="sectionTitle"><div><h2>داشبورد پیشرفت فیزیکی</h2><p id="progressDate">تاریخ شیت: —</p></div><span class="tag">پیشرفت فیزیکی</span></div>
+      <div class="grid kpiGrid">
+        <div class="card kpi"><div class="kLabel">مجموع واحد در اجرا</div><div class="kValue" id="pTotal">—</div><div class="kSub">ردیف «جمع کل»</div></div>
+        <div class="card kpi"><div class="kLabel">درصد شروع عملیات اجرایی</div><div class="kValue" id="pStart">—</div><div class="kSub" id="pStartCount">—</div></div>
+        <div class="card kpi"><div class="kLabel">معرفی به بانک</div><div class="kValue" id="pBankIntro">—</div><div class="kSub">از کل تفصیلی</div></div>
+        <div class="card kpi"><div class="kLabel">عقد قرارداد</div><div class="kValue" id="pContract">—</div><div class="kSub">از کل تفصیلی</div></div>
+        <div class="card kpi"><div class="kLabel">فونداسیون</div><div class="kValue" id="pFoundation">—</div><div class="kSub">واحد</div></div>
+        <div class="card kpi"><div class="kLabel">نازک‌کاری</div><div class="kValue" id="pFinish">—</div><div class="kSub">واحد</div></div>
+      </div>
+      <div class="grid cols2">
+        <article class="card panel"><h3>زنجیره پیشرفت فیزیکی</h3><div class="desc">تعداد واحدهای ثبت‌شده در هر مرحله؛ درصدها نسبت به مجموع تفصیلی محاسبه شده‌اند.</div><div class="funnel" id="progressFunnel"></div><div class="note">ترتیب نمایش از مراحل ابتدایی به انتهایی است؛ اعداد از همان ستون‌های موجود در فایل واکشی شده‌اند.</div></article>
+        <article class="card panel"><h3>تفکیک روستایی و شهری در شیت پیشرفت</h3><div class="desc">مجموع هر بخش و نسبت آن به جمع دو بخش</div><div class="donutWrap"><div class="donut" id="progressDonut"><div class="donutInner"><strong id="progressDonutCenter">—</strong><span>جمع دو بخش</span></div></div><div class="legendStack" id="progressLegend"></div></div></article>
+      </div>
+      <div class="grid cols2" style="margin-top:14px">
+        <article class="card panel"><h3>پرتفوی برنامه‌ها از منظر پیشرفت</h3><div class="desc">بر مبنای ستون «تعداد واحد در دست اجرا»</div><div class="bars" id="progressPrograms"></div></article>
+        <article class="card panel"><h3>نرخ تبدیل مرحله‌ای</h3><div class="desc">شاخص‌های مقایسه‌ای نسبت به «معرفی به بانک» و «مجموع واحد در اجرا»</div><div class="metricList" id="conversionMetrics"></div></article>
+      </div>
+    </section>
+
+    <section class="view" id="banking">
+      <div class="sectionTitle"><div><h2>داشبورد عملکرد بانکی</h2><p id="bankingDate">تاریخ شیت: —</p></div><span class="tag">گزارش عملکرد بانک ها</span></div>
+      <div class="grid kpiGrid">
+        <div class="card kpi"><div class="kLabel">سهمیه اختصاص یافته</div><div class="kValue" id="bAllocated">—</div><div class="kSub">واحد</div></div>
+        <div class="card kpi"><div class="kLabel">سهمیه ابلاغ شده</div><div class="kValue" id="bAnnounced">—</div><div class="kSub" id="bAnnouncedPct">—</div></div>
+        <div class="card kpi"><div class="kLabel">معرفی به بانک</div><div class="kValue" id="bIntroduced">—</div><div class="kSub" id="bIntroducedPct">—</div></div>
+        <div class="card kpi"><div class="kLabel">انعقاد قرارداد</div><div class="kValue" id="bContracts">—</div><div class="kSub" id="bContractPct">—</div></div>
+        <div class="card kpi"><div class="kLabel">فاصله معرفی تا قرارداد</div><div class="kValue" id="bGap">—</div><div class="kSub">واحد</div></div>
+        <div class="card kpi"><div class="kLabel">جذب ریالی مجموع</div><div class="kValue" id="bAbsorption">—</div><div class="kSub">میلیارد ریال</div></div>
+      </div>
+      <div class="grid cols2">
+        <article class="card panel"><h3>زنجیره عملکرد بانکی</h3><div class="desc">مقایسه چهار نقطه کلیدی از سهمیه تا قرارداد</div><div class="funnel" id="bankFunnel"></div></article>
+        <article class="card panel"><h3>نرخ انعقاد قرارداد به تفکیک بانک</h3><div class="desc">درصد قرارداد نسبت به واحدهای معرفی‌شده به بانک</div><div class="bars" id="bankRateBars"></div></article>
+      </div>
+      <div class="card panel" style="margin-top:14px"><h3>جزئیات عملکرد بانک‌ها</h3><div class="desc">ردیف‌ها مستقیماً از داده‌های بانکی منبع ساخته شده‌اند؛ نرخ‌ها در HTML مجدداً محاسبه می‌شوند.</div><div class="tableWrap"><table class="dataTable"><thead><tr><th>ردیف</th><th>بانک عامل</th><th>سهمیه اختصاص</th><th>ابلاغ</th><th>معرفی</th><th>نرخ معرفی</th><th>قرارداد</th><th>نرخ قرارداد</th><th>جذب ریالی</th></tr></thead><tbody id="bankTableBody"></tbody></table></div></div>
+    </section>
+
+    <section class="view" id="quality">
+      <div class="sectionTitle"><div><h2>کنترل داده، اختلافات و جمع‌بندی مدیریتی</h2><p>برای استفاده در جلسه مدیریتی، اختلافات عددی بین لایه‌های گزارش نیز نمایش داده شده‌اند.</p></div><span class="tag">کنترل کیفیت داده</span></div>
+      <div class="grid cols3">
+        <article class="card panel"><h3>کنترل مجموع واحدها</h3><div class="desc">مقایسه «روکش کلی» با «پیشرفت فیزیکی»</div><div class="metricList" id="qualityTotals"></div></article>
+        <article class="card panel"><h3>کنترل زنجیره بانکی</h3><div class="desc">مقایسه ارقام تجمعی شیت بانک‌ها</div><div class="metricList" id="qualityBank"></div></article>
+        <article class="card panel"><h3>تحلیل مدیریتی نهایی</h3><div class="desc">خلاصه‌ای مبتنی بر داده‌های فعلی فایل</div><div class="insights" id="finalInsights"></div></article>
+      </div>
+      <div class="card panel" style="margin-top:14px"><h3>ردیابی منبع و تاریخ هر بخش</h3><div class="desc">تاریخ هر داشبورد از عنوان شیت خودش خوانده می‌شود؛ تاریخ بنر فقط از شیت «روکش کلی» می‌آید.</div><div class="metricList" id="sourceTrace"></div></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>منبع: `./HopeHouseSource.xlsx` — واکشی در هر اجرا با عدم استفاده از کش مرورگر</span>
+    <span>طرح «خانه امید» | سامانه هوشمند مدیریتی ریاست</span>
+  </footer>
+</div>
+</div>
+
+<div class="loading show" id="loading"><div class="loadCard"><div class="spinner"></div><strong>در حال واکشی و تحلیل فایل اکسل…</strong><div style="color:var(--muted);font-size:11px;margin-top:5px">سه شیت منبع در حال خواندن است.</div></div></div>
+
+<script>
+/* --------------------------------------------------------------------------
+   Lightweight XLSX reader — no CDN / no external JavaScript dependency.
+   Designed for modern browsers (HTTPS, GitHub Pages, localhost).
+-------------------------------------------------------------------------- */
+const XLSXLite = (()=>{
+  const u8 = (buf)=>new Uint8Array(buf);
+  const u16=(v,o)=>v.getUint16(o,true);
+  const u32=(v,o)=>v.getUint32(o,true);
+  const textDecoder = new TextDecoder('utf-8');
+  const normPath=(base,target)=>{
+    let p=(target||'').replace(/^\//,'');
+    if(!p.startsWith('xl/')) p=base + p;
+    const out=[]; for(const part of p.split('/')){ if(part==='.'||part==='')continue; if(part==='..')out.pop(); else out.push(part)}
+    return out.join('/');
+  };
+  async function inflateRaw(data){
+    if(data.byteLength===0) return new ArrayBuffer(0);
+    if(typeof DecompressionStream==='undefined') throw new Error('این مرورگر DecompressionStream را پشتیبانی نمی‌کند. مرورگر Chromium/Edge/Chrome جدید استفاده کنید.');
+    const ds=new DecompressionStream('deflate-raw');
+    const stream=new Blob([data]).stream().pipeThrough(ds);
+    return await new Response(stream).arrayBuffer();
+  }
+  async function unzip(buffer){
+    const bytes=u8(buffer), view=new DataView(buffer);
+    let eocd=-1; const start=Math.max(0,bytes.length-65557);
+    for(let i=bytes.length-22;i>=start;i--){ if(u32(view,i)===0x06054b50){eocd=i;break;} }
+    if(eocd<0) throw new Error('ساختار ZIP فایل اکسل پیدا نشد.');
+    const count=u16(view,eocd+10), cdOffset=u32(view,eocd+16); let p=cdOffset; const entries=new Map();
+    for(let i=0;i<count;i++){
+      if(u32(view,p)!==0x02014b50) throw new Error('Central Directory نامعتبر است.');
+      const flags=u16(view,p+8),method=u16(view,p+10),cs=u32(view,p+20),us=u32(view,p+24),fn=u16(view,p+28),ex=u16(view,p+30),co=u16(view,p+32),lo=u32(view,p+42);
+      const nameBytes=bytes.slice(p+46,p+46+fn); const name=textDecoder.decode(nameBytes);
+      entries.set(name,{method,cs,us,lo,flags}); p+=46+fn+ex+co;
+    }
+    async function read(name){
+      const e=entries.get(name); if(!e) return null; const lp=e.lo;
+      if(u32(view,lp)!==0x04034b50) throw new Error('Local file header نامعتبر است: '+name);
+      const fn=u16(view,lp+26),ex=u16(view,lp+28); const start=lp+30+fn+ex; const comp=bytes.slice(start,start+e.cs);
+      if(e.method===0) return comp.buffer.slice(comp.byteOffset,comp.byteOffset+comp.byteLength);
+      if(e.method===8) return await inflateRaw(comp);
+      throw new Error('روش فشرده‌سازی ZIP پشتیبانی نمی‌شود: '+e.method);
+    }
+    return {read,entries};
+  }
+  const localName=(el)=>el.localName || el.nodeName.split(':').pop();
+  async function xml(zip,name){ const b=await zip.read(name); if(!b) throw new Error('فایل XML یافت نشد: '+name); return new DOMParser().parseFromString(textDecoder.decode(b),'application/xml'); }
+  function nodes(root,tag){ return Array.from(root.getElementsByTagName('*')).filter(n=>localName(n)===tag); }
+  function child(root,tag){ return Array.from(root.children||[]).find(n=>localName(n)===tag) || null; }
+  function colIndex(ref){ const m=/^([A-Z]+)\d+$/i.exec(ref||''); if(!m)return 0; let n=0; for(const c of m[1].toUpperCase()) n=n*26+(c.charCodeAt(0)-64); return n-1; }
+  function parseSharedStrings(doc){
+    return nodes(doc,'si').map(si=>nodes(si,'t').map(t=>t.textContent||'').join(''));
+  }
+  function parseSheet(doc,shared){
+    const rows=[];
+    for(const row of nodes(doc,'row')){
+      const rNum=Number(row.getAttribute('r')||rows.length+1)-1;
+      while(rows.length<=rNum) rows.push([]);
+      const arr=rows[rNum];
+      for(const c of nodes(row,'c')){
+        const ref=c.getAttribute('r')||''; const idx=colIndex(ref); const t=c.getAttribute('t')||''; const vEl=child(c,'v'); let val=null;
+        if(t==='inlineStr'){
+          const is=child(c,'is'); val=is?nodes(is,'t').map(x=>x.textContent||'').join(''):'';
+        } else if(t==='s'){
+          const si=Number(vEl?.textContent||0); val=shared[si]??'';
+        } else if(t==='b'){ val=Number(vEl?.textContent||0)===1; }
+        else if(t==='str' || t==='e'){ val=vEl?.textContent??''; }
+        else { const raw=vEl?.textContent; if(raw==null||raw==='') val=null; else { const num=Number(raw); val=Number.isFinite(num)?num:raw; } }
+        arr[idx]=val;
+      }
+    }
+    return rows;
+  }
+  async function parse(buffer){
+    const zip=await unzip(buffer);
+    const wb=await xml(zip,'xl/workbook.xml');
+    const rels=await xml(zip,'xl/_rels/workbook.xml.rels');
+    const relMap=new Map();
+    for(const rel of nodes(rels,'Relationship')){ relMap.set(rel.getAttribute('Id'),rel.getAttribute('Target')); }
+    let shared=[]; if(zip.entries.has('xl/sharedStrings.xml')) shared=parseSharedStrings(await xml(zip,'xl/sharedStrings.xml'));
+    const sheets=[]; const wbSheets=nodes(wb,'sheet');
+    for(const s of wbSheets){
+      const name=s.getAttribute('name')||''; const rid=s.getAttribute('r:id')||s.getAttribute('id')||''; const target=relMap.get(rid); if(!target) continue;
+      const path=normPath('xl/',target); const doc=await xml(zip,path); sheets.push({name, path, rows:parseSheet(doc,shared)});
+    }
+    return {sheets,getSheet:(name)=>sheets.find(s=>s.name===name)};
+  }
+  return {parse};
+})();
+
+const App=(()=>{
+  const DATA={};
+  const q=(id)=>document.getElementById(id);
+  const nf=new Intl.NumberFormat('en-US',{maximumFractionDigits:2});
+  const n0=new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
+  const pct=(x)=>Number.isFinite(Number(x))?(Number(x)*100).toFixed(1)+'%':'—';
+  const num=(x)=>Number.isFinite(Number(x))?nf.format(Number(x)):'—';
+  const int=(x)=>Number.isFinite(Number(x))?n0.format(Number(x)):'—';
+  const clean=(s)=>String(s??'').replace(/[\u200c\u200f\u202a-\u202e]/g,'').replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/\s+/g,' ').trim();
+  const isNum=(x)=>Number.isFinite(Number(x));
+  const toNum=(x)=>isNum(x)?Number(x):0;
+  const dateRe=/\d{4}[\/\-.]\d{1,2}[\/\-.]\d{1,2}/;
+  function extractDate(rows, preferredRows=[1,3,4]){ for(const ri of preferredRows){ const r=rows[ri]||[]; for(const v of r){ const m=String(v??'').match(dateRe); if(m)return m[0].replace(/\./g,'/').replace(/-/g,'/'); } } for(const r of rows.slice(0,8)){ for(const v of r){ const m=String(v??'').match(dateRe); if(m)return m[0].replace(/\./g,'/').replace(/-/g,'/'); } } return '—'; }
+  function findRow(rows, predicate, start=0){ for(let i=start;i<rows.length;i++) if(predicate(rows[i],i)) return rows[i]; return null; }
+  function findIndex(rows, predicate, start=0){ for(let i=start;i<rows.length;i++) if(predicate(rows[i],i)) return i; return -1; }
+  function setText(id,v){q(id).textContent=v;}
+  function makeInsight(title,text,kind='ok',icon='•'){return `<div class="insight ${kind}"><div class="ico">${icon}</div><div><h4>${title}</h4><p>${text}</p></div></div>`}
+  function bar(containerId,label,value,max,fmt=num,alt=false){
+    const pctv=max>0?Math.max(0,Math.min(100,(value/max)*100)):0;
+    return `<div class="barRow"><div><div class="barLabel">${label}</div></div><div class="barTrack"><div class="barFill ${alt?'alt':''}" style="width:${pctv.toFixed(2)}%"></div></div><div class="barValue">${fmt(value)}</div></div>`;
+  }
+  function donut(elId,parts,total,centerText,legendId){
+    const el=q(elId); let cursor=0; const seg=[]; for(const [i,p] of parts.entries()){const v=total?Math.max(0,p.value/total*100):0; seg.push(`${p.color||(['var(--accent)','var(--accent2)','var(--accent3)','var(--warn)'][i%4])} ${cursor.toFixed(2)}% ${(cursor+v).toFixed(2)}%`); cursor+=v;}
+    el.style.background=`conic-gradient(${seg.join(',')})`; setText(el.querySelector('strong')?.id || '',centerText);
+    const lg=q(legendId); if(lg)lg.innerHTML=parts.map(p=>`<div class="li"><div class="liLeft"><span class="dot ${p.cls||''}" style="${p.dot?'background:'+p.color:''}"></span>${p.label}</div><div class="liRight">${num(p.value)} <span style="color:var(--muted);font-weight:500">(${pct(p.value/total)})</span></div></div>`).join('');
+  }
+  function stageRows(){return [
+    ['شروع عملیات اجرایی',DATA.progress.overall.start,DATA.progress.overall.total],
+    ['پی‌کنی',DATA.progress.overall.excav,DATA.progress.overall.total],
+    ['فونداسیون',DATA.progress.overall.foundation,DATA.progress.overall.total],
+    ['اسکلت',DATA.progress.overall.skeleton,DATA.progress.overall.total],
+    ['سفتکاری',DATA.progress.overall.plaster,DATA.progress.overall.total],
+    ['نازک‌کاری',DATA.progress.overall.finish,DATA.progress.overall.total],
+  ];}
+  function renderProgressFunnel(){q('progressFunnel').innerHTML=stageRows().map(([l,v,t])=>{const p=t?v/t*100:0;return `<div class="funnelRow"><div class="funnelLabel">${l}</div><div class="funnelTrack"><div class="funnelFill" style="width:${Math.max(1,p).toFixed(2)}%"></div></div><div class="funnelValue">${int(v)} <span style="color:var(--muted);font-weight:500">(${p.toFixed(1)}%)</span></div></div>`}).join('');}
+  function renderBankFunnel(){const b=DATA.banking.summary; const arr=[['سهمیه اختصاص یافته',b.allocated],['سهمیه ابلاغ شده',b.announced],['معرفی به بانک',b.introduced],['انعقاد قرارداد',b.contracts]]; const max=Math.max(...arr.map(x=>x[1]),1); q('bankFunnel').innerHTML=arr.map(([l,v])=>{const p=v/max*100; return `<div class="funnelRow"><div class="funnelLabel">${l}</div><div class="funnelTrack"><div class="funnelFill" style="width:${Math.max(1,p).toFixed(2)}%"></div></div><div class="funnelValue">${int(v)} <span style="color:var(--muted);font-weight:500">(${pct(v/b.allocated)})</span></div></div>`}).join('');}
+  function parseModel(workbook){
+    const cover=workbook.getSheet('روکش کلی'); const progress=workbook.getSheet('پیشرفت فیزیکی'); const banking=workbook.getSheet('گزارش عملکرد بانک ها');
+    if(!cover||!progress||!banking) throw new Error('یکی از سه شیت مورد انتظار یافت نشد. نام شیت‌ها باید دقیقاً «روکش کلی»، «پیشرفت فیزیکی» و «گزارش عملکرد بانک ها» باشد.');
+    DATA.cover={date:extractDate(cover.rows,[1]),title:String(cover.rows[1]?.[1]??''),rows:cover.rows};
+    const cr=cover.rows;
+    const items=[]; let mode='روستایی';
+    for(let i=3;i<cr.length;i++){
+      const label=clean(cr[i]?.[1]); const val=toNum(cr[i]?.[2]); if(!label)continue;
+      if(label.includes('مجموع روستایی')){DATA.cover.ruralTotal=val; mode='شهری';continue}
+      if(label.includes('درصد روستایی')){DATA.cover.ruralPct=val;continue}
+      if(label.includes('مجموع شهری')){DATA.cover.urbanTotal=val;mode='';continue}
+      if(label.includes('درصد شهری')){DATA.cover.urbanPct=val;continue}
+      if(label.includes('مجموع کل')){DATA.cover.total=val;continue}
+      if(label.includes('برنامه تا')){DATA.cover.plan=val;continue}
+      if(label.includes('درصد تحقق')){DATA.cover.achievement=val;continue}
+      if(mode)items.push({label,value:val,group:mode});
+    }
+    DATA.cover.items=items;
+
+    const pr=progress.rows; DATA.progress={date:extractDate(pr,[1]),rows:pr,groups:{rural:[],urban:[]}};
+    const progItems=[]; for(let i=4;i<pr.length;i++){
+      const r=pr[i]||[]; const label=clean(r[10]); const total=toNum(r[9]); if(!label)continue;
+      if(label==='مجموع' || label.includes('جمع کل')) continue; const grp=clean(r[12]); const group=grp==='شهری'?'urban':(progItems.some(x=>x.group==='urban')?'urban':'rural');
+      const obj={label,total,startRate:toNum(r[5]),start:toNum(r[6]),excav:toNum(r[6]),contract:toNum(r[7]),bankIntro:toNum(r[8]),finish:toNum(r[1]),plaster:toNum(r[2]),skeleton:toNum(r[3]),foundation:toNum(r[4]),group};
+      // Row 6 is the actual پی‌کنی column; same index 6 as above. Keep explicit aliases for readability.
+      progItems.push(obj); DATA.progress.groups[group].push(obj);
+    }
+    const ruralTotalRow=findRow(pr,r=>clean(r?.[10])==='مجموع' && clean(pr[4]?.[12])==='روستایی');
+    const urbanTotalRow=findRow(pr,r=>clean(r?.[10])==='مجموع' && clean(pr[12])!=='روستایی',12);
+    const overall=findRow(pr,r=>clean(r?.[10]).includes('جمع کل'));
+    // Safer direct totals by first/last occurrence.
+    const totals=pr.filter(r=>clean(r?.[10])==='مجموع');
+    const rt=totals[0]||[]; const ut=totals[1]||[]; const ot=overall||pr[20]||[];
+    const totalDetailed=toNum(ot[9]||0); const ruralDetailed=toNum(rt[9]||0); const urbanDetailed=toNum(ut[9]||0);
+    DATA.progress.items=progItems; DATA.progress.overall={total:totalDetailed,ruralTotal:ruralDetailed,urbanTotal:urbanDetailed,start:toNum(ot[6]),excav:toNum(ot[6]),foundation:toNum(ot[4]),skeleton:toNum(ot[3]),plaster:toNum(ot[2]),finish:toNum(ot[1]),contract:toNum(ot[7]),bankIntro:toNum(ot[8]),startRate:toNum(ot[5])};
+    DATA.progress.ruralRate=ruralDetailed/(ruralDetailed+urbanDetailed||1); DATA.progress.urbanRate=urbanDetailed/(ruralDetailed+urbanDetailed||1);
+
+    const br=banking.rows; DATA.banking={date:extractDate(br,[3]),rows:br};
+    const bankRows=br.slice(6).filter(r=>clean(r?.[2]) && clean(r?.[2])!=='مجموع' && isNum(r?.[4]));
+    DATA.banking.banks=bankRows.map(r=>({row:r,sort:toNum(r[0]),no:toNum(r[1]),name:clean(r[2]),allocated:toNum(r[4]),date:String(r[5]??'—'),announced:toNum(r[6]),announcedPct:toNum(r[7]),introduced:toNum(r[8]),introducedPct:toNum(r[9]),contracts:toNum(r[10]),contractPct:toNum(r[11]),absorption:toNum(r[12])}));
+    const bt=br.find(r=>clean(r?.[1])==='مجموع')||[];
+    DATA.banking.summary={allocated:toNum(bt[4]),announced:toNum(bt[6]),announcedPct:toNum(bt[7]),introduced:toNum(bt[8]),introducedPct:toNum(bt[9]),contracts:toNum(bt[10]),contractPct:toNum(bt[11]),absorption:toNum(bt[12])};
+    DATA.banking.allocGap=DATA.banking.summary.allocated-DATA.banking.summary.announced;
+    return DATA;
+  }
+  function render(){
+    const c=DATA.cover,p=DATA.progress,b=DATA.banking;
+    setText('bannerDate',c.date); setText('overviewDate','تاریخ شیت: '+c.date); setText('progressDate','تاریخ شیت: '+p.date); setText('bankingDate','تاریخ شیت: '+b.date);
+    setText('kTotal',int(c.total)); setText('kPlan',int(c.plan)); setText('kAch',pct(c.achievement)); setText('kRural',int(c.ruralTotal)); setText('kRuralPct',pct(c.ruralPct)); setText('kUrban',int(c.urbanTotal)); setText('kUrbanPct',pct(c.urbanPct)); setText('kGap',int(c.plan-c.total)); q('kAchSpark').style.width=Math.min(100,Math.max(0,c.achievement*100)).toFixed(1)+'%';
+    donut('ruralUrbanDonut',[{label:'روستایی',value:c.ruralTotal,color:'var(--accent)'},{label:'شهری',value:c.urbanTotal,color:'var(--accent2)'}],c.ruralTotal+c.urbanTotal,pct(c.ruralTotal/(c.ruralTotal+c.urbanTotal||1)),'ruralUrbanLegend');
+    q('coverBars').innerHTML=c.items.sort((a,b)=>b.value-a.value).map((x,i)=>bar('coverBars',x.label,x.value,Math.max(c.total,...c.items.map(y=>y.value)),num,i>5)).join('');
+    const detailTotalDelta=p.overall.total-c.total;
+    q('overviewInsights1').innerHTML=
+      makeInsight('تحقق برنامه',`مجموع فعلی ${int(c.total)} واحد از برنامه ${int(c.plan)} واحد، معادل ${pct(c.achievement)} تحقق را نشان می‌دهد. فاصله عددی تا برنامه ${int(c.plan-c.total)} واحد است.`,c.achievement<.75?'warn':'ok','↗')+
+      makeInsight('ترکیب پروژه',`از مجموع روکش کلی، ${pct(c.ruralPct)} در بخش روستایی و ${pct(c.urbanPct)} در بخش شهری ثبت شده است.`, 'ok','◈');
+    q('overviewInsights2').innerHTML=
+      makeInsight('شروع عملیات',`در شیت پیشرفت، نرخ «درصد شروع عملیات اجرایی» ${pct(p.overall.startRate)} ثبت شده و در ستون «پی‌کنی» ${int(p.overall.excav)} واحد درج شده است.`,'ok','▸')+
+      makeInsight('کنترل مجموع',`مجموع تفصیلی شیت پیشرفت ${int(p.overall.total)} واحد است؛ این عدد ${detailTotalDelta>=0?'+':''}${int(detailTotalDelta)} واحد با رقم روکش کلی اختلاف دارد.`,Math.abs(detailTotalDelta)>0?'warn':'ok','!');
+    q('overviewInsights3').innerHTML=
+      makeInsight('ابلاغ بانکی',`${int(b.summary.announced)} واحد از ${int(b.summary.allocated)} واحد سهمیه اختصاص‌یافته، ابلاغ شده است؛ نرخ ابلاغ ${pct(b.summary.announcedPct)} است.`,'ok','⌁')+
+      makeInsight('تبدیل معرفی به قرارداد',`${int(b.summary.contracts)} قرارداد از ${int(b.summary.introduced)} معرفی ثبت شده است؛ نرخ تبدیل مجدد ${pct(b.summary.contractPct)} محاسبه می‌شود.`,b.summary.contractPct<.25?'warn':'ok','↳');
+
+    setText('pTotal',int(p.overall.total)); setText('pStart',pct(p.overall.startRate)); setText('pStartCount','پی‌کنی: '+int(p.overall.excav)+' واحد'); setText('pBankIntro',int(p.overall.bankIntro)); setText('pContract',int(p.overall.contract)); setText('pFoundation',int(p.overall.foundation)); setText('pFinish',int(p.overall.finish));
+    renderProgressFunnel();
+    donut('progressDonut',[{label:'روستایی',value:p.overall.ruralTotal,color:'var(--accent)'},{label:'شهری',value:p.overall.urbanTotal,color:'var(--accent2)'}],p.overall.ruralTotal+p.overall.urbanTotal,pct(p.overall.ruralTotal/(p.overall.ruralTotal+p.overall.urbanTotal||1)),'progressLegend');
+    const maxProg=Math.max(p.overall.total,...p.items.map(x=>x.total)); q('progressPrograms').innerHTML=p.items.sort((a,b)=>b.total-a.total).map((x,i)=>bar('progressPrograms',x.label,x.total,maxProg,num,i%2===0)).join('');
+    q('conversionMetrics').innerHTML=[
+      ['شروع عملیات / کل',pct(p.overall.start/p.overall.total)],['پی‌کنی / کل',pct(p.overall.excav/p.overall.total)],['فونداسیون / کل',pct(p.overall.foundation/p.overall.total)],['اسکلت / کل',pct(p.overall.skeleton/p.overall.total)],['سفتکاری / کل',pct(p.overall.plaster/p.overall.total)],['نازک‌کاری / کل',pct(p.overall.finish/p.overall.total)],['عقد قرارداد / معرفی',pct(p.overall.contract/(p.overall.bankIntro||1))]
+    ].map(([l,r])=>`<div class="metricItem"><div class="l">${l}</div><div class="r">${r}</div></div>`).join('');
+
+    setText('bAllocated',int(b.summary.allocated)); setText('bAnnounced',int(b.summary.announced)); setText('bAnnouncedPct',pct(b.summary.announcedPct)); setText('bIntroduced',int(b.summary.introduced)); setText('bIntroducedPct',pct(b.summary.introducedPct)); setText('bContracts',int(b.summary.contracts)); setText('bContractPct',pct(b.summary.contractPct)); setText('bGap',int(b.summary.introduced-b.summary.contracts)); setText('bAbsorption',num(b.summary.absorption)); renderBankFunnel();
+    const maxRate=1; q('bankRateBars').innerHTML=b.banks.map((x,i)=>bar('bankRateBars',x.name,x.contractPct,maxRate,v=>pct(v),i%2===0)).join('');
+    q('bankTableBody').innerHTML=b.banks.map(x=>`<tr><td>${int(x.no)}</td><td><strong>${x.name}</strong><div class="barNote">ابلاغ: ${x.date}</div></td><td>${int(x.allocated)}</td><td>${int(x.announced)}<div class="barNote">${pct(x.announcedPct)}</div></td><td>${int(x.introduced)}</td><td><div class="miniBar"><div class="miniTrack"><div class="miniFill" style="width:${Math.max(0,Math.min(100,x.introducedPct*100))}%"></div></div></div><div class="barNote">${pct(x.introducedPct)}</div></td><td>${int(x.contracts)}</td><td><div class="miniBar"><div class="miniTrack"><div class="miniFill" style="width:${Math.max(0,Math.min(100,x.contractPct*100))}%"></div></div></div><div class="barNote">${pct(x.contractPct)}</div></td><td>${num(x.absorption)}</td></tr>`).join('');
+
+    q('qualityTotals').innerHTML=[['روکش کلی',int(c.total)],['پیشرفت فیزیکی',int(p.overall.total)],['اختلاف',`${p.overall.total-c.total>=0?'+':''}${int(p.overall.total-c.total)}`],['درصد اختلاف نسبت به روکش',pct((p.overall.total-c.total)/(c.total||1))]].map(([l,r],i)=>`<div class="metricItem"><div class="l">${l}</div><div class="r" style="color:${i>=2&&p.overall.total!==c.total?'var(--warn)':''}">${r}</div></div>`).join('');
+    q('qualityBank').innerHTML=[['سهمیه اختصاص یافته',int(b.summary.allocated)],['سهمیه ابلاغ شده',int(b.summary.announced)],['معرفی به بانک',int(b.summary.introduced)],['انعقاد قرارداد',int(b.summary.contracts)],['فاصله معرفی تا قرارداد',int(b.summary.introduced-b.summary.contracts)]].map(([l,r])=>`<div class="metricItem"><div class="l">${l}</div><div class="r">${r}</div></div>`).join('');
+    q('finalInsights').innerHTML=
+      makeInsight('محور برنامه',`تحقق برنامه فعلی ${pct(c.achievement)} است و ${int(c.plan-c.total)} واحد تا برنامه اعلام‌شده فاصله دارد.`,c.achievement<.85?'warn':'ok','01')+
+      makeInsight('محور عملیات',`در شیت پیشرفت، ${int(p.overall.finish)} واحد در مرحله نازک‌کاری ثبت شده و ${int(p.overall.contract)} واحد در وضعیت عقد قرارداد قرار دارند.`,'ok','02')+
+      makeInsight('محور بانکی',`از ${int(b.summary.allocated)} سهمیه اختصاص‌یافته، ${int(b.summary.announced)} واحد ابلاغ، ${int(b.summary.introduced)} واحد معرفی و ${int(b.summary.contracts)} قرارداد ثبت شده است.`,'ok','03')+
+      (Math.abs(p.overall.total-c.total)>0?makeInsight('کنترل کیفیت داده',`بین مجموع روکش کلی و جمع کل شیت پیشرفت ${int(Math.abs(p.overall.total-c.total))} واحد اختلاف وجود دارد؛ برای نسخه مدیریتی، این مورد قابل پیگیری است.`,'warn','!'):'');
+    q('sourceTrace').innerHTML=[
+      ['بنر و نمای کلی','روکش کلی',c.date],['داشبورد پیشرفت فیزیکی','پیشرفت فیزیکی',p.date],['داشبورد عملکرد بانکی','گزارش عملکرد بانک ها',b.date]
+    ].map(([a,s,d])=>`<div class="metricItem"><div class="l"><strong style="color:#effdf9">${a}</strong><div class="barNote">شیت منبع: ${s}</div></div><div class="r">${d}</div></div>`).join('');
+  }
+  async function loadBuffer(buf){
+    q('loading').classList.add('show'); q('errorBox').classList.remove('show');
+    try{
+      const wb=await XLSXLite.parse(buf); parseModel(wb); render();
+      setText('sourceStatus','داده‌ها به‌روز شد'); setText('refreshStamp',new Date().toLocaleString('en-GB',{hour12:false}));
+    }catch(err){
+      setText('sourceStatus','خطا در خواندن'); q('errorBox').classList.add('show'); setText('errorText','فایل دریافت شد، اما ساختار آن برای این داشبورد قابل پردازش نبود.'); q('errorCode').textContent=String(err?.stack||err);
+    }finally{q('loading').classList.remove('show');}
+  }
+  async function load(){
+    q('loading').classList.add('show'); q('errorBox').classList.remove('show'); setText('sourceStatus','در حال واکشی…');
+    try{
+      const url='./HopeHouseSource.xlsx?ts='+Date.now();
+      const res=await fetch(url,{cache:'no-store'}); if(!res.ok) throw new Error(`HTTP ${res.status} — ${url}`); const buf=await res.arrayBuffer(); await loadBuffer(buf);
+    }catch(err){
+      q('loading').classList.remove('show'); setText('sourceStatus','واکشی ناموفق'); q('errorBox').classList.add('show'); setText('errorText','منبع نسبی `./HopeHouseSource.xlsx` در این اجرا در دسترس نبود. روی GitHub Pages یا یک وب‌سرور اجرا کنید؛ در صورت تست محلی، می‌توانید فایل را دستی انتخاب کنید.'); q('errorCode').textContent=String(err?.stack||err);
+    }
+  }
+  function init(){
+    document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));btn.classList.add('active');q(btn.dataset.view).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}));
+    q('refreshBtn').addEventListener('click',load); q('pickBtn').addEventListener('click',()=>q('fileInput').click()); q('fileInput').addEventListener('change',async e=>{const f=e.target.files?.[0];if(f)await loadBuffer(await f.arrayBuffer());}); load();
+  }
+  return {init};
+})();
+App.init();
+</script>
+</body>
+</html>
