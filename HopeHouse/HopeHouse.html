@@ -663,6 +663,26 @@ function destroyCharts(){
   charts=[];
 }
 
+/* انیمیشن شمارنده‌ها — عمداً خارج از loadExcelData تا همه‌جا در دسترس باشد */
+function runCounters(){
+  const els = document.querySelectorAll('.counter');
+  const duration = 1250;
+  els.forEach(el=>{
+    const target = Number(el.dataset.value || 0);
+    const decimals = Number(el.dataset.decimals || 0);
+    const suffix = el.dataset.suffix || '';
+    const start = performance.now();
+    function tick(now){
+      const p = Math.min((now-start)/duration,1);
+      const eased = 1-Math.pow(1-p,3);
+      const current = target*eased;
+      el.textContent = toFaNumber(current,decimals) + suffix;
+      if(p<1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+}
+
 async function loadExcelData() {
   try {
     /*
