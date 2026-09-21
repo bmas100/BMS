@@ -656,17 +656,53 @@ function destroyCharts(){
 
 async function loadExcelData() {
   try {
-    const response = await fetch('./HopeHouseSource.xlsx', {cache:'no-store'});
-    if (!response.ok) throw new Error('HopeHouseSource.xlsx با موفقیت دریافت نشد.');
-    const buffer = await response.arrayBuffer();
+    /*
+      فایل در حالت عادی دقیقاً کنار HTML است.
+      مسیر raw گیت‌هاب فقط به‌عنوان fallback استفاده می‌شود تا اگر HTML
+      از آدرس github.com/blob یا محیطی غیر از GitHub Pages اجرا شد، داده‌ها
+      همچنان قابل دریافت باشند.
+    */
+    const excelSources = [
+      new URL('./HopeHouseSource.xlsx', document.baseURI).href,
+      'https://raw.githubusercontent.com/bmas100/BMS/main/HopeHouse/HopeHouseSource.xlsx'
+    ];
+
+    let buffer = null;
+    let lastFetchError = null;
+
+    for (const source of [...new Set(excelSources)]) {
+      try {
+        const response = await fetch(source, {cache:'no-store'});
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        buffer = await response.arrayBuffer();
+        if (buffer.byteLength < 1000) throw new Error('فایل دریافت‌شده معتبر نیست.');
+        break;
+      } catch (e) {
+        lastFetchError = e;
+      }
+    }
+
+    if (!buffer) {
+      throw new Error('فایل HopeHouseSource.xlsx دریافت نشد. ' + (lastFetchError?.message || ''));
+    }
+
     const wb = XLSX.read(buffer, {type:'array', cellDates:false});
 
-    const overall = wb.Sheets['روکش کلی'];
-    const physical = wb.Sheets['پیشرفت فیزیکی'];
-    const banks = wb.Sheets['گزارش عملکرد بانک ها '];
+    /* نام شیت‌ها با trim پیدا می‌شوند؛ بنابراین فاصلهٔ انتهایی/ابتدایی
+       در Excel باعث خطا نمی‌شود. */
+    function getSheetByName(name) {
+      const actualName = wb.SheetNames.find(n => String(n).trim() === name.trim());
+      return actualName ? wb.Sheets[actualName] : null;
+    }
+
+    const overall = getSheetByName('روکش کلی');
+    const physical = getSheetByName('پیشرفت فیزیکی');
+    const banks = getSheetByName('گزارش عملکرد بانک ها');
 
     if (!overall || !physical || !banks) {
-      throw new Error('هر سه شیت موردنیاز پیدا نشدند.');
+      throw new Error(`شیت‌های موردنیاز پیدا نشدند. شیت‌های موجود: ${wb.SheetNames.join(' | ')}`);
     }
 
     /* -------------------- روکش کلی -------------------- */
@@ -751,8 +787,9 @@ async function loadExcelData() {
 
     setText('physicalChartTotal', fa(phy.total));
     setText('physicalTableTotal', fa(phy.total));
-    document.querySelectorAll('.sectionDate')[0].textContent=bannerDate;
-    document.querySelectorAll('.sectionDate')[1].textContent=physicalDate;
+    const sectionDates = document.querySelectorAll('.sectionDate');
+    if(sectionDates[0]) sectionDates[0].textContent = bannerDate;
+    if(sectionDates[1]) sectionDates[1].textContent = physicalDate;
 
     setMetric('phyDigging',phy.digging,phy.digging/phy.total);
     setMetric('phyFoundation',phy.foundation,phy.foundation/phy.total);
@@ -788,8 +825,9 @@ async function loadExcelData() {
 
     /* -------------------- بانک‌ها -------------------- */
     const bankRows = XLSX.utils.sheet_to_json(banks, {header:1, defval:null});
-    const bankDate=extractDate(banks);
-    document.querySelectorAll('.sectionDate')[1].textContent=bankDate;
+    const bankDate = extractDate(banks);
+    const bankSectionDate = document.querySelectorAll('.sectionDate')[2];
+    if(bankSectionDate) bankSectionDate.textContent = bankDate;
 
     let totalBankRow=null;
     const bankData=[];
@@ -947,7 +985,7 @@ async function loadExcelData() {
     const msg=document.createElement('div');
     msg.className='alert';
     msg.style.margin='16px 0';
-    msg.innerHTML='<strong>خطا در بارگذاری داده‌ها:</strong> فایل <b>HopeHouseSource.xlsx</b> باید دقیقاً کنار همین فایل HTML قرار داشته باشد و نام سه شیت آن مطابق فایل منبع باشد.';
+    msg.innerHTML='<strong>خطا در بارگذاری داده‌ها:</strong> <span>جزئیات: '+String(err?.message || err).replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</span>';
     document.querySelector('main.container')?.prepend(msg);
   }
 }
