@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد طرح خانه امید</title>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <!-- SheetJS (Excel Parser) -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-main: #1a202c;
+            --text-muted: #718096;
+            --primary: #173d73;
+            --secondary: #16a5c7;
+            --accent-green: #38a169;
+            --accent-red: #e53e3e;
+            --accent-amber: #d69e2e;
+            --border-color: #e2e8f0;
+            --font-family: Tahoma, 'Segoe UI', system-ui, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .dashboard-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- Header / Hero --- */
+        .hero {
+            background: linear-gradient(135deg, #102a52 0%, #173d73 50%, #16a5c7 100%);
+            border-radius: 16px;
+            padding: 30px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(23,61,115,0.2);
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg opacity="0.05" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23fff"/></svg>');
+            pointer-events: none;
+        }
+
+        .hero-header { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 2; margin-bottom: 20px;}
+        
+        /* تغییرات ظاهری درخواستی هدر */
+        .hero-title-group h2 { 
+            font-size: 24px; 
+            font-weight: 900; 
+            color: #ffffff; 
+            margin-bottom: 6px; 
+            letter-spacing: 0.5px; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        }
+        .hero-title-group h1 { 
+            font-size: clamp(26px, 3.5vw, 44px); 
+            font-weight: 900;
+            color: #ffd34b; /* رنگ متمایز طلایی/کهربایی */
+            margin: 0 0 10px;
+            text-shadow: 0 4px 20px rgba(255, 211, 75, 0.4);
+        }
+        
+        .hero-chip {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+
+        .hero-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; z-index: 2; position: relative;}
+        .hero-stat {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 16px; border-radius: 12px;
+            text-align: center;
+        }
+        .hero-stat .val { font-size: 28px; font-weight: bold; margin-bottom: 4px; }
+        .hero-stat .lbl { font-size: 13px; opacity: 0.9; }
+
+        /* --- Sections & Cards --- */
+        .section-title {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin: 32px 0 16px; padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .section-title h2 { font-size: 20px; color: var(--primary); display: flex; align-items: center; gap: 10px;}
+        .section-title p { font-size: 12px; color: var(--text-muted); }
+
+        .grid { display: grid; gap: 16px; }
+        
+        /* گرید مخصوص دو نمودار دایره ای */
+        .grid.donut-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        
+        .grid.equal { grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
+        .grid.four { grid-template-columns: repeat(4, 1fr); }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
+            position: relative; overflow: hidden;
+            transition: transform 0.2s;
+        }
+        
+        /* --- KPI Cards --- */
+        .kpi-card { display: flex; flex-direction: column; }
+        .kpi-card .icon { 
+            width: 48px; height: 48px; border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; margin-bottom: 16px;
+            background: #f0f7ff; color: var(--primary);
+        }
+        .kpi-card .value { font-size: 32px; font-weight: bold; color: var(--text-main); margin-bottom: 4px; }
+        .kpi-card .label { font-size: 14px; color: var(--text-muted); margin-bottom: 16px;}
+        .kpi-card .foot {
+            margin-top: auto; padding-top: 16px;
+            border-top: 1px dashed var(--border-color);
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 13px; font-weight: bold;
+        }
+        .kpi-card .accent { position: absolute; top: 0; right: 0; width: 4px; height: 100%; }
+        .accent.blue { background: var(--primary); }
+        .accent.green { background: var(--accent-green); }
+        .accent.red { background: var(--accent-red); }
+        .accent.amber { background: var(--accent-amber); }
+        
+        .badge { padding: 4px 8px; border-radius: 6px; font-size: 12px; }
+        .badge.green { background: #e6ffed; color: #1e7e34; }
+        .badge.amber { background: #fff8e1; color: #f57f17; }
+        .badge.red { background: #ffebee; color: #c62828; }
+        .badge.blue { background: #e3f2fd; color: #1565c0; }
+
+        /* --- Charts --- */
+        .chart-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;}
+        .chart-head h3 { font-size: 15px; color: var(--text-main); }
+        .chart-box { position: relative; height: 260px; width: 100%; }
+        .chart-box.tall { height: 390px; }
+
+        /* --- Custom Progress Bars & Tables --- */
+        .progress-group { margin-bottom: 16px; }
+        .progress-group .pg-head { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+        .progress { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
+        .progress span { display: block; height: 100%; border-radius: 4px; transition: width 1s ease; }
+        .progress span.blue { background: var(--primary); }
+        .progress span.cyan { background: var(--secondary); }
+
+        .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .data-table th, .data-table td { padding: 10px; text-align: right; border-bottom: 1px solid var(--border-color); }
+        .data-table th { color: var(--text-muted); font-weight: normal; }
+        .data-table td.num { font-weight: bold; font-family: monospace; font-size: 14px;}
+        
+        .insight-box {
+            background: #f8fafc; border-right: 4px solid var(--secondary);
+            padding: 16px; border-radius: 8px; font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        /* --- Responsive Rules --- */
+        @media (max-width: 900px) {
+            .hero-grid, .grid.four, .grid.equal { grid-template-columns: 1fr !important; }
+            .hero-header { flex-direction: column; gap: 16px; }
+        }
+        @media (max-width: 580px) {
+            /* محافظت از دوستونه بودن نمودارهای دایره ای در موبایل */
+            .grid.donut-row { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px; }
+            .grid.donut-row .card { padding: 12px 8px; }
+            .grid.donut-row .chart-head h3 { font-size: 11px; }
+            .grid.donut-row .chart-box { height: 180px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <!-- HERO SECTION -->
+    <div class="hero">
+        <div class="hero-header">
+            <div class="hero-title-group">
+                <h2>سامانه هوشمند مدیریتی ریاست</h2>
+                <h1>طرح «خانه امید» ـ مسکن محرومین</h1>
+                <div class="hero-chip"><i class="fa-solid fa-clock"></i> آخرین به‌روزرسانی سیستم: <span data-var-text="dateBanner">...</span></div>
+            </div>
+            <div class="hero-chip" style="background: rgba(0,0,0,0.3)">
+                <i class="fa-solid fa-file-excel"></i> منبع: فایل HopeHouseSource.xlsx
+            </div>
+        </div>
+        
+        <div class="hero-grid">
+            <div class="hero-stat">
+                <div class="val counter" data-var="totalBasket">۰</div>
+                <div class="lbl">کل سبد خانه امید (واحد)</div>
+            </div>
+            <div class="hero-stat">
+                <div class="val counter" data-var="realization" data-decimals="1" data-suffix="٪">۰</div>
+                <div class="lbl">تحقق برنامه</div>
+            </div>
+            <div class="hero-stat">
+                <div class="val counter" data-var="p_peikani">۰</div>
+                <div class="lbl">شروع عملیات (پی‌کنی)</div>
+            </div>
+            <div class="hero-stat">
+                <div class="val counter" data-var="b_gharardad">۰</div>
+                <div class="lbl">انعقاد قرارداد بانکی</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 1: OVERVIEW -->
+    <div class="section-title">
+        <h2><i class="fa-solid fa-chart-pie"></i> نمای کلان و ترکیب سبد</h2>
+        <p>تاریخ گزارش شیت: <span data-var-text="dateOverview">...</span></p>
+    </div>
+
+    <div class="grid four">
+        <div class="card kpi-card">
+            <div class="icon"><i class="fa-solid fa-house-flag"></i></div>
+            <div class="value counter" data-var="totalBasket">۰</div>
+            <div class="label">تعداد کل واحدهای در دست اجرا</div>
+            <div class="foot"><span>برنامه: <span data-var-text="targetProgram"></span></span> <span class="badge blue">مصوب</span></div>
+            <div class="accent blue"></div>
+        </div>
+        <div class="card kpi-card">
+            <div class="icon"><i class="fa-solid fa-bullseye"></i></div>
+            <div class="value counter" data-var="realization" data-decimals="1" data-suffix="٪">۰</div>
+            <div class="label">تحقق نسبت به برنامه</div>
+            <div class="foot"><span>فاصله: <span data-var-text="gap"></span></span> <span class="badge amber">نیازمند پیگیری</span></div>
+            <div class="accent amber"></div>
+        </div>
+        <div class="card kpi-card">
+            <div class="icon"><i class="fa-solid fa-trowel-bricks"></i></div>
+            <div class="value counter" data-var="p_peikani">۰</div>
+            <div class="label">شروع عملیات اجرایی (پی‌کنی)</div>
+            <div class="foot"><span>نسبت به کل: <span data-var-text="p_peikaniPct"></span>٪</span> <span class="badge green">مطلوب</span></div>
+            <div class="accent green"></div>
+        </div>
+        <div class="card kpi-card">
+            <div class="icon"><i class="fa-solid fa-coins"></i></div>
+            <div class="value counter" data-var="b_pool_hemat" data-decimals="3" data-suffix=" همت">۰</div>
+            <div class="label">مجموع جذب ریالی تسهیلات</div>
+            <div class="foot"><span data-var-text="b_pool"></span> میلیارد ریال <span class="badge blue">بانک</span></div>
+            <div class="accent blue"></div>
+        </div>
+    </div>
+
+    <div class="grid donut-row" style="margin-top:16px">
+        <div class="card">
+            <div class="chart-head">
+                <h3>ترکیب سبد خانه امید</h3>
+                <span class="badge blue">روستایی/شهری</span>
+            </div>
+            <div class="chart-box"><canvas id="mixChart"></canvas></div>
+        </div>
+        <div class="card">
+            <div class="chart-head">
+                <h3>وضعیت تحقق برنامه</h3>
+                <span class="badge amber">هدف‌گذاری</span>
+            </div>
+            <div class="chart-box"><canvas id="planChart"></canvas></div>
+        </div>
+    </div>
+    
+    <div class="grid equal" style="margin-top:16px">
+        <div class="card">
+            <div class="chart-head"><h3>مهم‌ترین برنامه‌های روستایی</h3></div>
+            <div class="chart-box"><canvas id="ruralProgramsChart"></canvas></div>
+        </div>
+        <div class="card">
+            <div class="chart-head"><h3>مهم‌ترین برنامه‌های شهری</h3></div>
+            <div class="chart-box"><canvas id="urbanProgramsChart"></canvas></div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: PHYSICAL -->
+    <div class="section-title">
+        <h2><i class="fa-solid fa-person-digging"></i> پیشرفت فیزیکی پروژه‌ها</h2>
+        <p>تاریخ گزارش شیت: <span data-var-text="datePhysical">...</span></p>
+    </div>
+
+    <!-- درخواست کاربر: تمام نمودارهای بعدی در ردیف های تک ستونه مجزا قرار گیرند -->
+    <div class="card" style="margin-bottom: 16px;">
+        <div class="chart-head">
+            <h3>توزیع واحدها در مراحل اجرایی</h3>
+            <span class="badge blue">کل کشور</span>
+        </div>
+        <div class="chart-box tall"><canvas id="physicalStagesChart"></canvas></div>
+        
+        <table class="data-table" style="margin-top:16px">
+            <tr><th>مرحله اجرایی</th><th>تعداد واحد</th><th>درصد از کل سبد</th><th>مانده تا پوشش کامل</th></tr>
+            <tr><td>پی‌کنی (شروع)</td><td class="num" data-var-text="p_peikani"></td><td class="num"><span data-var-text="p_peikaniPct"></span>٪</td><td class="num" data-var-text="p_peikaniGap"></td></tr>
+            <tr><td>فونداسیون</td><td class="num" data-var-text="p_found"></td><td class="num"><span data-var-text="p_foundPct"></span>٪</td><td class="num" data-var-text="p_foundGap"></td></tr>
+            <tr><td>اسکلت</td><td class="num" data-var-text="p_esk"></td><td class="num"><span data-var-text="p_eskPct"></span>٪</td><td class="num" data-var-text="p_eskGap"></td></tr>
+            <tr><td>سفت‌کاری</td><td class="num" data-var-text="p_seft"></td><td class="num"><span data-var-text="p_seftPct"></span>٪</td><td class="num" data-var-text="p_seftGap"></td></tr>
+            <tr><td>نازک‌کاری (اتمام)</td><td class="num" data-var-text="p_nazak"></td><td class="num"><span data-var-text="p_nazakPct"></span>٪</td><td class="num" data-var-text="p_nazakGap"></td></tr>
+        </table>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div class="chart-head">
+            <h3>مقایسه پیشرفت روستایی و شهری</h3>
+            <span class="badge blue">تفکیکی</span>
+        </div>
+        <div class="chart-box tall"><canvas id="urbanRuralPhysicalChart"></canvas></div>
+    </div>
+
+    <!-- SECTION 3: BANKING -->
+    <div class="section-title">
+        <h2><i class="fa-solid fa-building-columns"></i> عملکرد بانک‌های عامل</h2>
+        <p>تاریخ گزارش شیت: <span data-var-text="dateBank">...</span></p>
+    </div>
+
+    <div class="insight-box">
+        <i class="fa-solid fa-circle-info" style="color:var(--secondary); margin-left:8px;"></i>
+        از مجموع <strong><span data-var-text="b_sahmie"></span></strong> سهمیه اختصاص‌یافته، تاکنون <strong><span data-var-text="b_eblaghPct"></span>٪</strong> توسط بانک‌ها ابلاغ شده است. از این میان، <strong><span data-var-text="b_moarefi"></span></strong> واحد به بانک معرفی شده که تنها برای <strong><span data-var-text="b_gharardad"></span></strong> واحد (معادل <span data-var-text="b_gharardadPct"></span>٪ معرفی‌شدگان) انعقاد قرارداد صورت گرفته است. 
+        <br><br>
+        <span class="badge red"><i class="fa-solid fa-triangle-exclamation"></i> رسوب پرونده:</span> در حال حاضر <strong><span data-var-text="b_wait"></span></strong> پرونده در بانک‌ها در انتظار انعقاد قرارداد هستند.
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div class="chart-head">
+            <h3>سیر مراحل بانکی (از ابلاغ تا قرارداد)</h3>
+            <span class="badge blue">تجمعی</span>
+        </div>
+        <div class="chart-box tall"><canvas id="bankFunnelChart"></canvas></div>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div class="chart-head">
+            <h3>جذب ریالی به تفکیک بانک عامل (میلیارد ریال)</h3>
+        </div>
+        <div class="chart-box tall"><canvas id="bankMoneyChart"></canvas></div>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div class="chart-head">
+            <h3>نرخ تبدیل و عملکرد بانک‌ها</h3>
+            <span class="badge blue">درصد موفقیت مراحل</span>
+        </div>
+        <div class="chart-box tall"><canvas id="bankRateChart"></canvas></div>
+    </div>
+
+</div>
+
+<script>
+    // --- Utils ---
+    const faNumbers = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+    function toFa(str) {
+        return str.toString().replace(/\d/g, x => faNumbers[x]);
+    }
+    function toFaNumber(num, decimals=0) {
+        if(isNaN(num)) return num;
+        let str = num.toFixed(decimals);
+        let parts = str.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return toFa(parts.join('.'));
+    }
+
+    Chart.register(ChartDataLabels);
+    Chart.defaults.font.family = "Tahoma, 'Segoe UI', sans-serif";
+    Chart.defaults.color = "#718096";
+
+    // --- Core Data Loader & Parser ---
+    async function loadDataAndRender() {
+        try {
+            const response = await fetch('HopeHouseSource.xlsx');
+            const arrayBuffer = await response.arrayBuffer();
+            const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+            
+            // Extract sheets keeping original column letter positions mapping to avoid shift issues
+            const rookeshObj = XLSX.utils.sheet_to_json(workbook.Sheets['روکش کلی'], { header: "A", defval: null });
+            const physicalObj = XLSX.utils.sheet_to_json(workbook.Sheets['پیشرفت فیزیکی'], { header: "A", defval: null });
+            const bankSheetName = workbook.SheetNames.find(s => s && s.includes('بانک')) || 'گزارش عملکرد بانک ها ';
+            const bankObj = XLSX.utils.sheet_to_json(workbook.Sheets[bankSheetName], { header: "A", defval: null });
+
+            const extractDate = (str) => {
+                if(!str) return '';
+                const parts = str.toString().split('\n');
+                return parts[parts.length - 1].trim();
+            };
+
+            // 1. Parse Rookesh (روکش کلی)
+            const bannerDate = extractDate(rookeshObj[1]?.B);
+            let ruralTotal = 0, urbanTotal = 0, totalBasket = 0, targetProgram = 0;
+            let ruralPrograms = [], ruralData = [];
+            let urbanPrograms = [], urbanData = [];
+            let currentSection = '';
+
+            for(let i=0; i<rookeshObj.length; i++) {
+                const row = rookeshObj[i];
+                const label = (row?.B || '').toString().trim();
+                const val = parseFloat(row?.C);
+                
+                if(!label) continue;
+                
+                if(label.includes('مجموع روستایی')) { ruralTotal = val; currentSection = 'urban'; continue; } 
+                else if(label.includes('مجموع شهری')) { urbanTotal = val; currentSection = 'end'; continue; } 
+                else if(label.includes('مجموع کل')) { totalBasket = val; } 
+                else if(label.includes('برنامه تا')) { targetProgram = val; } 
+                else if(row.C !== null && !isNaN(val) && val > 0) {
+                    if(currentSection === '') { ruralPrograms.push(label); ruralData.push(val); }
+                    else if(currentSection === 'urban') { urbanPrograms.push(label); urbanData.push(val); }
+                }
+            }
+            
+            // 2. Parse Physical (پیشرفت فیزیکی)
+            const physicalDate = extractDate(physicalObj[1]?.B);
+            let p_peikani=0, p_found=0, p_esk=0, p_seft=0, p_nazak=0;
+            let p_gharardad=0, p_moarefi=0, p_total=0;
+            let p_rural_stages=[], p_urban_stages=[];
+            
+            for(let i=0; i<physicalObj.length; i++) {
+                const row = physicalObj[i];
+                const label = (row?.L || '').toString().trim(); // Column 11 (شرح)
+                
+                if(label === 'مجموع') {
+                    if(p_rural_stages.length === 0) p_rural_stages = [row.H, row.F, row.E, row.D, row.C];
+                    else p_urban_stages = [row.H, row.F, row.E, row.D, row.C];
+                } else if(label.includes('جمع کل')) {
+                    p_peikani = row.H; p_found = row.F; p_esk = row.E; p_seft = row.D; p_nazak = row.C;
+                    p_gharardad = row.I; p_moarefi = row.J; p_total = row.K;
+                }
+            }
+
+            // 3. Parse Bank (گزارش عملکرد بانک ها)
+            const bankDate = extractDate(bankObj[3]?.B);
+            let b_sahmie=0, b_eblagh=0, b_moarefi=0, b_gharardad=0, b_pool=0;
+            let bankNames=[], bankMoarefiRate=[], bankGharardadRate=[], bankMoney=[];
+            
+            for(let i=5; i<bankObj.length; i++) {
+                const row = bankObj[i];
+                const bName = (row?.C || '').toString().trim(); // Column 2 (بانک عامل)
+                
+                if(!bName) continue;
+                
+                if(bName === 'مجموع') {
+                    b_sahmie = row.E; b_eblagh = row.G; b_moarefi = row.I; b_gharardad = row.K; b_pool = row.M;
+                    break;
+                } else {
+                    bankNames.push(bName);
+                    bankMoarefiRate.push((row.J || 0) * 100);
+                    bankGharardadRate.push((row.L || 0) * 100);
+                    bankMoney.push(row.M || 0);
+                }
+            }
+
+            // --- Map Data to UI Logic ---
+            const vars = {
+                dateBanner: bannerDate,
+                dateOverview: bannerDate,
+                datePhysical: physicalDate,
+                dateBank: bankDate,
+                
+                totalBasket: totalBasket,
+                targetProgram: targetProgram,
+                realization: (totalBasket/targetProgram*100),
+                gap: targetProgram - totalBasket,
+                
+                p_peikani: p_peikani, p_found: p_found, p_esk: p_esk, p_seft: p_seft, p_nazak: p_nazak,
+                p_total: p_total,
+                
+                p_peikaniPct: (p_peikani/p_total*100), p_foundPct: (p_found/p_total*100),
+                p_eskPct: (p_esk/p_total*100), p_seftPct: (p_seft/p_total*100), p_nazakPct: (p_nazak/p_total*100),
+                
+                p_peikaniGap: p_total - p_peikani, p_foundGap: p_total - p_found,
+                p_eskGap: p_total - p_esk, p_seftGap: p_total - p_seft, p_nazakGap: p_total - p_nazak,
+                
+                b_sahmie: b_sahmie, b_eblagh: b_eblagh, b_moarefi: b_moarefi, b_gharardad: b_gharardad,
+                b_pool: b_pool, b_wait: b_moarefi - b_gharardad, b_pool_hemat: (b_pool/10000),
+                
+                b_eblaghPct: (b_eblagh/b_sahmie*100), b_moarefiPct: (b_moarefi/b_eblagh*100), b_gharardadPct: (b_gharardad/b_moarefi*100)
+            };
+
+            // Inject Text Values
+            document.querySelectorAll('[data-var-text]').forEach(el => {
+                let val = vars[el.dataset.varText];
+                if(typeof val === 'number') {
+                    el.textContent = toFaNumber(val, Number.isInteger(val) ? 0 : 1);
+                } else if(typeof val === 'string' && !isNaN(parseFloat(val)) && !val.includes('/')) {
+                    el.textContent = toFaNumber(parseFloat(val), val.includes('.') ? 1 : 0);
+                } else {
+                    el.textContent = toFa(val || '---');
+                }
+            });
+
+            // Inject Counter Values
+            document.querySelectorAll('.counter[data-var]').forEach(el => {
+                el.dataset.value = vars[el.dataset.var];
+            });
+
+            // Render All Charts
+            initCharts({
+                mixLabels: ['روستایی','شهری'], mixData: [ruralTotal, urbanTotal],
+                planLabels: ['عملکرد ثبت‌شده','فاصله تا برنامه'], planData: [totalBasket, targetProgram - totalBasket],
+                ruralProgLabels: ruralPrograms, ruralProgData: ruralData,
+                urbanProgLabels: urbanPrograms, urbanProgData: urbanData,
+                physLabels: ['پی‌کنی','فونداسیون','اسکلت','سفت‌کاری','نازک‌کاری'], physData: [p_peikani, p_found, p_esk, p_seft, p_nazak],
+                physRuralData: p_rural_stages, physUrbanData: p_urban_stages,
+                bankFunnelLabels: ['سهمیه ابلاغ‌شده','معرفی به بانک','انعقاد قرارداد'], bankFunnelData: [b_eblagh, b_moarefi, b_gharardad],
+                bankMoneyLabels: bankNames, bankMoneyData: bankMoney,
+                bankRateLabels: bankNames, bankRateMoarefi: bankMoarefiRate, bankRateGharardad: bankGharardadRate
+            });
+
+            // Trigger animations
+            runCounters();
+
+        } catch(err) {
+            console.error("Error processing Excel:", err);
+            if(err.message.includes('fetch')) {
+                alert("خطا: برای خواندن فایل اکسل، فایل HTML باید روی یک سرور محلی (Localhost / Live Server) اجرا شود.");
+            }
+        }
+    }
+
+    // --- Chart Rendering Function ---
+    function initCharts(data) {
+        const donutOptions = (showLabels = true) => ({
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { font: { family: 'Tahoma', size: 12 } } },
+                datalabels: {
+                    display: showLabels, color: '#fff', font: { weight: 'bold', size: 13, family: 'Tahoma' },
+                    formatter: (value, ctx) => {
+                        let sum = ctx.chart._metasets[ctx.datasetIndex].total;
+                        return toFaNumber((value*100 / sum), 1) + "٪";
+                    }
+                }
+            }
+        });
+
+        const barOptions = (horizontal = false) => ({
+            responsive: true, maintainAspectRatio: false, indexAxis: horizontal ? 'y' : 'x',
+            plugins: {
+                legend: { display: false },
+                datalabels: { 
+                    anchor: 'end', align: 'end', color: '#173d73', font: { weight: 'bold', family: 'Tahoma' },
+                    formatter: v => toFaNumber(v)
+                }
+            },
+            scales: {
+                x: { grid: { display: false }, ticks: { font: { family: 'Tahoma' } } },
+                y: { grid: { borderDash: [4,4] }, ticks: { font: { family: 'Tahoma' } } }
+            }
+        });
+
+        // 1. Donuts (Side by side)
+        new Chart(document.getElementById('mixChart'), {
+            type:'doughnut',
+            data:{ labels: data.mixLabels, datasets:[{data: data.mixData, backgroundColor:['#173d73','#16a5c7'], borderWidth:0}] },
+            options: donutOptions()
+        });
+
+        new Chart(document.getElementById('planChart'), {
+            type:'doughnut',
+            data:{ labels: data.planLabels, datasets:[{data: data.planData, backgroundColor:['#38a169','#e2e8f0'], borderWidth:0}] },
+            options: donutOptions()
+        });
+
+        // 2. Programs
+        new Chart(document.getElementById('ruralProgramsChart'), {
+            type:'bar',
+            data:{ labels: data.ruralProgLabels, datasets:[{data: data.ruralProgData, backgroundColor:'#173d73', borderRadius:4}] },
+            options: barOptions(true)
+        });
+
+        new Chart(document.getElementById('urbanProgramsChart'), {
+            type:'bar',
+            data:{ labels: data.urbanProgLabels, datasets:[{data: data.urbanProgData, backgroundColor:'#16a5c7', borderRadius:4}] },
+            options: barOptions(true)
+        });
+
+        // 3. Physical Stages (Single Col)
+        new Chart(document.getElementById('physicalStagesChart'), {
+            type:'bar',
+            data:{ labels: data.physLabels, datasets:[{data: data.physData, backgroundColor:'#38a169', borderRadius:6}] },
+            options: barOptions(false)
+        });
+
+        // 4. Urban vs Rural Physical (Single Col)
+        new Chart(document.getElementById('urbanRuralPhysicalChart'), {
+            type:'bar',
+            data:{
+                labels: data.physLabels,
+                datasets:[
+                    {label: 'روستایی', data: data.physRuralData, backgroundColor:'#173d73', borderRadius:4},
+                    {label: 'شهری', data: data.physUrbanData, backgroundColor:'#16a5c7', borderRadius:4}
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { font: { family: 'Tahoma' } } },
+                    datalabels: { display: false }
+                },
+                scales: {
+                    x: { grid: { display: false }, ticks: { font: { family: 'Tahoma' } } },
+                    y: { grid: { borderDash: [4,4] }, ticks: { font: { family: 'Tahoma' } } }
+                }
+            }
+        });
+
+        // 5. Bank Funnel (Single Col)
+        new Chart(document.getElementById('bankFunnelChart'), {
+            type:'bar',
+            data:{ labels: data.bankFunnelLabels, datasets:[{data: data.bankFunnelData, backgroundColor:'#d69e2e', borderRadius:6}] },
+            options: barOptions(false)
+        });
+
+        // 6. Bank Money (Single Col)
+        new Chart(document.getElementById('bankMoneyChart'), {
+            type:'bar',
+            data:{ labels: data.bankMoneyLabels, datasets:[{data: data.bankMoneyData, backgroundColor:'#173d73', borderRadius:4}] },
+            options: barOptions(false)
+        });
+
+        // 7. Bank Rates (Single Col)
+        new Chart(document.getElementById('bankRateChart'), {
+            type:'bar',
+            data:{
+                labels: data.bankRateLabels,
+                datasets:[
+                    {label: 'درصد معرفی نسبت به ابلاغ', data: data.bankRateMoarefi, backgroundColor:'#16a5c7', borderRadius:4},
+                    {label: 'درصد قرارداد نسبت به معرفی', data: data.bankRateGharardad, backgroundColor:'#38a169', borderRadius:4}
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { font: { family: 'Tahoma' } } },
+                    datalabels: { 
+                        color: '#fff', font: { weight: 'bold', family: 'Tahoma', size: 10 },
+                        formatter: v => toFaNumber(v, 1) + '٪'
+                    }
+                },
+                scales: {
+                    x: { grid: { display: false }, ticks: { font: { family: 'Tahoma' } } },
+                    y: { max: 100, grid: { borderDash: [4,4] }, ticks: { font: { family: 'Tahoma' } } }
+                }
+            }
+        });
+    }
+
+    // --- Counter Animation ---
+    function runCounters() {
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = parseFloat(counter.getAttribute('data-value'));
+            if(isNaN(target)) return;
+            const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
+            const suffix = counter.getAttribute('data-suffix') || '';
+            const duration = 1500; 
+            const stepTime = Math.abs(Math.floor(duration / 60));
+            let current = 0;
+            const increment = target / (duration / stepTime);
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    counter.innerText = toFaNumber(target, decimals) + suffix;
+                    clearInterval(timer);
+                } else {
+                    counter.innerText = toFaNumber(current, decimals) + suffix;
+                }
+            }, stepTime);
+        });
+    }
+
+    // Run when DOM is ready
+    window.addEventListener('load', loadDataAndRender);
+</script>
+</body>
+</html>
