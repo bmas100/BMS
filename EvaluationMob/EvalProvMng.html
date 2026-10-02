@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ارزیابی مدیرکل استان</title>
+<style>
+@font-face{font-family:Vazirmatn;src:url('../CSS/Fonts/Vazirmatn-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Vazirmatn;src:url('../CSS/Fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{font-family:Vazirmatn,sans-serif;background:#eef2f7;color:#172033}
+.banner{height:82px;min-height:82px;background:linear-gradient(135deg,#0f172a,#1e3a8a);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:3px solid #fbbf24;box-shadow:0 3px 12px rgba(0,0,0,.18);gap:12px}
+.person{display:flex;align-items:center;gap:9px;min-width:0}
+.person.evaluator{flex-direction:row-reverse;text-align:left}
+.photo{width:58px;height:58px;border-radius:50%;object-fit:cover;border:2px solid #fbbf24;background:#fff;flex:none}
+.info{min-width:0}
+.role{font-size:10px;color:#fbbf24;font-weight:700;margin-bottom:2px;white-space:nowrap}
+.name{font-size:14px;font-weight:700;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.province{font-size:10px;color:#dbe4f2;margin-top:2px;white-space:nowrap}
+.sep{width:1px;height:48px;background:rgba(255,255,255,.22);flex:none}
+.frame-wrap{height:calc(100vh - 82px);width:100%;background:#fff}
+iframe{display:block;width:100%;height:100%;border:0;background:#fff}
+@media(max-width:480px){.banner{height:72px;min-height:72px;padding:6px 9px}.frame-wrap{height:calc(100vh - 72px)}.photo{width:48px;height:48px}.name{font-size:12px}.role{font-size:8.5px}.province{font-size:9px}.sep{height:42px}}
+</style>
+</head>
+<body>
+<header class="banner">
+  <div class="person subject">
+    <img id="managerImage" class="photo" src="" alt="مدیرکل استان">
+    <div class="info">
+      <div class="role">ارزیاب‌شونده</div>
+      <div id="managerName" class="name">در حال شناسایی...</div>
+      <div id="provinceName" class="province"></div>
+    </div>
+  </div>
+  <div class="sep"></div>
+  <div class="person evaluator">
+    <div class="info">
+      <div class="role">ارزیاب</div>
+      <div class="name">ریاست بنیاد مسکن</div>
+    </div>
+    <img class="photo" src="../Images/UserPic/01.jpg" alt="ریاست بنیاد مسکن">
+  </div>
+</header>
+<div class="frame-wrap"><iframe id="surveyFrame" title="فرم ارزیابی مدیرکل استان" allow="fullscreen"></iframe></div>
+<script>
+const records=[{"code": "EAZ", "province": "آذربایجان شرقی", "manager": "حجت اله سروری", "image": "AzSharqi_Sarvari.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=S1XcCUi0v0nvxUj"}, {"code": "WAZ", "province": "آذربایجان غربی", "manager": "علیرضا مقدم", "image": "AzQarbi_Moghadam.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=U1XcCUi4M1nvxUn"}, {"code": "ARD", "province": "اردبیل", "manager": "حامد کیخسروی", "image": "Ardabil_KeiKhosravi.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=V1XcCUi8vwnvxUr"}, {"code": "ISF", "province": "اصفهان", "manager": "غلامرضا اسماعیلی", "image": "Isfahan_Esmaeili.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=P1XcCUictvnvxUv"}, {"code": "ALB", "province": "البرز", "manager": "علی دیوسالار", "image": "Alborz_DivSalar.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=Q1XcCUigxgnvxUz"}, {"code": "ILM", "province": "ایلام", "manager": "حبیب اله محبی", "image": "Ilam_Mohebi.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=Z1XcCUikBHnvxUD"}, {"code": "BSH", "province": "بوشهر", "manager": "امیر برومند", "image": "Bushehr_Boromand.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=S1XcCUioqRnvxUH"}, {"code": "TEH", "province": "تهران", "manager": "حسین جنتی", "image": "Tehran_Janati.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=D1XcCUisRVnvxUL"}, {"code": "CHB", "province": "چهارمحال و بختیاری", "manager": "رسول شهبازی", "image": "CHB_Shahbazi.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=A1XcCUiwCVnvxUP"}, {"code": "SKH", "province": "خراسان جنوبی", "manager": "قاسم تنها", "image": "SKH_Tanha.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=P1XcCUiA8LnvxUT"}, {"code": "RKH", "province": "خراسان رضوی", "manager": "خلیل منبتی", "image": "RKH_Monabati.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=E1XcCUiEdanvxUX"}, {"code": "NKH", "province": "خراسان شمالی", "manager": "هادی زارعی", "image": "NKH_Zarei.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=D1XcCUiIgRnvxV1"}, {"code": "KHZ", "province": "خوزستان", "manager": "محمود اکبری فضلی", "image": "Khuzestan_Akbari.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=F1XcCUiMAknvxV5"}, {"code": "ZAN", "province": "زنجان", "manager": "سیدمحمد موسوی", "image": "Zanjan_Mousavi.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=A1XcCUiQ8knvxV9"}, {"code": "SMN", "province": "سمنان", "manager": "حمیدرضا همتی", "image": "Semnan_Hemati.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=M1XcCUiUD7nvxVd"}, {"code": "SBL", "province": "سیستان و بلوچستان", "manager": "امین عدیلی", "image": "SB_Adili.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=T1XcCUiYSJnvxVh"}, {"code": "FAR", "province": "فارس", "manager": "علی‌نقی لقمانی", "image": "Fars_Loghmani.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=Q1XcCUi12WnvxVl"}, {"code": "QZV", "province": "قزوین", "manager": "اصغر گونجی", "image": "Qazvin_Gavanaji.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=R1XcCUi16PnvxVp"}, {"code": "QOM", "province": "قم", "manager": "محمد اطهری", "image": "Qom_Athari.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=Q1XcCUi1axnvxVt"}, {"code": "KRD", "province": "کردستان", "manager": "محمد رسولی", "image": "Kordestan_Rasoli.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=I1XcCUi1eYnvxVx"}, {"code": "KRM", "province": "کرمان", "manager": "ایوب سازمند", "image": "Kerman_Sazmand.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=F1XcCUi1iynvxVB"}, {"code": "KSH", "province": "کرمانشاه", "manager": "شمس الله خدادادی", "image": "Kermanshah_Khodadadi.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=T1XcCUi1manvxVF"}, {"code": "KBA", "province": "کهگیلویه و بویراحمد", "manager": "حامد صیادی", "image": "KB_Sayadi.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=N1XcCUi1qrnvxVJ"}, {"code": "GLS", "province": "گلستان", "manager": "داوود خسروی", "image": "Golestan_Khosravi.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=K1XcCUi1uXnvxVN"}, {"code": "GIL", "province": "گیلان", "manager": "حامد دائمی", "image": "Gilan_Daemi.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=A1XcCUi1yQnvxVR"}, {"code": "LOR", "province": "لرستان", "manager": "پویا تابعی", "image": "Lorestan_Tabei.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=O1XcCUi1CtnvxVV"}, {"code": "MZN", "province": "مازندران", "manager": "علی اصغر احمدی", "image": "Mazandaran_Ahmadi.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=J1XcCUi1G3nvxVZ"}, {"code": "MRK", "province": "مرکزی", "manager": "علی عسگری", "image": "Markazi_Asgari.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=S1XcCUi1KQnvxW3"}, {"code": "HRM", "province": "هرمزگان", "manager": "حامد ذاکری", "image": "Hormozgan_Zakeri.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=S1XcCUi1ORnvxW7"}, {"code": "HMN", "province": "همدان", "manager": "مسعود رضایی", "image": "Hamedan_Rezaei.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=K1XcCUi1S2nvxWb"}, {"code": "YZD", "province": "یزد", "manager": "علیرضا نادریان زاده", "image": "Yazd_NaderianZadeh.jpg", "link": "https://survey.porsline.ir/s/9zfZP7UG?qs=A1XcCUi1WunvxWf"}];
+const path=window.location.pathname;
+const marker='.html';
+const idx=path.toLowerCase().indexOf(marker);
+let suffix='';
+if(idx>=0) suffix=path.substring(idx+marker.length);
+if(!suffix || suffix==='/'){
+  suffix='/s/9zfZP7UG?qs=S1XcCUi0v0nvxUj';
+}
+let targetUrl='https://survey.porsline.ir'+suffix;
+if(window.location.search){
+  if(suffix.indexOf('?')===-1) targetUrl+=window.location.search;
+}
+const record=records.find(x=>x.link===targetUrl);
+if(record){
+ document.getElementById('managerName').textContent=record.manager;
+ document.getElementById('provinceName').textContent=record.province+' · '+record.code;
+ document.getElementById('managerImage').src='../Images/ProvManagers/'+record.image;
+ document.getElementById('managerImage').alt=record.manager;
+} else {
+ document.getElementById('managerName').textContent='مدیرکل استان';
+ document.getElementById('provinceName').textContent='استان بر اساس لینک ورودی شناسایی نشد';
+}
+document.getElementById('surveyFrame').src=targetUrl;
+</script>
+</body>
+</html>
