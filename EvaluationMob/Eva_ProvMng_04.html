@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>سامانه مدیریتی ریاست - ارزیابی مدیران کل - ارزیاب 04</title>
+
+    <style>
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('../CSS/Fonts/Vazirmatn-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('../CSS/Fonts/Vazirmatn-Bold.woff2') format('woff2');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --primary: #1e3a8a;
+            --accent: #fbbf24;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            color: var(--text-dark);
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            background: linear-gradient(-45deg, #e0e7ff, #bae6fd, #bfdbfe, #ddd6fe);
+            background-size: 300% 300%;
+            animation: gradientBG 8s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header-banner {
+            background: linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,58,138,0.95) 100%);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            direction: rtl;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border-bottom: 4px solid var(--accent);
+        }
+
+        .evaluator-box {
+            display: flex;
+            direction: rtl;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+            flex: 0 1 auto;
+        }
+
+        .evaluator-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            object-fit: cover;
+            background-color: rgba(255,255,255,0.2);
+            flex: 0 0 auto;
+        }
+
+        .evaluator-label {
+            font-size: 0.83rem;
+            font-weight: bold;
+            color: #fff;
+            line-height: 1.55;
+            text-align: right;
+            white-space: normal;
+        }
+
+        .evaluator-label .prefix {
+            color: var(--accent);
+        }
+
+        .header-titles {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            align-items: flex-end;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .header-titles h1 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .header-titles h2 {
+            margin: 0 0 5px 0;
+            font-size: 0.78rem;
+            color: var(--accent);
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .container {
+            padding: 20px 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .managers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        @media (min-width: 480px) {
+            .managers-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .manager-card {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 7px 5px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .manager-card:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .profile-wrapper {
+            position: relative;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 8px;
+        }
+
+        .profile-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: conic-gradient(transparent, transparent, transparent, var(--accent));
+            animation: rotate 4s linear infinite;
+        }
+
+        .profile-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+
+        .profile-image {
+            position: relative;
+            z-index: 10;
+            width: calc(100% - 6px);
+            height: calc(100% - 6px);
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: 0px 0px;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .manager-name {
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            text-align: center;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .province-name {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin: 4px 0 0 0;
+        }
+
+        @media (max-width: 520px) {
+            .header-banner {
+                padding: 9px 10px;
+                gap: 9px;
+            }
+
+            .evaluator-avatar {
+                width: 44px;
+                height: 44px;
+            }
+
+            .evaluator-box {
+                gap: 7px;
+                max-width: 62%;
+            }
+
+            .evaluator-label {
+                font-size: 0.69rem;
+                line-height: 1.45;
+            }
+
+            .header-titles h1 {
+                font-size: 0.88rem;
+            }
+
+            .header-titles h2 {
+                font-size: 0.62rem;
+                margin-bottom: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-banner">
+        <div class="header-titles">
+            <h2>سامانه مدیریتی ریاست بنیاد مسکن</h2>
+            <h1>ارزیابی مدیران کل استان‌ها</h1>
+        </div>
+
+        <div class="evaluator-box">
+            <div class="evaluator-label"><span class="prefix">ارزیاب:</span> مدیرکل استان</div>
+            <img id="evaluatorAvatar" class="evaluator-avatar" src="./04.jpg" alt="مدیرکل استان">
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="managers-grid" id="managersContainer"></div>
+    </main>
+
+    <script>
+        document.addEventListener('touchmove', function (event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        const evaluatorCode = "04";
+        const evaluatorName = "مدیرکل استان";
+
+        const provincesData = [
+            {"c":"EAZ","k":"EAZ04","n":"آذربایجان شرقی","m":"حجت اله سروری","p":"AzSharqi_Sarvari.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=E1XcCUi3AKnvxUm"},
+            {"c":"WAZ","k":"WAZ04","n":"آذربایجان غربی","m":"علیرضا مقدم","p":"AzQarbi_Moghadam.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=C1XcCUi7V9nvxUq"},
+            {"c":"ARD","k":"ARD04","n":"اردبیل","m":"حامد کیخسروی","p":"Ardabil_KeiKhosravi.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=G1XcCUibhcnvxUu"},
+            {"c":"ISF","k":"ISF04","n":"اصفهان","m":"غلامرضا اسماعیلی","p":"Isfahan_Esmaeili.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=U1XcCUifaCnvxUy"},
+            {"c":"ALB","k":"ALB04","n":"البرز","m":"علی دیوسالار","p":"Alborz_DivSalar.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=D1XcCUijXrnvxUC"},
+            {"c":"ILM","k":"ILM04","n":"ایلام","m":"حبیب اله محبی","p":"Ilam_Mohebi.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=G1XcCUinZRnvxUG"},
+            {"c":"BSH","k":"BSH04","n":"بوشهر","m":"امیر برومند","p":"Bushehr_Boromand.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=C1XcCUirWZnvxUK"},
+            {"c":"TEH","k":"TEH04","n":"تهران","m":"حسین جنتی","p":"Tehran_Janati.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=P1XcCUivhCnvxUO"},
+            {"c":"CHB","k":"CHB04","n":"چهارمحال و بختیاری","m":"رسول شهبازی","p":"CHB_Shahbazi.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=J1XcCUizWQnvxUS"},
+            {"c":"SKH","k":"SKH04","n":"خراسان جنوبی","m":"قاسم تنها","p":"SKH_Tanha.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=B1XcCUiDGknvxUW"},
+            {"c":"RKH","k":"RKH04","n":"خراسان رضوی","m":"خلیل منبتی","p":"RKH_Monabati.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=F1XcCUiH2LnvxV0"},
+            {"c":"NKH","k":"NKH04","n":"خراسان شمالی","m":"هادی زارعی","p":"NKH_Zarei.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=D1XcCUiLWdnvxV4"},
+            {"c":"KHZ","k":"KHZ04","n":"خوزستان","m":"محمود اکبری فضلی","p":"Khuzestan_Akbari.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=B1XcCUiPRQnvxV8"},
+            {"c":"ZAN","k":"ZAN04","n":"زنجان","m":"سیدمحمد موسوی","p":"Zanjan_Mousavi.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=H1XcCUiTaynvxVc"},
+            {"c":"SMN","k":"SMN04","n":"سمنان","m":"حمیدرضا همتی","p":"Semnan_Hemati.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=T1XcCUiXZbnvxVg"},
+            {"c":"SBL","k":"SBL04","n":"سیستان و بلوچستان","m":"امین عدیلی","p":"SB_Adili.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=F1XcCUi11FnvxVk"},
+            {"c":"FAR","k":"FAR04","n":"فارس","m":"علی‌نقی لقمانی","p":"Fars_Loghmani.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=Q1XcCUi15snvxVo"},
+            {"c":"QZV","k":"QZV04","n":"قزوین","m":"اصغر گونجی","p":"Qazvin_Gavanaji.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=P1XcCUi195nvxVs"},
+            {"c":"QOM","k":"QOM04","n":"قم","m":"محمد اطهری","p":"Qom_Athari.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=Q1XcCUi1danvxVw"},
+            {"c":"KRD","k":"KRD04","n":"کردستان","m":"محمد رسولی","p":"Kordestan_Rasoli.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=Q1XcCUi1hTnvxVA"},
+            {"c":"KRM","k":"KRM04","n":"کرمان","m":"ایوب سازمند","p":"Kerman_Sazmand.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=X1XcCUi1lvnvxVE"},
+            {"c":"KSH","k":"KSH04","n":"کرمانشاه","m":"شمس الله خدادادی","p":"Kermanshah_Khodadadi.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=X1XcCUi1penvxVI"},
+            {"c":"KBA","k":"KBA04","n":"کهگیلویه و بویراحمد","m":"حامد صیادی","p":"KB_Sayadi.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=I1XcCUi1t4nvxVM"},
+            {"c":"GLS","k":"GLS04","n":"گلستان","m":"داوود خسروی","p":"Golestan_Khosravi.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=M1XcCUi1xtnvxVQ"},
+            {"c":"GIL","k":"GIL04","n":"گیلان","m":"حامد دائمی","p":"Gilan_Daemi.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=R1XcCUi1B1nvxVU"},
+            {"c":"LOR","k":"LOR04","n":"لرستان","m":"پویا تابعی","p":"Lorestan_Tabei.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=G1XcCUi1F3nvxVY"},
+            {"c":"MZN","k":"MZN04","n":"مازندران","m":"علی اصغر احمدی","p":"Mazandaran_Ahmadi.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=X1XcCUi1JTnvxW2"},
+            {"c":"MRK","k":"MRK04","n":"مرکزی","m":"علی عسگری","p":"Markazi_Asgari.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=O1XcCUi1NunvxW6"},
+            {"c":"HRM","k":"HRM04","n":"هرمزگان","m":"حامد ذاکری","p":"Hormozgan_Zakeri.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=C1XcCUi1RynvxWa"},
+            {"c":"HMN","k":"HMN04","n":"همدان","m":"مسعود رضایی","p":"Hamedan_Rezaei.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=X1XcCUi1VFnvxWe"},
+            {"c":"YZD","k":"YZD04","n":"یزد","m":"علیرضا نادریان زاده","p":"Yazd_NaderianZadeh.jpg","l":"EvalProvMng.html?sid=9zfZP7UG&qs=I1XcCUi1Z7nvxWi"}
+        ];
+
+        const container = document.getElementById('managersContainer');
+
+        provincesData.forEach(prov => {
+            const card = document.createElement('a');
+            card.className = 'manager-card';
+            card.href = prov.l;
+            card.target = '_blank';
+            card.rel = 'noopener noreferrer';
+
+            card.innerHTML = `
+                <div class="profile-wrapper">
+                    <img class="profile-image" src="../Images/ProvManagers/${prov.p}" alt="${prov.m}">
+                </div>
+                <h3 class="manager-name">${prov.m}</h3>
+                <p class="province-name">${prov.n}</p>
+            `;
+
+            container.appendChild(card);
+        });
+    </script>
+</body>
+</html>
