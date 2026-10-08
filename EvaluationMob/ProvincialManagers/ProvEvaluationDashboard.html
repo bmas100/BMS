@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ارزیابی مدیران کل استان‌ها</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:Vazirmatn,Tahoma,sans-serif;
+    background:#f4f7fb;
+    color:#243447;
+}
+.header{
+    background:linear-gradient(135deg,#12355b,#1f7a8c);
+    color:white;
+    padding:18px 20px;
+    box-shadow:0 5px 20px #0002;
+}
+.header .top{
+    font-size:14px;
+    opacity:.85;
+}
+.header h1{
+    margin:5px 0;
+    font-size:25px;
+}
+.header p{
+    margin:0;
+    font-size:14px;
+}
+.container{
+    max-width:1300px;
+    margin:auto;
+    padding:20px;
+}
+.summary{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+.box{
+    background:white;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 8px 25px #0001;
+    text-align:center;
+}
+.box strong{
+    display:block;
+    font-size:28px;
+    color:#12355b;
+}
+.card{
+    background:white;
+    border-radius:22px;
+    padding:18px;
+    margin-bottom:20px;
+    box-shadow:0 8px 25px #0001;
+}
+.person{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+.person img{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #eee;
+}
+.province{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:18px;
+    font-weight:800;
+}
+.province img{
+    width:38px;
+    height:38px;
+    object-fit:contain;
+}
+.badge{
+    padding:8px 15px;
+    border-radius:30px;
+    color:white;
+    font-weight:700;
+    display:inline-block;
+}
+.excellent{background:#16803c}
+.good{background:#2c7be5}
+.medium{background:#e0a800}
+.improve{background:#e66b00}
+.weak{background:#b42318}
+.missing{
+    color:#777;
+    font-size:13px;
+}
+.bars{
+    margin-top:15px;
+}
+.bar{
+    margin:12px 0;
+}
+.bar-title{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+}
+.track{
+    background:#edf1f5;
+    border-radius:20px;
+    height:13px;
+    overflow:hidden;
+}
+.fill{
+    height:100%;
+    border-radius:20px;
+    background:linear-gradient(90deg,#1f7a8c,#12355b);
+}
+.rank{
+    font-size:30px;
+    font-weight:900;
+    color:#12355b;
+}
+@media(max-width:600px){
+    .header h1{font-size:20px}
+    .container{padding:10px}
+    .person img{width:60px;height:60px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<div class="top">سامانه هوشمند مدیریتی ریاست</div>
+<h1>ارزیابی عملکرد مدیران کل استان‌ها</h1>
+<p>ترکیب ارزیابی کمی (۷۰٪) و ارزیابی کیفی (۳۰٪)</p>
+</div>
+
+<div class="container">
+<div id="summary" class="summary"></div>
+<div id="content"></div>
+</div>
+
+
+<script>
+function scoreState(v){
+    if(v===null || v===undefined || v==="")
+        return {title:"بدون ارزیابی",cls:"missing"};
+    v=Number(v);
+    if(v>=85) return {title:"عالی",cls:"excellent"};
+    if(v>=70) return {title:"خوب",cls:"good"};
+    if(v>=55) return {title:"متوسط",cls:"medium"};
+    if(v>=40) return {title:"نیاز به بهبود",cls:"improve"};
+    return {title:"ضعیف",cls:"weak"};
+}
+
+function validScore(v){
+    return v!==null && v!==undefined && v!=="" && !isNaN(v);
+}
+
+function calcTotal(q,k){
+    let total=0;
+    let w=0;
+    if(validScore(q)){ total += Number(q)*0.7; w+=0.7; }
+    if(validScore(k)){ total += Number(k)*0.3; w+=0.3; }
+    return w ? Math.round(total/w) : null;
+}
+
+fetch("Score_ProvEvaluation.xlsx")
+.then(r=>r.arrayBuffer())
+.then(data=>{
+    let wb=XLSX.read(data,{type:"array"});
+    let ws=wb.Sheets["Score"];
+    let rows=XLSX.utils.sheet_to_json(ws);
+
+    rows=rows.map(x=>{
+        x["محاسبه امتیاز کل"]=calcTotal(x["امتیاز کمی"],x["امتیاز کیفی"]);
+        return x;
+    });
+
+    rows.sort((a,b)=>(b["محاسبه امتیاز کل"]||0)-(a["محاسبه امتیاز کل"]||0));
+
+    document.getElementById("summary").innerHTML=`
+    <div class="box"><strong>${rows.length}</strong>استان ارزیابی شده</div>
+    <div class="box"><strong>${rows.filter(x=>x["محاسبه امتیاز کل"]!=null).length}</strong>دارای امتیاز</div>
+    <div class="box"><strong>${rows[0]["استان"]}</strong>رتبه اول</div>
+    `;
+
+    let html="";
+    rows.forEach((x,i)=>{
+        let total=x["محاسبه امتیاز کل"];
+        let st=scoreState(total);
+        let q=validScore(x["امتیاز کمی"])?x["امتیاز کمی"]:"بدون داده";
+        let k=validScore(x["امتیاز کیفی"])?x["امتیاز کیفی"]:"بدون داده";
+
+        html+=`
+        <div class="card">
+            <div class="person">
+                <div class="rank">${i+1}</div>
+                <img src="${x["تصویر مدیرکل استان"]||''}">
+                <div>
+                    <div class="province">
+                    <img src="${x["آیکون استان"]||''}">
+                    ${x["استان"]}
+                    </div>
+                    <b>${x["نام مدیرکل"]}</b>
+                </div>
+            </div>
+
+            <h3>
+            امتیاز نهایی:
+            <span class="badge ${st.cls}">${st.title}</span>
+            </h3>
+
+            <div class="bars">
+                <div class="bar">
+                  <div class="bar-title">
+                    <span>ارزیابی کمی (۷۰٪)</span>
+                    <span>${q}</span>
+                  </div>
+                  <div class="track"><div class="fill" style="width:${validScore(q)?q:0}%"></div></div>
+                </div>
+
+                <div class="bar">
+                  <div class="bar-title">
+                    <span>ارزیابی کیفی (۳۰٪)</span>
+                    <span>${k}</span>
+                  </div>
+                  <div class="track"><div class="fill" style="width:${validScore(k)?k:0}%"></div></div>
+                </div>
+
+                <div class="bar">
+                  <div class="bar-title">
+                    <span>امتیاز ترکیبی</span>
+                    <span>${total??"بدون ارزیابی"}</span>
+                  </div>
+                  <div class="track"><div class="fill" style="width:${total||0}%"></div></div>
+                </div>
+            </div>
+        </div>`;
+    });
+
+    document.getElementById("content").innerHTML=html;
+})
+.catch(e=>{
+ document.getElementById("content").innerHTML="خطا در خواندن فایل Score_ProvEvaluation.xlsx";
+});
+</script>
+
+</body>
+</html>
