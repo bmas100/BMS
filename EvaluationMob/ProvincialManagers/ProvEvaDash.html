@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prov Evaluation Gauge</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<style>
+body{margin:0;background:#f4f7fb;font-family:Vazirmatn}
+.header{background:#17375e;color:#fff;text-align:center;padding:14px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:14px}
+.card{background:#fff;border-radius:20px;border-top:5px solid #2864c7;padding:10px;box-shadow:0 5px 20px #0001}
+.card:nth-child(even){background:#f8fbff}
+.manager{display:flex;direction:rtl;align-items:center;justify-content:flex-start;gap:10px}
+.manager img{width:55px;height:55px;border-radius:50%;object-fit:cover}
+.name{font-weight:800}
+.province{display:flex;align-items:center;gap:8px;font-weight:bold;font-size:13px}
+.province img{width:30px;height:30px;object-fit:contain}
+.gauge{height:190px}
+.badge{font-size:11px;padding:4px 10px;border-radius:20px;margin:2px}
+.q{background:#dbeafe;color:#1d4ed8}.k{background:#dcfce7;color:#15803d}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:7px;padding:7px}.gauge{height:140px}.manager img{width:40px;height:40px}.name{font-size:11px}}
+</style>
+</head>
+<body>
+<div class="header"><b>سامانه هوشمند مدیریتی ریاست</b><br>ارزیابی مدیران کل استان‌ها</div>
+<div id="grid" class="grid"></div>
+<script>
+const ok=v=>v!==''&&v!=null&&!isNaN(v);
+function total(a,b){let s=0,w=0;if(ok(a)){s+=a*.7;w+=.7}if(ok(b)){s+=b*.3;w+=.3}return w?s/w:null}
+function grade(v){if(v==null)return ['-',0];if(v>=85)return['A',100];if(v>=70)return['B',80];if(v>=60)return['C',60];if(v>=50)return['D',40];return['F',20]}
+function gauge(id,g){
+let c=echarts.init(document.getElementById(id));
+c.setOption({series:[{type:'gauge',startAngle:200,endAngle:-20,min:0,max:100,
+progress:{show:true,width:18},
+axisLine:{lineStyle:{width:18,color:[[.2,'#d73027'],[.4,'#fc8d59'],[.6,'#fee08b'],[.8,'#91cf60'],[1,'#1a9850']]}},
+pointer:{width:5},
+axisLabel:{formatter:v=>({20:'F',40:'D',60:'C',80:'B',100:'A'}[v]||'')},
+detail:{formatter:()=>g[0],fontSize:38,offsetCenter:[0,'45%']},
+data:[{value:g[1]}]}]})
+}
+fetch('Score_ProvEvaluation.xlsx').then(r=>r.arrayBuffer()).then(b=>{
+let rows=XLSX.utils.sheet_to_json(XLSX.read(b,{type:'array'}).Sheets.Score);
+grid.innerHTML=rows.map((x,i)=>`<div class="card"><div class="province"><img src="${x['آیکون استان']||''}">${x['استان']||''}</div><div class="manager"><span class="name">${x['نام مدیرکل']||''}</span><img src="${x['تصویر مدیرکل استان']||''}"></div><div id="g${i}" class="gauge"></div><div align="center"><span class="badge q">کمی ${ok(x['امتیاز کمی'])?'✓':'—'}</span><span class="badge k">کیفی ${ok(x['امتیاز کیفی'])?'✓':'—'}</span></div></div>`).join('');
+rows.forEach((x,i)=>gauge('g'+i,grade(total(x['امتیاز کمی'],x['امتیاز کیفی']))));
+});
+</script>
+</body>
+</html>
