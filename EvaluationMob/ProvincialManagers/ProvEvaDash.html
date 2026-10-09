@@ -2,50 +2,279 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Prov Evaluation Gauge</title>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ارزیابی مدیران کل استان‌ها</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
-body{margin:0;background:#f4f7fb;font-family:Vazirmatn}
-.header{background:#17375e;color:#fff;text-align:center;padding:14px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:14px}
-.card{background:#fff;border-radius:20px;border-top:5px solid #2864c7;padding:10px;box-shadow:0 5px 20px #0001}
-.card:nth-child(even){background:#f8fbff}
-.manager{display:flex;direction:rtl;align-items:center;justify-content:flex-start;gap:10px}
-.manager img{width:55px;height:55px;border-radius:50%;object-fit:cover}
-.name{font-weight:800}
-.province{display:flex;align-items:center;gap:8px;font-weight:bold;font-size:13px}
-.province img{width:30px;height:30px;object-fit:contain}
-.gauge{height:190px}
-.badge{font-size:11px;padding:4px 10px;border-radius:20px;margin:2px}
-.q{background:#dbeafe;color:#1d4ed8}.k{background:#dcfce7;color:#15803d}
-@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:7px;padding:7px}.gauge{height:140px}.manager img{width:40px;height:40px}.name{font-size:11px}}
+:root{--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--q:#2563eb;--k:#7c3aed;--odd:#ffffff;--even:#e3edf9}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:'Vazirmatn',Tahoma,sans-serif;background:#f3f6fa;color:var(--ink);-webkit-text-size-adjust:100%}
+
+/* ---------- Banner ---------- */
+.banner{position:relative;overflow:hidden;color:#fff;min-height:66px;padding:10px 16px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:linear-gradient(120deg,#0a1f40 0%,#14407a 55%,#1d6fb8 100%);
+  box-shadow:0 4px 18px rgba(10,31,64,.35)}
+.banner::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 12% 130%,rgba(255,255,255,.20),transparent 45%),
+             radial-gradient(circle at 92% -40%,rgba(255,255,255,.16),transparent 42%)}
+.banner::after{content:"";position:absolute;inset:0;
+  background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.045) 0 2px,transparent 2px 16px)}
+.banner>*{position:relative;z-index:1}
+.kicker{font-size:11px;font-weight:600;color:#a9d1ff;letter-spacing:.2px}
+.title{font-size:19px;font-weight:900;line-height:1.55}
+.date{font-size:11px;font-weight:600;white-space:nowrap;padding:4px 11px;border-radius:99px;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28)}
+
+/* ---------- Legend ---------- */
+.legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:12px 10px 0}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;background:#fff;
+  border:1px solid var(--line);border-radius:99px;padding:3px 10px 3px 8px}
+.chip b{display:inline-grid;place-items:center;width:19px;height:19px;border-radius:50%;
+  font:900 11px Arial,sans-serif}
+
+/* ---------- Grid & cards ---------- */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:14px;max-width:1240px;margin:0 auto}
+.card{--c:#cbd5e1;--t:#fff;background:var(--odd);border-radius:16px;border-top:5px solid var(--c);
+  box-shadow:0 6px 18px rgba(15,42,77,.09);padding:10px 12px 9px;min-width:0;
+  display:flex;flex-direction:column;gap:4px;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(15,42,77,.15)}
+/* زبرا: ردیف زوج (۳ ستونه) */
+.card:nth-child(6n+4),.card:nth-child(6n+5),.card:nth-child(6n+6){background:var(--even)}
+
+.head{display:flex;align-items:center;gap:8px}
+.prov,.mgr{display:flex;align-items:center;gap:7px;min-width:0;flex:1}
+.mgr{justify-content:flex-end}              /* عکس مدیر در سمت چپ کارت، نام سمت راستِ عکس */
+.prov img{width:28px;height:28px;object-fit:contain;flex:none}
+.mgr img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:none;background:#e2e8f0;
+  border:2px solid var(--c);box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.pname{font-weight:800;font-size:13.5px;line-height:1.4}
+.mname{font-weight:600;font-size:12px;color:var(--muted);line-height:1.4}
+.pname,.mname{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-width:0}
+
+.gauge{width:100%;aspect-ratio:1/.9}
+
+.foot{display:flex;flex-direction:column;align-items:center;gap:5px}
+.lvl{font-size:12px;font-weight:800;color:var(--t);background:var(--c);padding:2px 14px;border-radius:99px}
+.tags{display:flex;gap:5px;justify-content:center}
+.tag{font-size:10px;font-weight:600;padding:1px 8px;border-radius:99px;border:1px solid transparent;line-height:1.7}
+.tag.q.on{background:#dbeafe;color:#1d4ed8;border-color:#93c5fd}
+.tag.k.on{background:#ede9fe;color:#6d28d9;border-color:#c4b5fd}
+.tag.off{background:transparent;color:#94a3b8;border:1px dashed #cbd5e1}
+
+/* ---------- Status / picker ---------- */
+.status{max-width:520px;margin:30px auto;padding:22px;text-align:center;background:#fff;border-radius:16px;
+  box-shadow:0 6px 18px rgba(15,42,77,.1);font-size:14px;line-height:2}
+.status:empty{display:none}
+.status label{display:inline-block;margin-top:8px;padding:8px 20px;border-radius:99px;cursor:pointer;
+  background:#14407a;color:#fff;font-weight:700}
+.status input{display:none}
+.note{max-width:900px;margin:0 auto;padding:4px 16px 24px;text-align:center;font-size:11px;color:var(--muted);line-height:1.9}
+
+/* ---------- Mobile: ۲ گیج در هر ردیف ---------- */
+@media(max-width:760px){
+  .banner{min-height:58px;padding:8px 12px}
+  .title{font-size:15px}
+  .date{display:none}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:8px}
+  .card{padding:8px 7px 7px;border-radius:14px}
+  .card:nth-child(n){background:var(--odd)}
+  .card:nth-child(4n+3),.card:nth-child(4n+4){background:var(--even)}
+  .head{gap:4px}.prov,.mgr{gap:4px}
+  .prov img{width:22px;height:22px}
+  .mgr img{width:32px;height:32px;border-width:1.5px}
+  .pname{font-size:11px}.mname{font-size:10px}
+  .lvl{font-size:11px;padding:1px 10px}
+  .tag{font-size:9px;padding:0 6px}
+}
 </style>
 </head>
 <body>
-<div class="header"><b>سامانه هوشمند مدیریتی ریاست</b><br>ارزیابی مدیران کل استان‌ها</div>
-<div id="grid" class="grid"></div>
+
+<header class="banner">
+  <div>
+    <div class="kicker">سامانه هوشمند مدیریتی ریاست</div>
+    <div class="title">ارزیابی عملکرد مدیران کل استان‌ها</div>
+  </div>
+  <div class="date" id="today"></div>
+</header>
+
+<div class="legend" id="legend"></div>
+<div class="status" id="status">در حال بارگذاری اطلاعات…</div>
+<main class="grid" id="grid"></main>
+<p class="note">رتبه هر مدیرکل از ترکیب ارزیابی کمی (۷۰٪) و کیفی (۳۰٪) محاسبه می‌شود. اگر یکی از دو ارزیابی ثبت نشده باشد، صفر در نظر گرفته نمی‌شود و رتبه فقط بر اساس ارزیابی ثبت‌شده تعیین می‌گردد.</p>
+
 <script>
-const ok=v=>v!==''&&v!=null&&!isNaN(v);
-function total(a,b){let s=0,w=0;if(ok(a)){s+=a*.7;w+=.7}if(ok(b)){s+=b*.3;w+=.3}return w?s/w:null}
-function grade(v){if(v==null)return ['-',0];if(v>=85)return['A',100];if(v>=70)return['B',80];if(v>=60)return['C',60];if(v>=50)return['D',40];return['F',20]}
-function gauge(id,g){
-let c=echarts.init(document.getElementById(id));
-c.setOption({series:[{type:'gauge',startAngle:200,endAngle:-20,min:0,max:100,
-progress:{show:true,width:18},
-axisLine:{lineStyle:{width:18,color:[[.2,'#d73027'],[.4,'#fc8d59'],[.6,'#fee08b'],[.8,'#91cf60'],[1,'#1a9850']]}},
-pointer:{width:5},
-axisLabel:{formatter:v=>({20:'F',40:'D',60:'C',80:'B',100:'A'}[v]||'')},
-detail:{formatter:()=>g[0],fontSize:38,offsetCenter:[0,'45%']},
-data:[{value:g[1]}]}]})
+/* ================= تنظیمات ================= */
+var XLSX_FILE='Score_ProvEvaluation.xlsx';
+var SHEET_NAME='Score';
+var W_Q=0.7, W_K=0.3;
+/* رتبه‌ها از ضعیف به عالی؛ min = حداقل امتیاز برای کسب رتبه */
+var GRADES=[
+  {k:'F',min:0 ,color:'#e53935',text:'#fff'   ,label:'ضعیف'},
+  {k:'D',min:50,color:'#fb8c00',text:'#fff'   ,label:'نیاز به بهبود'},
+  {k:'C',min:60,color:'#fbc02d',text:'#3d2f00',label:'متوسط'},
+  {k:'B',min:70,color:'#43a047',text:'#fff'   ,label:'خوب'},
+  {k:'A',min:85,color:'#1e88e5',text:'#fff'   ,label:'عالی'}
+];
+var NA_COLOR='#cbd5e1';
+
+/* ================= ابزارها ================= */
+var FONT="Vazirmatn,Tahoma,Arial,sans-serif";
+var FB={
+  mgr:'data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#e2e8f0"/><circle cx="32" cy="24" r="11" fill="#94a3b8"/><path d="M10 60c2-14 12-20 22-20s20 6 22 20z" fill="#94a3b8"/></svg>'),
+  prov:'data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 4l24 8v18c0 16-10 26-24 30C18 56 8 46 8 30V12z" fill="#cbd5e1"/></svg>')
+};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function normKey(s){return String(s).replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[\u200c\s]/g,'')}
+function getCol(row,name){var n=normKey(name);for(var k in row){if(normKey(k)===n)return row[k]}return ''}
+function toNum(v){
+  if(v==null)return null;
+  var s=String(v).trim();if(s==='')return null;
+  s=s.replace(/[۰-۹]/g,function(d){return d.charCodeAt(0)-1776})
+     .replace(/[٠-٩]/g,function(d){return d.charCodeAt(0)-1632})
+     .replace(/٫/g,'.').replace(/[٬,%٪\s]/g,'');
+  var n=parseFloat(s);return isFinite(n)?n:null;
 }
-fetch('Score_ProvEvaluation.xlsx').then(r=>r.arrayBuffer()).then(b=>{
-let rows=XLSX.utils.sheet_to_json(XLSX.read(b,{type:'array'}).Sheets.Score);
-grid.innerHTML=rows.map((x,i)=>`<div class="card"><div class="province"><img src="${x['آیکون استان']||''}">${x['استان']||''}</div><div class="manager"><span class="name">${x['نام مدیرکل']||''}</span><img src="${x['تصویر مدیرکل استان']||''}"></div><div id="g${i}" class="gauge"></div><div align="center"><span class="badge q">کمی ${ok(x['امتیاز کمی'])?'✓':'—'}</span><span class="badge k">کیفی ${ok(x['امتیاز کیفی'])?'✓':'—'}</span></div></div>`).join('');
-rows.forEach((x,i)=>gauge('g'+i,grade(total(x['امتیاز کمی'],x['امتیاز کیفی']))));
+/* امتیاز کل: بخش خالی صفر نیست و از محاسبه حذف می‌شود */
+function total(q,k){
+  var s=0,w=0;
+  if(q!=null){s+=q*W_Q;w+=W_Q}
+  if(k!=null){s+=k*W_K;w+=W_K}
+  return w?s/w:null;
+}
+function gradeIndex(s){var i=0;for(var j=0;j<GRADES.length;j++){if(s>=GRADES[j].min)i=j}return i}
+/* موقعیت عقربه: هر رتبه یک پنجم گیج را می‌گیرد، داخل رتبه خطی */
+function needle(s){
+  s=Math.max(0,Math.min(100,s));
+  var i=gradeIndex(s),lo=GRADES[i].min,hi=(i<GRADES.length-1)?GRADES[i+1].min:100;
+  var p=(s-lo)/(hi-lo);
+  var v=(i+p)*(100/GRADES.length);
+  return Math.max(1.5,Math.min(98.5,v));
+}
+
+/* ================= راهنمای رتبه‌ها و تاریخ ================= */
+(function(){
+  document.getElementById('legend').innerHTML=GRADES.slice().reverse().map(function(g){
+    return '<span class="chip"><b style="background:'+g.color+';color:'+g.text+'">'+g.k+'</b>'+g.label+'</span>';
+  }).join('');
+  try{document.getElementById('today').textContent=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{year:'numeric',month:'long',day:'numeric'}).format(new Date())}catch(e){}
+})();
+
+/* ================= گیج ================= */
+var charts=[];
+function buildOption(c,animateFrom){
+  var el=c.el,W=el.clientWidth,H=el.clientHeight;
+  var r=Math.max(40,Math.min(W/2-6,(H-8)/1.8));
+  var cx=W/2,cy=r+8;
+  var w=Math.max(10,Math.round(r*.14));
+  var lf=Math.max(10,Math.round(r*.105));
+  var fs=Math.round(r*.44);
+  var has=c.score!=null;
+  var bands=GRADES.map(function(g,i){return [(i+1)/GRADES.length,has?g.color:'#e2e8f0']});
+  var rich={};
+  GRADES.forEach(function(g){rich[g.k]={color:has?g.color:'#94a3b8',fontWeight:900,fontSize:lf,fontFamily:'Arial,'+FONT}});
+  var val=has?needle(c.score):0;
+  var gr=has?GRADES[gradeIndex(c.score)]:null;
+  var map={};GRADES.forEach(function(g,i){map[Math.round((i+.5)*(100/GRADES.length))]=g.k});
+
+  return {
+    animationDuration:900,animationDurationUpdate:1500,animationEasingUpdate:'cubicOut',
+    series:[
+      { /* کمان رنگی + عقربه + حرف رتبه */
+        type:'gauge',min:0,max:100,startAngle:200,endAngle:-20,center:[cx,cy],radius:r,splitNumber:GRADES.length,
+        axisLine:{lineStyle:{width:w,color:bands}},
+        axisTick:{show:false},axisLabel:{show:false},
+        splitLine:{show:true,distance:-w,length:w,lineStyle:{color:'#fff',width:3}},
+        pointer:{show:has,length:'60%',width:Math.max(4,r*.05),itemStyle:{color:'#1e293b'}},
+        anchor:{show:has,showAbove:true,size:Math.max(9,r*.11),itemStyle:{color:'#fff',borderColor:'#1e293b',borderWidth:3}},
+        title:{show:false},
+        detail:{show:true,offsetCenter:[0,'54%'],fontSize:has?fs:fs*.7,fontWeight:900,fontFamily:'Arial,'+FONT,
+          color:has?gr.color:'#94a3b8',formatter:function(){return has?gr.k:'—'}},
+        data:[{value:animateFrom?0:val}]
+      },
+      { /* حروف A..F روی محور */
+        type:'gauge',min:0,max:100,startAngle:200,endAngle:-20,center:[cx,cy],radius:r,splitNumber:10,silent:true,
+        axisLine:{lineStyle:{width:w,color:[[1,'rgba(0,0,0,0)']]}},
+        axisTick:{show:false},splitLine:{show:false},pointer:{show:false},anchor:{show:false},
+        detail:{show:false},title:{show:false},
+        axisLabel:{distance:w+6+lf*.6,fontSize:lf,rich:rich,
+          formatter:function(v){var k=map[Math.round(v)];return k?'{'+k+'|'+k+'}':''}},
+        data:[{value:0}]
+      }
+    ]
+  };
+}
+function initChart(c,i){
+  c.chart=echarts.init(c.el,null,{renderer:'canvas'});
+  c.chart.setOption(buildOption(c,true));
+  if(c.score!=null){
+    setTimeout(function(){c.chart.setOption({series:[{data:[{value:needle(c.score)}]}]})},120+i*35);
+  }
+}
+var rt;
+window.addEventListener('resize',function(){
+  clearTimeout(rt);
+  rt=setTimeout(function(){charts.forEach(function(c){if(!c.chart)return;c.chart.resize();c.chart.setOption(buildOption(c,false))})},150);
 });
+
+/* ================= نمایش ================= */
+function tag(cls,name,on){
+  return on?'<span class="tag '+cls+' on" title="ارزیابی '+name+' ثبت شده">'+name+' ✓</span>'
+            :'<span class="tag off" title="ارزیابی '+name+' ثبت نشده">'+name+' —</span>';
+}
+function render(rows){
+  var st=document.getElementById('status'),grid=document.getElementById('grid');
+  charts.forEach(function(c){if(c.chart)c.chart.dispose()});charts=[];
+  rows=rows.filter(function(r){return getCol(r,'استان')||getCol(r,'نام مدیرکل')});
+  if(!rows.length){st.innerHTML='ردیفی برای نمایش در شیت «'+esc(SHEET_NAME)+'» پیدا نشد.';return}
+  st.innerHTML='';
+  grid.innerHTML=rows.map(function(x,i){
+    var q=toNum(getCol(x,'امتیاز کمی')),k=toNum(getCol(x,'امتیاز کیفی'));
+    var s=total(q,k),g=s!=null?GRADES[gradeIndex(s)]:null;
+    var pi=String(getCol(x,'آیکون استان')||'').trim(),mi=String(getCol(x,'تصویر مدیرکل استان')||'').trim();
+    charts.push({score:s,idx:i});
+    return '<article class="card" style="--c:'+(g?g.color:NA_COLOR)+';--t:'+(g?g.text:'#475569')+'">'
+      +'<div class="head">'
+        +'<div class="prov"><img src="'+esc(pi||FB.prov)+'" alt="" onerror="this.onerror=null;this.src=FB.prov"><span class="pname">'+esc(getCol(x,'استان'))+'</span></div>'
+        +'<div class="mgr"><span class="mname">'+esc(getCol(x,'نام مدیرکل'))+'</span><img src="'+esc(mi||FB.mgr)+'" alt="" onerror="this.onerror=null;this.src=FB.mgr"></div>'
+      +'</div>'
+      +'<div class="gauge" id="g'+i+'"></div>'
+      +'<div class="foot"><span class="lvl">'+(g?g.label:'بدون ارزیابی')+'</span>'
+      +'<div class="tags">'+tag('q','کمی',q!=null)+tag('k','کیفی',k!=null)+'</div></div>'
+      +'</article>';
+  }).join('');
+  requestAnimationFrame(function(){
+    charts.forEach(function(c,i){c.el=document.getElementById('g'+i);initChart(c,i)});
+  });
+}
+function parseBuffer(buf){
+  var wb=XLSX.read(buf,{type:'array'});
+  var ws=wb.Sheets[SHEET_NAME]||wb.Sheets[wb.SheetNames[0]];
+  render(XLSX.utils.sheet_to_json(ws,{defval:''}));
+}
+function showPicker(reason){
+  var st=document.getElementById('status');
+  st.innerHTML='فایل <b>'+XLSX_FILE+'</b> به صورت خودکار خوانده نشد.<br><small style="color:#64748b">'+reason+'</small><br>'
+    +'<label>انتخاب فایل اکسل<input type="file" id="pick" accept=".xlsx,.xls"></label>';
+  document.getElementById('pick').addEventListener('change',function(e){
+    var f=e.target.files[0];if(!f)return;
+    var fr=new FileReader();fr.onload=function(){parseBuffer(fr.result)};fr.readAsArrayBuffer(f);
+  });
+}
+fetch(XLSX_FILE,{cache:'no-store'})
+  .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.arrayBuffer()})
+  .then(parseBuffer)
+  .catch(function(e){
+    showPicker(location.protocol==='file:'
+      ?'مرورگر هنگام باز کردن مستقیم فایل از روی دیسک اجازه خواندن خودکار را نمی‌دهد؛ فایل را دستی انتخاب کنید، یا صفحه را روی وب‌سرور (IIS / localhost) اجرا کنید.'
+      :'فایل در کنار صفحه پیدا نشد یا قابل خواندن نیست.');
+  });
 </script>
 </body>
 </html>
