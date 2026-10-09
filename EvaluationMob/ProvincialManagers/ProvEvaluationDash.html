@@ -1,51 +1,46 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>داشبورد گیج ارزیابی مدیران</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>داشبورد ارزیابی مدیران</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <style>
-body{margin:0;background:#f4f7fb;font-family:Vazirmatn;color:#243447}
-.header{background:linear-gradient(135deg,#09203f,#176b87);color:white;padding:20px;text-align:center}
-.header small{opacity:.8}.header h1{margin:8px}
-.grid{padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.card{background:white;border-radius:22px;padding:12px;text-align:center;box-shadow:0 8px 25px #0002}
-.person img{width:60px;height:60px;border-radius:50%;object-fit:cover}
-.prov img{width:35px;height:35px;object-fit:contain}
-.name{font-weight:900}
-.gauge{width:150px;height:75px;margin:15px auto;position:relative;overflow:hidden}
-.arc{width:150px;height:150px;border-radius:50%;background:conic-gradient(#d62828,#f77f00,#fcbf49,#2a9d8f,#1d3557 50%,transparent 50%);position:absolute}
-.arc:after{content:'';position:absolute;background:white;width:105px;height:105px;border-radius:50%;left:22px;top:22px}
-.needle{position:absolute;bottom:0;left:73px;width:4px;height:60px;background:#222;transform-origin:bottom;z-index:3}
-.center{position:absolute;bottom:0;width:100%;font-size:25px;font-weight:900;z-index:4}
-.flags{font-size:11px;color:#777;margin-top:10px}
-.flag{background:#eef2f5;border-radius:15px;padding:4px 8px;margin:3px}
-@media(max-width:700px){.grid{grid-template-columns:repeat(3,1fr);gap:6px;padding:8px}.card{padding:7px}.gauge{transform:scale(.8);margin:0 auto}.name{font-size:11px}}
+body{margin:0;background:#f4f7fb;font-family:Vazirmatn}
+.header{background:#12355b;color:#fff;text-align:center;padding:12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px}
+.card{background:#fff;border-radius:15px;border-top:4px solid #1565c0;padding:8px;box-shadow:0 4px 15px #0001}
+.card:nth-child(even){background:#f8fbff}
+.info{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:bold}
+.info div{display:flex;align-items:center;gap:5px}
+.info img{width:28px;height:28px;object-fit:contain;border-radius:50%}
+.gauge{height:95px}
+.tags{text-align:center;font-size:10px}.tag{padding:3px 8px;border-radius:15px}
+.q{background:#dbeafe;color:#1d4ed8}.k{background:#dcfce7;color:#15803d}
+@media(max-width:700px){.grid{grid-template-columns:repeat(3,1fr);gap:5px;padding:5px}.info{display:block;font-size:10px}.gauge{height:80px}}
 </style>
 </head>
 <body>
-<div class="header"><small>سامانه هوشمند مدیریتی ریاست</small><h1>داشبورد ارزیابی مدیران کل استان‌ها</h1></div>
-<div class="grid" id="app"></div>
-
+<div class="header"><b>سامانه هوشمند مدیریتی ریاست</b><br>ارزیابی مدیران کل استان‌ها</div>
+<div id="grid" class="grid"></div>
 <script>
-function valid(x){return x!==''&&x!==null&&x!==undefined&&!isNaN(x)}
-function total(q,k){let s=0,w=0;if(valid(q)){s+=q*.7;w+=.7}if(valid(k)){s+=k*.3;w+=.3}return w?Math.round(s/w):null}
-function rank(x){if(x===null)return ['- ',0];if(x>=90)return ['A+',170];if(x>=80)return ['A',150];if(x>=70)return ['B',120];if(x>=60)return ['C',90];if(x>=50)return ['D',60];return ['E',30]}
-
-fetch('Score_ProvEvaluation.xlsx').then(r=>r.arrayBuffer()).then(b=>{
-let wb=XLSX.read(b,{type:'array'}),rows=XLSX.utils.sheet_to_json(wb.Sheets['Score']);
-app.innerHTML=rows.map(x=>{
-let t=total(x['امتیاز کمی'],x['امتیاز کیفی']),g=rank(t);
-return `<div class="card">
-<div class="person"><img src="${x['تصویر مدیرکل استان']||''}"></div>
-<div class="prov"><img src="${x['آیکون استان']||''}"></div>
-<div class="name">${x['نام مدیرکل']||''}</div><div>${x['استان']||''}</div>
-<div class="gauge"><div class="arc"></div><div class="needle" style="transform:rotate(${g[1]-90}deg)"></div><div class="center">${g[0]}</div></div>
-<div>سطح عملکرد</div>
-<div class="flags"><span class="flag">کمی ${valid(x['امتیاز کمی'])?'✓':'—'}</span><span class="flag">کیفی ${valid(x['امتیاز کیفی'])?'✓':'—'}</span></div>
-</div>`}).join('')
+function ok(v){return v!==''&&v!=null&&!isNaN(v)}
+function total(a,b){let s=0,w=0;if(ok(a)){s+=a*.7;w+=.7}if(ok(b)){s+=b*.3;w+=.3}return w?s/w:null}
+function rank(v){if(v==null)return '-';if(v>=85)return'A';if(v>=70)return'B';if(v>=60)return'C';if(v>=50)return'D';return'F'}
+function num(r){return {A:5,B:4,C:3,D:2,F:1}[r]||0}
+function gauge(id,r){
+let c=echarts.init(document.getElementById(id));
+c.setOption({series:[{type:'gauge',startAngle:180,endAngle:0,min:0,max:5,radius:'100%',
+axisLine:{lineStyle:{width:18,color:[[.2,'#d32f2f'],[.4,'#fb8c00'],[.6,'#fbc02d'],[.8,'#43a047'],[1,'#1565c0']]}},
+axisLabel:{formatter:v=>['F','D','C','B','A'][v],fontSize:9},
+pointer:{width:3},detail:{formatter:r,fontSize:28,offsetCenter:[0,'35%']},
+data:[{value:num(r)}]}]})
+}
+fetch('Score_ProvEvaluation.xlsx').then(x=>x.arrayBuffer()).then(b=>{
+let wb=XLSX.read(b,{type:'array'}),rows=XLSX.utils.sheet_to_json(wb.Sheets.Score);
+grid.innerHTML=rows.map((x,i)=>`<div class="card"><div class="info"><div><img src="${x['آیکون استان']||''}">${x['استان']||''}</div><div><img src="${x['تصویر مدیرکل استان']||''}">${x['نام مدیرکل']||''}</div></div><div class="gauge" id="g${i}"></div><div class="tags"><span class="tag q">کمی ${ok(x['امتیاز کمی'])?'✓':'—'}</span> <span class="tag k">کیفی ${ok(x['امتیاز کیفی'])?'✓':'—'}</span></div></div>`).join('');
+rows.forEach((x,i)=>gauge('g'+i,rank(total(x['امتیاز کمی'],x['امتیاز کیفی']))))
 })
 </script>
 </body>
