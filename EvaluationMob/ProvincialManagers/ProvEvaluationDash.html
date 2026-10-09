@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>داشبورد گیج ارزیابی مدیران</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<style>
+body{margin:0;background:#f4f7fb;font-family:Vazirmatn;color:#243447}
+.header{background:linear-gradient(135deg,#09203f,#176b87);color:white;padding:20px;text-align:center}
+.header small{opacity:.8}.header h1{margin:8px}
+.grid{padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.card{background:white;border-radius:22px;padding:12px;text-align:center;box-shadow:0 8px 25px #0002}
+.person img{width:60px;height:60px;border-radius:50%;object-fit:cover}
+.prov img{width:35px;height:35px;object-fit:contain}
+.name{font-weight:900}
+.gauge{width:150px;height:75px;margin:15px auto;position:relative;overflow:hidden}
+.arc{width:150px;height:150px;border-radius:50%;background:conic-gradient(#d62828,#f77f00,#fcbf49,#2a9d8f,#1d3557 50%,transparent 50%);position:absolute}
+.arc:after{content:'';position:absolute;background:white;width:105px;height:105px;border-radius:50%;left:22px;top:22px}
+.needle{position:absolute;bottom:0;left:73px;width:4px;height:60px;background:#222;transform-origin:bottom;z-index:3}
+.center{position:absolute;bottom:0;width:100%;font-size:25px;font-weight:900;z-index:4}
+.flags{font-size:11px;color:#777;margin-top:10px}
+.flag{background:#eef2f5;border-radius:15px;padding:4px 8px;margin:3px}
+@media(max-width:700px){.grid{grid-template-columns:repeat(3,1fr);gap:6px;padding:8px}.card{padding:7px}.gauge{transform:scale(.8);margin:0 auto}.name{font-size:11px}}
+</style>
+</head>
+<body>
+<div class="header"><small>سامانه هوشمند مدیریتی ریاست</small><h1>داشبورد ارزیابی مدیران کل استان‌ها</h1></div>
+<div class="grid" id="app"></div>
+
+<script>
+function valid(x){return x!==''&&x!==null&&x!==undefined&&!isNaN(x)}
+function total(q,k){let s=0,w=0;if(valid(q)){s+=q*.7;w+=.7}if(valid(k)){s+=k*.3;w+=.3}return w?Math.round(s/w):null}
+function rank(x){if(x===null)return ['- ',0];if(x>=90)return ['A+',170];if(x>=80)return ['A',150];if(x>=70)return ['B',120];if(x>=60)return ['C',90];if(x>=50)return ['D',60];return ['E',30]}
+
+fetch('Score_ProvEvaluation.xlsx').then(r=>r.arrayBuffer()).then(b=>{
+let wb=XLSX.read(b,{type:'array'}),rows=XLSX.utils.sheet_to_json(wb.Sheets['Score']);
+app.innerHTML=rows.map(x=>{
+let t=total(x['امتیاز کمی'],x['امتیاز کیفی']),g=rank(t);
+return `<div class="card">
+<div class="person"><img src="${x['تصویر مدیرکل استان']||''}"></div>
+<div class="prov"><img src="${x['آیکون استان']||''}"></div>
+<div class="name">${x['نام مدیرکل']||''}</div><div>${x['استان']||''}</div>
+<div class="gauge"><div class="arc"></div><div class="needle" style="transform:rotate(${g[1]-90}deg)"></div><div class="center">${g[0]}</div></div>
+<div>سطح عملکرد</div>
+<div class="flags"><span class="flag">کمی ${valid(x['امتیاز کمی'])?'✓':'—'}</span><span class="flag">کیفی ${valid(x['امتیاز کیفی'])?'✓':'—'}</span></div>
+</div>`}).join('')
+})
+</script>
+</body>
+</html>
