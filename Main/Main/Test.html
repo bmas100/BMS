@@ -10,7 +10,7 @@
 
     <!-- توجه: چون فایل‌های style.css و banner.css در اختیار نبودند، تمام استایل صفحه به‌صورت یکپارچه و داخلی نوشته شده است -->
 
-    <!-- ================= PWA Code ================= 
+    <!-- ================= PWA Code ================= -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#f0f4f8">
     <meta name="mobile-web-app-capable" content="yes">
@@ -18,7 +18,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="سامانه هوشمند مدیریتی ریاست">
     <link rel="apple-touch-icon" href="BonyadLogo.png">
-     ============================================ -->
+   <!--  ============================================ -->
 
     <style>
         :root {
@@ -262,8 +262,8 @@
             border-top: 2px solid #1a365d;
             box-shadow: 0 12px 28px rgba(26,54,93,.12);
             overflow: hidden;
-           /* animation: cardIn 0.5s cubic-bezier(0.2,0.8,0.2,1) both, glowBreathe 3.8s ease-in-out infinite; */
-            animation-delay: calc(var(--i) * 45ms), calc(var(--i) * 220ms);
+           animation: cardIn 2s cubic-bezier(0.2,0.8,0.2,1) both, glowBreathe 3.8s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 80ms), calc(var(--i) * 220ms);
             transition: transform 0.15s ease;
 			margin-top:-5px !important;
         }
@@ -294,7 +294,7 @@
             background: linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);
             filter: blur(2px);
             transform: translateX(-250%) skewX(-20deg);
-            animation: sweepPro 7s ease-in-out infinite;
+            animation: sweepPro 15s ease-in-out infinite;
             animation-delay: calc(var(--i) * 600ms);
         }
         @keyframes sweepPro {
@@ -411,7 +411,7 @@
 }
         /* ================= تفکیک رنگ کارت‌های زوج و فرد ================= */
         .grid-container .card:nth-of-type(odd) {
-            background: linear-gradient(145deg,#ebe3ff,#9678d8);
+            background: linear-gradient(145deg,#e7dcff,#bb9dfe);
         }
         .grid-container .card:nth-of-type(even) {
             background: linear-gradient(145deg,#ffffff,#d5c8ff);
@@ -544,7 +544,7 @@
             <a href="../../SystemsMob/SystemsMob.html" target="_blank" class="card" style="--i:9">
                 <span class="sweep"></span>
                 <div class="icon-mark"><i class="fa-solid fa-server"></i></div>
-                <p>سامانه‌های بنیادمسکن</p>
+                <p>فناوری و زیرساخت</p>
             </a>
 
             <!-- ردیف 6 -->
@@ -554,7 +554,7 @@
                 <div class="icon-mark"><i class="fa-solid fa-comments"></i></div>
                 <p>ارتباط با ریاست</p>
             </a>
-            <a href="#" target="_blank" class="card" style="--i:11">
+            <a href="../../NewsMedia/NewsMedia.html" target="_blank" class="card" style="--i:11">
                 <span class="sweep"></span>
                 <div class="icon-mark"><i class="fa-solid fa-globe"></i></div>
                 <p>رسانه‌های خبری</p>
@@ -566,12 +566,12 @@
                 <div class="icon-mark"><i class="fa-solid fa-city"></i></div>
                 <p>مسکن شهری</p>
             </a>
-            <a href="./Parliament" target="_blank" class="card" style="--i:13">
+            <a href="../../Parliament/Parliament.html" target="_blank" class="card" style="--i:13">
                 <span class="sweep"></span>
                 <div class="icon-mark"><i class="fa-solid fa-landmark"></i></div>
                 <p>امور مجلس</p>
             </a>
-            <a href="./OtherReport" target="_blank" class="card" style="--i:14">
+            <a href="../../Other/OtherReport.html" target="_blank" class="card" style="--i:14">
                 <span class="sweep"></span>
                 <div class="icon-mark"><i class="fa-solid fa-file-lines"></i></div>
                 <p>سایر گزارشات</p>
@@ -586,7 +586,7 @@
         </div>
         
         -->
-        <img src="./FooterGreen.png" alt="Footer" class="footer-img">
+        <img src="./Footer.png" alt="Footer" class="footer-img">
         
 
         <!-- ================= اسکریپت کنترل کش و آپدیت خودکار ================= -->
@@ -638,7 +638,7 @@
                 buttons: [
                     { text: "ارزیابی مدیران ستادی", link: "../../EvaluationMob/EvaHeadquarters.html" },
                     { text: "ارزیابی مدیران عامل و هیئت‌مدیره شرکت‌ها", link: "#" },
-                    { text: "ارزیابی مدیران کل استان‌ها", link: "../../EvaluationMob/Eva_ProvMng.html?u=A7kP2Xq9" },
+                    { text: "ارزیابی مدیران کل استان‌ها", link: "../../EvaluationMob/ProvincialManagers/EvaDash.html" },
                     { text: "ارزیابی مدیران شعب", link: "#"},
                     { text: "شاخص‌های عملکرد", link: "../../EvaluationMob/KPI_ProvManager.html" }
                 ]
@@ -710,7 +710,7 @@
         }
     </script>
 
-<script src="tracker.js?v=106"></script>
+<script src="tracker.js?v=107"></script>
 
 </body>
 </html>
