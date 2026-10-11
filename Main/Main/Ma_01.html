@@ -233,7 +233,7 @@
             flex: 1 1 auto; min-height: 0;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(5, minmax(0, 1fr));
+            grid-template-rows: repeat(6, minmax(0, 1fr));
 
             /* ===== فاصله واقعی کارت‌ها توسط اندازه خود کارت کنترل می‌شود ===== */
             /* Grid gap عمداً صفر است تا فقط متغیرهای بالا کنترل‌کننده باشند */
@@ -278,14 +278,11 @@
         .card:active { transform: scale(0.96); }
         .card:hover { transform: translateY(-3px); }
 
-        .card::before, .card::after {
-            content: '';
-            position: absolute; width: 9px; height: 9px;
-            border: 1.5px solid var(--accent-2);
-            opacity: 0.4;
+        /* حذف زوایای تزئینی گوشه کارت‌ها */
+        .card::before,
+        .card::after {
+            display: none;
         }
-        .card::before { top: 6px; right: 6px; border-bottom: none; border-left: none; }
-        .card::after { bottom: 6px; left: 6px; border-top: none; border-right: none; }
 
         .card .sweep { position: absolute; inset: 0; pointer-events: none; overflow: hidden; border-radius: 18px; }
         .card .sweep::before {
