@@ -38,11 +38,11 @@
 
             /* ===== کنترل اندازه و فاصله کارت‌ها ===== */
             --card-width: 100%;   /* عرض کارت: مثلا 92% یا 100% */
-            --card-height: 87%; /* ارتفاع پایه کارت؛ بهتر است تغییر ندهید */
+            --card-height: 89%; /* ارتفاع پایه کارت؛ بهتر است تغییر ندهید */
 
             /* فقط این دو مقدار را برای کم/زیاد کردن فاصله کارت‌ها تغییر دهید */
             --card-column-gap: 8px; /* ← فقط این عدد را برای کم/زیاد کردن فاصله افقی تغییر دهید */
-            --card-row-gap: 0px;  /* ← فقط این عدد را برای کم/زیاد کردن فاصله عمودی تغییر دهید */
+            --card-row-gap: -2px;  /* ← فقط این عدد را برای کم/زیاد کردن فاصله عمودی تغییر دهید */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -149,7 +149,7 @@
             border-radius: 30px;
             overflow: hidden;
 			
-			margin-top: 15px;
+			margin-top: 6px;
         }
     
      
@@ -443,7 +443,7 @@
                 <h1>سامانه هوشمند مدیریتی ریاست</h1>
                 <div class="meta-row">
                     <span class="status-pill">اداره کل حوزه ریاست</span>
-                    <span class="version-chip"><span class="dot"></span>نسخه 1.0</span>
+                    <span class="version-chip"><span class="dot"></span>نسخه 2.0</span>
                 </div>
             </div>
 
@@ -585,13 +585,13 @@
                 <p>ماشین آلات</p>
             </a>
 
-            <a href="#" target="_blank" class="card" style="--i:15">
+            <a href="./Inefficient.html" target="_blank" class="card" style="--i:15">
                 <span class="sweep"></span>
                 <div class="icon-mark"><i class="fa-solid fa-city"></i></div>
                 <p>سکونتگاه‌های ناکارآمد</p>
             </a>
 
-            <a href="./Inefficient.html" target="_blank" class="card" style="--i:16">
+            <a href="#" target="_blank" class="card" style="--i:16">
                 <span class="sweep"></span>
                 <div class="icon-mark"><i class="fa-solid fa-map"></i></div>
                 <p>واگذاری زمین</p>
