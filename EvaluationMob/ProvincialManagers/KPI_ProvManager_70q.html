@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>شاخص های ارزیابی مدیران کل بنیاد مسکن استان ها</title>
+<style>
+:root{
+  --navy:#0b3558;
+  --navy2:#124b78;
+  --blue:#1c6fa8;
+  --cyan:#1597b8;
+  --green:#2c9a72;
+  --orange:#e69428;
+  --red:#d75c5c;
+  --ink:#18344b;
+  --muted:#6c7f91;
+  --bg:#f4f7fa;
+  --card:#ffffff;
+  --line:#dce5ec;
+  --shadow:0 12px 35px rgba(16,53,82,.09);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; font-family:"Vazirmatn","IRANSans","Tahoma",sans-serif;
+  background:linear-gradient(180deg,#eef4f8 0,#f8fafc 340px,var(--bg) 100%);
+  color:var(--ink); line-height:1.9;
+}
+button{font:inherit}
+.container{width:min(1460px,calc(100% - 32px));margin:auto}
+.hero{
+  margin:20px auto 22px; border-radius:30px; padding:30px 34px 24px;
+  color:#fff; overflow:hidden; position:relative; box-shadow:0 20px 55px rgba(8,47,78,.20);
+  background:
+   radial-gradient(circle at 16% 20%,rgba(255,255,255,.17),transparent 22%), radial-gradient(circle at 85% 10%,rgba(58,191,218,.25),transparent 28%), linear-gradient(135deg,#082d4c,#053456 58%,#012230)
+}
+.hero:after{content:"";position:absolute;inset:auto -10% -100px 35%;height:250px;border-radius:50%;background:rgba(255,255,255,.06);transform:rotate(-8deg)}
+.hero-content{position:relative;z-index:2;display:flex;gap:28px;align-items:center;justify-content:space-between}
+.hero h1{margin:0 0 8px;font-size:clamp(23px,2.6vw,34px);font-weight:900;letter-spacing:-.5px}
+.hero p{margin:0;color:#dcebf5;font-size:16px}
+.hero-badge{display:flex;align-items:center;justify-content:center;min-width:98px;height:98px;border:1px solid rgba(255,255,255,.2);border-radius:26px;background:rgba(255,255,255,.09);backdrop-filter:blur(8px)}
+.hero-badge svg{width:52px;height:52px;fill:none;stroke:#fff;stroke-width:1.8}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px;position:relative;z-index:2}
+.stat{padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14)}
+.stat strong{display:block;font-size:28px;line-height:1.2}.stat span{font-size:12px;color:#d4e6f0}
+.toolbar{position:sticky;top:10px;z-index:20;display:flex;gap:12px;align-items:center;padding:12px 14px;margin:0 0 24px;border:1px solid var(--line);background:rgba(255,255,255,.90);backdrop-filter:blur(13px);box-shadow:0 8px 25px rgba(20,60,90,.08);border-radius:18px}
+.search{flex:1;display:flex;align-items:center;gap:10px;padding:0 13px;border:1px solid var(--line);background:#f8fbfd;border-radius:13px;color:var(--muted)}
+.search input{width:100%;border:0;outline:0;background:transparent;padding:11px 2px;font-size:14px;color:var(--ink)}
+.toolbar select,.toolbar button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:13px;padding:9px 12px;cursor:pointer}
+.toolbar button:hover{background:#f2f7fa}
+.axis-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;padding-bottom:30px}
+.axis-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;scroll-margin-top:100px}
+.axis-head{padding:20px 21px 17px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:16px;background:linear-gradient(135deg,var(--navy),var(--navy2));position:relative}
+.axis-head:after{content:"";position:absolute;inset:auto -25px -42px auto;width:170px;height:115px;background:rgba(255,255,255,.06);border-radius:50%}
+.axis-title{display:flex;align-items:center;gap:14px;position:relative;z-index:1}.axis-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;background:rgba(255,255,255,.12)}
+.axis-icon svg{width:27px;height:27px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.axis-name{font-size:19px;font-weight:900}.axis-no{font-size:11px;color:#cae2ef}
+.count{position:relative;z-index:1;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.11);font-size:11px;white-space:nowrap}
+.axis-body{padding:16px}
+.category{margin:0 0 15px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fbfdff}
+.category:last-child{margin-bottom:0}
+.category-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;background:linear-gradient(90deg,#f2f7fb,#fbfdff);border-bottom:1px solid var(--line)}
+.category-head h3{margin:0;font-size:15px}.category-head span{font-size:11px;color:var(--muted)}
+.kpi-list{display:flex;flex-direction:column}
+.kpi{padding:13px 15px;border-bottom:1px dashed #dce5ec}.kpi:last-child{border-bottom:0}
+.kpi-row{display:grid;grid-template-columns:44px 1fr;gap:12px}.num{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:#edf5fa;color:#0e5d8e;font-weight:800;font-size:12px;margin-top:2px}
+.kpi-title{font-size:14px;font-weight:850;color:#173f5d;margin-bottom:5px}.kpi-desc{font-size:12px;color:#667988}
+.axis-card[data-tone="green"] .axis-head{background:linear-gradient(135deg,#17634f,#26866d)}
+.axis-card[data-tone="orange"] .axis-head{background:linear-gradient(135deg,#8d5517,#c4771d)}
+.axis-card[data-tone="purple"] .axis-head{background:linear-gradient(135deg,#4d3a77,#7054a2)}
+.axis-card[data-tone="teal"] .axis-head{background:linear-gradient(135deg,#0d5d68,#118799)}
+.axis-card[data-tone="red"] .axis-head{background:linear-gradient(135deg,#763e49,#ae535f)}
+.axis-card[data-tone="blue"] .axis-head{background:linear-gradient(135deg,#0d3e70,#246ba7)}
+.axis-card[data-tone="gold"] .axis-head{background:linear-gradient(135deg,#6e5718,#ac8a20)}
+.policy{margin:0 0 40px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.policy-head{padding:18px 22px;color:#fff;background:linear-gradient(135deg,#163e61,#1d6f96);display:flex;align-items:center;gap:12px}.policy-head h2{margin:0;font-size:19px}.policy-head svg{width:27px;height:27px;fill:none;stroke:#fff;stroke-width:1.8}
+.policy-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}.policy-item{padding:21px;border-left:1px solid var(--line)}.policy-item:last-child{border-left:0}.policy-item h3{margin:0 0 7px;font-size:14px}.policy-item p{margin:0;color:var(--muted);font-size:12px}
+.empty{display:none;text-align:center;padding:50px;color:var(--muted)}
+.footer{padding:20px 0 50px;color:#7b8b98;font-size:11px;text-align:center}
+@media(max-width:1050px){.axis-grid{grid-template-columns:1fr}.policy-grid{grid-template-columns:repeat(2,1fr)}.policy-item:nth-child(2){border-left:0}.policy-item:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+@media(max-width:700px){.container{width:min(100% - 18px,1460px)}.hero{padding:27px 22px 24px;border-radius:22px}.hero-content{align-items:flex-start}.hero-badge{min-width:68px;height:68px;border-radius:18px}.hero-badge svg{width:37px;height:37px}.stats{grid-template-columns:repeat(2,1fr);gap:9px}.stat strong{font-size:22px}.toolbar{position:static;flex-wrap:wrap}.search{width:100%;flex:none}.toolbar select,.toolbar button{flex:1}.policy-grid{grid-template-columns:1fr}.policy-item{border-left:0;border-bottom:1px solid var(--line)!important}.policy-item:last-child{border-bottom:0!important}.axis-head{padding:17px}.axis-name{font-size:16px}.axis-body{padding:11px}.kpi-row{grid-template-columns:36px 1fr}.num{width:30px;height:30px}}
+@media print{body{background:#fff}.hero{box-shadow:none;margin:0 0 15px}.toolbar,.footer{display:none}.axis-grid{grid-template-columns:1fr}.axis-card,.policy{box-shadow:none;break-inside:avoid}.axis-card{margin-bottom:18px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="hero">
+    <div class="hero-content">
+      <div>
+        <div style="font-size:25px; font-weight:bold; color:#86ff8c;margin-bottom:0px; margin-top: -10px;">سامانه هوشمند مدیریتی ریاست</div>
+        <h1>شاخص های ارزیابی مدیران کل استان‌ها</h1>
+      </div>
+      <div class="hero-badge" aria-hidden="true">
+        <svg viewBox="0 0 48 48"><path d="M8 39V9h32v30M14 31h6v-7h8v7h6V14H14zM18 18h12M18 22h12"/><path d="M10 39h28"/></svg>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong>7</strong><span>محور ارزیابی</span></div>
+      <div class="stat"><strong id="totalCount">70</strong><span>شاخص عملکردی</span></div>
+      <div class="stat"><strong>7</strong><span>محور تخصصی و مدیریتی</span></div>
+      <div class="stat"><strong>کمی + کیفی</strong><span>الگوی سنجش عملکرد</span></div>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="search" type="text" placeholder="جست‌وجو در عنوان یا توضیحات شاخص‌ها..." />
+    </div>
+    <select id="axisFilter" aria-label="فیلتر محور"><option value="all">همه محورها</option></select>
+    <button onclick="window.print()">چاپ / PDF</button>
+  </div>
+
+  <main id="axisGrid" class="axis-grid"></main>
+  <div id="empty" class="empty">شاخصی با عبارت جست‌وجوشده پیدا نشد.</div>
+
+  <section class="policy">
+    <div class="policy-head">
+      <svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 4.4-3.2 7.7-8 9-4.8-1.3-8-4.6-8-9V7l8-4z"/><path d="M8.5 12l2.2 2.2 4.8-5"/></svg>
+      <h2>راهنمای اجرای ارزیابی</h2>
+    </div>
+    <div class="policy-grid">
+      <div class="policy-item"><h3>شاخص‌های کمی</h3><p>دارای مقدار هدف، مقدار تحقق‌یافته، درصد تحقق و منبع داده باشند تا امتیازدهی قابل دفاع و قابل ممیزی باشد.</p></div>
+      <div class="policy-item"><h3>شاخص‌های کیفی</h3><p>با چک‌لیست و شواهد مستند مانند صورت‌جلسه، مکاتبه، گزارش و خروجی سامانه ارزیابی شوند.</p></div>
+      <div class="policy-item"><h3>وزن‌دهی محورها</h3><p>وزن هر محور و شاخص بر اساس مأموریت‌ها و اولویت‌های مصوب تعیین شود.</p></div>
+      <div class="policy-item"><h3>مالکیت داده و اعتبارسنجی</h3><p>مالک داده و مرجع تأیید عملکرد برای هر شاخص به‌صورت شفاف مشخص باشد.</p></div>
+    </div>
+  </section>
+
+  <footer class="footer">شاخص های ارزیابی مدیران کل بنیاد مسکن استان ها</footer>
+</div>
+
+<script>
+const icons={
+  leader:`<svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>`,
+  support:`<svg viewBox="0 0 24 24"><path d="M12 3l2 4 4 .6-3 3 0 4.4-3-1.8-3 1.8.1-4.4-3.1-3L10 7z"/><path d="M5 19h14"/></svg>`,
+  urban:`<svg viewBox="0 0 24 24"><path d="M4 21V7l7-3v17M11 21V10l9-3v14"/><path d="M7 10h1M7 14h1M7 18h1M15 12h1M15 16h1"/></svg>`,
+  rural:`<svg viewBox="0 0 24 24"><path d="M3 21h18M5 21v-7l7-6 7 6v7M9 21v-4h6v4M8 7l4-4 4 4"/></svg>`,
+  rebuild:`<svg viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/><path d="M6.5 6.5l4 4M13.5 13.5l4 4M17.5 6.5l-4 4M10.5 13.5l-4 4"/></svg>`,
+  management:`<svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 4.4-3.2 7.7-8 9-4.8-1.3-8-4.6-8-9V7l8-4z"/><path d="M8 12l2.5 2.5L16 9"/></svg>`,
+  plan:`<svg viewBox="0 0 24 24"><path d="M4 19V5h16v14H4z"/><path d="M7 15l3-4 3 2 4-5M7 8h.01M7 19v2M17 19v2"/></svg>`
+};
+const data=[
+{
+ axis:1,name:'ارزیابی مؤلفه‌های رهبری و مدیریت',icon:'management',tone:'purple',
+ cats:[{name:'رهبری، حکمرانی و مدیریت',items:[
+ ['هماهنگی با ستاد مرکزی','انطباق برنامه‌های اجرایی استان با سیاست‌های ابلاغی ریاست بنیاد و شورای مرکزی'],
+ ['اجرای صحیح بخشنامه‌ها و دستورالعمل‌ها','سرعت و دقت در عملیاتی کردن دستورالعمل‌های اداری، مالی و فنی ستاد مرکزی'],
+ ['تحقق برنامه‌ها و سهمیه‌های سالانه','میزان تحقق برنامه‌های عملیاتی، اهداف کمی و سهمیه‌های ابلاغی در استان'],
+ ['تعامل و اثرگذاری بین‌دستگاهی','میزان حضور، پیگیری و دفاع از منافع بنیاد در جلسات و کارگروه‌های استانی و تعاملات بین‌دستگاهی'],
+ ['مدیریت بحران و تداوم خدمت','سرعت عمل در تشکیل ستادهای بحران، بسیج منابع و حفظ تداوم خدمات در شرایط اضطراری'],
+ ['پیشگیری از تخلفات و ارتقای شفافیت','اقدامات پیشگیرانه در کاهش تخلفات اداری، ارتقای شفافیت و تقویت انضباط عملکردی'],
+ ['تصمیم‌گیری مبتنی بر داده و شواهد','استفاده از اطلاعات معتبر، گزارش‌های تحلیلی و شواهد عملکردی در تصمیم‌گیری‌های مدیریتی'],
+ ['تفویض اختیار و پاسخگویی مدیریتی','توزیع مناسب مسئولیت‌ها، تعیین روشن متولیان و پیگیری پاسخگویی مدیران و واحدها'],
+ ['مدیریت تعارض و حل مسائل سازمانی','توانایی شناسایی اختلافات، میانجیگری مؤثر و تبدیل مسائل بین واحدی به تصمیم و اقدام اجرایی'],
+ ['توسعه فرهنگ سازمانی و کار تیمی','تقویت همکاری بین واحدها، مشارکت کارکنان و ایجاد فضای سازمانی مبتنی بر مسئولیت‌پذیری و نتیجه‌گرایی']
+]}]
+},
+{
+ axis:2,name:'حوزه مدیرکل استان',icon:'leader',tone:'blue',
+ cats:[{name:'مدیریت و راهبری استان',items:[
+ ['مدیریت افکار عمومی و پاسخگویی','سرعت و اثربخشی در پاسخگویی به ابهامات، شایعات و حواشی محلی و مدیریت افکار عمومی استان'],
+ ['کیفیت برگزاری و پشتیبانی از جلسات و مراسم','کیفیت برنامه‌ریزی، هماهنگی و پشتیبانی از مراسم، جلسات و برنامه‌های رسمی استانی'],
+ ['موفقیت در محاکم قضایی و دفاع از منافع سازمانی','نسبت آرای قطعی صادره به نفع بنیاد در محاکم و مراجع حل اختلاف، و کیفیت لوایح دفاعی و پیگیری اجرای احکام'],
+ ['مدیریت پروژه‌های حقوقی، ثبتی و ملکی','پیشرفت در اخذ و تثبیت اسناد مالکیت املاک بنیاد، رفع تصرف یا معارض و تعیین تکلیف املاک فاقد سند یا دارای معارض'],
+ ['موفقیت در جذب منابع و مشارکت‌های مردمی (حساب 100)','میزان موفقیت در جذب کمک‌های نقدی، مصالح ساختمانی و زمین از خیرین، نهادها و صنایع استان از طریق دفتر مشارکت‌های مردمی'],
+ ['توانمندی در توسعه مشارکت خیرین مسکن‌ساز','میزان فعالیت انجمن خیرین مسکن‌ساز استان، شناسایی خیرین بالقوه و تعداد واحدهای مسکونی تکمیل‌شده با مشارکت خیرین'],
+ ['میزان تعامل و عملکرد رسانه‌ای','کیفیت تعامل با رسانه‌ها و صداوسیما و انعکاس مناسب عملکرد و دستاوردهای بنیاد در سطح استان'],
+ ['پاسخگویی به مکاتبات و درخواست‌های مردمی','سرعت و کیفیت رسیدگی به درخواست‌های مردم و ارائه پاسخ مناسب به مراجعات حضوری و مکاتبات مردمی'],
+ ['سلامت اداری و شفافیت معاملات','رعایت آیین‌نامه معاملات و مصوبات کمیسیون معاملات، انضباط اداری و اقدامات پیشگیرانه از تخلف'],
+ ['پیگیری ویژه مسائل و اولویت‌های استان','سرعت و اثربخشی در شناسایی مسائل راهبردی استان، تعیین اولویت‌ها و به نتیجه رساندن موضوعات کلیدی']
+]}]
+},
+{
+ axis:3,name:'معاونت پشتیبانی و مدیریت منابع انسانی',icon:'support',tone:'teal',
+ cats:[{name:'منابع انسانی، پشتیبانی و خدمات سازمانی',items:[
+ ['اثربخشی در تأمین و نگهداشت نیروی انسانی','سرعت و کیفیت فرآیندهای جذب، به‌کارگیری و آموزش کارکنان و پوشش پست‌های بلاتصدی'],
+ ['بهره‌وری و توانمندسازی کارکنان','میزان اجرای برنامه‌های آموزشی، توسعه شایستگی‌ها و ارتقای بهره‌وری نیروی انسانی'],
+ ['کیفیت خدمات رفاهی و انگیزشی کارکنان','سطح پوشش و کیفیت خدمات رفاهی، بیمه تکمیلی و تسهیلات کارکنان و رضایت‌مندی از خدمات'],
+ ['نظام ارزیابی عملکرد و انضباط اداری','کیفیت اجرای ارزیابی عملکرد، رسیدگی به مسائل انضباطی و پیگیری به‌موقع امور کارکنان'],
+ ['بهره‌وری و مدیریت اموال و دارایی‌ها','کنترل اموال، تجهیزات و دارایی‌های اداری، ثبت و به‌روزرسانی اطلاعات و استفاده بهینه از منابع'],
+ ['بهره‌وری و مدیریت ناوگان و ماشین‌آلات','میزان بهره‌برداری مؤثر، انجام به‌موقع سرویس و نگهداری و استفاده بهینه از ماشین‌آلات و خودروها'],
+ ['کیفیت خدمات پشتیبانی و تدارکات','تأمین به‌موقع کالا و خدمات، مدیریت قراردادهای پشتیبانی و کنترل هزینه‌های جاری'],
+ ['پایش رضایت کارکنان و سرمایه انسانی','سنجش منظم رضایت کارکنان، شناسایی عوامل مؤثر بر انگیزش و اجرای اقدامات بهبوددهنده'],
+ ['مدیریت جانشینی و شناسایی استعدادهای مدیریتی','شناسایی نیروهای مستعد، برنامه‌ریزی جانشینی برای مشاغل کلیدی و توسعه مسیرهای رشد مدیریتی'],
+ ['کاهش فرآیندهای اداری و ارتقای خدمات کارکنان','بازطراحی و ساده‌سازی فرآیندهای منابع انسانی و پشتیبانی و افزایش سرعت ارائه خدمات داخلی']
+]}]
+},
+{
+ axis:4,name:'معاونت مسکن و عمران شهری',icon:'urban',tone:'green',
+ cats:[{name:'مسکن و عمران شهری',items:[
+ ['اثربخشی در تأمین اراضی شهری','موفقیت در پیگیری و تحویل به‌موقع اراضی مناسب از دستگاه‌های ذی‌ربط برای اجرای پروژه‌های مسکن'],
+ ['موفقیت در اخذ مجوزها و رفع موانع','سرعت و اثربخشی در اخذ پروانه‌های ساختمانی، تغییر کاربری و رفع موانع اداری با دستگاه‌های محلی'],
+ ['پیشرفت پروژه‌های مسکن شهری','میزان تحقق پیشرفت فیزیکی پروژه‌ها نسبت به برنامه زمان‌بندی مصوب'],
+ ['کیفیت و انطباق فنی پروژه‌ها','رعایت ضوابط فنی، مقررات ملی ساختمان و الزامات کنترل کیفیت در پروژه‌ها'],
+ ['رعایت الزامات ایمنی و HSE','اجرای الزامات ایمنی و بهداشت کارگاه و اقدامات پیشگیرانه برای کاهش حوادث'],
+ ['کنترل و مدیریت تأخیرات پروژه‌ها','شناسایی و رفع موانع اجرایی، کنترل انحرافات زمانی و اقدامات مؤثر برای جلوگیری از تأخیر'],
+ ['کنترل هزینه و انحرافات مالی پروژه‌ها','پایش هزینه‌های واقعی در مقایسه با برآورد و قرارداد و اجرای اقدامات اصلاحی برای کنترل انحرافات'],
+ ['تحویل به‌موقع و تعیین تکلیف پروژه‌های نیمه‌تمام','نرخ تکمیل و تحویل پروژه‌های نیمه‌تمام و تعیین تکلیف پروژه‌های دارای مشکل اجرایی، قراردادی یا حقوقی'],
+ ['رضایت‌مندی متقاضیان از کیفیت و خدمات پروژه‌ها','سنجش رضایت بهره‌برداران از کیفیت ساخت، خدمات و فرآیند تحویل و رسیدگی به نواقص'],
+ ['فعال‌سازی ظرفیت پیمانکاران و سازندگان استانی','استفاده مؤثر از ظرفیت پیمانکاران و سازندگان واجد صلاحیت و ارزیابی عملکرد آنان در پروژه‌های استان']
+]}]
+},
+{
+ axis:5,name:'معاونت توسعه و عمران روستایی',icon:'rural',tone:'orange',
+ cats:[{name:'توسعه و عمران روستایی',items:[
+ ['میزان تهیه و بازنگری طرح‌های هادی روستایی','تحقق سهمیه تهیه طرح هادی برای روستاهای فاقد طرح و بازنگری طرح‌های دارای افق منقضی'],
+ ['پیشرفت بهسازی معابر و مدیریت قیر','پیشرفت اجرای بهسازی معابر، جذب سهمیه قیر ابلاغی و نظارت بر اجرای آسفالت معابر روستایی'],
+ ['پیشرفت و اثربخشی طرح‌های منظومه روستایی','پیشرفت مطالعات و اجرای طرح منظومه و اجرای پروژه‌های پیشران توسعه روستایی'],
+ ['اثربخشی در ایمن‌سازی روستاهای در معرض خطر','پیشرفت پروژه‌های دیوار حائل، مهار سیلاب و سایر اقدامات پیشگیرانه برای کاهش خطرپذیری'],
+ ['تملک، تثبیت مالکیت و واگذاری اراضی روستایی','عملکرد در تملک اراضی، اخذ اسناد و واگذاری زمین در چارچوب قوانین و برنامه‌های ابلاغی'],
+ ['پیشرفت نقشه‌برداری و توسعه اطلاعات مکانی روستاها','سرعت نقشه‌برداری اراضی برای صدور سند و پیشرفت رقومی‌سازی و یکپارچه‌سازی داده‌های مکانی'],
+ ['تسریع فرآیندهای ثبتی و بین‌دستگاهی','کیفیت تعامل و پیگیری با اداره ثبت اسناد و دستگاه‌های اجرایی برای تسریع صدور اسناد روستایی'],
+ ['اثربخشی در توسعه خدمات و زیرساخت‌های روستایی','میزان پیشرفت و اثرگذاری اقدامات عمرانی روستایی در ارتقای دسترسی و کیفیت خدمات عمومی'],
+ ['نظارت بر کیفیت اجرای پروژه‌های روستایی','کنترل مستمر کیفیت عملیات اجرایی، رعایت مشخصات فنی و ثبت و رفع به‌موقع نواقص'],
+ ['مشارکت روستاییان و دستگاه‌های محلی در توسعه','میزان جلب مشارکت دهیاری‌ها، شوراها، دستگاه‌های اجرایی و جوامع محلی در اجرای برنامه‌های توسعه روستایی']
+]}]
+},
+{
+ axis:6,name:'معاونت امور بازسازی و مسکن روستایی',icon:'rebuild',tone:'red',
+ cats:[{name:'بازسازی و مسکن روستایی',items:[
+ ['پیشرفت و تکمیل واحدهای مسکونی روستایی','پیشرفت فیزیکی پروژه‌ها و نرخ اتمام واحدهای مسکونی روستایی در حال ساخت'],
+ ['پیشرفت مقاوم‌سازی مسکن روستایی','رشد سهم واحدهای مقاوم‌سازی‌شده نسبت به کل واحدهای مسکونی روستایی استان'],
+ ['رعایت ضوابط فنی در ساخت‌وساز روستایی','کیفیت کنترل ساخت‌وساز، پایش عملکرد ناظران و رعایت ضوابط فنی ابلاغی'],
+ ['عملکرد و مدیریت مؤثر بازسازی پس از سوانح','سرعت آواربرداری، تشکیل پرونده، ارزیابی خسارت و پیشرفت تکمیل واحدهای احداثی و تعمیری'],
+ ['ساماندهی بافت‌های ناکارآمد و پرخطر','پیشرفت اقدامات ساماندهی سکونتگاه‌های ناکارآمد و مناطق پرخطر بر اساس اولویت‌های مصوب'],
+ ['جذب و تحقق تسهیلات و اعتبارات مسکن روستایی','میزان جذب منابع بانکی و اعتبارات مصوب و کاهش فاصله بین سهمیه و عملکرد استان'],
+ ['تسریع در تشکیل پرونده و معرفی متقاضیان','سرعت و کیفیت تشکیل پرونده، تکمیل مدارک و معرفی متقاضیان واجد شرایط به بانک‌ها'],
+ ['کاهش زمان و هزینه فرآیند اجرای واحدها','اقدامات مؤثر برای کاهش زمان چرخه ساخت و کنترل هزینه‌های تمام‌شده بدون افت کیفیت'],
+ ['پایش کیفیت عملکرد ناظران و مجریان','ارزیابی مستمر عملکرد عوامل فنی، شناسایی انحرافات و پیگیری اقدامات اصلاحی'],
+ ['تکمیل و بهره‌برداری مؤثر از واحدهای نیمه‌تمام','نرخ تعیین تکلیف، تکمیل و بهره‌برداری واحدهای نیمه‌تمام با تمرکز بر پروژه‌های دارای اولویت']
+]}]
+},
+{
+ axis:7,name:'معاونت برنامه‌ریزی',icon:'plan',tone:'gold',
+ cats:[{name:'شاخص‌های برنامه‌ریزی',items:[
+ ['تحقق برنامه عملیاتی و بودجه مصوب استان','میزان انطباق عملکرد واقعی استان با اهداف کمی، زمانی و اعتبارات مصوب و میزان انحراف قابل‌کنترل'],
+ ['پایش انحرافات برنامه و بودجه','شناسایی به‌موقع انحرافات، تحلیل علل و ارائه اقدامات اصلاحی قابل سنجش'],
+ ['جذب و تأمین منابع مالی','میزان تحقق منابع مالی موردنیاز از محل اعتبارات دولتی، بانکی، استانی، خیرین و سایر منابع مجاز'],
+ ['تسهیل فرآیند اخذ و جذب تسهیلات','پیگیری و رفع موانع بانکی، تسریع در عقد قرارداد، معرفی متقاضیان و جذب تسهیلات مصوب'],
+ ['تعامل و پیگیری مؤثر امور مجلس','پاسخگویی به‌موقع و مستند به درخواست‌ها، سؤالات و تذکرات نمایندگان و پیگیری مسائل استان'],
+ ['پایداری و دسترس‌پذیری سامانه‌های سازمانی','میزان پایداری، دسترس‌پذیری و استمرار خدمت سامانه‌های مورد استفاده استان و کاهش اختلالات'],
+ ['یکپارچگی سامانه‌ها و تبادل داده','میزان اتصال سامانه‌های مرتبط، تبادل مکانیزه اطلاعات، کاهش ورود تکراری داده و ارتقای سازگاری اطلاعات'],
+ ['امنیت اطلاعات و مدیریت دسترسی سامانه‌ها','رعایت الزامات امنیتی، کنترل دسترسی کاربران، حفاظت از اطلاعات و پیگیری رخدادهای امنیتی'],
+ ['گزارش‌دهی مدیریتی، داشبورد و استفاده از داده','کیفیت و بهنگامی داشبوردها و گزارش‌های مدیریتی و استفاده از داده‌های معتبر برای تصمیم‌گیری'],
+ ['پایداری سخت‌افزار، شبکه و زیرساخت فناوری اطلاعات','کفایت و پایداری تجهیزات، شبکه، ارتباطات و زیرساخت‌های فناوری اطلاعات و رفع به‌موقع خرابی‌ها']
+]}]
+}
+];
+
+const grid=document.getElementById('axisGrid');
+const filter=document.getElementById('axisFilter');
+const search=document.getElementById('search');
+const empty=document.getElementById('empty');
+let total=0;
+
+data.forEach(a=>{
+  filter.insertAdjacentHTML('beforeend',`<option value="${toEn(a.axis)}">محور ${toEn(a.axis)}: ${a.name}</option>`);
+  a.cats.forEach(c=>total+=c.items.length);
+});
+document.getElementById('totalCount').textContent=toEn(total);
+
+axisFilter.addEventListener('change',render);
+search.addEventListener('input',render);
+
+function toEn(v){return String(v).replace(/[۰-۹]/g,d=>'0123456789'[d.charCodeAt(0)-1776])}
+function norm(s){return s.replace(/[يى]/g,'ی').replace(/ك/g,'ک').replace(/ة/g,'ه').toLowerCase()}
+function render(){
+ const q=norm(search.value.trim()); const af=filter.value;
+ grid.innerHTML=''; let shown=0;
+ data.filter(a=>af==='all'||String(a.axis)===af).forEach(a=>{
+   let cats=''; let matchedAxis=0;
+   a.cats.forEach((c,ci)=>{
+      const items=c.items.filter(([t,d])=>!q || norm(t+' '+d).includes(q));
+      if(!items.length)return;
+      matchedAxis+=items.length;
+      cats += `<section class="category"><div class="category-head"><h3>${c.name}</h3><span>${toEn(items.length)} شاخص</span></div><div class="kpi-list">`;
+      items.forEach(([t,d],i)=>{
+        const number = a.cats.slice(0,ci).reduce((n,x)=>n+x.items.length,0)+c.items.indexOf(items[i])+1;
+        cats += `<article class="kpi"><div class="kpi-row"><div class="num">${toEn(number)}</div><div><div class="kpi-title">${t}</div><div class="kpi-desc">${d}</div></div></div></article>`;
+      });
+      cats += '</div></section>';
+   });
+   if(!matchedAxis)return;
+   shown+=matchedAxis;
+   grid.insertAdjacentHTML('beforeend',`<article class="axis-card" data-tone="${a.tone}" id="axis-${toEn(a.axis)}"><header class="axis-head"><div class="axis-title"><div class="axis-icon">${icons[a.icon]}</div><div><div class="axis-no">محور ${toEn(a.axis)}</div><div class="axis-name">${a.name}</div></div></div><div class="count">${matchedAxis} شاخص</div></header><div class="axis-body">${cats}</div></article>`);
+ });
+ empty.style.display=shown?'none':'block';
+}
+render();
+</script>
+</body>
+</html>
