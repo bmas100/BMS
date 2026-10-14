@@ -808,7 +808,7 @@ Chart.defaults.font.family='Vazirmatn';
 const fa=n=>new Intl.NumberFormat('fa-IR').format(n);
 
 async function readExcel(){
- const r=await fetch('CentralCouncil_Source.xlsx?v='+Date.now());
+ const r=await fetch('./CentralCouncil_Source.xlsx?v='+Date.now());
  const b=await r.arrayBuffer();
  return XLSX.read(b,{type:'array'});
 }
