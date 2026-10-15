@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>داشبورد عملکرد ماشین‌آلات | بنیاد مسکن انقلاب اسلامی</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+<style>
+:root{
+  --blue:#1e88e5; --cyan:#00acc1; --green:#2e9e5b; --orange:#f59e0b;
+  --purple:#8e24aa; --red:#e53935; --teal:#00897b; --indigo:#3f51b5;
+  --pink:#ec407a; --lime:#7cb342; --brown:#8d6e63; --slate:#546e7a;
+  --bg:#f1f5f9; --card:#ffffff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+  --shadow:0 8px 24px rgba(15,23,42,.07);
+  --shadow-lg:0 16px 40px rgba(15,23,42,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Vazirmatn',sans-serif;
+  background:
+     radial-gradient(1200px 600px at 100% 0%, #e0f2fe 0%, transparent 55%),
+     radial-gradient(1000px 500px at 0% 10%, #dcfce7 0%, transparent 50%),
+     var(--bg);
+  color:var(--ink);
+  line-height:1.7;
+  padding-bottom:40px;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ================= BANNER ================= */
+.banner{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(120deg,#0b3b6f 0%,#12558f 35%,#0e7490 70%,#0f766e 100%);
+  color:#fff;
+  padding:34px 22px 74px;
+  border-radius:0 0 34px 34px;
+  box-shadow:var(--shadow-lg);
+  margin-bottom:-46px;
+}
+.banner::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    radial-gradient(circle at 12% 20%, rgba(255,255,255,.14) 0 2px, transparent 3px),
+    radial-gradient(circle at 78% 62%, rgba(255,255,255,.12) 0 2px, transparent 3px),
+    radial-gradient(circle at 45% 85%, rgba(255,255,255,.10) 0 2px, transparent 3px);
+  background-size:220px 220px, 300px 300px, 260px 260px;
+  opacity:.7;
+}
+.banner::after{
+  content:"";position:absolute;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,.16), transparent 62%);
+  top:-260px;left:-140px;
+}
+.banner-inner{position:relative;z-index:2;max-width:1500px;margin:0 auto}
+.banner-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-logo{
+  width:62px;height:62px;border-radius:18px;
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.32);
+  display:grid;place-items:center;font-size:28px;
+  backdrop-filter:blur(6px);
+  box-shadow:0 8px 20px rgba(0,0,0,.18);
+}
+.brand h1{font-size:clamp(1.05rem,2.4vw,1.6rem);font-weight:800;letter-spacing:-.2px}
+.brand p{font-size:.82rem;opacity:.9;font-weight:400}
+
+.banner-badges{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.banner-badge{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.28);
+  padding:9px 16px;border-radius:999px;font-size:.82rem;
+  backdrop-filter:blur(6px);
+  transition:.22s;
+}
+.banner-badge i{color:#fde68a}
+.banner-link{
+  text-decoration:none;color:#fff;cursor:pointer;
+  background:rgba(253,230,138,.20);
+  border-color:rgba(253,230,138,.55);
+}
+.banner-link i{color:#fef3c7}
+.banner-link:hover{
+  background:rgba(253,230,138,.35);
+  transform:translateY(-2px);
+  box-shadow:0 8px 18px rgba(0,0,0,.22);
+}
+
+.banner-strip{
+  margin-top:26px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
+}
+.strip-item{
+  background:rgba(255,255,255,.11);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:16px;padding:12px 14px;
+  backdrop-filter:blur(8px);
+  display:flex;align-items:center;gap:10px;
+  transition:.25s;
+}
+.strip-item:hover{transform:translateY(-3px);background:rgba(255,255,255,.18)}
+.strip-item i{font-size:1.15rem;color:#a7f3d0}
+.strip-item span{font-size:.75rem;opacity:.85;display:block}
+.strip-item b{font-size:1.02rem;font-weight:800}
+
+/* ================= LAYOUT ================= */
+.wrap{max-width:1500px;margin:0 auto;padding:0 18px;position:relative;z-index:5}
+.section-head{
+  display:flex;align-items:center;gap:12px;
+  margin:38px 0 16px;
+}
+.section-head .ico{
+  width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#1e88e5,#0e7490);color:#fff;font-size:1.05rem;
+  box-shadow:0 8px 18px rgba(30,136,229,.32);
+}
+.section-head h2{font-size:clamp(.98rem,2vw,1.2rem);font-weight:800}
+.section-head p{font-size:.76rem;color:var(--muted)}
+
+/* ================= KPI ================= */
+.kpi-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));
+  gap:14px;margin-top:-38px;
+}
+.kpi{
+  background:var(--card);border-radius:20px;padding:16px 16px 14px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+  border:1px solid rgba(226,232,240,.9);
+  transition:.28s cubic-bezier(.4,0,.2,1);
+}
+.kpi:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.kpi::after{
+  content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:5px;
+  background:var(--accent,#1e88e5);
+}
+.kpi .k-ico{
+  width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+  font-size:1.05rem;color:#fff;background:var(--accent,#1e88e5);
+  box-shadow:0 8px 16px rgba(0,0,0,.14);margin-bottom:10px;
+}
+.kpi .k-label{font-size:.76rem;color:var(--muted);font-weight:600}
+.kpi .k-value{font-size:1.42rem;font-weight:800;letter-spacing:-.5px;margin-top:2px}
+.kpi .k-value small{font-size:.68rem;font-weight:600;color:var(--muted);margin-inline-start:3px}
+.kpi .k-sub{font-size:.7rem;color:var(--muted);margin-top:5px;display:flex;align-items:center;gap:5px}
+
+/* ================= CARDS / CHARTS ================= */
+.grid{display:grid;gap:16px}
+.g-2{grid-template-columns:repeat(auto-fit,minmax(330px,1fr))}
+.span-2{grid-column:span 2}
+@media(max-width:860px){.span-2{grid-column:span 1}}
+
+.card{
+  background:var(--card);border-radius:20px;padding:16px 16px 10px;
+  box-shadow:var(--shadow);border:1px solid rgba(226,232,240,.9);
+  transition:.25s;
+}
+.card:hover{box-shadow:var(--shadow-lg)}
+.card-head{
+  display:flex;align-items:center;gap:10px;
+  padding-bottom:10px;margin-bottom:6px;border-bottom:1px dashed var(--line);
+}
+.card-head .ci{
+  width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  font-size:.9rem;color:#fff;background:var(--accent,#1e88e5);flex:0 0 auto;
+}
+.card-head h3{font-size:.88rem;font-weight:800}
+.card-head p{font-size:.68rem;color:var(--muted);font-weight:400}
+.chart-box{position:relative;height:330px}
+.chart-box.tall{height:400px}
+@media(max-width:640px){
+  .chart-box{height:290px}
+  .chart-box.tall{height:360px}
+}
+
+/* ================= INSIGHT CARDS ================= */
+.insights{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.ins{
+  border-radius:18px;padding:16px;background:#fff;border:1px solid var(--line);
+  box-shadow:var(--shadow);position:relative;overflow:hidden;transition:.25s;
+}
+.ins:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.ins .i-ico{
+  width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
+  color:#fff;font-size:1rem;margin-bottom:10px;
+}
+.ins h4{font-size:.86rem;font-weight:800;margin-bottom:6px}
+.ins p{font-size:.76rem;color:#475569;line-height:1.9}
+.ins .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{
+  font-size:.68rem;font-weight:700;padding:4px 10px;border-radius:999px;
+  background:#f1f5f9;color:#334155;border:1px solid var(--line);
+}
+.ins::before{
+  content:"";position:absolute;inset-inline-end:-40px;top:-40px;width:120px;height:120px;
+  border-radius:50%;background:var(--accent,#1e88e5);opacity:.07;
+}
+
+/* ================= TABLE ================= */
+.table-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.search{flex:1;min-width:200px;position:relative}
+.search i{position:absolute;inset-inline-start:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.85rem}
+.search input{
+  width:100%;padding:11px 40px 11px 14px;border-radius:14px;border:1px solid var(--line);
+  font-family:'Vazirmatn';font-size:.82rem;background:#f8fafc;outline:none;transition:.2s;
+}
+.search input:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 4px rgba(30,136,229,.12)}
+.tbl-scroll{overflow-x:auto;border-radius:16px;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:.78rem;min-width:900px;background:#fff}
+thead th{
+  background:linear-gradient(180deg,#0f172a,#1e293b);color:#fff;font-weight:700;
+  padding:11px 10px;text-align:center;white-space:nowrap;font-size:.74rem;position:sticky;top:0;
+}
+tbody td{padding:9px 10px;text-align:center;border-bottom:1px solid #f1f5f9;white-space:nowrap}
+tbody tr:nth-child(even){background:#f8fafc}
+tbody tr:hover{background:#e0f2fe}
+tbody td.name{font-weight:700;text-align:right;color:#0f172a}
+.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.68rem;font-weight:700}
+.b-green{background:#dcfce7;color:#166534}
+.b-amber{background:#fef3c7;color:#92400e}
+.b-red{background:#fee2e2;color:#991b1b}
+.b-blue{background:#dbeafe;color:#1e40af}
+
+/* ================= FOOTER ================= */
+.footer{
+  margin-top:34px;text-align:center;font-size:.74rem;color:var(--muted);
+  padding:18px;border-top:1px dashed var(--line);
+}
+.footer b{color:#0f172a}
+
+::-webkit-scrollbar{height:9px;width:9px}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:9px}
+::-webkit-scrollbar-thumb:hover{background:#94a3b8}
+</style>
+</head>
+<body>
+
+<!-- ============ BANNER ============ -->
+<header class="banner">
+  <div class="banner-inner">
+    <div class="banner-top">
+      <div class="brand">
+        <div class="brand-logo"><i class="fa-solid fa-tractor"></i></div>
+        <div>
+          <h1>عملکرد واحد ماشین‌آلات</h1>
+          <p><i class="fa-solid fa-building-columns"></i> بنیاد مسکن انقلاب اسلامی &nbsp;|&nbsp; سامانه هوشمند مدیریتی ریاست &nbsp;|&nbsp; گزارش ۶ ماهه سال ۱۴۰۵</p>
+        </div>
+      </div>
+      <div class="banner-badges">
+        <div class="banner-badge">
+          <i class="fa-regular fa-calendar-check"></i>
+          <span>دوره گزارش: نیمه اول ۱۴۰۵</span>
+        </div>
+        <a href="./Machinery.pdf" target="_blank" class="banner-badge banner-link">
+          <i class="fa-solid fa-up-right-from-square"></i>
+          <span>جزئیات گزارش</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="banner-strip">
+      <div class="strip-item"><i class="fa-solid fa-truck-monster"></i><div><span>کل ناوگان</span><b>۱٬۴۹۶ دستگاه</b></div></div>
+      <div class="strip-item"><i class="fa-solid fa-circle-check"></i><div><span>ناوگان فعال</span><b>۱٬۳۸۳ دستگاه</b></div></div>
+      <div class="strip-item"><i class="fa-solid fa-sack-dollar"></i><div><span>سرمایه ماشین‌آلات</span><b>۱۴٬۷۹۰ میلیارد تومان</b></div></div>
+      <div class="strip-item"><i class="fa-solid fa-gauge-high"></i><div><span>کارکرد (AVL)</span><b>۱۳۵٬۵۶۳ روز-ماشین</b></div></div>
+      <div class="strip-item"><i class="fa-solid fa-chart-line"></i><div><span>سود عملکردی</span><b>۲٬۵۹۱ میلیارد تومان</b></div></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="kpi-grid" id="kpiGrid"></section>
+
+  <!-- CHARTS PART 1 -->
+  <div class="section-head">
+    <div class="ico"><i class="fa-solid fa-chart-column"></i></div>
+    <div><h2>تحلیل ناوگان ماشین‌آلات</h2><p>تعداد، ترکیب و وضعیت ناوگان استان‌ها</p></div>
+  </div>
+
+  <div class="grid g-2">
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="--accent:#1e88e5"><i class="fa-solid fa-truck-front"></i></div>
+        <div><h3>ناوگان کل و فعال — ۱۲ استان برتر</h3><p>مقایسه تعداد کل با ناوگان عملیاتی</p></div>
+      </div>
+      <div class="chart-box"><canvas id="c1"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="--accent:#f59e0b"><i class="fa-solid fa-hourglass-half"></i></div>
+        <div><h3>میانگین عمر ناوگان — ۱۰ استان با قدیمی‌ترین ماشین‌آلات</h3><p>بر حسب سال</p></div>
+      </div>
+      <div class="chart-box tall"><canvas id="c2"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="--accent:#8e24aa"><i class="fa-solid fa-chart-pie"></i></div>
+        <div><h3>سهم سرمایه ماشین‌آلات</h3><p>۶ استان برتر + سایر (میلیارد تومان)</p></div>
+      </div>
+      <div class="chart-box"><canvas id="c3"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="--accent:#00897b"><i class="fa-solid fa-gauge"></i></div>
+        <div><h3>کارکرد ماشین‌آلات (AVL) — ۱۰ استان برتر</h3><p>روز-ماشین</p></div>
+      </div>
+      <div class="chart-box tall"><canvas id="c4"></canvas></div>
+    </div>
+  </div>
+
+  <!-- CHARTS PART 2 -->
+  <div class="section-head">
+    <div class="ico" style="background:linear-gradient(135deg,#2e9e5b,#0f766e)"><i class="fa-solid fa-coins"></i></div>
+    <div><h2>تحلیل مالی و بودجه عملکرد</h2><p>درآمد، هزینه و سودآوری ماشین‌آلات استان‌ها</p></div>
+  </div>
+
+  <div class="grid g-2">
+    <div class="card span-2">
+      <div class="card-head">
+        <div class="ci" style="--accent:#2e9e5b"><i class="fa-solid fa-scale-balanced"></i></div>
+        <div><h3>درآمد، هزینه و سود — ۱۰ استان برتر درآمدی</h3><p>ارقام به میلیارد تومان</p></div>
+      </div>
+      <div class="chart-box tall"><canvas id="c5"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="--accent:#e53935"><i class="fa-solid fa-percent"></i></div>
+        <div><h3>حاشیه سود ماشین‌آلات — ۱۰ استان برتر</h3><p>درصد سود نسبت به درآمد</p></div>
+      </div>
+      <div class="chart-box tall"><canvas id="c6"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="--accent:#3f51b5"><i class="fa-solid fa-braille"></i></div>
+        <div><h3>پراکندگی سرمایه و کارکرد</h3><p>هر حباب نماینده یک استان است</p></div>
+      </div>
+      <div class="chart-box tall"><canvas id="c7"></canvas></div>
+    </div>
+  </div>
+
+  <!-- CHARTS PART 3 -->
+  <div class="section-head">
+    <div class="ico" style="background:linear-gradient(135deg,#8e24aa,#ec407a)"><i class="fa-solid fa-diagram-project"></i></div>
+    <div><h2>تحلیل پروژه‌ها و مقایسه استان‌ها</h2><p>توزیع پروژه‌های اتمام‌یافته و در دست اجرا</p></div>
+  </div>
+
+  <div class="grid g-2">
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="--accent:#8e24aa"><i class="fa-solid fa-layer-group"></i></div>
+        <div><h3>توزیع کل پروژه‌ها بر اساس نوع</h3><p>مجموع ۲٬۱۰۱ پروژه در سطح کشور</p></div>
+      </div>
+      <div class="chart-box"><canvas id="c8"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="--accent:#00acc1"><i class="fa-solid fa-bars-stacked"></i></div>
+        <div><h3>ترکیب پروژه‌ها — ۱۰ استان با بیشترین پروژه</h3><p>تفکیک بر اساس نوع پروژه</p></div>
+      </div>
+      <div class="chart-box"><canvas id="c9"></canvas></div>
+    </div>
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="section-head">
+    <div class="ico" style="background:linear-gradient(135deg,#f59e0b,#e53935)"><i class="fa-solid fa-lightbulb"></i></div>
+    <div><h2>کارت‌های تحلیلی و یافته‌های کلیدی</h2><p>جمع‌بندی هوشمند از عملکرد ۶ ماهه</p></div>
+  </div>
+
+  <div class="insights" id="insights"></div>
+
+  <!-- TABLE -->
+  <div class="section-head">
+    <div class="ico" style="background:linear-gradient(135deg,#0f172a,#334155)"><i class="fa-solid fa-table-list"></i></div>
+    <div><h2>جدول تفصیلی عملکرد استان‌ها</h2><p>۳۱ استان — قابل جست‌وجو</p></div>
+  </div>
+
+  <div class="card">
+    <div class="table-tools">
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchBox" placeholder="جست‌وجوی نام استان ...">
+      </div>
+      <span class="chip" id="rowCount">۳۱ استان</span>
+    </div>
+    <div class="tbl-scroll">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>#</th><th>استان</th><th>ناوگان کل</th><th>ناوگان فعال</th>
+            <th>عمر ناوگان (سال)</th><th>سرمایه (میلیارد ت)</th>
+            <th>کارکرد AVL (روز-ماشین)</th><th>پروژه‌ها</th>
+            <th>درآمد</th><th>هزینه</th><th>سود</th><th>حاشیه سود</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    <b>بنیاد مسکن انقلاب اسلامی</b> — سامانه هوشمند مدیریتی ریاست &nbsp;|&nbsp;
+    داده‌های گزارش ۶ ماهه سال ۱۴۰۵ &nbsp;|&nbsp; منبع: سامانه AVL و آمار عملکرد امور ماشین‌آلات استان‌ها
+  </div>
+</main>
+
+<script>
+/* =========================================================
+   1) داده‌ها
+   ========================================================= */
+const P = [
+  {n:'اردبیل',            t:48, a:48, age:16.9375, cap:638,    avl:5754,  h:59,  i:0,  j:0,  k:4,  m:61.54,  c:38.64,  p:22.90},
+  {n:'اصفهان',            t:41, a:36, age:17.5122, cap:225.1,  avl:3306,  h:6,   i:7,  j:2,  k:1,  m:461.48, c:374.11, p:87.37},
+  {n:'البرز',             t:19, a:14, age:12.1053, cap:274.8,  avl:2444,  h:7,   i:3,  j:1,  k:1,  m:118.87, c:30.95,  p:87.92},
+  {n:'ایلام',             t:42, a:39, age:15.2381, cap:557,    avl:5193,  h:82,  i:0,  j:0,  k:1,  m:109.57, c:36.91,  p:72.66},
+  {n:'آذربایجان شرقی',    t:49, a:48, age:17.1633, cap:444.3,  avl:4645,  h:108, i:12, j:1,  k:1,  m:167.97, c:56.97,  p:111.00},
+  {n:'آذربایجان غربی',    t:51, a:42, age:18.0000, cap:500,    avl:5972,  h:53,  i:14, j:10, k:4,  m:172.21, c:102.56, p:69.65},
+  {n:'بوشهر',             t:54, a:42, age:18.7778, cap:633,    avl:4210,  h:20,  i:2,  j:1,  k:0,  m:211.90, c:110.38, p:101.52},
+  {n:'تهران',             t:32, a:30, age:13.8750, cap:122.8,  avl:3001,  h:2,   i:2,  j:1,  k:2,  m:103.02, c:33.47,  p:69.55},
+  {n:'چهارمحال و بختیاری',t:54, a:52, age:16.0556, cap:754.5,  avl:5824,  h:3,   i:14, j:0,  k:4,  m:205.04, c:116.95, p:88.09},
+  {n:'خراسان جنوبی',      t:52, a:52, age:16.1765, cap:665.1,  avl:5967,  h:16,  i:8,  j:0,  k:6,  m:141.97, c:36.105, p:105.865},
+  {n:'خراسان رضوی',       t:98, a:96, age:22.8469, cap:935.265,avl:10767, h:3,   i:0,  j:0,  k:12, m:429.51, c:178.08, p:251.43},
+  {n:'خراسان شمالی',      t:48, a:48, age:20.0208, cap:603,    avl:4936,  h:87,  i:0,  j:1,  k:1,  m:138.84, c:101.81, p:37.03},
+  {n:'خوزستان',           t:66, a:58, age:20.7273, cap:637,    avl:2923,  h:140, i:6,  j:1,  k:2,  m:873.82, c:672.28, p:201.54},
+  {n:'زنجان',             t:45, a:34, age:15.8889, cap:353.5,  avl:3418,  h:13,  i:0,  j:1,  k:24, m:35.27,  c:29.45,  p:5.82},
+  {n:'سمنان',             t:32, a:24, age:16.9375, cap:420,    avl:2649,  h:47,  i:2,  j:0,  k:2,  m:59.56,  c:55.28,  p:4.28},
+  {n:'سیستان و بلوچستان', t:65, a:59, age:18.5846, cap:570,    avl:4765,  h:31,  i:0,  j:0,  k:9,  m:112.80, c:69.66,  p:43.14},
+  {n:'فارس',              t:46, a:44, age:15.3913, cap:568.5,  avl:3295,  h:265, i:11, j:3,  k:1,  m:144.12, c:87.09,  p:57.03},
+  {n:'قزوین',             t:44, a:43, age:13.9318, cap:368.8,  avl:4057,  h:15,  i:1,  j:2,  k:3,  m:162.26, c:74.11,  p:88.15},
+  {n:'قم',                t:39, a:39, age:11.7436, cap:351.85, avl:4581,  h:1,   i:1,  j:0,  k:1,  m:358.17, c:132.02, p:226.15},
+  {n:'کردستان',           t:50, a:46, age:14.5532, cap:441.6,  avl:4061,  h:23,  i:4,  j:13, k:7,  m:179.87, c:48.55,  p:131.32},
+  {n:'کرمان',             t:31, a:31, age:14.5161, cap:300.6,  avl:2984,  h:35,  i:4,  j:0,  k:7,  m:59.80,  c:31.21,  p:28.59},
+  {n:'کرمانشاه',          t:63, a:61, age:20.1905, cap:316.8,  avl:5963,  h:78,  i:4,  j:1,  k:1,  m:132.17, c:75.02,  p:57.15},
+  {n:'کهگیلویه و بویراحمد',t:40,a:36, age:18.6750, cap:344.5,  avl:2005,  h:7,   i:2,  j:1,  k:2,  m:72.58,  c:33.45,  p:39.13},
+  {n:'گلستان',            t:54, a:53, age:16.5370, cap:535.9,  avl:5439,  h:58,  i:29, j:6,  k:56, m:116.29, c:69.50,  p:46.79},
+  {n:'گیلان',             t:43, a:40, age:17.1395, cap:376.3,  avl:925,   h:5,   i:2,  j:0,  k:6,  m:52.90,  c:41.47,  p:11.43},
+  {n:'لرستان',            t:38, a:29, age:16.0263, cap:476,    avl:3328,  h:71,  i:5,  j:1,  k:4,  m:104.00, c:74.10,  p:29.90},
+  {n:'مازندران',          t:61, a:54, age:17.7541, cap:373.9,  avl:6916,  h:318, i:0,  j:0,  k:5,  m:132.03, c:59.06,  p:72.97},
+  {n:'مرکزی',             t:38, a:37, age:18.0263, cap:420.5,  avl:4132,  h:63,  i:9,  j:38, k:0,  m:264.00, c:147.30, p:116.70},
+  {n:'هرمزگان',           t:51, a:49, age:19.2941, cap:442,    avl:1537,  h:16,  i:6,  j:1,  k:4,  m:147.12, c:55.60,  p:91.52},
+  {n:'همدان',             t:63, a:60, age:18.2698, cap:655.2,  avl:6412,  h:50,  i:6,  j:0,  k:0,  m:387.93, c:258.25, p:129.68},
+  {n:'یزد',               t:39, a:39, age:17.1538, cap:485,    avl:4154,  h:1,   i:8,  j:0,  k:0,  m:139.73, c:34.87,  p:104.86}
+];
+
+const sum = (arr, f) => arr.reduce((s,x)=>s+f(x),0);
+const fa = (v,d=0) => Number(v).toLocaleString('fa-IR',{minimumFractionDigits:d, maximumFractionDigits:d});
+const pct = (a,b) => b ? (a/b*100) : 0;
+
+P.forEach(x=>{
+  x.proj = x.h + x.i + x.j + x.k;
+  x.margin = pct(x.p, x.m);
+  x.activeRate = pct(x.a, x.t);
+  x.avlPerMachine = x.avl / x.a;
+});
+
+const T = {
+  total: sum(P,x=>x.t), active: sum(P,x=>x.a), cap: sum(P,x=>x.cap), avl: sum(P,x=>x.avl),
+  proj: sum(P,x=>x.proj), h: sum(P,x=>x.h), i: sum(P,x=>x.i), j: sum(P,x=>x.j), k: sum(P,x=>x.k),
+  income: sum(P,x=>x.m), cost: sum(P,x=>x.c), profit: sum(P,x=>x.p), age: 17.47
+};
+T.activeRate = pct(T.active,T.total);
+T.margin = pct(T.profit,T.income);
+
+/* =========================================================
+   2) Chart.js config
+   ========================================================= */
+Chart.register(ChartDataLabels);
+Chart.defaults.font.family = "'Vazirmatn', sans-serif";
+Chart.defaults.font.size = 11.5;
+Chart.defaults.color = '#475569';
+Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(15,23,42,.94)';
+Chart.defaults.plugins.tooltip.titleFont = {family:'Vazirmatn', size:12, weight:'bold'};
+Chart.defaults.plugins.tooltip.bodyFont = {family:'Vazirmatn', size:11.5};
+Chart.defaults.plugins.tooltip.padding = 10;
+Chart.defaults.plugins.tooltip.cornerRadius = 10;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.boxWidth = 8;
+Chart.defaults.plugins.legend.labels.padding = 14;
+Chart.defaults.plugins.legend.labels.font = {family:'Vazirmatn', size:11.5};
+
+const PALETTE = ['#1e88e5','#00acc1','#2e9e5b','#f59e0b','#8e24aa','#e53935',
+                 '#00897b','#3f51b5','#ec407a','#7cb342','#8d6e63','#546e7a'];
+const gridStyle = {color:'#eef2f7'};
+const xTick = {font:{family:'Vazirmatn', size:10.5}, maxRotation:45, minRotation:0};
+
+/* base datalabel style: BLACK text */
+const DL = (extra={}) => Object.assign({
+  font:{family:'Vazirmatn', size:10.5, weight:'700'},
+  color:'#000000'
+}, extra);
+
+/* =========================================================
+   3) KPI CARDS
+   ========================================================= */
+const kpis = [
+  {t:'کل ناوگان ماشین‌آلات', v: fa(T.total), u:'دستگاه', i:'fa-truck-monster', c:'#1e88e5', s:`میانگین ${fa(T.total/31,1)} دستگاه در هر استان`},
+  {t:'ناوگان فعال', v: fa(T.active), u:'دستگاه', i:'fa-circle-check', c:'#2e9e5b', s:`نرخ آمادگی ${fa(T.activeRate,1)}٪ از کل ناوگان`},
+  {t:'ناوگان غیرفعال', v: fa(T.total-T.active), u:'دستگاه', i:'fa-triangle-exclamation', c:'#e53935', s:`${fa(100-T.activeRate,1)}٪ نیازمند تعمیر و بازسازی`},
+  {t:'میانگین عمر ناوگان', v: fa(T.age,2), u:'سال', i:'fa-hourglass-half', c:'#f59e0b', s:'بالاتر از استاندارد مطلوب'},
+  {t:'سرمایه ماشین‌آلات', v: fa(T.cap,0), u:'میلیارد تومان', i:'fa-sack-dollar', c:'#00897b', s:`میانگین ${fa(T.cap/31,1)} میلیارد در هر استان`},
+  {t:'کارکرد ماشین‌آلات (AVL)', v: fa(T.avl), u:'روز-ماشین', i:'fa-gauge-high', c:'#8e24aa', s:`میانگین ${fa(T.avl/T.active)} روز به ازای هر ماشین فعال`},
+  {t:'پروژه‌های اتمام‌یافته و در اجرا', v: fa(T.proj), u:'پروژه', i:'fa-diagram-project', c:'#3f51b5', s:'عمران روستایی، نهضت ملی، بازسازی، پیمانی'},
+  {t:'درآمد ماشین‌آلات', v: fa(T.income,0), u:'میلیارد تومان', i:'fa-arrow-trend-up', c:'#00acc1', s:'مجموع عملکرد ۶ ماهه کشور'},
+  {t:'هزینه ماشین‌آلات', v: fa(T.cost,0), u:'میلیارد تومان', i:'fa-arrow-trend-down', c:'#ec407a', s:`${fa(pct(T.cost,T.income),1)}٪ از درآمد`},
+  {t:'سود عملکردی', v: fa(T.profit,0), u:'میلیارد تومان', i:'fa-coins', c:'#7cb342', s:`حاشیه سود ${fa(T.margin,1)}٪`}
+];
+
+document.getElementById('kpiGrid').innerHTML = kpis.map(k=>`
+  <div class="kpi" style="--accent:${k.c}">
+    <div class="k-ico"><i class="fa-solid ${k.i}"></i></div>
+    <div class="k-label">${k.t}</div>
+    <div class="k-value">${k.v}<small>${k.u}</small></div>
+    <div class="k-sub"><i class="fa-solid fa-circle-info"></i>${k.s}</div>
+  </div>
+`).join('');
+
+/* =========================================================
+   4) CHART 1 — ناوگان کل و فعال (لیبل عمودی + ۵px راست)
+   ========================================================= */
+const top12Total = [...P].sort((a,b)=>b.t-a.t).slice(0,12);
+new Chart(document.getElementById('c1'), {
+  type:'bar',
+  data:{
+    labels: top12Total.map(x=>x.n),
+    datasets:[
+      {label:'ناوگان کل', data: top12Total.map(x=>x.t), backgroundColor:'#1e88e5',
+       borderRadius:7, barPercentage:.82, categoryPercentage:.7,
+       datalabels: DL({
+         anchor:'end', align:'right',
+         rotation:-90,
+         offset:-8,
+         clip:false,
+         formatter:v=>fa(v)
+       })},
+      {label:'ناوگان فعال', data: top12Total.map(x=>x.a), backgroundColor:'#2e9e5b',
+       borderRadius:7, barPercentage:.82, categoryPercentage:.7,
+       datalabels: DL({
+         anchor:'end', align:'right',
+         rotation:-90,
+         offset:-8,
+         clip:false,
+         formatter:v=>fa(v)
+       })}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    layout:{padding:{top:60, right:14}},
+    plugins:{
+      legend:{position:'top'},
+      tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fa(c.parsed.y)} دستگاه`}}
+    },
+    scales:{
+      y:{beginAtZero:true, ticks:{callback:v=>fa(v)}, grid:gridStyle},
+      x:{ticks:xTick, grid:{display:false}}
+    }
+  }
+});
+
+/* =========================================================
+   5) CHART 2 — عمر ناوگان (۱۰px راست)
+   ========================================================= */
+const top10Age = [...P].sort((a,b)=>b.age-a.age).slice(0,10);
+new Chart(document.getElementById('c2'), {
+  type:'bar',
+  data:{
+    labels: top10Age.map(x=>x.n),
+    datasets:[{
+      label:'عمر ناوگان (سال)',
+      data: top10Age.map(x=>+x.age.toFixed(2)),
+      backgroundColor: top10Age.map((_,i)=> i<3 ? '#e53935' : (i<6 ? '#f59e0b' : '#1e88e5')),
+      borderRadius:7, barPercentage:.72,
+      datalabels: DL({anchor:'end', align:'right', offset:40, clip:false, formatter:v=>fa(v,1)+' سال'})
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    responsive:true, maintainAspectRatio:false,
+    layout:{padding:{right:90}},
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:c=>` عمر ناوگان: ${fa(c.parsed.x,2)} سال`}}
+    },
+    scales:{
+      x:{beginAtZero:true, ticks:{callback:v=>fa(v)}, grid:gridStyle},
+      y:{ticks:{font:{family:'Vazirmatn', size:11}}, grid:{display:false}}
+    }
+  }
+});
+
+/* =========================================================
+   6) CHART 3 — سهم سرمایه (حلقوی، ۱۰px راست)
+   ========================================================= */
+const top6Cap = [...P].sort((a,b)=>b.cap-a.cap).slice(0,6);
+const othersCap = T.cap - sum(top6Cap,x=>x.cap);
+new Chart(document.getElementById('c3'), {
+  type:'doughnut',
+  data:{
+    labels:[...top6Cap.map(x=>x.n),'سایر استان‌ها'],
+    datasets:[{
+      data:[...top6Cap.map(x=>+x.cap.toFixed(1)), +othersCap.toFixed(1)],
+      backgroundColor:['#1e88e5','#00acc1','#2e9e5b','#f59e0b','#8e24aa','#e53935','#94a3b8'],
+      borderColor:'#fff', borderWidth:3, hoverOffset:10
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false, cutout:'52%',
+    layout:{padding:{right:22, left:10, top:10, bottom:10}},
+    plugins:{
+      legend:{position:'bottom', labels:{padding:10, font:{size:10.5}}},
+      tooltip:{callbacks:{label:c=>` ${c.label}: ${fa(c.parsed,0)} میلیارد تومان (${fa(pct(c.parsed,T.cap),1)}٪)`}},
+      datalabels: DL({
+        offset:0,
+        font:{family:'Vazirmatn', size:10.5, weight:'800'},
+        formatter:(v)=>{
+          const p = pct(v, T.cap);
+          return p < 4 ? '' : fa(p,1)+'٪';
+        }
+      })
+    }
+  }
+});
+
+/* =========================================================
+   7) CHART 4 — کارکرد AVL (۱۰px راست)
+   ========================================================= */
+const top10Avl = [...P].sort((a,b)=>b.avl-a.avl).slice(0,10);
+new Chart(document.getElementById('c4'), {
+  type:'bar',
+  data:{
+    labels: top10Avl.map(x=>x.n),
+    datasets:[{
+      label:'کارکرد (روز-ماشین)',
+      data: top10Avl.map(x=>x.avl),
+      backgroundColor: top10Avl.map((_,i)=>PALETTE[i%PALETTE.length]),
+      borderRadius:7, barPercentage:.74,
+      datalabels: DL({anchor:'end', align:'right', offset:25, clip:false, formatter:v=>fa(v)})
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    responsive:true, maintainAspectRatio:false,
+    layout:{padding:{right:100}},
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:c=>` کارکرد: ${fa(c.parsed.x)} روز-ماشین`}}
+    },
+    scales:{
+      x:{beginAtZero:true, ticks:{callback:v=>fa(v)}, grid:gridStyle},
+      y:{ticks:{font:{family:'Vazirmatn', size:11}}, grid:{display:false}}
+    }
+  }
+});
+
+/* =========================================================
+   8) CHART 5 — درآمد/هزینه/سود (لیبل عمودی + ۵px راست)
+   ========================================================= */
+const top10Inc = [...P].sort((a,b)=>b.m-a.m).slice(0,10);
+new Chart(document.getElementById('c5'), {
+  type:'bar',
+  data:{
+    labels: top10Inc.map(x=>x.n),
+    datasets:[
+      {label:'درآمد', data: top10Inc.map(x=>+x.m.toFixed(1)), backgroundColor:'#1e88e5',
+       borderRadius:7, barPercentage:.8, categoryPercentage:.72,
+       datalabels: DL({
+         anchor:'end', align:'right',
+         rotation:-90,
+         offset:-8,
+         clip:false,
+         formatter:v=>fa(v,0)
+       })},
+      {label:'هزینه', data: top10Inc.map(x=>+x.c.toFixed(1)), backgroundColor:'#e53935',
+       borderRadius:7, barPercentage:.8, categoryPercentage:.72,
+       datalabels: DL({
+         anchor:'end', align:'right',
+         rotation:-90,
+         offset:-8,
+         clip:false,
+         formatter:v=>fa(v,0)
+       })},
+      {label:'سود', data: top10Inc.map(x=>+x.p.toFixed(1)), backgroundColor:'#2e9e5b',
+       borderRadius:7, barPercentage:.8, categoryPercentage:.72,
+       datalabels: DL({
+         anchor:'end', align:'right',
+         rotation:-90,
+         offset:-8,
+         clip:false,
+         formatter:v=>fa(v,0)
+       })}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    layout:{padding:{top:60, right:14}},
+    plugins:{
+      legend:{position:'top'},
+      tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fa(c.parsed.y,1)} میلیارد تومان`}}
+    },
+    scales:{
+      y:{beginAtZero:true, ticks:{callback:v=>fa(v)}, grid:gridStyle},
+      x:{ticks:xTick, grid:{display:false}}
+    }
+  }
+});
+
+/* =========================================================
+   9) CHART 6 — حاشیه سود (۱۰px راست)
+   ========================================================= */
+const top10Margin = [...P].sort((a,b)=>b.margin-a.margin).slice(0,10);
+new Chart(document.getElementById('c6'), {
+  type:'bar',
+  data:{
+    labels: top10Margin.map(x=>x.n),
+    datasets:[{
+      label:'حاشیه سود (٪)',
+      data: top10Margin.map(x=>+x.margin.toFixed(1)),
+      backgroundColor: top10Margin.map((_,i)=> i<3 ? '#2e9e5b' : (i<6 ? '#7cb342' : '#f59e0b')),
+      borderRadius:7, barPercentage:.7,
+      datalabels: DL({anchor:'end', align:'right', offset:25, clip:false, formatter:v=>fa(v,1)+'٪'})
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    responsive:true, maintainAspectRatio:false,
+    layout:{padding:{right:80}},
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:c=>` حاشیه سود: ${fa(c.parsed.x,1)}٪`}}
+    },
+    scales:{
+      x:{beginAtZero:true, max:100, ticks:{callback:v=>fa(v)+'٪'}, grid:gridStyle},
+      y:{ticks:{font:{family:'Vazirmatn', size:11}}, grid:{display:false}}
+    }
+  }
+});
+
+/* =========================================================
+   10) CHART 7 — حبابی
+   ========================================================= */
+new Chart(document.getElementById('c7'), {
+  type:'bubble',
+  data:{
+    datasets:[{
+      label:'استان‌ها',
+      data: P.map(x=>({
+        x:+x.cap.toFixed(1), y:x.avl,
+        r: Math.max(5, Math.sqrt(x.t)*1.5),
+        name:x.n
+      })),
+      backgroundColor: P.map((_,i)=>PALETTE[i%PALETTE.length]+'cc'),
+      borderColor:'#fff', borderWidth:1.5
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      datalabels:{display:false},
+      tooltip:{
+        callbacks:{
+          title:c=>c[0].raw.name,
+          label:c=>[` سرمایه: ${fa(c.raw.x,1)} میلیارد تومان`,
+                     ` کارکرد: ${fa(c.raw.y)} روز-ماشین`,
+                     ` ناوگان: ${fa(P.find(p=>p.n===c.raw.name).t)} دستگاه`]
+        }
+      }
+    },
+    scales:{
+      x:{title:{display:true, text:'سرمایه ماشین‌آلات (میلیارد تومان)', font:{family:'Vazirmatn', size:11}}, ticks:{callback:v=>fa(v)}, grid:gridStyle},
+      y:{title:{display:true, text:'کارکرد AVL (روز-ماشین)', font:{family:'Vazirmatn', size:11}}, ticks:{callback:v=>fa(v)}, grid:gridStyle}
+    }
+  }
+});
+
+/* =========================================================
+   11) CHART 8 — توزیع پروژه‌ها (حلقوی، ۱۰px راست)
+   ========================================================= */
+new Chart(document.getElementById('c8'), {
+  type:'doughnut',
+  data:{
+    labels:['عمران روستایی','نهضت ملی / مسکن شهری','بازسازی','پیمانی'],
+    datasets:[{
+      data:[T.h, T.i, T.j, T.k],
+      backgroundColor:['#1e88e5','#f59e0b','#e53935','#2e9e5b'],
+      borderColor:'#fff', borderWidth:3, hoverOffset:10
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false, cutout:'48%',
+    layout:{padding:{right:24, left:10, top:10, bottom:10}},
+    plugins:{
+      legend:{position:'bottom', labels:{padding:10}},
+      tooltip:{callbacks:{label:c=>` ${c.label}: ${fa(c.parsed)} پروژه (${fa(pct(c.parsed,T.proj),1)}٪)`}},
+      datalabels: DL({
+        offset:10,
+        font:{family:'Vazirmatn', size:11, weight:'800'},
+        formatter:(v)=> fa(v) + '\n' + fa(pct(v,T.proj),1) + '٪'
+      })
+    }
+  }
+});
+
+/* =========================================================
+   12) CHART 9 — ترکیب پروژه‌ها (۱۰px راست)
+   ========================================================= */
+const top10Proj = [...P].sort((a,b)=>b.proj-a.proj).slice(0,10);
+new Chart(document.getElementById('c9'), {
+  type:'bar',
+  data:{
+    labels: top10Proj.map(x=>x.n),
+    datasets:[
+      {label:'عمران روستایی', data: top10Proj.map(x=>x.h), backgroundColor:'#1e88e5', borderRadius:4,
+       datalabels: DL({anchor:'center', align:'center', offset:10, clip:false,
+         font:{size:9.5, weight:'800'}, formatter:v=> v>0 ? fa(v) : ''})},
+      {label:'نهضت ملی/شهری', data: top10Proj.map(x=>x.i), backgroundColor:'#f59e0b', borderRadius:4,
+       datalabels: DL({anchor:'center', align:'center', offset:10, clip:false,
+         font:{size:9.5, weight:'800'}, formatter:v=> v>0 ? fa(v) : ''})},
+      {label:'بازسازی', data: top10Proj.map(x=>x.j), backgroundColor:'#e53935', borderRadius:4,
+       datalabels: DL({anchor:'center', align:'center', offset:10, clip:false,
+         font:{size:9.5, weight:'800'}, formatter:v=> v>0 ? fa(v) : ''})},
+      {label:'پیمانی', data: top10Proj.map(x=>x.k), backgroundColor:'#2e9e5b', borderRadius:4,
+       datalabels: DL({anchor:'center', align:'center', offset:10, clip:false,
+         font:{size:9.5, weight:'800'}, formatter:v=> v>0 ? fa(v) : ''})}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    layout:{padding:{top:10, right:14}},
+    plugins:{
+      legend:{position:'top', labels:{padding:9, font:{size:10}}},
+      tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fa(c.parsed.y)} پروژه`}}
+    },
+    scales:{
+      x:{stacked:true, ticks:xTick, grid:{display:false}},
+      y:{stacked:true, beginAtZero:true, ticks:{callback:v=>fa(v)}, grid:gridStyle}
+    }
+  }
+});
+
+/* =========================================================
+   13) INSIGHT CARDS
+   ========================================================= */
+const bestIncome = [...P].sort((a,b)=>b.m-a.m)[0];
+const bestProfit = [...P].sort((a,b)=>b.p-a.p)[0];
+const bestMargin = [...P].sort((a,b)=>b.margin-a.margin)[0];
+const worstMargin = [...P].sort((a,b)=>a.margin-b.margin)[0];
+const oldest = [...P].sort((a,b)=>b.age-a.age)[0];
+const newest = [...P].sort((a,b)=>a.age-b.age)[0];
+const mostActive = [...P].sort((a,b)=>b.t-a.t)[0];
+const weakest = [...P].sort((a,b)=>a.activeRate-b.activeRate)[0];
+const bestUtil = [...P].sort((a,b)=>b.avlPerMachine-a.avlPerMachine)[0];
+
+const insights = [
+  {c:'#1e88e5', i:'fa-trophy', t:'قدرت درآمدزایی',
+   b:`<b>${bestIncome.n}</b> با <b>${fa(bestIncome.m,0)}</b> میلیارد تومان، بالاترین درآمد ماشین‌آلات کشور را در ۶ ماهه نخست ثبت کرده است.`,
+   chips:[`درآمد: ${fa(bestIncome.m,0)} م.ت`,`حاشیه سود: ${fa(bestIncome.margin,1)}٪`,`ناوگان: ${fa(bestIncome.t)} دستگاه`]},
+  {c:'#2e9e5b', i:'fa-coins', t:'پیشتاز سودآوری',
+   b:`<b>${bestProfit.n}</b> با <b>${fa(bestProfit.p,0)}</b> میلیارد تومان سود، بیشترین بازدهی مالی را داشته است.`,
+   chips:[`سود: ${fa(bestProfit.p,0)} م.ت`,`هزینه: ${fa(bestProfit.c,0)} م.ت`,`نسبت سود به درآمد: ${fa(bestProfit.margin,1)}٪`]},
+  {c:'#7cb342', i:'fa-percent', t:'بهترین حاشیه سود',
+   b:`<b>${bestMargin.n}</b> با حاشیه سود <b>${fa(bestMargin.margin,1)}٪</b> کارآمدترین استان در مدیریت هزینه‌ها است.`,
+   chips:[`درآمد: ${fa(bestMargin.m,1)} م.ت`,`سود: ${fa(bestMargin.p,1)} م.ت`]},
+  {c:'#e53935', i:'fa-arrow-down-long', t:'ضعیف‌ترین بازدهی',
+   b:`<b>${worstMargin.n}</b> با حاشیه سود تنها <b>${fa(worstMargin.margin,1)}٪</b> پایین‌ترین بازدهی مالی را دارد و نیازمند بازنگری در ساختار هزینه است.`,
+   chips:[`هزینه: ${fa(worstMargin.c,1)} م.ت`,`درآمد: ${fa(worstMargin.m,1)} م.ت`]},
+  {c:'#f59e0b', i:'fa-hourglass-half', t:'هشدار فرسودگی ناوگان',
+   b:`<b>${oldest.n}</b> با میانگین عمر <b>${fa(oldest.age,1)}</b> سال، قدیمی‌ترین ناوگان را دارد؛ در مقابل <b>${newest.n}</b> با <b>${fa(newest.age,1)}</b> سال جوان‌ترین ناوگان کشور است.`,
+   chips:[`قدیمی‌ترین: ${oldest.n}`,`جوان‌ترین: ${newest.n}`,`میانگین کشوری: ${fa(T.age,2)} سال`]},
+  {c:'#8e24aa', i:'fa-truck-fast', t:'بزرگ‌ترین ناوگان',
+   b:`<b>${mostActive.n}</b> با <b>${fa(mostActive.t)}</b> دستگاه، بزرگ‌ترین ناوگان ماشین‌آلات کشور را در اختیار دارد.`,
+   chips:[`فعال: ${fa(mostActive.a)} دستگاه`,`نرخ آمادگی: ${fa(mostActive.activeRate,1)}٪`]},
+  {c:'#00acc1', i:'fa-gauge-high', t:'بالاترین بهره‌وری',
+   b:`<b>${bestUtil.n}</b> با <b>${fa(bestUtil.avlPerMachine,0)}</b> روز-ماشین کارکرد به ازای هر ماشین فعال، بالاترین بهره‌وری عملیاتی را ثبت کرده است.`,
+   chips:[`کارکرد کل: ${fa(bestUtil.avl)} روز-ماشین`]},
+  {c:'#3f51b5', i:'fa-screwdriver-wrench', t:'ریسک آمادگی ناوگان',
+   b:`<b>${weakest.n}</b> با نرخ آمادگی <b>${fa(weakest.activeRate,1)}٪</b> پایین‌ترین سطح بهره‌گیری از ناوگان را دارد (${fa(weakest.t-weakest.a)} دستگاه غیرفعال).`,
+   chips:[`کل: ${fa(weakest.t)}`,`فعال: ${fa(weakest.a)}`,`غیرفعال: ${fa(weakest.t-weakest.a)}`]},
+  {c:'#00897b', i:'fa-diagram-project', t:'سهم پروژه‌ها',
+   b:`از مجموع <b>${fa(T.proj)}</b> پروژه، سهم عمران روستایی <b>${fa(pct(T.h,T.proj),1)}٪</b> و نهضت ملی/مسکن شهری <b>${fa(pct(T.i,T.proj),1)}٪</b> است.`,
+   chips:[`عمران روستایی: ${fa(T.h)}`,`نهضت ملی: ${fa(T.i)}`,`بازسازی: ${fa(T.j)}`,`پیمانی: ${fa(T.k)}`]},
+  {c:'#ec407a', i:'fa-chart-pie', t:'ساختار مالی کشور',
+   b:`در مجموع کشور، درآمد <b>${fa(T.income,0)}</b>، هزینه <b>${fa(T.cost,0)}</b> و سود <b>${fa(T.profit,0)}</b> میلیارد تومان محقق شده است.`,
+   chips:[`حاشیه سود کلان: ${fa(T.margin,1)}٪`,`نسبت هزینه به درآمد: ${fa(pct(T.cost,T.income),1)}٪`]}
+];
+
+document.getElementById('insights').innerHTML = insights.map(k=>`
+  <div class="ins" style="--accent:${k.c}">
+    <div class="i-ico" style="background:${k.c}"><i class="fa-solid ${k.i}"></i></div>
+    <h4>${k.t}</h4>
+    <p>${k.b}</p>
+    <div class="chips">${k.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
+  </div>
+`).join('');
+
+/* =========================================================
+   14) TABLE
+   ========================================================= */
+function marginBadge(v){
+  if(v >= 60) return `<span class="badge b-green">${fa(v,1)}٪</span>`;
+  if(v >= 40) return `<span class="badge b-blue">${fa(v,1)}٪</span>`;
+  if(v >= 25) return `<span class="badge b-amber">${fa(v,1)}٪</span>`;
+  return `<span class="badge b-red">${fa(v,1)}٪</span>`;
+}
+
+function renderTable(list){
+  document.getElementById('tbody').innerHTML = list.map((x,idx)=>`
+    <tr>
+      <td>${fa(idx+1)}</td>
+      <td class="name">${x.n}</td>
+      <td>${fa(x.t)}</td>
+      <td>${fa(x.a)}</td>
+      <td>${fa(x.age,2)}</td>
+      <td>${fa(x.cap,1)}</td>
+      <td>${fa(x.avl)}</td>
+      <td>${fa(x.proj)}</td>
+      <td style="color:#1e88e5;font-weight:700">${fa(x.m,1)}</td>
+      <td style="color:#e53935;font-weight:700">${fa(x.c,1)}</td>
+      <td style="color:#2e9e5b;font-weight:800">${fa(x.p,1)}</td>
+      <td>${marginBadge(x.margin)}</td>
+    </tr>
+  `).join('');
+  document.getElementById('rowCount').textContent = fa(list.length) + ' استان';
+}
+
+renderTable(P);
+
+document.getElementById('searchBox').addEventListener('input', e=>{
+  const q = e.target.value.trim();
+  renderTable(P.filter(x=>x.n.includes(q)));
+});
+</script>
+</body>
+</html>
