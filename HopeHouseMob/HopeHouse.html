@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>داشبورد جامع طرح خانه امید</title>
+
+<!-- فونت وزیرمتن -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- آیکون‌ها -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- Chart.js + Datalabels Plugin -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+<style>
+  :root {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --primary-light: #818cf8;
+    --accent: #f97316;
+    --teal: #0f766e;
+    --teal-dark: #115e59;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #0ea5e9;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --bg: #f1f5f9;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+    --shadow-hover: 0 12px 32px rgba(79, 70, 229, 0.15);
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 0% 0%, rgba(79,70,229,0.08), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(249,115,22,0.08), transparent 40%),
+      var(--bg);
+    min-height: 100vh;
+  }
+
+  /* ---------- بنر ---------- */
+  .banner {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1e1b4b 0%, #4f46e5 30%, #7c3aed 55%, #0f766e 80%, #b45309 100%);
+    color: #fff;
+    padding: 44px 28px 66px;
+    border-radius: 0 0 32px 32px;
+    box-shadow: 0 20px 55px rgba(79, 70, 229, 0.4);
+    margin-bottom: 0;
+  }
+
+  .banner::before, .banner::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(65px);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .banner::before {
+    width: 340px; height: 340px;
+    background: #f97316;
+    top: -130px; left: -85px;
+    animation: float 9s ease-in-out infinite;
+  }
+  .banner::after {
+    width: 300px; height: 300px;
+    background: #22d3ee;
+    bottom: -150px; right: -65px;
+    animation: float 11s ease-in-out infinite reverse;
+  }
+  @keyframes float {
+    0%,100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(22px,-20px) scale(1.1); }
+  }
+
+  .banner-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+    justify-content: space-between;
+  }
+
+  .banner-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .banner h1 {
+    font-size: clamp(20px, 3vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.25);
+  }
+
+  .banner p.subtitle {
+    font-size: clamp(12px, 1.4vw, 15px);
+    opacity: 0.94;
+    max-width: 780px;
+  }
+
+  .banner-icon {
+    width: 96px;
+    height: 96px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 26px;
+    display: grid;
+    place-items: center;
+    font-size: 42px;
+    color: #fff;
+    flex-shrink: 0;
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+    50% { transform: scale(1.06); box-shadow: 0 0 0 18px rgba(255,255,255,0); }
+  }
+
+  .banner-meta {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    font-size: 12.5px;
+    opacity: 0.95;
+  }
+  .banner-meta span i { margin-left: 6px; color: #fcd34d; }
+
+  /* ---------- نوار ناوبری ---------- */
+  .tabs-bar {
+    max-width: 1300px;
+    margin: -30px auto 0;
+    padding: 0 20px;
+    position: relative;
+    z-index: 4;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 14px 22px;
+    border-radius: 16px 16px 0 0;
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.25s ease;
+    box-shadow: 0 -4px 12px rgba(15,23,42,0.04);
+    border-bottom: none;
+    position: relative;
+    top: 1px;
+  }
+  .tab-btn i { font-size: 16px; }
+  .tab-btn:hover { color: var(--primary); transform: translateY(-2px); }
+  .tab-btn.active {
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-color: transparent;
+    box-shadow: 0 -6px 20px rgba(79,70,229,0.35);
+  }
+  .tab-btn.active i { color: #fcd34d; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ---------- کانتینر ---------- */
+  .container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+    position: relative;
+    z-index: 3;
+  }
+
+  /* ---------- بخش‌ها ---------- */
+  .section { margin-top: 42px; }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 20px;
+    padding-right: 14px;
+    border-right: 5px solid var(--primary);
+    line-height: 1.2;
+  }
+  .section-title i { color: var(--primary); font-size: 18px; }
+
+  /* ---------- کارت‌های عددی ---------- */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-top: 40px;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 22px 20px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+  }
+  .stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-light);
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 6px; height: 100%;
+    background: linear-gradient(180deg, var(--primary), var(--accent));
+    border-radius: 0 0 0 6px;
+  }
+  .stat-card .icon-box {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    margin-bottom: 14px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    box-shadow: 0 8px 20px rgba(79,70,229,0.3);
+  }
+  .stat-card.orange .icon-box { background: linear-gradient(135deg, #f97316, #ea580c); box-shadow: 0 8px 20px rgba(249,115,22,0.3); }
+  .stat-card.green  .icon-box { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 8px 20px rgba(16,185,129,0.3); }
+  .stat-card.red    .icon-box { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 8px 20px rgba(239,68,68,0.3); }
+  .stat-card.blue   .icon-box { background: linear-gradient(135deg, #0ea5e9, #0284c7); box-shadow: 0 8px 20px rgba(14,165,233,0.3); }
+  .stat-card.purple .icon-box { background: linear-gradient(135deg, #8b5cf6, #7c3aed); box-shadow: 0 8px 20px rgba(139,92,246,0.3); }
+  .stat-card.teal   .icon-box { background: linear-gradient(135deg, #14b8a6, #0d9488); box-shadow: 0 8px 20px rgba(20,184,166,0.3); }
+
+  .stat-card .label {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .stat-card .value {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    line-height: 1.1;
+  }
+  .stat-card .value small {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-right: 4px;
+  }
+  .stat-card .trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: #ecfdf5;
+    color: #059669;
+  }
+  .stat-card .trend.down { background: #fef2f2; color: #dc2626; }
+  .stat-card .trend.warn { background: #fffbeb; color: #d97706; }
+  .stat-card .trend.blue { background: #eff6ff; color: #1d4ed8; }
+
+  /* ---------- چارت‌ها ---------- */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 20px;
+  }
+  .charts-grid.two { grid-template-columns: repeat(auto-fit, minmax(460px, 1fr)); }
+
+  .chart-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+  .chart-card:hover { box-shadow: var(--shadow-hover); }
+
+  .chart-card .chart-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .chart-card .chart-head h3 {
+    font-size: 14.5px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .chart-card .chart-head h3 i { color: var(--primary); }
+  .chart-card .chart-head .tag {
+    font-size: 11px;
+    background: #eef2ff;
+    color: var(--primary-dark);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  .chart-wrap { position: relative; width: 100%; height: 300px; }
+  .chart-wrap.small { height: 250px; }
+  .chart-wrap.tall { height: 380px; }
+
+  /* ---------- کارت‌های تحلیلی ---------- */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+
+  .insight-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border-top: 4px solid var(--primary);
+  }
+  .insight-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+  .insight-card.warning { border-top-color: var(--warning); }
+  .insight-card.danger  { border-top-color: var(--danger); }
+  .insight-card.success { border-top-color: var(--success); }
+  .insight-card.info    { border-top-color: var(--info); }
+
+  .insight-card .ic {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+    color: #fff;
+    background: var(--primary);
+    margin-bottom: 12px;
+  }
+  .insight-card.warning .ic { background: var(--warning); }
+  .insight-card.danger  .ic { background: var(--danger); }
+  .insight-card.success .ic { background: var(--success); }
+  .insight-card.info    .ic { background: var(--info); }
+
+  .insight-card h4 {
+    font-size: 14.5px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .insight-card p {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.85;
+  }
+
+  /* ---------- پروگرس بارها ---------- */
+  .progress-list { display: flex; flex-direction: column; gap: 16px; }
+  .progress-item .p-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .progress-item .p-head span:last-child {
+    color: var(--primary-dark);
+    font-weight: 700;
+  }
+  .progress-bar-bg {
+    height: 10px;
+    background: #eef2ff;
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    width: 0;
+    transition: width 1.2s ease;
+  }
+  .progress-bar-fill.green { background: linear-gradient(90deg, #10b981, #34d399); }
+  .progress-bar-fill.orange { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .progress-bar-fill.red    { background: linear-gradient(90deg, #ef4444, #f87171); }
+  .progress-bar-fill.blue   { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
+
+  /* ---------- نقل قول ---------- */
+  .quote-card {
+    background: linear-gradient(135deg, #052e2b, #0f766e);
+    color: #fff; border-radius: var(--radius); padding: 26px 24px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 14px 36px rgba(15,118,110,0.35);
+    margin-top: 40px;
+  }
+  .quote-card::before {
+    content: '\f10d'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+    position: absolute; top: -10px; right: 16px; font-size: 90px; opacity: 0.08;
+  }
+  .quote-card p { font-size: 13.5px; line-height: 2; position: relative; z-index: 1; }
+  .quote-card .src {
+    margin-top: 14px; font-size: 12px; opacity: 0.9;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .quote-card .src i { color: #fcd34d; }
+
+  /* ---------- جدول استانی ---------- */
+  .table-wrap {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  table.prov-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    min-width: 640px;
+  }
+  table.prov-table thead th {
+    background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+    color: #fff;
+    padding: 12px 10px;
+    text-align: center;
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent);
+    white-space: nowrap;
+  }
+  table.prov-table thead th:first-child { border-radius: 0 10px 0 0; }
+  table.prov-table thead th:last-child { border-radius: 10px 0 0 0; }
+  table.prov-table tbody td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #f1f5f9;
+    font-variant-numeric: tabular-nums;
+  }
+  table.prov-table tbody tr:nth-child(even) { background: #f8fafc; }
+  table.prov-table tbody tr:hover { background: #ecfeff; transition: background 0.2s; }
+  table.prov-table tbody tr.total-row {
+    background: linear-gradient(90deg, #fef3c7, #fef9c3);
+    font-weight: 800;
+    color: #78350f;
+  }
+  table.prov-table tbody tr.total-row td { border-bottom: 2px solid var(--accent); }
+
+  /* ---------- فوتر ---------- */
+  footer {
+    text-align: center;
+    padding: 28px 20px 40px;
+    color: var(--text-muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 50px;
+  }
+  footer strong { color: var(--primary-dark); }
+
+  /* ---------- ریسپانسیو ---------- */
+  @media (max-width: 768px) {
+    .banner { padding: 28px 18px 60px; border-radius: 0 0 24px 24px; }
+    .banner-icon { width: 68px; height: 68px; font-size: 30px; border-radius: 18px; }
+    .tabs-bar { margin-top: -35px; padding: 0 12px; gap: 6px; }
+    .tab-btn { padding: 11px 14px; font-size: 12px; flex: 1; justify-content: center; }
+    .tab-btn i { font-size: 14px; }
+    .stats-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 30px; }
+    .stat-card { padding: 16px 14px; }
+    .stat-card .icon-box { width: 42px; height: 42px; font-size: 18px; margin-bottom: 10px; }
+    .stat-card .value { font-size: 20px; }
+    .stat-card .label { font-size: 11.5px; }
+    .charts-grid, .charts-grid.two { grid-template-columns: 1fr; }
+    .chart-wrap { height: 260px; }
+    .chart-wrap.tall { height: 320px; }
+    .section-title { font-size: 15.5px; }
+    .container { padding: 0 14px 40px; }
+    .quote-card { padding: 20px 18px; }
+  }
+
+  /* انیمیشن ورود */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.7s ease forwards;
+  }
+  @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<!-- ================= بنر ================= -->
+<header class="banner">
+  <div class="banner-content">
+    <div style="flex:1; min-width:260px;">
+      <div class="banner-badge">
+        <i class="fa-solid fa-house-chimney-window"></i>
+        داشبورد جامع مدیریتی — بنیاد مسکن انقلاب اسلامی
+      </div>
+      <h1>طرح ملی خانه امید</h1>
+      <p class="subtitle">
+        داشبورد تحلیلی یکپارچه عملکرد، تأمین مالی، تأمین زمین، پیشرفت پروژه‌های مسکن محرومین،
+        زوج‌های جوان و اقشار کم‌درآمد در بخش شهری و روستایی
+      </p>
+      <div class="banner-meta">
+        <span><i class="fa-regular fa-calendar-check"></i> تاریخ گزارش: ۱۴۰۵/۰۷/۰۴</span>
+        <span><i class="fa-solid fa-building-columns"></i> دوازدهمین جلسه ستاد هماهنگی</span>
+        <span><i class="fa-solid fa-map-location-dot"></i> سراسر کشور</span>
+      </div>
+    </div>
+    <div class="banner-icon">
+      <i class="fa-solid fa-house-chimney-user"></i>
+    </div>
+  </div>
+</header>
+
+<!-- ================= نوار ناوبری ================= -->
+<div class="tabs-bar">
+  <button class="tab-btn active" data-tab="tab-general">
+    <i class="fa-solid fa-chart-line"></i>
+    داشبورد عملکردی و مالی
+  </button>
+  <button class="tab-btn" data-tab="tab-land">
+    <i class="fa-solid fa-map-location-dot"></i>
+    داشبورد تأمین زمین
+  </button>
+</div>
+
+<main class="container">
+
+  <!-- ============================================================ -->
+  <!-- ==================== تب ۱: عملکردی و مالی ==================== -->
+  <!-- ============================================================ -->
+  <section id="tab-general" class="tab-panel active">
+
+    <!-- کارت‌های عددی -->
+    <div class="stats-grid">
+      <div class="stat-card fade-in">
+        <div class="icon-box"><i class="fa-solid fa-house"></i></div>
+        <div class="label">واحدهای در دست اجرا (۱۴۰۵)</div>
+        <div class="value">۹۸,۹۸۴ <small>واحد</small></div>
+        <span class="trend"><i class="fa-solid fa-arrow-trend-up"></i> ۷۲٪ روستایی</span>
+      </div>
+
+      <div class="stat-card green fade-in">
+        <div class="icon-box"><i class="fa-solid fa-tree-city"></i></div>
+        <div class="label">واحدهای روستایی</div>
+        <div class="value">۷۰,۹۵۲ <small>واحد</small></div>
+        <span class="trend"><i class="fa-solid fa-circle-check"></i> فعال</span>
+      </div>
+
+      <div class="stat-card orange fade-in">
+        <div class="icon-box"><i class="fa-solid fa-city"></i></div>
+        <div class="label">واحدهای شهری</div>
+        <div class="value">۲۸,۰۳۲ <small>واحد</small></div>
+        <span class="trend warn"><i class="fa-solid fa-triangle-exclamation"></i> نیازمند تسریع</span>
+      </div>
+
+      <div class="stat-card blue fade-in">
+        <div class="icon-box"><i class="fa-solid fa-map"></i></div>
+        <div class="label">واگذاری زمین روستایی</div>
+        <div class="value">۳۵,۹۳۹ <small>قطعه</small></div>
+        <span class="trend"><i class="fa-solid fa-arrow-up"></i> تحقق ۱۱۰٪</span>
+      </div>
+
+      <div class="stat-card purple fade-in">
+        <div class="icon-box"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="label">واگذاری زمین شهری</div>
+        <div class="value">۸,۹۲۳ <small>قطعه</small></div>
+        <span class="trend warn"><i class="fa-solid fa-arrow-down"></i> تحقق ۶۴٪</span>
+      </div>
+
+      <div class="stat-card red fade-in">
+        <div class="icon-box"><i class="fa-solid fa-sack-dollar"></i></div>
+        <div class="label">اعتبار ابلاغی بانکی</div>
+        <div class="value">۱۲۰,۰۰۰ <small>میلیارد ریال</small></div>
+        <span class="trend down"><i class="fa-solid fa-triangle-exclamation"></i> جذب ۱۵٪</span>
+      </div>
+
+      <div class="stat-card teal fade-in">
+        <div class="icon-box"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+        <div class="label">کمک‌های نقدی خیرین</div>
+        <div class="value">۹۶۷ <small>میلیارد ریال</small></div>
+        <span class="trend"><i class="fa-solid fa-check"></i> تحقق ۶۷٪</span>
+      </div>
+
+      <div class="stat-card green fade-in">
+        <div class="icon-box"><i class="fa-solid fa-gift"></i></div>
+        <div class="label">کمک‌های غیرنقدی</div>
+        <div class="value">۲,۶۲۶ <small>میلیارد ریال</small></div>
+        <span class="trend"><i class="fa-solid fa-fire"></i> تحقق ۲۸۵٪</span>
+      </div>
+    </div>
+
+    <!-- نمودارها -->
+    <div class="section">
+      <h2 class="section-title"><i class="fa-solid fa-chart-pie"></i> تحلیل عملکرد و توزیع داده‌ها</h2>
+
+      <div class="charts-grid two">
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-chart-pie"></i> سهم واحدهای در دست اجرا</h3>
+            <span class="tag">شهری / روستایی</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartUrbanRural"></canvas></div>
+        </div>
+
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-bars-progress"></i> پیشرفت مراحل اجرایی تفاهم‌نامه ۸ هزار واحدی روستایی</h3>
+            <span class="tag">کمیته امداد</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartStages"></canvas></div>
+        </div>
+
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-building-columns"></i> عملکرد بانک‌های عامل در جذب تسهیلات</h3>
+            <span class="tag">میلیارد ریال</span>
+          </div>
+          <div class="chart-wrap tall"><canvas id="chartBanks"></canvas></div>
+        </div>
+
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-map-location-dot"></i> عملکرد استانی واگذاری زمین روستایی</h3>
+            <span class="tag">۱۰ استان برتر</span>
+          </div>
+          <div class="chart-wrap tall"><canvas id="chartProvinces"></canvas></div>
+        </div>
+
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-hand-holding-heart"></i> جذب کمک‌های خیرین (۶ ماهه)</h3>
+            <span class="tag">برنامه / عملکرد</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartDonations"></canvas></div>
+        </div>
+
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-scale-balanced"></i> شکاف منابع و مصارف طرح</h3>
+            <span class="tag">همت (هزار میلیارد تومان)</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartGap"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- تفاهم‌نامه‌ها -->
+    <div class="section">
+      <h2 class="section-title"><i class="fa-solid fa-file-contract"></i> پیشرفت تفاهم‌نامه‌های نهادهای حمایتی</h2>
+
+      <div class="charts-grid two">
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-diagram-project"></i> میزان تحقق مراحل تفاهم‌نامه‌ها</h3>
+            <span class="tag">درصد</span>
+          </div>
+          <div class="progress-list">
+            <div class="progress-item">
+              <div class="p-head"><span><i class="fa-solid fa-house-chimney"></i> کمیته امداد — ۸ هزار واحد روستایی</span><span>۹۳٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill green" data-width="93%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span><i class="fa-solid fa-city"></i> کمیته امداد — ۳۰ هزار واحد شهری</span><span>۸۰٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill orange" data-width="80%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span><i class="fa-solid fa-heart"></i> بهزیستی — ۸ هزار واحد</span><span>۹۳٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill blue" data-width="93%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span><i class="fa-solid fa-triangle-exclamation"></i> کمیته امداد — ۶ هزار واحد شهری (بنیاد ساخت)</span><span>۰٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill red" data-width="2%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-chart-column"></i> مقایسه پروانه، معرفی به بانک و قرارداد</h3>
+            <span class="tag">تعداد واحد</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartAgreements"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- کارت‌های تحلیلی -->
+    <div class="section">
+      <h2 class="section-title"><i class="fa-solid fa-lightbulb"></i> کارت‌های تحلیلی و یافته‌های کلیدی</h2>
+
+      <div class="insight-grid">
+        <div class="insight-card success fade-in">
+          <div class="ic"><i class="fa-solid fa-trophy"></i></div>
+          <h4>عملکرد مطلوب در حوزه زمین روستایی</h4>
+          <p>تحقق ۱۱۰ درصدی سهمیه واگذاری زمین روستایی با ۳۵,۹۳۹ قطعه، بیانگر موفقیت سیاست واگذاری ۹۹ ساله و ماده ۴ در جذب جوانی جمعیت و تسریع فرآیند ساخت مسکن روستایی است.</p>
+        </div>
+
+        <div class="insight-card danger fade-in">
+          <div class="ic"><i class="fa-solid fa-circle-exclamation"></i></div>
+          <h4>بحران در جذب تسهیلات بانکی</h4>
+          <p>از ۱۲۰,۰۰۰ میلیارد ریال اعتبار ابلاغی، فقط ۲۸٪ قرارداد منعقد و حدود ۱۵٪ جذب شده است. این گلوگاه، اصلی‌ترین مانع پیشرفت فیزیکی پروژه‌ها به شمار می‌رود.</p>
+        </div>
+
+        <div class="insight-card warning fade-in">
+          <div class="ic"><i class="fa-solid fa-scale-unbalanced"></i></div>
+          <h4>شکاف عظیم منابع و مصارف</h4>
+          <p>نیاز مالی طرح ۲۳۷ همت برآورد شده، اما مجموع اعتبارات مصوب تا پایان سال تنها ۳,۱۱۶ میلیارد تومان است. این شکاف نیازمند تدبیر فوری و متنوع‌سازی منابع است.</p>
+        </div>
+
+        <div class="insight-card danger fade-in">
+          <div class="ic"><i class="fa-solid fa-ban"></i></div>
+          <h4>توقف پروژه ۶ هزار واحدی شهری</h4>
+          <p>با وجود ۳,۶۰۷ واحد در دست اجرا در تفاهم‌نامه ۶ هزار واحدی شهری کمیته امداد، مبلغ تأمین‌شده و تخصیصی به استان صفر است. ادامه کار پیمانکاران در هاله‌ای از ابهام قرار دارد.</p>
+        </div>
+
+        <div class="insight-card info fade-in">
+          <div class="ic"><i class="fa-solid fa-hand-holding-heart"></i></div>
+          <h4>درخشش کمک‌های غیرنقدی خیرین</h4>
+          <p>عملکرد غیرنقدی ۲۸۵ درصد برنامه شش‌ماهه، نشان‌دهنده ظرفیت بالای مشارکت مردمی و اعتماد خیرین به طرح است. این ظرفیت باید در بخش نقدی نیز تقویت شود.</p>
+        </div>
+
+        <div class="insight-card warning fade-in">
+          <div class="ic"><i class="fa-solid fa-building"></i></div>
+          <h4>عقب‌ماندگی بخش شهری نسبت به روستایی</h4>
+          <p>تنها ۲۸٪ واحدهای در دست اجرا متعلق به بخش شهری است و تحقق زمین شهری تنها ۶۴٪ بوده. بازتوزیع ظرفیت‌ها و تمرکز بر پروژه‌های شهری ضروری است.</p>
+        </div>
+
+        <div class="insight-card fade-in">
+          <div class="ic"><i class="fa-solid fa-handshake"></i></div>
+          <h4>مانده مطالبات از نهادهای حمایتی</h4>
+          <p>مانده تعهد کمیته امداد در بخش روستایی ۳,۷۲۹ میلیارد ریال و مبلغ تخصیصی به بهزیستی تنها ۱۸۰ میلیارد ریال بوده که هزینه‌شده توسط استان صفر است.</p>
+        </div>
+
+        <div class="insight-card info fade-in">
+          <div class="ic"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+          <h4>ظرفیت مغفول مالیات و مسئولیت اجتماعی</h4>
+          <p>استفاده از ظرفیت مالیات شرکت‌های تابعه و بند «خ» ماده ۲۰ قانون برنامه هفتم (۲,۲۵۲ میلیارد تومان) می‌تواند بخشی از شکاف منابع را پوشش دهد.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ==================== تب ۲: تأمین زمین ==================== -->
+  <!-- ============================================================ -->
+  <section id="tab-land" class="tab-panel">
+
+    <!-- کارت‌های عددی -->
+    <div class="stats-grid">
+      <div class="stat-card fade-in">
+        <div class="icon-box"><i class="fa-solid fa-house-flag"></i></div>
+        <div class="label">هدف تأمین اراضی</div>
+        <div class="value">۲۰,۰۰۰ <small>واحد</small></div>
+        <span class="trend"><i class="fa-solid fa-bullseye"></i> سهمیه ابلاغی</span>
+      </div>
+
+      <div class="stat-card green fade-in">
+        <div class="icon-box"><i class="fa-solid fa-map-location-dot"></i></div>
+        <div class="label">مجموع قطعات شناسایی‌شده</div>
+        <div class="value">۲۰,۰۶۲ <small>قطعه</small></div>
+        <span class="trend"><i class="fa-solid fa-check"></i> تحقق ۱۰۰٪</span>
+      </div>
+
+      <div class="stat-card teal fade-in">
+        <div class="icon-box"><i class="fa-solid fa-city"></i></div>
+        <div class="label">داخل حریم شهر</div>
+        <div class="value">۱۴,۳۰۰ <small>قطعه</small></div>
+        <span class="trend blue"><i class="fa-solid fa-arrow-up"></i> تحقق ۷۲٪</span>
+      </div>
+
+      <div class="stat-card orange fade-in">
+        <div class="icon-box"><i class="fa-solid fa-tree"></i></div>
+        <div class="label">خارج از حریم شهر</div>
+        <div class="value">۵,۷۶۲ <small>قطعه</small></div>
+        <span class="trend warn"><i class="fa-solid fa-arrow-down"></i> تحقق ۲۹٪</span>
+      </div>
+
+      <div class="stat-card purple fade-in">
+        <div class="icon-box"><i class="fa-solid fa-sack-dollar"></i></div>
+        <div class="label">عواید واگذاری اراضی روستایی</div>
+        <div class="value">۱,۷۷۰ <small>میلیارد ریال</small></div>
+        <span class="trend"><i class="fa-solid fa-coins"></i> سهم ۵٪</span>
+      </div>
+
+      <div class="stat-card blue fade-in">
+        <div class="icon-box"><i class="fa-solid fa-droplet"></i></div>
+        <div class="label">اعتبار قیر رایگان</div>
+        <div class="value">۲۲۵ <small>میلیارد ریال</small></div>
+        <span class="trend blue"><i class="fa-solid fa-handshake"></i> کمک قیرسازان</span>
+      </div>
+
+      <div class="stat-card red fade-in">
+        <div class="icon-box"><i class="fa-solid fa-users"></i></div>
+        <div class="label">متقاضیان نهضت ملی (دهک ۱-۴)</div>
+        <div class="value">۳۹,۵۱۸ <small>نفر</small></div>
+        <span class="trend down"><i class="fa-solid fa-user-check"></i> ۹,۳۹۷ تخصیص</span>
+      </div>
+
+      <div class="stat-card green fade-in">
+        <div class="icon-box"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="label">تأیید نهایی نهضت ملی</div>
+        <div class="value">۲,۶۲۱ <small>نفر</small></div>
+        <span class="trend"><i class="fa-solid fa-stamp"></i> سهم نهایی</span>
+      </div>
+    </div>
+
+    <!-- نقل قول -->
+    <section class="quote-card fade-in">
+      <p>
+        «به همه در کوشش برای رفاه طبقات محروم وصیت می‌کنم که خیر دنیا و آخرت شماها
+        رسیدگی به حال محرومان جامعه است که در طول تاریخ ستم‌شاهی و خان‌خانی در رنج
+        و زحمت بوده‌اند... و از انصاف به دور است که یکی بی‌خانمان و یکی دارایی
+        آپارتمان‌ها باشد.»
+      </p>
+      <div class="src">
+        <i class="fa-solid fa-book-open"></i>
+        وصیت‌نامه سیاسی - الهی، صفحه ۸۳ — حضرت امام خمینی (ره)
+      </div>
+    </section>
+
+    <!-- نمودارها -->
+    <div class="section">
+      <h2 class="section-title"><i class="fa-solid fa-chart-pie"></i> تحلیل عملکرد تأمین زمین</h2>
+
+      <div class="charts-grid two">
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-chart-pie"></i> سهم قطعات داخل و خارج از حریم شهر</h3>
+            <span class="tag">از ۲۰,۰۶۲ قطعه</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartInsideOutside"></canvas></div>
+        </div>
+
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-bars-progress"></i> تحقق اهداف تأمین زمین</h3>
+            <span class="tag">تعداد قطعه</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartTargets"></canvas></div>
+        </div>
+
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-ranking-star"></i> عملکرد ۱۰ استان برتر در تأمین زمین</h3>
+            <span class="tag">تعداد قطعه</span>
+          </div>
+          <div class="chart-wrap tall"><canvas id="chartTopProvinces"></canvas></div>
+        </div>
+
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-users-viewfinder"></i> وضعیت نهضت ملی — دهک ۱ تا ۴</h3>
+            <span class="tag">تعداد نفرات</span>
+          </div>
+          <div class="chart-wrap tall"><canvas id="chartNehzat"></canvas></div>
+        </div>
+
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-chart-column"></i> منابع تأمین اعتبار طرح</h3>
+            <span class="tag">میلیارد ریال</span>
+          </div>
+          <div class="chart-wrap"><canvas id="chartFunding"></canvas></div>
+        </div>
+
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-scale-balanced"></i> مقایسه سهمیه و شناسایی زمین — استان‌ها</h3>
+            <span class="tag">سهمیه / عملکرد</span>
+          </div>
+          <div class="chart-wrap tall"><canvas id="chartCompare"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- پیشرفت استانی -->
+    <div class="section">
+      <h2 class="section-title"><i class="fa-solid fa-list-check"></i> پیشرفت استانی تأمین زمین و نهضت ملی</h2>
+
+      <div class="charts-grid two" style="margin-bottom:20px">
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-percent"></i> نرخ تحقق استانی (تأمین زمین)</h3>
+            <span class="tag">درصد نسبت به سهمیه</span>
+          </div>
+          <div class="progress-list">
+            <div class="progress-item">
+              <div class="p-head"><span>گلستان</span><span>۲۲۹٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill green" data-width="100%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>خراسان شمالی</span><span>۲۰۰٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill green" data-width="95%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>کرمان</span><span>۱۹۲٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill green" data-width="92%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>فارس</span><span>۱۴۰٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill blue" data-width="70%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>تهران</span><span>۱۳۴٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill blue" data-width="66%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>لرستان</span><span>۱۳۴٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill blue" data-width="66%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>کهگیلویه و بویراحمد</span><span>۱۱۸٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill blue" data-width="58%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>زنجان</span><span>۱۱۷٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill blue" data-width="57%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card fade-in">
+          <div class="chart-head">
+            <h3><i class="fa-solid fa-triangle-exclamation"></i> استان‌های نیازمند تسریع</h3>
+            <span class="tag">زیر ۶۰٪</span>
+          </div>
+          <div class="progress-list">
+            <div class="progress-item">
+              <div class="p-head"><span>مازندران</span><span>۱۷٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill red" data-width="17%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>چهارمحال و بختیاری</span><span>۳۱٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill red" data-width="31%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>سیستان و بلوچستان</span><span>۴۵٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill orange" data-width="45%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>خوزستان</span><span>۴۵٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill orange" data-width="45%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>همدان</span><span>۴۶٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill orange" data-width="46%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>کردستان</span><span>۵۷٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill orange" data-width="57%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>قزوین</span><span>۶۰٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill orange" data-width="60%"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="p-head"><span>کرمانشاه</span><span>۱۰۰٪</span></div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill green" data-width="100%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- جدول استانی -->
+      <div class="table-wrap fade-in">
+        <h3 style="font-size:14.5px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px">
+          <i class="fa-solid fa-table-list" style="color:var(--teal)"></i>
+          جدول عملکرد استانی تأمین زمین (۲۰,۰۰۰ واحد هدف)
+        </h3>
+        <table class="prov-table">
+          <thead>
+            <tr>
+              <th>ردیف</th>
+              <th>استان</th>
+              <th>سهمیه ابلاغی</th>
+              <th>شناسایی داخل حریم</th>
+              <th>شناسایی خارج حریم</th>
+              <th>مجموع شناسایی</th>
+              <th>درصد تحقق</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>۱</td><td>آذربایجان شرقی</td><td>۱,۱۷۵</td><td>۸۲۴</td><td>۰</td><td>۸۲۴</td><td><span style="color:#059669;font-weight:700">۷۰٪</span></td></tr>
+            <tr><td>۲</td><td>آذربایجان غربی</td><td>۱,۱۳۰</td><td>۸۴۲</td><td>۰</td><td>۸۴۲</td><td><span style="color:#059669;font-weight:700">۷۵٪</span></td></tr>
+            <tr><td>۳</td><td>البرز</td><td>۱۴۰</td><td>۱۵۰</td><td>۰</td><td>۱۵۰</td><td><span style="color:#059669;font-weight:700">۱۰۷٪</span></td></tr>
+            <tr><td>۴</td><td>اردبیل</td><td>۴۱۰</td><td>۴۱۰</td><td>۰</td><td>۴۱۰</td><td><span style="color:#059669;font-weight:700">۱۰۰٪</span></td></tr>
+            <tr><td>۵</td><td>اصفهان</td><td>۱,۱۰۰</td><td>۱,۱۰۵</td><td>۰</td><td>۱,۱۰۵</td><td><span style="color:#059669;font-weight:700">۱۰۰٪</span></td></tr>
+            <tr><td>۶</td><td>ایلام</td><td>۳۴۵</td><td>۲۱۹</td><td>۰</td><td>۲۱۹</td><td><span style="color:#d97706;font-weight:700">۶۳٪</span></td></tr>
+            <tr><td>۷</td><td>بوشهر</td><td>۶۰۰</td><td>۶۱۰</td><td>۰</td><td>۶۱۰</td><td><span style="color:#059669;font-weight:700">۱۰۲٪</span></td></tr>
+            <tr><td>۸</td><td>تهران</td><td>۲۱۰</td><td>۲۸۲</td><td>۰</td><td>۲۸۲</td><td><span style="color:#059669;font-weight:700">۱۳۴٪</span></td></tr>
+            <tr><td>۹</td><td>چهارمحال و بختیاری</td><td>۳۶۰</td><td>۱۱۰</td><td>۰</td><td>۱۱۰</td><td><span style="color:#dc2626;font-weight:700">۳۱٪</span></td></tr>
+            <tr><td>۱۰</td><td>خراسان جنوبی</td><td>۷۲۵</td><td>۶۰۰</td><td>۰</td><td>۶۰۰</td><td><span style="color:#d97706;font-weight:700">۸۳٪</span></td></tr>
+            <tr><td>۱۱</td><td>خراسان رضوی</td><td>۱,۴۰۰</td><td>۷۲۶</td><td>۷۸۳</td><td>۱,۵۰۹</td><td><span style="color:#059669;font-weight:700">۱۰۸٪</span></td></tr>
+            <tr><td>۱۲</td><td>خراسان شمالی</td><td>۶۲۰</td><td>۷۳۴</td><td>۰</td><td>۱,۴۱۸</td><td><span style="color:#059669;font-weight:700">۲۲۹٪</span></td></tr>
+            <tr><td>۱۳</td><td>خوزستان</td><td>۷۷۵</td><td>۴۷۵</td><td>۳۰۰</td><td>۷۷۵</td><td><span style="color:#059669;font-weight:700">۱۰۰٪</span></td></tr>
+            <tr><td>۱۴</td><td>زنجان</td><td>۵۰۰</td><td>۷۴</td><td>۰</td><td>۵۹۲</td><td><span style="color:#059669;font-weight:700">۱۱۸٪</span></td></tr>
+            <tr><td>۱۵</td><td>سمنان</td><td>۲۳۰</td><td>۲۳۰</td><td>۰</td><td>۲۳۰</td><td><span style="color:#059669;font-weight:700">۱۰۰٪</span></td></tr>
+            <tr><td>۱۶</td><td>سیستان و بلوچستان</td><td>۱,۱۰۰</td><td>۴۹۷</td><td>۰</td><td>۴۹۷</td><td><span style="color:#dc2626;font-weight:700">۴۵٪</span></td></tr>
+            <tr><td>۱۷</td><td>فارس</td><td>۱,۳۵۰</td><td>۴۴۱</td><td>۸۱۲</td><td>۱,۸۸۷</td><td><span style="color:#059669;font-weight:700">۱۴۰٪</span></td></tr>
+            <tr><td>۱۸</td><td>قزوین</td><td>۳۴۵</td><td>۳۰۰</td><td>۰</td><td>۳۰۰</td><td><span style="color:#d97706;font-weight:700">۸۷٪</span></td></tr>
+            <tr><td>۱۹</td><td>قم</td><td>۱۵۰</td><td>۰</td><td>۱۷۰</td><td>۱۷۰</td><td><span style="color:#059669;font-weight:700">۱۱۳٪</span></td></tr>
+            <tr><td>۲۰</td><td>کردستان</td><td>۴۵۰</td><td>۱۴۹</td><td>۰</td><td>۲۵۶</td><td><span style="color:#d97706;font-weight:700">۵۷٪</span></td></tr>
+            <tr><td>۲۱</td><td>کرمان</td><td>۱,۰۰۰</td><td>۷۵۵</td><td>۳۲۰</td><td>۱,۹۲۰</td><td><span style="color:#059669;font-weight:700">۱۹۲٪</span></td></tr>
+            <tr><td>۲۲</td><td>کرمانشاه</td><td>۳۲۰</td><td>۱۶۰</td><td>۰</td><td>۳۲۰</td><td><span style="color:#059669;font-weight:700">۱۰۰٪</span></td></tr>
+            <tr><td>۲۳</td><td>کهگیلویه و بویراحمد</td><td>۴۱۰</td><td>۶۹</td><td>۴۱۰</td><td>۵۴۸</td><td><span style="color:#059669;font-weight:700">۱۳۴٪</span></td></tr>
+            <tr><td>۲۴</td><td>گلستان</td><td>۵۶۵</td><td>۳۶۵</td><td>۲۰۰</td><td>۱,۱۳۰</td><td><span style="color:#059669;font-weight:700">۲۰۰٪</span></td></tr>
+            <tr><td>۲۵</td><td>گیلان</td><td>۸۲۰</td><td>۱۱۵</td><td>۳۳۶</td><td>۸۶۳</td><td><span style="color:#059669;font-weight:700">۱۰۵٪</span></td></tr>
+            <tr><td>۲۶</td><td>لرستان</td><td>۶۴۰</td><td>۱۴</td><td>۸۰۰</td><td>۸۵۶</td><td><span style="color:#059669;font-weight:700">۱۰۵٪</span></td></tr>
+            <tr><td>۲۷</td><td>مازندران</td><td>۱,۱۰۰</td><td>۰</td><td>۱۰۶</td><td>۱۸۳</td><td><span style="color:#dc2626;font-weight:700">۱۷٪</span></td></tr>
+            <tr><td>۲۸</td><td>مرکزی</td><td>۴۱۰</td><td>۱۶۰</td><td>۰</td><td>۳۲۰</td><td><span style="color:#d97706;font-weight:700">۷۸٪</span></td></tr>
+            <tr><td>۲۹</td><td>هرمزگان</td><td>۶۰۰</td><td>۲۱۰</td><td>۲۱۱</td><td>۴۲۱</td><td><span style="color:#059669;font-weight:700">۷۰٪</span></td></tr>
+            <tr><td>۳۰</td><td>همدان</td><td>۶۷۵</td><td>۱۲۵</td><td>۰</td><td>۳۱۰</td><td><span style="color:#dc2626;font-weight:700">۴۶٪</span></td></tr>
+            <tr><td>۳۱</td><td>یزد</td><td>۳۴۵</td><td>۴۰۵</td><td>۰</td><td>۴۰۵</td><td><span style="color:#059669;font-weight:700">۱۱۷٪</span></td></tr>
+            <tr class="total-row">
+              <td colspan="2">جمع کل</td>
+              <td>۲۰,۰۰۰</td>
+              <td>۱۴,۳۰۰</td>
+              <td>۵,۷۶۲</td>
+              <td>۲۰,۰۶۲</td>
+              <td>۱۰۰٪</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- کارت‌های تحلیلی -->
+    <div class="section">
+      <h2 class="section-title"><i class="fa-solid fa-lightbulb"></i> کارت‌های تحلیلی تأمین زمین</h2>
+
+      <div class="insight-grid">
+        <div class="insight-card success fade-in">
+          <div class="ic"><i class="fa-solid fa-trophy"></i></div>
+          <h4>تحقق ۱۰۰٪ هدف تأمین زمین</h4>
+          <p>با شناسایی ۲۰,۰۶۲ قطعه زمین، هدف تأمین اراضی برای ۲۰,۰۰۰ واحد مسکونی به طور کامل محقق شده و مازاد ۶۲ قطعه‌ای نیز وجود دارد.</p>
+        </div>
+
+        <div class="insight-card info fade-in">
+          <div class="ic"><i class="fa-solid fa-city"></i></div>
+          <h4>غلبه شناسایی داخل حریم شهر</h4>
+          <p>از مجموع ۲۰,۰۶۲ قطعه، ۱۴,۳۰۰ قطعه (۷۱٪) داخل حریم شهر و تنها ۵,۷۶۲ قطعه (۲۹٪) خارج از حریم شناسایی شده است.</p>
+        </div>
+
+        <div class="insight-card warning fade-in">
+          <div class="ic"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <h4>ناهمگونی عملکرد استانی</h4>
+          <p>گلستان (۲۲۹٪)، خراسان شمالی (۲۰۰٪) و کرمان (۱۹۲٪) پیشتاز هستند، در حالی که مازندران (۱۷٪)، چهارمحال (۳۱٪) و سیستان و بلوچستان (۴۵٪) نیازمند توجه فوری هستند.</p>
+        </div>
+
+        <div class="insight-card danger fade-in">
+          <div class="ic"><i class="fa-solid fa-users-slash"></i></div>
+          <h4>ضعف در تخصیص نهضت ملی</h4>
+          <p>از ۳۹,۵۱۸ متقاضی دهک ۱ تا ۴، تنها ۹,۳۹۷ نفر (۲۴٪) تخصیص داده شده و فقط ۲,۶۲۱ نفر تأیید نهایی شده‌اند.</p>
+        </div>
+
+        <div class="insight-card info fade-in">
+          <div class="ic"><i class="fa-solid fa-coins"></i></div>
+          <h4>تنوع منابع تأمین اعتبار</h4>
+          <p>طرح از سه منبع اصلی تغذیه می‌شود: عواید واگذاری اراضی روستایی، کمک نقدی شرکت‌های قیرساز و اعتبارات دولتی-استانی.</p>
+        </div>
+
+        <div class="insight-card success fade-in">
+          <div class="ic"><i class="fa-solid fa-scale-balanced"></i></div>
+          <h4>مازاد شناسایی زمین</h4>
+          <p>مجموع شناسایی (۲۰,۰۶۲ قطعه) از سهمیه ابلاغی (۲۰,۰۰۰ واحد) فراتر رفته و مازاد ۶۲ قطعه‌ای ایجاد شده است.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    <strong>بنیاد مسکن انقلاب اسلامی</strong> — دبیرخانه ستاد هماهنگی طرح خانه امید
+  </p>
+  <p style="margin-top:6px;">گزارش تحلیلی جامع — دوازدهمین جلسه ستاد هماهنگی — ۱۴۰۵/۰۷/۰۴</p>
+</footer>
+
+<script>
+/* ================= ثبت پلاگین Datalabels ================= */
+Chart.register(ChartDataLabels);
+
+/* ================= تنظیمات کلی ================= */
+Chart.defaults.font.family = 'Vazirmatn, sans-serif';
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#475569';
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.boxWidth = 8;
+Chart.defaults.plugins.legend.labels.padding = 14;
+Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(15,23,42,0.92)';
+Chart.defaults.plugins.tooltip.padding = 10;
+Chart.defaults.plugins.tooltip.cornerRadius = 8;
+Chart.defaults.plugins.tooltip.titleFont = { family: 'Vazirmatn', weight: '700' };
+Chart.defaults.plugins.tooltip.bodyFont = { family: 'Vazirmatn' };
+
+/* تنظیمات پیش‌فرض Datalabels */
+Chart.defaults.set('plugins.datalabels', {
+  color: '#0f172a',
+  font: { family: 'Vazirmatn', weight: '700', size: 11 },
+  display: true
+});
+
+const faNum = (n) => Number(n).toLocaleString('fa-IR');
+
+/* ============================================================ */
+/* ==================== نمودارهای تب ۱ ==================== */
+/* ============================================================ */
+
+/* ۱. سهم شهری و روستایی */
+new Chart(document.getElementById('chartUrbanRural'), {
+  type: 'doughnut',
+  data: {
+    labels: ['روستایی', 'شهری'],
+    datasets: [{
+      data: [70952, 28032],
+      backgroundColor: ['#10b981', '#f97316'],
+      borderWidth: 4,
+      borderColor: '#fff',
+      hoverOffset: 10
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '58%',
+    layout: { padding: { top: 10, bottom: 10 } },
+    plugins: {
+      legend: { position: 'bottom' },
+      datalabels: {
+        color: '#fff',
+        font: { family: 'Vazirmatn', weight: '800', size: 13 },
+        formatter: (v, ctx) => {
+          const total = ctx.dataset.data.reduce((a,b)=>a+b,0);
+          const pct = ((v/total)*100).toFixed(1);
+          return pct + '٪\n' + faNum(v);
+        },
+        textAlign: 'center',
+        anchor: 'center',
+        align: 'center'
+      },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => {
+            const total = ctx.dataset.data.reduce((a,b)=>a+b,0);
+            const pct = ((ctx.parsed/total)*100).toFixed(1);
+            return ` ${ctx.label}: ${faNum(ctx.parsed)} (${pct}٪)`;
+          }
+        }
+      }
+    }
+  }
+});
+
+/* ۲. مراحل اجرایی */
+new Chart(document.getElementById('chartStages'), {
+  type: 'bar',
+  data: {
+    labels: ['تأیید پرونده', 'معرفی به بانک', 'عقد قرارداد', 'پی‌کنی', 'فونداسیون', 'اسکلت', 'گچ‌کاری'],
+    datasets: [{
+      label: 'تعداد واحد',
+      data: [7808, 7501, 7224, 7497, 7317, 7191, 6764],
+      backgroundColor: ['#4f46e5','#6366f1','#818cf8','#0ea5e9','#22d3ee','#10b981','#f59e0b'],
+      borderRadius: 8,
+      maxBarThickness: 40
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { top: 24 } },
+    plugins: {
+      legend: { display: false },
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        color: '#1e293b',
+        font: { family: 'Vazirmatn', weight: '700', size: 11 },
+        formatter: (v) => faNum(v)
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: '#eef2ff' },
+        ticks: { callback: v => faNum(v) }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+/* ۳. عملکرد بانک‌ها */
+new Chart(document.getElementById('chartBanks'), {
+  type: 'bar',
+  data: {
+    labels: ['تجارت','رفاه','مسکن','صادرات','پست بانک','ملت','ملی'],
+    datasets: [
+      {
+        label: 'سهمیه ابلاغی',
+        data: [24000, 12545, 5455, 24000, 6000, 24000, 24000],
+        backgroundColor: 'rgba(79,70,229,0.85)',
+        borderRadius: 8
+      },
+      {
+        label: 'جذب شده',
+        data: [10457, 3711, 541, 3295, 28, 54, 0],
+        backgroundColor: 'rgba(249,115,22,0.9)',
+        borderRadius: 8
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { top: 20 } },
+    plugins: {
+      legend: { position: 'bottom' },
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        color: '#1e293b',
+        font: { family: 'Vazirmatn', weight: '700', size: 10 },
+        formatter: (v) => v > 0 ? faNum(v) : ''
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: '#eef2ff' },
+        ticks: { callback: v => faNum(v) }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+/* ۴. عملکرد استانی زمین روستایی */
+new Chart(document.getElementById('chartProvinces'), {
+  type: 'bar',
+  data: {
+    labels: ['آذربایجان شرقی','خراسان رضوی','خراسان شمالی','خراسان جنوبی','مازندران','خوزستان','کرمان','گلستان','سیستان','هرمزگان'],
+    datasets: [{
+      label: 'واگذاری زمین',
+      data: [8449, 3185, 2588, 1932, 1090, 1000, 776, 730, 676, 427],
+      backgroundColor: ['#4f46e5','#6366f1','#818cf8','#a5b4fc','#0ea5e9','#22d3ee','#10b981','#34d399','#f59e0b','#fbbf24'],
+      borderRadius: 8,
+      maxBarThickness: 34
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { right: 40 } },
+    plugins: {
+      legend: { display: false },
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        color: '#1e293b',
+        font: { family: 'Vazirmatn', weight: '700', size: 11 },
+        formatter: (v) => faNum(v)
+      }
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        grid: { color: '#eef2ff' },
+        ticks: { callback: v => faNum(v) }
+      },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+/* ۵. جذب کمک خیرین */
+new Chart(document.getElementById('chartDonations'), {
+  type: 'bar',
+  data: {
+    labels: ['کمک‌های نقدی', 'کمک‌های غیرنقدی'],
+    datasets: [
+      {
+        label: 'برنامه ۶ ماهه',
+        data: [1447, 923],
+        backgroundColor: 'rgba(79,70,229,0.85)',
+        borderRadius: 10,
+        maxBarThickness: 70
+      },
+      {
+        label: 'عملکرد ۶ ماهه',
+        data: [967, 2626],
+        backgroundColor: 'rgba(16,185,129,0.9)',
+        borderRadius: 10,
+        maxBarThickness: 70
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { top: 20 } },
+    plugins: {
+      legend: { position: 'bottom' },
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        color: '#1e293b',
+        font: { family: 'Vazirmatn', weight: '700', size: 11 },
+        formatter: (v) => faNum(v)
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: '#eef2ff' },
+        ticks: { callback: v => faNum(v) }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+/* ۶. شکاف منابع و مصارف */
+new Chart(document.getElementById('chartGap'), {
+  type: 'bar',
+  data: {
+    labels: ['منابع مورد نیاز', 'اعتبارات مصوب'],
+    datasets: [{
+      label: 'همت (هزار میلیارد تومان)',
+      data: [237, 3.116],
+      backgroundColor: ['#ef4444', '#10b981'],
+      borderRadius: 12,
+      maxBarThickness: 90
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { top: 24 } },
+    plugins: {
+      legend: { display: false },
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        color: '#1e293b',
+        font: { family: 'Vazirmatn', weight: '800', size: 12 },
+        formatter: (v) => v.toLocaleString('fa-IR') + ' همت'
+      },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => ` ${ctx.parsed.y.toLocaleString('fa-IR')} همت`
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        type: 'logarithmic',
+        grid: { color: '#eef2ff' },
+        ticks: { callback: v => faNum(v) }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+/* ۷. مقایسه تفاهم‌نامه‌ها */
+new Chart(document.getElementById('chartAgreements'), {
+  type: 'bar',
+  data: {
+    labels: ['کمیته امداد ۸ هزار روستایی','کمیته امداد ۳۰ هزار شهری','بهزیستی ۸ هزار','کمیته امداد ۶ هزار شهری'],
+    datasets: [
+      {
+        label: 'پرونده تأییدشده',
+        data: [7808, 1916, 2525, 3607],
+        backgroundColor: 'rgba(79,70,229,0.85)',
+        borderRadius: 8
+      },
+      {
+        label: 'معرفی به بانک',
+        data: [7501, 1603, 2359, 0],
+        backgroundColor: 'rgba(14,165,233,0.85)',
+        borderRadius: 8
+      },
+      {
+        label: 'عقد قرارداد',
+        data: [7224, 1530, 2359, 0],
+        backgroundColor: 'rgba(249,115,22,0.9)',
+        borderRadius: 8
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { top: 20 } },
+    plugins: {
+      legend: { position: 'bottom' },
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        color: '#1e293b',
+        font: { family: 'Vazirmatn', weight: '700', size: 9 },
+        formatter: (v) => v > 0 ? faNum(v) : ''
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: '#eef2ff' },
+        ticks: { callback: v => faNum(v) }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+/* ============================================================ */
+/* ==================== نمودارهای تب ۲ ==================== */
+/* ============================================================ */
+
+/* ۱. داخل/خارج حریم */
+new Chart(document.getElementById('chartInsideOutside'), {
+  type: 'doughnut',
+  data: {
+    labels: ['داخل حریم شهر', 'خارج از حریم'],
+    datasets: [{
+      data: [14300, 5762],
+      backgroundColor: ['#0f766e', '#f59e0b'],
+      borderWidth: 4,
+      borderColor: '#fff',
+      hoverOffset: 12
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '58%',
+    plugins: {
+      legend: { position: 'bottom' },
+      datalabels: {
+        color: '#fff',
+        font: { family: 'Vazirmatn', weight: '800', size: 13 },
+        formatter: (v, ctx) => {
+          const total = ctx.dataset.data.reduce((a,b)=>a+b,0);
+          const pct = ((v/total)*100).toFixed(1);
+          return pct + '٪\n' + faNum(v);
+        },
+        textAlign: 'center',
+        anchor: 'center',
+        align: 'center'
+      },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => {
+            const total = ctx.dataset.data.reduce((a,b)=>a+b,0);
+            const pct = ((ctx.parsed/total)*100).toFixed(1);
+            return ` ${ctx.label}: ${faNum(ctx.parsed)} (${pct}٪)`;
+          }
+        }
+      }
+    }
+  }
+});
+
+/* ۲. تحقق اهداف */
+new Chart(document.getElementById('chartTargets'), {
+  type: 'bar',
+  data: {
+    labels: ['هدف تأمین اراضی', 'شناسایی داخل حریم', 'شناسایی خارج حریم', 'مجموع شناسایی'],
+    datasets: [{
+      label: 'تعداد قطعه/واحد',
+      data: [20000, 14300, 5762, 20062],
+      backgroundColor: ['#94a3b8', '#0f766e', '#f59e0b', '#0891b2'],
+      borderRadius: 10,
+      maxBarThickness: 60
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { top: 24 } },
+    plugins: {
+      legend: { display: false },
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        color: '#1e293b',
+        font: { family: 'Vazirmatn', weight: '700', size: 11 },
+        formatter: (v) => faNum(v)
+      },
+      tooltip: { callbacks: { label: (ctx) => ` ${faNum(ctx.parsed.y)} واحد/قطعه` } }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: '#f1f5f9' },
+        ticks: { callback: v => faNum(v) }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+/* ۳. ۱۰ استان برتر */
+new Chart(document.getElementById('chartTopProvinces'), {
+  type: 'bar',
+  data: {
+    labels: ['گلستان','خراسان شمالی','کرمان','فارس','تهران','لرستان','کهگیلویه','زنجان','یزد','خراسان رضوی'],
+    datasets: [{
+      label: 'مجموع شناسایی',
+      data: [1418, 1418, 1920, 1887, 1300, 1000, 856, 730, 640, 1509],
+      backgroundColor: ['#0f766e','#14b8a6','#0891b2','#0ea5e9','#8b5cf6','#a855f7','#f59e0b','#fbbf24','#10b981','#34d399'],
+      borderRadius: 8,
+      maxBarThickness: 34
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { right: 44 } },
+    plugins: {
+      legend: { display: false },
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        color: '#1e293b',
+        font: { family: 'Vazirmatn', weight: '700', size: 11 },
+        formatter: (v) => faNum(v)
+      },
+      tooltip: { callbacks: { label: (ctx) => ` ${faNum(ctx.parsed.x)} قطعه` } }
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        grid: { color: '#f1f5f9' },
+        ticks: { callback: v => faNum(v) }
+      },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+/* ۴. نهضت ملی */
+new Chart(document.getElementById('chartNehzat'), {
+  type: 'bar',
+  data: {
+    labels: ['ثبت‌نام شده','تخصیص داده شده','تأیید نهایی','انصراف/رد','در انتظار بررسی'],
+    datasets: [{
+      label: 'تعداد متقاضی',
+      data: [39518, 9397, 2621, 16362, 11138],
+      backgroundColor: ['#0f766e','#0891b2','#10b981','#dc2626','#f59e0b'],
+      borderRadius: 10,
+      maxBarThickness: 56
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { top: 24 } },
+    plugins: {
+      legend: { display: false },
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        color: '#1e293b',
+        font: { family: 'Vazirmatn', weight: '700', size: 11 },
+        formatter: (v) => faNum(v)
+      },
+      tooltip: { callbacks: { label: (ctx) => ` ${faNum(ctx.parsed.y)} نفر` } }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: '#f1f5f9' },
+        ticks: { callback: v => faNum(v) }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+/* ۵. منابع تأمین اعتبار */
+new Chart(document.getElementById('chartFunding'), {
+  type: 'polarArea',
+  data: {
+    labels: ['عواید واگذاری اراضی روستایی', 'کمک شرکت‌های قیرساز', 'اعتبارات دولتی-استانی'],
+    datasets: [{
+      data: [1770, 225, 1000],
+      backgroundColor: ['rgba(15,118,110,0.85)','rgba(245,158,11,0.85)','rgba(8,145,178,0.85)'],
+      borderColor: '#fff',
+      borderWidth: 3
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom' },
+      datalabels: {
+        color: '#fff',
+        font: { family: 'Vazirmatn', weight: '800', size: 12 },
+        formatter: (v) => faNum(v) + '\nم.ر'
+      },
+      tooltip: {
+        callbacks: { label: (ctx) => ` ${faNum(ctx.parsed.r)} میلیارد ریال` }
+      }
+    },
+    scales: {
+      r: {
+        ticks: { backdropColor: 'transparent', color: '#94a3b8', callback: v => faNum(v) },
+        grid: { color: '#e2e8f0' }
+      }
+    }
+  }
+});
+
+/* ۶. مقایسه سهمیه و عملکرد */
+new Chart(document.getElementById('chartCompare'), {
+  type: 'bar',
+  data: {
+    labels: ['گلستان','خراسان شمالی','کرمان','فارس','تهران','لرستان','کهگیلویه','زنجان','یزد','همدان'],
+    datasets: [
+      {
+        label: 'سهمیه ابلاغی',
+        data: [565, 620, 1000, 1350, 210, 640, 410, 500, 345, 675],
+        backgroundColor: 'rgba(15,118,110,0.85)',
+        borderRadius: 8
+      },
+      {
+        label: 'مجموع شناسایی',
+        data: [1418, 1418, 1920, 1887, 1300, 1000, 856, 730, 640, 310],
+        backgroundColor: 'rgba(245,158,11,0.9)',
+        borderRadius: 8
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { top: 20 } },
+    plugins: {
+      legend: { position: 'bottom' },
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        color: '#1e293b',
+        font: { family: 'Vazirmatn', weight: '700', size: 10 },
+        formatter: (v) => faNum(v)
+      },
+      tooltip: { callbacks: { label: (ctx) => ` ${faNum(ctx.parsed.y)} واحد` } }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: '#f1f5f9' },
+        ticks: { callback: v => faNum(v) }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+/* ================= انیمیشن پروگرس بارها ================= */
+function animateProgressBars() {
+  document.querySelectorAll('.progress-bar-fill').forEach(el => {
+    el.style.width = '0';
+  });
+  setTimeout(() => {
+    document.querySelectorAll('.progress-bar-fill').forEach(el => {
+      el.style.width = el.dataset.width;
+    });
+  }, 250);
+}
+
+/* ================= تب‌سوییچ ================= */
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.tab-panel');
+
+tabButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const targetId = btn.dataset.tab;
+
+    tabButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    tabPanels.forEach(p => {
+      if (p.id === targetId) {
+        p.classList.add('active');
+      } else {
+        p.classList.remove('active');
+      }
+    });
+
+    // انیمیشن مجدد پروگرس بارها
+    animateProgressBars();
+
+    // اسکرول نرم به بالای تب
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+/* ================= انیمیشن ورود کارت‌ها ================= */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationDelay = (i * 0.05) + 's';
+      entry.target.style.animationPlayState = 'running';
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.fade-in').forEach(el => {
+  el.style.animationPlayState = 'paused';
+  observer.observe(el);
+});
+
+/* ================= اجرای اولیه ================= */
+window.addEventListener('load', () => {
+  setTimeout(animateProgressBars, 300);
+});
+</script>
+
+</body>
+</html>
