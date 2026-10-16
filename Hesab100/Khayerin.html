@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>داشبورد عملکرد انجمن خیرین مسکن‌ساز استان‌ها | سامانه هوشمند مدیریتی ریاست بنیاد مسکن</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+<style>
+:root{
+  --bg:#eef2f7;
+  --card:#ffffff;
+  --ink:#0f172a;
+  --ink-2:#334155;
+  --muted:#64748b;
+  --line:#e2e8f0;
+  --brand:#0f766e;
+  --brand-2:#14b8a6;
+  --brand-3:#0e7490;
+  --indigo:#4338ca;
+  --amber:#d97706;
+  --rose:#be123c;
+  --radius:18px;
+  --shadow:0 6px 24px -8px rgba(15,23,42,.18), 0 2px 6px -2px rgba(15,23,42,.06);
+  --shadow-lg:0 18px 46px -18px rgba(15,23,42,.35);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Vazirmatn', system-ui, sans-serif;
+  background:
+     radial-gradient(1100px 560px at 100% -8%, #ccfbf1 0%, transparent 58%),
+     radial-gradient(900px 520px at -8% 6%, #e0e7ff 0%, transparent 55%),
+     radial-gradient(800px 500px at 50% 110%, #fef3c7 0%, transparent 60%),
+     var(--bg);
+  color:var(--ink);
+  padding:16px 14px 42px;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+.wrap{max-width:1480px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+
+/* ============ BANNER ============ */
+.banner{
+  position:relative;
+  border-radius:26px;
+  overflow:hidden;
+  background:linear-gradient(122deg,#0b3b36 0%, #0f766e 32%, #0e7490 62%, #1e3a8a 100%);
+  box-shadow:var(--shadow-lg);
+  isolation:isolate;
+}
+.banner::before{
+  content:"";
+  position:absolute;inset:0;
+  background:
+    radial-gradient(520px 260px at 88% -20%, rgba(45,212,191,.45), transparent 70%),
+    radial-gradient(420px 240px at 8% 120%, rgba(129,140,248,.42), transparent 70%);
+  z-index:-1;
+}
+.banner::after{
+  content:"";
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size:44px 44px;
+  mask-image:linear-gradient(to bottom, rgba(0,0,0,.6), transparent 85%);
+  z-index:-1;
+}
+.banner-inner{
+  padding:26px 28px 26px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.banner-icon{
+  width:76px;height:76px;flex:0 0 auto;
+  border-radius:22px;
+  display:grid;place-items:center;
+  font-size:32px;color:#fff;
+  background:linear-gradient(145deg, rgba(255,255,255,.28), rgba(255,255,255,.08));
+  border:1px solid rgba(255,255,255,.32);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5), 0 10px 26px -12px rgba(0,0,0,.6);
+  backdrop-filter:blur(6px);
+}
+.banner-text{flex:1 1 340px;min-width:260px;color:#fff}
+.banner-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12.5px;font-weight:600;letter-spacing:.2px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.24);
+  padding:6px 13px;border-radius:999px;
+  margin-bottom:12px;
+  backdrop-filter:blur(4px);
+}
+.banner-text h1{
+  font-size:clamp(19px, 2.6vw, 30px);
+  font-weight:800;line-height:1.45;
+  text-shadow:0 2px 14px rgba(0,0,0,.28);
+}
+.banner-text p{
+  margin-top:8px;font-size:14px;font-weight:400;color:#d7fbf4;opacity:.95;
+}
+.capsules{display:flex;flex-direction:column;gap:10px;flex:0 0 auto}
+.capsule{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:11px 18px;border-radius:999px;
+  font-size:13.5px;font-weight:600;white-space:nowrap;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.3);
+  backdrop-filter:blur(8px);
+  transition:.25s ease;
+}
+.capsule-date{
+  background:rgba(255,255,255,.15);color:#fff;
+}
+.capsule-link{
+  background:linear-gradient(135deg,#fbbf24,#f59e0b);
+  color:#3b2503;border-color:rgba(255,255,255,.45);
+  box-shadow:0 10px 22px -10px rgba(245,158,11,.95);
+}
+.capsule-link:hover{transform:translateY(-2px);box-shadow:0 16px 28px -12px rgba(245,158,11,1)}
+.capsule-link i.fa-arrow-up-right-from-square{font-size:11px;opacity:.8}
+
+/* ============ SECTION TITLE ============ */
+.sec-title{
+  display:flex;align-items:center;gap:11px;
+  font-size:16.5px;font-weight:800;color:#0f172a;
+  margin:6px 2px -4px;
+}
+.sec-title .bar{
+  width:6px;height:22px;border-radius:99px;
+  background:linear-gradient(180deg,var(--brand-2),var(--brand));
+}
+.sec-title span.sub{font-size:12.5px;font-weight:500;color:var(--muted);margin-inline-start:auto}
+
+/* ============ KPI CARDS ============ */
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(215px,1fr));
+  gap:14px;
+}
+.kpi{
+  position:relative;
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:18px 17px 16px;
+  box-shadow:var(--shadow);
+  border:1px solid rgba(226,232,240,.9);
+  overflow:hidden;
+  transition:.28s cubic-bezier(.2,.7,.3,1);
+}
+.kpi::before{
+  content:"";position:absolute;inset-inline:0;top:0;height:5px;
+  background:linear-gradient(90deg, var(--c1), var(--c2));
+}
+.kpi::after{
+  content:"";position:absolute;left:-38px;bottom:-46px;
+  width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(circle, var(--c1), transparent 70%);
+  opacity:.1;
+}
+.kpi:hover{transform:translateY(-4px);box-shadow:0 22px 40px -20px rgba(15,23,42,.4)}
+.kpi-head{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.kpi-icon{
+  width:44px;height:44px;border-radius:13px;flex:0 0 auto;
+  display:grid;place-items:center;color:#fff;font-size:18px;
+  background:linear-gradient(145deg,var(--c1),var(--c2));
+  box-shadow:0 8px 18px -8px var(--c2);
+}
+.kpi-label{font-size:12.5px;color:var(--muted);font-weight:600;line-height:1.6}
+.kpi-value{
+  font-size:clamp(21px,2.4vw,27px);font-weight:800;color:#0b1b33;
+  letter-spacing:-.4px;line-height:1.25;
+  display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;
+}
+.kpi-value small{font-size:12px;font-weight:600;color:var(--muted)}
+.kpi-note{
+  margin-top:9px;font-size:11.5px;color:var(--muted);
+  display:flex;align-items:center;gap:6px;font-weight:500;
+}
+.kpi-note i{color:var(--c2)}
+
+/* ============ INSIGHT CARDS ============ */
+.insight-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(268px,1fr));
+  gap:14px;
+}
+.insight{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow:var(--shadow);
+  border:1px solid rgba(226,232,240,.9);
+  border-inline-start:5px solid var(--ac);
+  display:flex;gap:13px;align-items:flex-start;
+  transition:.28s ease;
+}
+.insight:hover{transform:translateY(-3px);box-shadow:0 20px 38px -20px rgba(15,23,42,.4)}
+.insight-ico{
+  width:42px;height:42px;border-radius:12px;flex:0 0 auto;
+  display:grid;place-items:center;font-size:17px;
+  color:var(--ac);background:color-mix(in srgb, var(--ac) 13%, #fff);
+}
+.insight h4{font-size:13.5px;font-weight:800;margin-bottom:6px;color:#0b1b33}
+.insight p{font-size:12.4px;line-height:1.95;color:var(--ink-2);font-weight:400}
+.insight b{color:var(--ac);font-weight:800}
+
+/* ============ CHART CARDS ============ */
+.chart-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(400px,1fr));
+  gap:15px;
+}
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  border:1px solid rgba(226,232,240,.9);
+  padding:16px 16px 12px;
+  display:flex;flex-direction:column;
+  transition:.28s ease;
+}
+.card:hover{box-shadow:0 20px 40px -22px rgba(15,23,42,.42)}
+.card-head{
+  display:flex;align-items:center;gap:10px;
+  padding-bottom:12px;margin-bottom:6px;
+  border-bottom:1px dashed var(--line);
+}
+.card-head .ico{
+  width:36px;height:36px;border-radius:11px;flex:0 0 auto;
+  display:grid;place-items:center;font-size:15px;color:#fff;
+  background:linear-gradient(145deg,var(--c1,#0f766e),var(--c2,#14b8a6));
+  box-shadow:0 8px 16px -9px var(--c2,#14b8a6);
+}
+.card-head h3{font-size:14px;font-weight:800;color:#0b1b33;line-height:1.5}
+.card-head p{font-size:11px;color:var(--muted);font-weight:500;margin-top:2px}
+.chart-box{position:relative;width:100%;height:320px;margin-top:8px}
+.chart-box.tall{height:600px}
+.chart-box.mid{height:400px}
+.span-2{grid-column:span 2}
+
+/* ============ TABLE ============ */
+.table-card{
+  background:var(--card);border-radius:var(--radius);
+  box-shadow:var(--shadow);border:1px solid rgba(226,232,240,.9);
+  padding:16px;overflow:hidden;
+}
+.table-scroll{overflow-x:auto;margin-top:10px;border-radius:12px;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:12.6px;min-width:860px}
+thead th{
+  position:sticky;top:0;
+  background:linear-gradient(180deg,#0f766e,#0d6b64);
+  color:#fff;font-weight:700;font-size:12.2px;
+  padding:12px 10px;text-align:center;white-space:nowrap;
+}
+tbody td{padding:10px;text-align:center;border-bottom:1px solid #eef2f7;color:var(--ink-2)}
+tbody tr:nth-child(even){background:#f8fafc}
+tbody tr:hover{background:#ecfeff}
+tbody tr.total-row{background:#f0fdfa;font-weight:800;color:#0f766e}
+tbody tr.total-row td{border-top:2px solid #99f6e4}
+.prov-cell{font-weight:700;color:#0b1b33;text-align:right !important;padding-inline-start:14px !important}
+.mini-bar{
+  height:7px;border-radius:99px;background:#e2e8f0;overflow:hidden;min-width:56px;
+  display:inline-block;vertical-align:middle;width:64px;margin-inline-end:6px;
+}
+.mini-bar span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#14b8a6,#0f766e)}
+.mini-bar.warn span{background:linear-gradient(90deg,#fbbf24,#d97706)}
+.mini-bar.bad span{background:linear-gradient(90deg,#fb7185,#be123c)}
+
+/* ============ FOOTER NOTE ============ */
+.note{
+  display:flex;gap:12px;align-items:flex-start;
+  background:linear-gradient(135deg,#fffbeb,#fef3c7);
+  border:1px solid #fde68a;border-radius:var(--radius);
+  padding:15px 18px;font-size:12.8px;line-height:2;color:#78350f;
+}
+.note i{font-size:18px;color:#d97706;margin-top:3px}
+footer{
+  text-align:center;font-size:11.5px;color:var(--muted);
+  padding-top:8px;font-weight:500;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1024px){
+  .span-2{grid-column:span 1}
+  .chart-grid{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  body{padding:10px 9px 30px}
+  .banner-inner{padding:20px 16px;gap:14px}
+  .banner-icon{width:60px;height:60px;font-size:25px;border-radius:17px}
+  .capsules{width:100%;flex-direction:column}
+  .capsule{justify-content:center;width:100%}
+  .kpi-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .kpi{padding:14px 13px}
+  .kpi-icon{width:38px;height:38px;font-size:15px}
+  .chart-box{height:290px}
+  .chart-box.tall{height:520px}
+  .chart-box.mid{height:360px}
+  .insight-grid{grid-template-columns:1fr}
+  .card{padding:13px 12px 8px}
+  .sec-title{font-size:14.5px}
+}
+@media (max-width:400px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .kpi-value{font-size:19px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= BANNER ================= -->
+  <header class="banner">
+    <div class="banner-inner">
+      <div class="banner-icon"><i class="fa-solid fa-house-chimney-window"></i></div>
+      <div class="banner-text">
+        <span class="banner-eyebrow"><i class="fa-solid fa-chart-pie"></i> سامانه هوشمند مدیریتی ریاست بنیاد مسکن</span>
+        <h1>داشبورد عملکرد انجمن خیرین مسکن‌ساز استان‌ها</h1>
+        <p>آمار عملکرد احداث مسکن طی شش ماه اول سال ۱۴۰۵</p>
+      </div>
+      <div class="capsules">
+        <span class="capsule capsule-date"><i class="fa-regular fa-calendar-check"></i> تاریخ گزارش: 1405/07/20</span>
+        <a class="capsule capsule-link" href="./Khayerin.pdf" target="_blank" rel="noopener">
+          <i class="fa-regular fa-file-pdf"></i> جزئیات گزارش
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= KPI ================= -->
+  <div class="sec-title">
+    <span class="bar"></span>
+    <i class="fa-solid fa-gauge-high" style="color:#0f766e"></i>
+    شاخص‌های کلیدی عملکرد (کل کشور)
+    <span class="sub">۶ ماه اول ۱۴۰۵</span>
+  </div>
+
+  <section class="kpi-grid">
+    <div class="kpi" style="--c1:#0ea5e9;--c2:#0369a1">
+      <div class="kpi-head">
+        <div class="kpi-icon"><i class="fa-solid fa-ruler-combined"></i></div>
+        <div class="kpi-label">جمع مساحت زمین‌های واگذار شده</div>
+      </div>
+      <div class="kpi-value">۱٬۷۸۲٬۹۵۶ <small>متر مربع</small></div>
+      <div class="kpi-note"><i class="fa-solid fa-vector-square"></i> در ۳۱ استان کشور</div>
+    </div>
+
+    <div class="kpi" style="--c1:#14b8a6;--c2:#0f766e">
+      <div class="kpi-head">
+        <div class="kpi-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+        <div class="kpi-label">واحدهای مسکونی در دست اجرا</div>
+      </div>
+      <div class="kpi-value">۳٬۹۶۴ <small>واحد</small></div>
+      <div class="kpi-note"><i class="fa-solid fa-arrow-trend-up"></i> در ۲۰ استان فعال</div>
+    </div>
+
+    <div class="kpi" style="--c1:#8b5cf6;--c2:#6d28d9">
+      <div class="kpi-head">
+        <div class="kpi-icon"><i class="fa-solid fa-chart-simple"></i></div>
+        <div class="kpi-label">میانگین پیشرفت فیزیکی</div>
+      </div>
+      <div class="kpi-value">۵۳٫۸۷ <small>درصد</small></div>
+      <div class="kpi-note"><i class="fa-solid fa-gauge"></i> میانگین وزنی پروژه‌های در جریان</div>
+    </div>
+
+    <div class="kpi" style="--c1:#f59e0b;--c2:#b45309">
+      <div class="kpi-head">
+        <div class="kpi-icon"><i class="fa-solid fa-house-circle-check"></i></div>
+        <div class="kpi-label">واحدهای اتمام‌یافته در ۶ ماه</div>
+      </div>
+      <div class="kpi-value">۳۳۳ <small>واحد</small></div>
+      <div class="kpi-note"><i class="fa-solid fa-hand-holding-heart"></i> در ۶ استان کشور</div>
+    </div>
+
+    <div class="kpi" style="--c1:#f43f5e;--c2:#be123c">
+      <div class="kpi-head">
+        <div class="kpi-icon"><i class="fa-solid fa-building-circle-check"></i></div>
+        <div class="kpi-label">کل واحدهای اتمام‌یافته از ابتدای تأسیس</div>
+      </div>
+      <div class="kpi-value">۲۳٬۶۴۶ <small>واحد</small></div>
+      <div class="kpi-note"><i class="fa-solid fa-flag-checkered"></i> عملکرد تجمعی انجمن خیرین</div>
+    </div>
+  </section>
+
+  <!-- ================= INSIGHT CARDS ================= -->
+  <div class="sec-title">
+    <span class="bar"></span>
+    <i class="fa-solid fa-lightbulb" style="color:#d97706"></i>
+    کارت‌های تحلیلی و یافته‌های کلیدی
+  </div>
+
+  <section class="insight-grid">
+    <div class="insight" style="--ac:#0f766e">
+      <div class="insight-ico"><i class="fa-solid fa-location-crosshairs"></i></div>
+      <div>
+        <h4>تمرکز جغرافیایی پروژه‌ها</h4>
+        <p>استان <b>خراسان رضوی</b> با <b>۱٬۰۶۹ واحد</b> معادل <b>۲۷٪</b> کل واحدهای در حال ساخت کشور، پیشتاز اجرای پروژه‌ها است. پس از آن قم (۶۹۵) و اصفهان (۴۰۴) قرار دارند.</p>
+      </div>
+    </div>
+
+    <div class="insight" style="--ac:#4338ca">
+      <div class="insight-ico"><i class="fa-solid fa-rocket"></i></div>
+      <div>
+        <h4>پیشرو در پیشرفت فیزیکی</h4>
+        <p>استان <b>آذربایجان شرقی</b> با <b>۸۹٪</b> پیشرفت، بالاترین سطح آماده‌سازی را دارد؛ در مقابل استان <b>کرمان</b> با <b>۵٪</b> نیازمند توجه ویژه و تأمین منابع است.</p>
+      </div>
+    </div>
+
+    <div class="insight" style="--ac:#d97706">
+      <div class="insight-ico"><i class="fa-solid fa-key"></i></div>
+      <div>
+        <h4>تحویل واحدهای تکمیل‌شده</h4>
+        <p>در ۶ ماه نخست سال <b>۳۳۳ واحد</b> به اتمام رسیده است. استان‌های <b>سمنان (۹۸)</b>، <b>اصفهان (۸۸)</b> و <b>خراسان رضوی (۶۲)</b> بیشترین سهم تحویل را داشته‌اند.</p>
+      </div>
+    </div>
+
+    <div class="insight" style="--ac:#0369a1">
+      <div class="insight-ico"><i class="fa-solid fa-map-location-dot"></i></div>
+      <div>
+        <h4>ظرفیت اراضی واگذار شده</h4>
+        <p>مجموع <b>۱٫۷۸ میلیون متر مربع</b> زمین واگذار شده که استان <b>اصفهان</b> با <b>۳۰۶٬۵۱۷ م²</b> (۱۷٪ کل) بزرگ‌ترین ظرفیت زمین را در اختیار دارد.</p>
+      </div>
+    </div>
+
+    <div class="insight" style="--ac:#be123c">
+      <div class="insight-ico"><i class="fa-solid fa-circle-pause"></i></div>
+      <div>
+        <h4>استان‌های بدون پروژه فعال</h4>
+        <p><b>۱۱ استان</b> دارای زمین واگذار شده اما فاقد واحد در حال اجرا هستند؛ از جمله <b>یزد، البرز، گیلان، آذربایجان غربی، همدان</b> و <b>کردستان</b> که ظرفیت‌سنجی مجدد را ضروری می‌سازد.</p>
+      </div>
+    </div>
+
+    <div class="insight" style="--ac:#6d28d9">
+      <div class="insight-ico"><i class="fa-solid fa-chart-line"></i></div>
+      <div>
+        <h4>روند اجرایی و تکمیل</h4>
+        <p>نسبت واحدهای اتمام‌یافته ۶ ماهه به کل واحدهای اتمام‌یافته از ابتدای تأسیس، حدود <b>۱٫۴٪</b> است؛ هرچند با رشد <b>۵۳٫۸۷٪</b> پیشرفت میانگین، انتظار می‌رود حجم تحویل نیمه دوم سال جهش یابد.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CHARTS ================= -->
+  <div class="sec-title">
+    <span class="bar"></span>
+    <i class="fa-solid fa-chart-column" style="color:#0e7490"></i>
+    نمودارهای تحلیلی عملکرد استان‌ها
+    <span class="sub">۳۱ استان | ۸ نمودار</span>
+  </div>
+
+  <section class="chart-grid">
+
+    <div class="card">
+      <div class="card-head">
+        <div class="ico" style="--c1:#0ea5e9;--c2:#0369a1"><i class="fa-solid fa-map"></i></div>
+        <div>
+          <h3>۱۰ استان برتر در مساحت زمین واگذار شده</h3>
+          <p>واحد: متر مربع</p>
+        </div>
+      </div>
+      <div class="chart-box"><canvas id="chartLand"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="ico" style="--c1:#14b8a6;--c2:#0f766e"><i class="fa-solid fa-helmet-safety"></i></div>
+        <div>
+          <h3>۱۲ استان برتر در واحدهای در دست اجرا</h3>
+          <p>واحد: تعداد واحد مسکونی</p>
+        </div>
+      </div>
+      <div class="chart-box"><canvas id="chartUC"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="ico" style="--c1:#8b5cf6;--c2:#6d28d9"><i class="fa-solid fa-chart-pie"></i></div>
+        <div>
+          <h3>سهم استان‌ها از واحدهای در حال ساخت</h3>
+          <p>درصد از کل ۳٬۹۶۴ واحد</p>
+        </div>
+      </div>
+      <div class="chart-box"><canvas id="chartShare"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="ico" style="--c1:#f59e0b;--c2:#b45309"><i class="fa-solid fa-gauge-high"></i></div>
+        <div>
+          <h3>توزیع استان‌ها بر اساس بازه پیشرفت فیزیکی</h3>
+          <p>تعداد استان در هر بازه (۲۰ استان فعال)</p>
+        </div>
+      </div>
+      <div class="chart-box"><canvas id="chartBuckets"></canvas></div>
+    </div>
+
+    <div class="card span-2">
+      <div class="card-head">
+        <div class="ico" style="--c1:#0f766e;--c2:#14b8a6"><i class="fa-solid fa-bars-progress"></i></div>
+        <div>
+          <h3>درصد پیشرفت فیزیکی واحدهای در حال اجرا به تفکیک استان</h3>
+          <p>۲۰ استان دارای پروژه فعال | مرتب‌شده از بیشترین به کمترین</p>
+        </div>
+      </div>
+      <div class="chart-box tall"><canvas id="chartProgress"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="ico" style="--c1:#f43f5e;--c2:#be123c"><i class="fa-solid fa-house-circle-check"></i></div>
+        <div>
+          <h3>واحدهای اتمام‌یافته در ۶ ماه اول ۱۴۰۵</h3>
+          <p>مجموع: ۳۳۳ واحد در ۶ استان</p>
+        </div>
+      </div>
+      <div class="chart-box"><canvas id="chartDone"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="ico" style="--c1:#4338ca;--c2:#6366f1"><i class="fa-solid fa-building-columns"></i></div>
+        <div>
+          <h3>۱۰ استان برتر در کل واحدهای اتمام‌یافته</h3>
+          <p>از ابتدای تأسیس تاکنون | مجموع کشور: ۲۳٬۶۴۶ واحد</p>
+        </div>
+      </div>
+      <div class="chart-box"><canvas id="chartTotal"></canvas></div>
+    </div>
+
+    <div class="card span-2">
+      <div class="card-head">
+        <div class="ico" style="--c1:#6d28d9;--c2:#8b5cf6"><i class="fa-solid fa-chart-line"></i></div>
+        <div>
+          <h3>نمودار ترکیبی: حجم واحدهای در حال ساخت و درصد پیشرفت فیزیکی</h3>
+          <p>۱۰ استان برتر بر اساس تعداد واحد در حال اجرا</p>
+        </div>
+      </div>
+      <div class="chart-box mid"><canvas id="chartMix"></canvas></div>
+    </div>
+
+  </section>
+
+  <!-- ================= TABLE ================= -->
+  <div class="sec-title">
+    <span class="bar"></span>
+    <i class="fa-solid fa-table-list" style="color:#4338ca"></i>
+    جدول تفصیلی عملکرد استان‌ها
+    <span class="sub">۳۱ استان</span>
+  </div>
+
+  <section class="table-card">
+    <div class="table-scroll">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>ردیف</th>
+            <th>استان</th>
+            <th>مساحت زمین واگذار شده (م²)</th>
+            <th>واحد در دست اجرا</th>
+            <th>پیشرفت فیزیکی</th>
+            <th>اتمام‌یافته در ۶ ماه</th>
+            <th>کل اتمام‌یافته از ابتدا</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= NOTE ================= -->
+  <div class="note">
+    <i class="fa-solid fa-circle-info"></i>
+    <div>
+      <b>توضیحات تکمیلی گزارش:</b> ۳۵ واحد در استان زنجان، ۱۴ واحد در استان گلستان، ۵۲ واحد در استان کرمان و ۴ واحد در استان مرکزی در سال جاری شروع شده است.
+      همچنین ستون «تعداد قطعه» زمین‌های واگذار شده در فایل مبدأ فاقد داده بوده و در این داشبورد لحاظ نشده است.
+    </div>
+  </div>
+
+  <footer>
+    سامانه هوشمند مدیریتی ریاست بنیاد مسکن &nbsp;|&nbsp; داشبورد عملکرد انجمن خیرین مسکن‌ساز &nbsp;|&nbsp; تاریخ گزارش: 1405/07/20
+  </footer>
+
+</div>
+
+<script>
+/* ================== تنظیمات پایه ================== */
+Chart.register(ChartDataLabels);
+Chart.defaults.font.family = "'Vazirmatn', system-ui, sans-serif";
+Chart.defaults.font.size = 11.5;
+Chart.defaults.color = '#475569';
+Chart.defaults.plugins.tooltip.rtl = true;
+Chart.defaults.plugins.tooltip.textDirection = 'rtl';
+Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(15,23,42,.94)';
+Chart.defaults.plugins.tooltip.padding = 11;
+Chart.defaults.plugins.tooltip.cornerRadius = 10;
+Chart.defaults.plugins.tooltip.titleFont = { family: "'Vazirmatn', sans-serif", size: 12.5, weight: '700' };
+Chart.defaults.plugins.tooltip.bodyFont = { family: "'Vazirmatn', sans-serif", size: 12 };
+
+/* ================== ابزار قالب‌بندی ================== */
+const nf   = new Intl.NumberFormat('fa-IR');
+const nf1  = new Intl.NumberFormat('fa-IR', { maximumFractionDigits: 1 });
+const nf2  = new Intl.NumberFormat('fa-IR', { maximumFractionDigits: 2 });
+const fmt  = v => nf.format(v);
+const fmt1 = v => nf1.format(v);
+const fmt2 = v => nf2.format(v);
+const pct  = v => fmt1(v) + '٪';
+
+const compact = v => {
+  if (v === 0) return '۰';
+  if (Math.abs(v) >= 1000000) return fmt1(v / 1000000) + ' م';
+  if (Math.abs(v) >= 1000)    return fmt1(v / 1000) + ' هزار';
+  return fmt(v);
+};
+
+/* ================== مقدار جابه‌جایی داده‌نماها (پیکسل به راست) ================== */
+const LABEL_SHIFT = 17;
+
+/* ================== داده‌ها ================== */
+const provData = [
+  { name:'آذربایجان شرقی',      land:95382,  uc:95,   prog:89, done:0,  total:1505 },
+  { name:'آذربایجان غربی',      land:8164,   uc:0,    prog:0,  done:0,  total:180  },
+  { name:'اردبیل',              land:13406,  uc:168,  prog:49, done:30, total:363  },
+  { name:'اصفهان',              land:306517, uc:404,  prog:60, done:88, total:3570 },
+  { name:'البرز',               land:55886,  uc:0,    prog:0,  done:0,  total:1241 },
+  { name:'ایلام',               land:0,      uc:0,    prog:0,  done:0,  total:0    },
+  { name:'بوشهر',               land:67300,  uc:92,   prog:47, done:0,  total:877  },
+  { name:'تهران',               land:187360, uc:48,   prog:11, done:0,  total:2987 },
+  { name:'چهارمحال و بختیاری',  land:19238,  uc:158,  prog:40, done:0,  total:158  },
+  { name:'خراسان جنوبی',        land:83100,  uc:130,  prog:43, done:0,  total:1014 },
+  { name:'خراسان رضوی',         land:199468, uc:1069, prog:56, done:62, total:1761 },
+  { name:'خراسان شمالی',        land:15034,  uc:0,    prog:0,  done:0,  total:294  },
+  { name:'خوزستان',             land:36416,  uc:135,  prog:17, done:0,  total:220  },
+  { name:'زنجان',               land:50908,  uc:66,   prog:60, done:6,  total:787  },
+  { name:'سمنان',               land:83000,  uc:189,  prog:60, done:98, total:1349 },
+  { name:'سیستان و بلوچستان',   land:10500,  uc:81,   prog:32, done:0,  total:125  },
+  { name:'فارس',                land:24500,  uc:60,   prog:50, done:0,  total:1565 },
+  { name:'قزوین',               land:400,    uc:0,    prog:0,  done:0,  total:12   },
+  { name:'قم',                  land:164592, uc:695,  prog:65, done:0,  total:1585 },
+  { name:'کردستان',             land:24523,  uc:0,    prog:0,  done:0,  total:36   },
+  { name:'کرمان',               land:7900,   uc:52,   prog:5,  done:49, total:394  },
+  { name:'کرمانشاه',            land:135,    uc:0,    prog:0,  done:0,  total:2    },
+  { name:'کهگیلویه و بویراحمد', land:705,    uc:0,    prog:0,  done:0,  total:12   },
+  { name:'گلستان',              land:35205,  uc:14,   prog:50, done:0,  total:362  },
+  { name:'گیلان',               land:27000,  uc:0,    prog:0,  done:0,  total:627  },
+  { name:'لرستان',              land:8617,   uc:112,  prog:30, done:0,  total:16   },
+  { name:'مازندران',            land:34594,  uc:2,    prog:50, done:0,  total:526  },
+  { name:'مرکزی',               land:14808,  uc:50,   prog:51, done:0,  total:190  },
+  { name:'هرمزگان',             land:42600,  uc:344,  prog:60, done:0,  total:326  },
+  { name:'همدان',               land:1298,   uc:0,    prog:0,  done:0,  total:147  },
+  { name:'یزد',                 land:164400, uc:0,    prog:0,  done:0,  total:1415 }
+];
+
+const topN = (arr, key, n) => [...arr].sort((a, b) => b[key] - a[key]).slice(0, n);
+
+/* پالت رنگ */
+const PALETTE = [
+  '#0f766e','#0ea5e9','#6366f1','#f59e0b','#f43f5e',
+  '#8b5cf6','#14b8a6','#d97706','#be123c','#0369a1',
+  '#65a30d','#c026d3'
+];
+
+/* ================== ۱) مساحت زمین (برچسب‌ها عمودی روی میله‌ها) ================== */
+(function () {
+  const d = topN(provData, 'land', 10);
+  new Chart(document.getElementById('chartLand'), {
+    type: 'bar',
+    data: {
+      labels: d.map(x => x.name),
+      datasets: [{
+        label: 'مساحت زمین (م²)',
+        data: d.map(x => x.land),
+        backgroundColor: d.map((_, i) => PALETTE[i % PALETTE.length]),
+        borderRadius: 9,
+        borderSkipped: false,
+        maxBarThickness: 46
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { top: 58, right: 20 } },
+      plugins: {
+        legend: { display: false },
+        datalabels: {
+          anchor: 'end',
+          align: 'top',
+          offset: 45,
+          rotation: -90,
+          color: '#0f172a',
+          font: { weight: '700', size: 11 },
+          formatter: v => compact(v)
+        },
+        tooltip: {
+          callbacks: {
+            label: c => ' مساحت: ' + fmt(c.raw) + ' متر مربع'
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { callback: v => compact(v), font: { size: 10.5 } },
+          grid: { color: '#eef2f7' }
+        },
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 10.5, weight: '600' }, maxRotation: 40, minRotation: 0 }
+        }
+      }
+    }
+  });
+})();
+
+/* ================== ۲) واحدهای در حال اجرا (برچسب‌ها عمودی روی میله‌ها) ================== */
+(function () {
+  const d = topN(provData, 'uc', 12);
+  new Chart(document.getElementById('chartUC'), {
+    type: 'bar',
+    data: {
+      labels: d.map(x => x.name),
+      datasets: [{
+        label: 'واحد در دست اجرا',
+        data: d.map(x => x.uc),
+        backgroundColor: d.map((_, i) => PALETTE[(i + 3) % PALETTE.length]),
+        borderRadius: 9,
+        borderSkipped: false,
+        maxBarThickness: 42
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { top: 58, right: 20 } },
+      plugins: {
+        legend: { display: false },
+        datalabels: {
+          anchor: 'end',
+          align: 'top',
+          offset: 18,
+          rotation: -90,
+          color: '#0f172a',
+          font: { weight: '700', size: 11 },
+          formatter: v => fmt(v)
+        },
+        tooltip: { callbacks: { label: c => ' واحد در حال اجرا: ' + fmt(c.raw) } }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { callback: v => fmt(v), font: { size: 10.5 } },
+          grid: { color: '#eef2f7' }
+        },
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 10, weight: '600' }, maxRotation: 45, minRotation: 0 }
+        }
+      }
+    }
+  });
+})();
+
+/* ================== ۳) سهم استان‌ها (دونات) ================== */
+(function () {
+  const sorted = topN(provData, 'uc', 4);
+  const topSum = sorted.reduce((s, x) => s + x.uc, 0);
+  const others = 3964 - topSum;
+
+  const labels = [...sorted.map(x => x.name), 'سایر استان‌ها'];
+  const values = [...sorted.map(x => x.uc), others];
+  const colors = ['#0f766e', '#0ea5e9', '#8b5cf6', '#f59e0b', '#cbd5e1'];
+  const total = values.reduce((a, b) => a + b, 0);
+
+  new Chart(document.getElementById('chartShare'), {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        backgroundColor: colors,
+        borderColor: '#fff',
+        borderWidth: 3,
+        hoverOffset: 10
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '56%',
+      layout: { padding: 12 },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          rtl: true,
+          labels: {
+            boxWidth: 13, boxHeight: 13, padding: 13,
+            font: { size: 11.5, weight: '600' },
+            usePointStyle: true, pointStyle: 'circle'
+          }
+        },
+        datalabels: {
+          anchor: 'center',
+          align: 'right',
+          offset: LABEL_SHIFT,
+          color: '#0b1b33',
+          font: { weight: '800', size: 11.5 },
+          formatter: (v) => {
+            const p = v / total * 100;
+            return p < 6 ? '' : fmt1(p) + '٪';
+          },
+          textStrokeColor: 'rgba(0,0,0,.18)',
+          textStrokeWidth: 2
+        },
+        tooltip: {
+          callbacks: {
+            label: c => ' ' + c.label + ': ' + fmt(c.raw) + ' واحد (' + fmt1(c.raw / total * 100) + '٪)'
+          }
+        }
+      }
+    }
+  });
+})();
+
+/* ================== ۴) بازه‌های پیشرفت فیزیکی (نمودار میله‌ای افقی ساده) ================== */
+(function () {
+  const active = provData.filter(x => x.uc > 0);
+  const b1 = active.filter(x => x.prog < 20).length;
+  const b2 = active.filter(x => x.prog >= 20 && x.prog < 40).length;
+  const b3 = active.filter(x => x.prog >= 40 && x.prog < 60).length;
+  const b4 = active.filter(x => x.prog >= 60 && x.prog < 80).length;
+  const b5 = active.filter(x => x.prog >= 80).length;
+
+  new Chart(document.getElementById('chartBuckets'), {
+    type: 'bar',
+    data: {
+      labels: ['زیر ۲۰٪', '۲۰ تا ۴۰٪', '۴۰ تا ۶۰٪', '۶۰ تا ۸۰٪', 'بالای ۸۰٪'],
+      datasets: [{
+        label: 'تعداد استان',
+        data: [b1, b2, b3, b4, b5],
+        backgroundColor: [
+          'rgba(190,18,60,.85)',
+          'rgba(217,119,6,.85)',
+          'rgba(14,165,233,.85)',
+          'rgba(20,184,166,.85)',
+          'rgba(109,40,217,.85)'
+        ],
+        borderRadius: 9,
+        borderSkipped: false,
+        maxBarThickness: 40
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { right: 70, left: 6 } },
+      plugins: {
+        legend: { display: false },
+        datalabels: {
+          anchor: 'end',
+          align: 'right',
+          offset: 38,
+          color: '#0f172a',
+          font: { weight: '800', size: 12 },
+          formatter: v => fmt(v) + ' استان'
+        },
+        tooltip: {
+          callbacks: { label: c => ' ' + c.label + ': ' + fmt(c.raw) + ' استان' }
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          ticks: { callback: v => fmt(v), font: { size: 10.5 }, stepSize: 1 },
+          grid: { color: '#eef2f7' }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { font: { size: 11.5, weight: '700' } }
+        }
+      }
+    }
+  });
+})();
+
+/* ================== ۵) پیشرفت فیزیکی (افقی) ================== */
+(function () {
+  const d = provData.filter(x => x.uc > 0).sort((a, b) => b.prog - a.prog);
+
+  const colorFor = p =>
+    p < 20 ? '#be123c' : p < 40 ? '#d97706' : p < 60 ? '#0ea5e9' : p < 80 ? '#14b8a6' : '#6d28d9';
+
+  new Chart(document.getElementById('chartProgress'), {
+    type: 'bar',
+    data: {
+      labels: d.map(x => x.name),
+      datasets: [{
+        label: 'پیشرفت فیزیکی',
+        data: d.map(x => x.prog),
+        backgroundColor: d.map(x => colorFor(x.prog)),
+        borderRadius: 7,
+        borderSkipped: false,
+        maxBarThickness: 24
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { right: 60, left: 6 } },
+      plugins: {
+        legend: { display: false },
+        datalabels: {
+          anchor: 'end',
+          align: 'right',
+          offset: LABEL_SHIFT,
+          clamp: true,
+          color: '#0f172a',
+          font: { weight: '800', size: 11 },
+          formatter: v => pct(v)
+        },
+        tooltip: {
+          callbacks: {
+            label: c => ' پیشرفت: ' + pct(c.raw) + ' | واحد در حال اجرا: ' + fmt(d[c.dataIndex].uc)
+          }
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          max: 100,
+          ticks: { callback: v => v + '٪', font: { size: 10.5 } },
+          grid: { color: '#eef2f7' }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { font: { size: 11, weight: '600' } }
+        }
+      }
+    }
+  });
+})();
+
+/* ================== ۶) اتمام‌یافته ۶ ماه ================== */
+(function () {
+  const d = provData.filter(x => x.done > 0).sort((a, b) => b.done - a.done);
+  new Chart(document.getElementById('chartDone'), {
+    type: 'bar',
+    data: {
+      labels: d.map(x => x.name),
+      datasets: [{
+        label: 'اتمام‌یافته در ۶ ماه',
+        data: d.map(x => x.done),
+        backgroundColor: ['#be123c', '#f43f5e', '#f59e0b', '#0ea5e9', '#14b8a6', '#6d28d9'],
+        borderRadius: 10,
+        borderSkipped: false,
+        maxBarThickness: 62
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { top: 38, right: 30 } },
+      plugins: {
+        legend: { display: false },
+        datalabels: {
+          anchor: 'end',
+          align: 'right',
+          offset: 15,
+          
+          color: '#0f172a',
+          font: { weight: '800', size: 12.5 },
+          formatter: v => fmt(v) + ' واحد'
+        },
+        tooltip: { callbacks: { label: c => ' اتمام‌یافته: ' + fmt(c.raw) + ' واحد' } }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { callback: v => fmt(v), font: { size: 10.5 } },
+          grid: { color: '#eef2f7' }
+        },
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 11, weight: '700' } }
+        }
+      }
+    }
+  });
+})();
+
+/* ================== ۷) کل اتمام‌یافته از ابتدا ================== */
+(function () {
+  const d = topN(provData, 'total', 10);
+  new Chart(document.getElementById('chartTotal'), {
+    type: 'bar',
+    data: {
+      labels: d.map(x => x.name),
+      datasets: [{
+        label: 'کل اتمام‌یافته',
+        data: d.map(x => x.total),
+        backgroundColor: d.map((_, i) => PALETTE[(i + 6) % PALETTE.length]),
+        borderRadius: 8,
+        borderSkipped: false,
+        maxBarThickness: 40
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { right: 70 } },
+      plugins: {
+        legend: { display: false },
+        datalabels: {
+          anchor: 'end',
+          align: 'right',
+          offset: 28,
+          clamp: true,
+          color: '#0f172a',
+          font: { weight: '800', size: 11 },
+          formatter: v => fmt(v)
+        },
+        tooltip: { callbacks: { label: c => ' کل اتمام‌یافته: ' + fmt(c.raw) + ' واحد' } }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          ticks: { callback: v => compact(v), font: { size: 10.5 } },
+          grid: { color: '#eef2f7' }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { font: { size: 10.5, weight: '600' } }
+        }
+      }
+    }
+  });
+})();
+
+/* ================== ۸) نمودار ترکیبی ================== */
+(function () {
+  const d = topN(provData, 'uc', 10);
+  new Chart(document.getElementById('chartMix'), {
+    data: {
+      labels: d.map(x => x.name),
+      datasets: [
+        {
+          type: 'bar',
+          label: 'واحد در حال اجرا',
+          data: d.map(x => x.uc),
+          backgroundColor: 'rgba(15,118,110,.85)',
+          borderRadius: 8,
+          borderSkipped: false,
+          maxBarThickness: 40,
+          yAxisID: 'y',
+          datalabels: {
+            anchor: 'end',
+            align: 'right',
+            offset: 8,
+            color: '#0b1b33',
+            font: { weight: '800', size: 10.5 },
+            formatter: v => fmt(v)
+          }
+        },
+        {
+          type: 'line',
+          label: 'درصد پیشرفت فیزیکی',
+          data: d.map(x => x.prog),
+          borderColor: '#f59e0b',
+          backgroundColor: 'rgba(245,158,11,.18)',
+          borderWidth: 3,
+          tension: .38,
+          pointRadius: 5,
+          pointBackgroundColor: '#fff',
+          pointBorderColor: '#d97706',
+          pointBorderWidth: 2.5,
+          pointHoverRadius: 7,
+          fill: false,
+          yAxisID: 'y1',
+          datalabels: {
+            anchor: 'end',
+            align: 'right',
+            offset: LABEL_SHIFT,
+            color: '#b45309',
+            font: { weight: '800', size: 10.5 },
+            formatter: v => pct(v)
+          }
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { top: 40, right: 30 } },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'top',
+          rtl: true,
+          labels: {
+            boxWidth: 13, boxHeight: 13, padding: 14,
+            font: { size: 11.5, weight: '700' },
+            usePointStyle: true, pointStyle: 'rectRounded'
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: c => c.dataset.type === 'line'
+              ? ' پیشرفت فیزیکی: ' + pct(c.raw)
+              : ' واحد در حال اجرا: ' + fmt(c.raw)
+          }
+        }
+      },
+      scales: {
+        y: {
+          position: 'right',
+          beginAtZero: true,
+          title: { display: true, text: 'تعداد واحد', font: { size: 11, weight: '700' }, color: '#0f766e' },
+          ticks: { callback: v => fmt(v), font: { size: 10.5 } },
+          grid: { color: '#eef2f7' }
+        },
+        y1: {
+          position: 'left',
+          beginAtZero: true,
+          max: 100,
+          title: { display: true, text: 'درصد پیشرفت', font: { size: 11, weight: '700' }, color: '#b45309' },
+          ticks: { callback: v => v + '٪', font: { size: 10.5 } },
+          grid: { display: false }
+        },
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 10.5, weight: '600' }, maxRotation: 40 }
+        }
+      }
+    }
+  });
+})();
+
+/* ================== جدول داده‌ها ================== */
+(function () {
+  const tbody = document.querySelector('#dataTable tbody');
+  let html = '';
+
+  provData.forEach((p, i) => {
+    const barClass = p.prog < 20 ? 'bad' : p.prog < 50 ? 'warn' : '';
+    const progCell = p.uc > 0
+      ? `<div style="display:flex;align-items:center;justify-content:center;gap:6px">
+           <span class="mini-bar ${barClass}"><span style="width:${p.prog}%"></span></span>
+           <b style="font-size:12px">${pct(p.prog)}</b>
+         </div>`
+      : '<span style="color:#94a3b8">—</span>';
+
+    html += `<tr>
+      <td>${fmt(i + 1)}</td>
+      <td class="prov-cell">${p.name}</td>
+      <td>${p.land ? fmt(p.land) : '<span style="color:#94a3b8">۰</span>'}</td>
+      <td>${p.uc ? '<b style="color:#0f766e">' + fmt(p.uc) + '</b>' : '<span style="color:#94a3b8">۰</span>'}</td>
+      <td>${progCell}</td>
+      <td>${p.done ? '<b style="color:#be123c">' + fmt(p.done) + '</b>' : '<span style="color:#94a3b8">—</span>'}</td>
+      <td>${fmt(p.total)}</td>
+    </tr>`;
+  });
+
+  html += `<tr class="total-row">
+      <td colspan="2">جمع کل</td>
+      <td>${fmt(1782956)}</td>
+      <td>${fmt(3964)}</td>
+      <td>${pct(53.87)}</td>
+      <td>${fmt(333)}</td>
+      <td>${fmt(23646)}</td>
+    </tr>`;
+
+  tbody.innerHTML = html;
+})();
+</script>
+</body>
+</html>
