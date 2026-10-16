@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>سامانه هوشمند مدیریتی ریاست</title>
+
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-Variable-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- ================= PWA Code ================= -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#eef3fb">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="سامانه هوشمند مدیریتی ریاست">
+    <link rel="apple-touch-icon" href="BonyadLogo.png">
+    <!-- ============================================ -->
+
+    <style>
+        :root{
+            --bg-0:#eef3fb;
+            --bg-1:#f8fbff;
+            --ink:#0d1b38;
+            --ink-2:#64748b;
+            --stroke:rgba(30,58,120,.10);
+            --brand-1:#2563eb;
+            --brand-2:#06b6d4;
+            --brand-3:#7c3aed;
+            --gap:9px;
+        }
+
+        *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+        html,body{
+            height:100%;margin:0;padding:0;overflow:hidden;
+            background:var(--bg-0);
+            font-family:'Vazirmatn',Tahoma,sans-serif;
+            color:var(--ink);
+            touch-action:manipulation;
+            -webkit-font-smoothing:antialiased;
+        }
+        a{text-decoration:none;color:inherit;}
+
+        /* ================= پس‌زمینه ================= */
+        .bg{position:fixed;inset:0;z-index:0;overflow:hidden;
+            background:
+                radial-gradient(120% 70% at 50% -12%, #dbe8ff 0%, transparent 62%),
+                linear-gradient(180deg,var(--bg-1),var(--bg-0));
+        }
+        .bg .orb{position:absolute;border-radius:50%;filter:blur(72px);opacity:.5;will-change:transform;}
+        .orb.o1{width:62vw;height:62vw;max-width:420px;max-height:420px;background:#93c5fd;top:-16vw;right:-18vw;animation:float1 22s ease-in-out infinite alternate;}
+        .orb.o2{width:56vw;height:56vw;max-width:380px;max-height:380px;background:#c4b5fd;top:40%;left:-22vw;opacity:.42;animation:float2 26s ease-in-out infinite alternate;}
+        .orb.o3{width:50vw;height:50vw;max-width:340px;max-height:340px;background:#67e8f9;bottom:-16vw;right:-10vw;opacity:.4;animation:float3 30s ease-in-out infinite alternate;}
+        @keyframes float1{to{transform:translate(-12vw,14vh) scale(1.2);}}
+        @keyframes float2{to{transform:translate(16vw,-10vh) scale(1.15);}}
+        @keyframes float3{to{transform:translate(-14vw,-12vh) scale(1.25);}}
+        .bg::after{
+            content:'';position:absolute;inset:0;
+            background-image:radial-gradient(rgba(30,58,120,.09) 1px,transparent 1px);
+            background-size:26px 26px;
+            -webkit-mask-image:radial-gradient(ellipse at 50% 22%,#000 12%,transparent 68%);
+            mask-image:radial-gradient(ellipse at 50% 22%,#000 12%,transparent 68%);
+        }
+
+        .shell{
+            position:relative;z-index:1;height:100dvh;
+            display:flex;flex-direction:column;
+            padding:max(10px,env(safe-area-inset-top)) 12px 0;
+            gap:10px;max-width:760px;margin:0 auto;
+        }
+
+        /* ================= هدر ================= */
+        .hero{
+            position:relative;flex:0 0 auto;overflow:hidden;
+            border-radius:26px;padding:13px 14px 11px;
+            background:linear-gradient(135deg,#1e3a8a 0%,#3730a3 48%,#0e7490 100%);
+            border:1px solid rgba(255,255,255,.15);
+            box-shadow:0 22px 44px -24px rgba(30,58,138,.95), inset 0 1px 0 rgba(255,255,255,.22);
+            animation:rise .7s cubic-bezier(.2,.8,.2,1) both;
+        }
+        .aurora{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+        .aurora span{position:absolute;border-radius:50%;filter:blur(38px);}
+        .aurora .a1{width:190px;height:190px;background:#22d3ee;opacity:.55;top:-80px;right:-50px;animation:float1 18s ease-in-out infinite alternate;}
+        .aurora .a2{width:170px;height:170px;background:#a78bfa;opacity:.5;bottom:-90px;left:-40px;animation:float2 22s ease-in-out infinite alternate;}
+        .aurora .a3{width:140px;height:140px;background:#f472b6;opacity:.28;top:30%;left:38%;animation:float3 26s ease-in-out infinite alternate;}
+        .hero::before{
+            content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+            background-image:radial-gradient(rgba(255,255,255,.16) 1px,transparent 1px);
+            background-size:20px 20px;
+            -webkit-mask-image:radial-gradient(ellipse at 50% 0%,#000 10%,transparent 72%);
+            mask-image:radial-gradient(ellipse at 50% 0%,#000 10%,transparent 72%);
+        }
+        .hero::after{
+            content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+            background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.22) 50%,transparent 62%);
+            transform:translateX(-130%);animation:shine 15s ease-in-out infinite;
+        }
+        @keyframes shine{0%,12%{transform:translateX(-130%);}58%,100%{transform:translateX(130%);}}
+
+        .hero-row{position:relative;z-index:2;display:flex;align-items:center;gap:10px;}
+        .avatar{
+            position:relative;flex:0 0 auto;
+            width:clamp(52px,13vw,64px);aspect-ratio:1;border-radius:50%;padding:2px;
+            background:conic-gradient(from 0deg,#67e8f9,#ffffff,#c4b5fd,#67e8f9);
+            animation:spin 9s linear infinite;
+            box-shadow:0 0 0 1px rgba(255,255,255,.25), 0 10px 22px -10px rgba(0,0,0,.6);
+        }
+        .avatar img{
+            width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;
+            background:#fff;border:2px solid #12235a;
+            animation:spin 9s linear infinite reverse;
+        }
+        @keyframes spin{to{transform:rotate(360deg);}}
+
+        .titles{flex:1 1 auto;min-width:0;text-align:center;}
+        .org{font-size:clamp(.58rem,2.6vw,.68rem);font-weight:600;color:#c7d7ff;line-height:1.4;}
+        .title{
+            margin:2px 0 0;font-weight:900;line-height:1.75;color:#fff;
+            font-size:clamp(.8rem,3.9vw,1.06rem);
+            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+            text-shadow:0 2px 12px rgba(0,0,0,.25);
+        }
+
+        .hero-meta{
+            position:relative;z-index:2;margin-top:11px;
+            display:flex;gap:6px;justify-content:center;flex-wrap:wrap;
+        }
+        .pill{
+            display:inline-flex;align-items:center;gap:5px;white-space:nowrap;
+            font-size:.575rem;font-weight:700;color:#eaf1ff;
+            padding:3.5px 10px;border-radius:999px;
+            background:rgba(255,255,255,.13);
+            border:1px solid rgba(255,255,255,.2);
+            backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+        }
+        .pill i{font-size:.6rem;opacity:.85;}
+        .pill .dot{width:5px;height:5px;border-radius:50%;background:#4ade80;animation:pulse 1.9s infinite;}
+        @keyframes pulse{
+            0%{box-shadow:0 0 0 0 rgba(74,222,128,.85);}
+            70%{box-shadow:0 0 0 7px rgba(74,222,128,0);}
+            100%{box-shadow:0 0 0 0 rgba(74,222,128,0);}
+        }
+
+        /* ================= جستجو ================= */
+        .search{flex:0 0 auto;position:relative;animation:rise .7s .1s cubic-bezier(.2,.8,.2,1) both;}
+        .search input{
+            width:100%;border:1px solid var(--stroke);outline:none;
+            background:rgba(255,255,255,.82);color:var(--ink);
+            font-family:inherit;font-size:.8rem;font-weight:500;
+            padding:12px 42px 12px 42px;border-radius:18px;
+            backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+            box-shadow:0 12px 26px -20px rgba(15,29,61,.85), inset 0 1px 0 #fff;
+            transition:border-color .25s,box-shadow .25s,background .25s;
+        }
+        .search input::placeholder{color:var(--ink-2);font-weight:500;}
+        .search input:focus{
+            border-color:rgba(59,130,246,.6);background:#fff;
+            box-shadow:0 0 0 4px rgba(59,130,246,.14), 0 12px 26px -20px rgba(15,29,61,.85);
+        }
+        .search .s-icon{
+            position:absolute;right:16px;top:50%;transform:translateY(-50%);
+            color:var(--ink-2);font-size:.8rem;pointer-events:none;
+        }
+        .search .clear{
+            position:absolute;left:11px;top:50%;transform:translateY(-50%);
+            width:26px;height:26px;border-radius:50%;border:none;cursor:pointer;
+            background:rgba(15,29,61,.08);color:var(--ink-2);
+            display:none;place-items:center;font-size:.68rem;font-family:inherit;
+            transition:background .2s,transform .15s;
+        }
+        .search .clear.show{display:grid;}
+        .search .clear:active{transform:translateY(-50%) scale(.9);background:rgba(15,29,61,.16);}
+
+        /* ================= ناحیه اسکرول ================= */
+        .scroller{
+            flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;
+            padding:2px 2px 14px;scrollbar-width:none;
+            overscroll-behavior:contain;
+        }
+        .scroller::-webkit-scrollbar{display:none;}
+
+        .group{margin-bottom:13px;}
+        .group:last-child{margin-bottom:2px;}
+
+        .group-head{
+            position:sticky;top:0;z-index:6;
+            display:flex;align-items:center;gap:8px;
+            padding:8px 4px;margin-bottom:8px;
+            background:linear-gradient(180deg,rgba(240,245,252,.97) 55%,rgba(240,245,252,.72) 100%);
+            backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+        }
+        .group-head .bar{
+            width:4px;height:16px;border-radius:4px;flex:0 0 auto;
+            background:linear-gradient(180deg,var(--g1,#3b82f6),var(--g2,#8b5cf6));
+            box-shadow:0 0 10px -2px var(--g1,#3b82f6);
+        }
+        .group-head h2{margin:0;font-size:.72rem;font-weight:800;color:var(--ink);letter-spacing:.1px;}
+        .group-head .count{
+            margin-inline-start:auto;font-size:.55rem;font-weight:800;color:var(--ink-2);
+            background:rgba(15,29,61,.06);padding:2.5px 9px;border-radius:999px;
+        }
+
+        /* ================= گرید کارت‌ها ================= */
+        .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);}
+        @media (min-width:560px){.grid{grid-template-columns:repeat(4,1fr);}}
+        @media (min-width:820px){.grid{grid-template-columns:repeat(5,1fr);}}
+
+        .card{
+            --h:215;--mx:50%;--my:0%;
+            position:relative;overflow:hidden;isolation:isolate;
+            display:flex;flex-direction:column;align-items:center;gap:7px;
+            padding:13px 6px 11px;text-align:center;
+            border-radius:19px;
+            background:linear-gradient(168deg,#ffffff 0%,#f2f7ff 100%);
+            border:1px solid var(--stroke);
+            box-shadow:0 12px 24px -20px rgba(15,29,61,.85), inset 0 1px 0 #fff;
+            opacity:0;
+            animation:pop .6s cubic-bezier(.2,.9,.25,1.15) forwards;
+            animation-delay:calc(var(--i) * 45ms + 120ms);
+            transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .3s, border-color .3s;
+        }
+        @keyframes pop{from{opacity:0;transform:translateY(16px) scale(.92);}to{opacity:1;transform:none;}}
+        @keyframes rise{from{opacity:0;transform:translateY(-12px);}to{opacity:1;transform:none;}}
+
+        .card::before{
+            content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+            background:radial-gradient(130px circle at var(--mx) var(--my), hsl(var(--h) 100% 60% / .20), transparent 66%);
+            opacity:0;transition:opacity .3s;
+        }
+        .card::after{
+            content:'';position:absolute;top:0;left:16%;right:16%;height:3px;z-index:2;
+            border-radius:0 0 5px 5px;
+            background:linear-gradient(90deg,transparent,hsl(var(--h) 88% 58%),transparent);
+            opacity:.9;
+        }
+        .card:hover,.card:focus-visible{
+            transform:translateY(-4px);
+            border-color:hsl(var(--h) 88% 60% / .5);
+            box-shadow:0 18px 30px -14px hsl(var(--h) 88% 50% / .5), inset 0 1px 0 #fff;
+            outline:none;
+        }
+        .card:hover::before,.card:focus-visible::before,.card:active::before{opacity:1;}
+        .card:active{transform:scale(.95);}
+
+        .card .blade{
+            position:absolute;top:-40%;left:-70%;width:34%;height:180%;z-index:3;
+            background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);
+            transform:rotate(20deg);
+            animation:cardBlade 22s ease-in-out infinite;
+            animation-delay:calc(var(--i) * 500ms);
+            pointer-events:none;
+        }
+        @keyframes cardBlade{0%{left:-70%;}16%{left:130%;}100%{left:130%;}}
+
+        .icon{
+            position:relative;z-index:2;flex:0 0 auto;
+            width:44px;height:44px;border-radius:14px;
+            display:grid;place-items:center;
+            background:linear-gradient(140deg, hsl(var(--h) 92% 63%), hsl(calc(var(--h) + 42) 88% 52%));
+            box-shadow:0 10px 18px -9px hsl(var(--h) 90% 48% / .85), inset 0 1px 0 rgba(255,255,255,.5);
+            transition:transform .3s cubic-bezier(.2,.8,.2,1);
+        }
+        .icon::after{
+            content:'';position:absolute;inset:0;border-radius:inherit;
+            background:linear-gradient(160deg,rgba(255,255,255,.42),transparent 48%);
+        }
+        .icon i{
+            position:relative;z-index:1;font-size:1.02rem;color:#fff;
+            filter:drop-shadow(0 2px 3px rgba(0,0,0,.24));
+        }
+        .card:hover .icon{transform:translateY(-2px) scale(1.06);}
+
+        .card .name{
+            position:relative;z-index:2;display:block;
+            font-size:.665rem;font-weight:800;line-height:1.45;color:var(--ink);
+        }
+        .card .sub{
+            position:relative;z-index:2;display:block;margin-top:-2px;
+            font-size:.53rem;font-weight:600;line-height:1.4;color:var(--ink-2);opacity:.92;
+        }
+
+        /* ================= حالت خالی ================= */
+        .empty{
+            display:none;text-align:center;color:var(--ink-2);
+            font-size:.8rem;font-weight:600;padding:44px 0;
+        }
+        .empty i{display:block;font-size:1.9rem;margin-bottom:10px;opacity:.55;}
+
+        /* ================= فوتر ================= */
+        .footer{
+            flex:0 0 auto;display:flex;justify-content:center;
+            padding:2px 0 max(12px,env(safe-area-inset-bottom));
+        }
+        .footer-img{
+            display:block;width:300px;max-height:34px;object-fit:contain;margin-top:6px;
+            opacity:.95;
+        }
+
+        /* ================= پاپ‌آپ ================= */
+        .popup-overlay{
+            position:fixed;inset:0;z-index:1000;background:rgba(13,27,56,.42);
+            backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+            opacity:0;visibility:hidden;pointer-events:none;
+            transition:opacity .32s ease,visibility .32s;
+        }
+        .popup-overlay.active{opacity:1;visibility:visible;pointer-events:auto;}
+
+        .popup-content{
+            position:fixed;z-index:1001;left:50%;bottom:0;width:100%;max-width:500px;
+            transform:translate(-50%,105%);
+            padding:10px 18px max(20px,env(safe-area-inset-bottom));
+            border-radius:30px 30px 0 0;
+            background:linear-gradient(180deg,#ffffff 0%,#eef4fd 100%);
+            border:1px solid var(--stroke);border-bottom:none;
+            box-shadow:0 -24px 60px -10px rgba(13,27,56,.4), inset 0 1px 0 #fff;
+            transition:transform .5s cubic-bezier(.2,.9,.25,1.05);
+            max-height:85dvh;overflow-y:auto;scrollbar-width:none;
+        }
+        .popup-content::-webkit-scrollbar{display:none;}
+        .popup-content.active{transform:translate(-50%,0);}
+        .popup-content::before{
+            content:'';position:absolute;top:0;left:18%;right:18%;height:3px;border-radius:0 0 4px 4px;
+            background:linear-gradient(90deg,transparent,var(--brand-2),var(--brand-1),transparent);
+        }
+        .grabber{width:44px;height:5px;border-radius:5px;background:rgba(13,27,56,.16);margin:4px auto 12px;}
+        .popup-title{
+            text-align:center;margin-bottom:14px;
+            font-size:1.02rem;font-weight:900;line-height:1.7;
+            background:linear-gradient(90deg,#1d4ed8,#0891b2);
+            -webkit-background-clip:text;background-clip:text;color:transparent;
+        }
+        .popup-body{display:flex;flex-direction:column;gap:8px;}
+        .popup-btn{
+            display:flex;align-items:center;gap:12px;
+            padding:12px 13px;border-radius:16px;
+            background:#fff;border:1px solid var(--stroke);
+            font-weight:600;font-size:.84rem;color:var(--ink);
+            box-shadow:0 8px 16px -14px rgba(15,29,61,.9);
+            opacity:0;transform:translateY(12px);
+            animation:pop2 .5s cubic-bezier(.2,.9,.25,1.1) forwards;
+            animation-delay:calc(var(--k) * 60ms + 150ms);
+            transition:background .2s,transform .15s,border-color .2s,box-shadow .2s;
+        }
+        @keyframes pop2{to{opacity:1;transform:none;}}
+        .popup-btn .num{
+            flex:0 0 auto;width:30px;height:30px;border-radius:10px;
+            display:grid;place-items:center;font-size:.75rem;font-weight:800;color:#fff;
+            background:linear-gradient(135deg,var(--brand-1),var(--brand-3));
+            box-shadow:0 7px 13px -6px rgba(59,130,246,.75);
+        }
+        .popup-btn .label{flex:1;line-height:1.55;}
+        .popup-btn i{color:var(--brand-1);font-size:.72rem;opacity:.85;}
+        .popup-btn:hover{border-color:rgba(59,130,246,.5);background:#f5f9ff;box-shadow:0 12px 22px -16px rgba(37,99,235,.9);}
+        .popup-btn:active{transform:scale(.975);background:#eaf2ff;}
+        .popup-btn.disabled{opacity:.5 !important;pointer-events:none;}
+        .close-popup-btn{
+            margin-top:14px;width:100%;padding:13px;border:none;color:#fff;cursor:pointer;
+            background:linear-gradient(90deg,#1d4ed8,#0891b2);border-radius:15px;
+            font-family:inherit;font-weight:700;font-size:.86rem;
+            box-shadow:0 12px 24px -14px rgba(29,78,216,.95);
+            transition:transform .15s,filter .2s;
+        }
+        .close-popup-btn:active{transform:scale(.97);filter:brightness(1.08);}
+
+        /* ================= ریسپانسیو ================= */
+        @media (orientation:landscape) and (max-height:600px){
+            html,body{overflow:auto !important;}
+            .shell{height:auto !important;min-height:100vh;}
+            .scroller{overflow:visible;}
+            .group-head{position:static;}
+        }
+        @media (prefers-reduced-motion:reduce){
+            *,*::before,*::after{
+                animation-duration:.001s !important;
+                animation-iteration-count:1 !important;
+                transition-duration:.001s !important;
+            }
+            .card,.popup-btn{opacity:1 !important;}
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg"><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span></div>
+
+<!-- ================= پاپ‌آپ ================= -->
+<div id="popup-overlay" class="popup-overlay" onclick="closePopup()"></div>
+<div id="popup-content" class="popup-content" role="dialog" aria-modal="true">
+    <div class="grabber"></div>
+    <div id="popup-title" class="popup-title"></div>
+    <div id="popup-body" class="popup-body"></div>
+    <button class="close-popup-btn" onclick="closePopup()">بستن</button>
+</div>
+
+<div class="shell">
+
+    <!-- ================= هدر ================= -->
+    <header class="hero">
+        <div class="aurora"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+
+        <div class="hero-row">
+            <div class="avatar"><img src="BonyadLogo.png" alt="لوگو بنیاد"></div>
+
+            <div class="titles">
+                <div class="org">بنیاد مسکن انقلاب اسلامی</div>
+                <h1 class="title">سامانه هوشمند مدیریتی ریاست</h1>
+            </div>
+
+            <div class="avatar">
+                <img src="./UserPic/Boss.png" alt="ریاست بنیاد" id="user-avatar"
+                     onerror="this.onerror=null;this.src='./UserPic/Boss.png';">
+            </div>
+        </div>
+
+        <div class="hero-meta">
+            <span class="pill"><i class="fa-regular fa-calendar"></i><b id="today-date">—</b></span>
+            <span class="pill"><i class="fa-regular fa-clock"></i><b id="today-time">—</b></span>
+            <span class="pill"><span class="dot"></span>سامانه فعال</span>
+        </div>
+
+        <script>
+            /* تشخیص هویت کاربر بر اساس لینک اختصاصی */
+            (function () {
+                const params = new URLSearchParams(window.location.search);
+                const userCode = params.get("u");
+                if (userCode) localStorage.setItem("UserCode", userCode);
+                const finalCode = localStorage.getItem("UserCode");
+                if (finalCode && finalCode !== "Unknown") {
+                    document.getElementById('user-avatar').src = './UserPic/' + finalCode + '.jpg';
+                }
+            })();
+        </script>
+    </header>
+
+    <!-- ================= جستجو ================= -->
+    <div class="search">
+        <i class="fa-solid fa-magnifying-glass s-icon"></i>
+        <input id="search-input" type="search" placeholder="جستجو در بخش‌های سامانه..." autocomplete="off" aria-label="جستجو">
+        <button id="clear-search" class="clear" type="button" aria-label="پاک کردن"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- ================= کارت‌ها ================= -->
+    <div class="scroller" id="scroller">
+
+        <!-- ---------- گروه ۱: راهبری و مدیریت ---------- -->
+        <section class="group" style="--g1:#3b82f6;--g2:#8b5cf6">
+            <div class="group-head">
+                <span class="bar"></span>
+                <h2>راهبری و مدیریت</h2>
+                <span class="count">۵ بخش</span>
+            </div>
+            <div class="grid">
+
+                <a href="../../CentralCouncilMob/CentralCouncil.html" target="_blank" class="card"
+                   style="--i:0;--h:222" data-search="شورای مرکزی جلسات مصوبات">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-sitemap"></i></div>
+                    <span class="name">شورای مرکزی</span>
+                    <span class="sub">جلسات و مصوبات</span>
+                </a>
+
+                <a href="#" class="card" style="--i:1;--h:248" data-search="شورای معاونین جلسات">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-people-group"></i></div>
+                    <span class="name">شورای معاونین</span>
+                    <span class="sub">جلسات هم‌اندیشی</span>
+                </a>
+
+                <a href="#" onclick="openPopup('provinces'); return false;" class="card"
+                   style="--i:2;--h:198" data-search="امور استانها سفر بازدید استانی">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                    <span class="name">امور استان‌ها</span>
+                    <span class="sub">سفرها و بازدیدها</span>
+                </a>
+
+                <a href="../../Parliament/Parliament.html" target="_blank" class="card"
+                   style="--i:3;--h:264" data-search="امور مجلس نمایندگان کمیسیون">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-landmark"></i></div>
+                    <span class="name">امور مجلس</span>
+                    <span class="sub">ارتباط با نمایندگان</span>
+                </a>
+
+                <a href="#" onclick="openPopup('BossContact'); return false;" class="card"
+                   style="--i:4;--h:190" data-search="ارتباط با ریاست مکاتبات پیام مردمی">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-comments"></i></div>
+                    <span class="name">ارتباط با ریاست</span>
+                    <span class="sub">مکاتبات و پیام‌ها</span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- ---------- گروه ۲: عملکرد و ارزیابی ---------- -->
+        <section class="group" style="--g1:#10b981;--g2:#06b6d4">
+            <div class="group-head">
+                <span class="bar"></span>
+                <h2>عملکرد و ارزیابی</h2>
+                <span class="count">۳ بخش</span>
+            </div>
+            <div class="grid">
+
+                <a href="#" onclick="openPopup('evaluation'); return false;" class="card"
+                   style="--i:5;--h:158" data-search="ارزیابی عملکرد شاخص رتبه بندی">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <span class="name">ارزیابی عملکرد</span>
+                    <span class="sub">شاخص‌ها و رتبه‌بندی</span>
+                </a>
+
+                <a href="#" onclick="openPopup('evaluation_Mng'); return false;" class="card"
+                   style="--i:6;--h:184" data-search="ارزیابی مدیران مدیرعامل استاندار">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-user-tie"></i></div>
+                    <span class="name">ارزیابی مدیران</span>
+                    <span class="sub">عملکرد مدیران و شعب</span>
+                </a>
+
+                <a href="#" onclick="openPopup('subsidiaries'); return false;" class="card"
+                   style="--i:7;--h:134" data-search="شرکتهای تابعه زیرمجموعه عملکرد مالی">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-building"></i></div>
+                    <span class="name">شرکت‌های تابعه</span>
+                    <span class="sub">عملکرد اجرایی و مالی</span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- ---------- گروه ۳: عمران و طرح‌های توسعه ---------- -->
+        <section class="group" style="--g1:#f59e0b;--g2:#ef4444">
+            <div class="group-head">
+                <span class="bar"></span>
+                <h2>عمران و طرح‌های توسعه</h2>
+                <span class="count">۹ بخش</span>
+            </div>
+            <div class="grid">
+
+                <a href="./UrbanHousing" target="_blank" class="card" style="--i:8;--h:26"
+                   data-search="مسکن شهری طرحهای شهری">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-city"></i></div>
+                    <span class="name">مسکن شهری</span>
+                    <span class="sub">طرح‌های شهری</span>
+                </a>
+
+                <a href="./Inefficient.html" target="_blank" class="card" style="--i:9;--h:8"
+                   data-search="سکونتگاه ناکارآمد بافت فرسوده بازآفرینی">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-house-crack"></i></div>
+                    <span class="name">سکونتگاه‌های ناکارآمد</span>
+                    <span class="sub">بازآفرینی بافت</span>
+                </a>
+
+                <a href="https://bmas100.github.io/War/WarReport.html" target="_blank" class="card"
+                   style="--i:10;--h:36" data-search="بازسازی جنگ رمضان گزارش پیشرفت">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-person-digging"></i></div>
+                    <span class="name">بازسازی جنگ رمضان</span>
+                    <span class="sub">گزارش پیشرفت</span>
+                </a>
+
+                <a href="#" class="card" style="--i:11;--h:96" data-search="عمران روستایی روستا">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-tractor"></i></div>
+                    <span class="name">عمران روستایی</span>
+                    <span class="sub">طرح‌های روستایی</span>
+                </a>
+
+                <a href="#" class="card" style="--i:12;--h:120" data-search="منظومه روستایی توسعه روستا">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-house-circle-check"></i></div>
+                    <span class="name">منظومه روستایی</span>
+                    <span class="sub">توسعه پایدار روستا</span>
+                </a>
+
+                <a href="#" target="_blank" class="card" style="--i:13;--h:58"
+                   data-search="طرحهای هادی روستایی">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-road"></i></div>
+                    <span class="name">طرح‌های هادی</span>
+                    <span class="sub">طرح هادی روستایی</span>
+                </a>
+
+                <a href="#" target="_blank" class="card" style="--i:14;--h:46"
+                   data-search="واگذاری زمین املاک">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-map"></i></div>
+                    <span class="name">واگذاری زمین</span>
+                    <span class="sub">زمین و املاک</span>
+                </a>
+
+                <a href="#" class="card" style="--i:15;--h:210" data-search="خدمات فنی نظارت کنترل">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-file-signature"></i></div>
+                    <span class="name">خدمات فنی</span>
+                    <span class="sub">نظارت و کنترل</span>
+                </a>
+
+                <a href="../../Machinery/Machinery.html" target="_blank" class="card"
+                   style="--i:16;--h:16" data-search="ماشین آلات ناوگان تجهیزات">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-truck-moving"></i></div>
+                    <span class="name">ماشین آلات</span>
+                    <span class="sub">ناوگان و تجهیزات</span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- ---------- گروه ۴: مالی، حقوقی و اداری ---------- -->
+        <section class="group" style="--g1:#8b5cf6;--g2:#ec4899">
+            <div class="group-head">
+                <span class="bar"></span>
+                <h2>مالی، حقوقی و اداری</h2>
+                <span class="count">۴ بخش</span>
+            </div>
+            <div class="grid">
+
+                <a href="#" class="card" style="--i:17;--h:145" data-search="بودجه اعتبارات مالی">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-coins"></i></div>
+                    <span class="name">بودجه و اعتبارات</span>
+                    <span class="sub">مدیریت مالی</span>
+                </a>
+
+                <a href="#" onclick="openPopup('legal'); return false;" class="card"
+                   style="--i:18;--h:274" data-search="حقوقی املاک اراضی دعاوی قضایی">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <span class="name">حقوقی و املاک</span>
+                    <span class="sub">اراضی و دعاوی</span>
+                </a>
+
+                <a href="../../HrmMob/HrmMob.html" target="_blank" class="card"
+                   style="--i:19;--h:232" data-search="اداری پشتیبانی منابع انسانی کارکنان">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-users-gear"></i></div>
+                    <span class="name">اداری و پشتیبانی</span>
+                    <span class="sub">منابع انسانی</span>
+                </a>
+
+                <a href="#" onclick="openPopup('Hesab100'); return false;" class="card"
+                   style="--i:20;--h:330" data-search="خیرین حساب 100 امام انجمن مسکن ساز">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    <span class="name">خیرین و حساب ۱۰۰</span>
+                    <span class="sub">کمک‌های مردمی</span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- ---------- گروه ۵: سامانه‌ها، رسانه و رفاه ---------- -->
+        <section class="group" style="--g1:#06b6d4;--g2:#3b82f6">
+            <div class="group-head">
+                <span class="bar"></span>
+                <h2>سامانه‌ها، رسانه و رفاه</h2>
+                <span class="count">۳ بخش</span>
+            </div>
+            <div class="grid">
+
+                <a href="../../SystemsMob/SystemsMob.html" target="_blank" class="card"
+                   style="--i:21;--h:206" data-search="سامانه زیرساخت فناوری اطلاعات IT">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-server"></i></div>
+                    <span class="name">سامانه‌ها و زیرساخت</span>
+                    <span class="sub">فناوری اطلاعات</span>
+                </a>
+
+                <a href="../../NewsMedia/NewsMedia.html" target="_blank" class="card"
+                   style="--i:22;--h:300" data-search="رسانه خبری اخبار اطلاع رسانی">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-globe"></i></div>
+                    <span class="name">رسانه‌های خبری</span>
+                    <span class="sub">اخبار و اطلاع‌رسانی</span>
+                </a>
+
+                <a href="../../HopeHouseMob/HopeHouse.html" target="_blank" class="card"
+                   style="--i:23;--h:350" data-search="خانه امید بازنشستگان رفاه">
+                    <span class="blade"></span>
+                    <div class="icon"><i class="fa-solid fa-house-chimney-window"></i></div>
+                    <span class="name">خانه امید</span>
+                    <span class="sub">بازنشستگان</span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- ---------- حالت خالی ---------- -->
+        <div class="empty" id="empty">
+            <i class="fa-regular fa-face-frown"></i>
+            موردی پیدا نشد
+        </div>
+
+    </div>
+
+    <!-- ================= فوتر ================= -->
+    <div class="footer">
+        <img src="./Footer.png" alt="Footer" class="footer-img">
+    </div>
+
+    <!-- ================= کنترل کش و آپدیت خودکار ================= -->
+    <script>
+        let refreshing = false;
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('sw.js').then(function (registration) {
+                    registration.update();
+                }).catch(function (err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+            navigator.serviceWorker.addEventListener('controllerchange', function () {
+                if (!refreshing) {
+                    window.location.reload();
+                    refreshing = true;
+                }
+            });
+        }
+    </script>
+</div>
+
+<script>
+    /* ================= داده‌های پاپ‌آپ‌ها ================= */
+    const popupsData = {
+        evaluation: {
+            title: "ارزیابی عملکرد",
+            buttons: [
+                { text: "ستاد مرکزی", link: "../../EvaluationMob/EvaHeadquarters.html" },
+                { text: "بنیاد مسکن استان‌ها", link: "../../EvaluationMob/EvaluationMob.html" },
+                { text: "شرکت‌های تابعه", link: "../../SubsidiariesMob/SubsidiariesMob.html" },
+                { text: "شاخص‌های عملکرد", link: "../../EvaluationMob/KPIs.html" }
+            ]
+        },
+        evaluation_Mng: {
+            title: "ارزیابی مدیران",
+            buttons: [
+                { text: "ارزیابی مدیران ستادی", link: "../../EvaluationMob/EvaHeadquarters.html" },
+                { text: "ارزیابی مدیران عامل و هیئت‌مدیره شرکت‌ها", link: "#" },
+                { text: "ارزیابی مدیران کل استان‌ها", link: "../../EvaluationMob/ProvincialManagers/EvaDash.html" },
+                { text: "ارزیابی مدیران شعب", link: "#" },
+                { text: "شاخص‌های عملکرد", link: "../../EvaluationMob/KPI_ProvManager.html" }
+            ]
+        },
+        provinces: {
+            title: "امور استان‌ها",
+            buttons: [
+                { text: "سفرهای استانی", link: "../../ProvincesMob/Provincal_Visits.html" },
+                { text: "سفرهای منطقه‌ای", link: "../../ProvincesMob/Provincal_Region.html" }
+            ]
+        },
+        subsidiaries: {
+            title: "شرکت‌های تابعه",
+            buttons: [
+                { text: "عملکرد اجرایی", link: "../../SubsidiariesMob/SubOperational.html" },
+                { text: "عملکرد مالی و بودجه", link: "../../SubsidiariesMob/SubFinancial.html" }
+            ]
+        },
+        legal: {
+            title: "حقوقی و املاک",
+            buttons: [
+                { text: "امور اراضی و املاک", link: "../../LegalMob/Land_Affairs.html" },
+                { text: "امور حقوقی و قضائی", link: "../../LegalMob/Legal_Affairs.html" }
+            ]
+        },
+        Hesab100: {
+            title: "حساب ۱۰۰ امام (ره) - انجمن خیرین مسکن‌ساز",
+            buttons: [
+                { text: "حساب ۱۰۰ امام (ره)", link: "../../Hesab100/Hesab100.html" },
+                { text: "انجمن خیرین مسکن‌ساز", link: "../../Hesab100/Khayerin.html" }
+            ]
+        },
+        BossContact: {
+            title: "ارتباط با ریاست",
+            buttons: [
+                { text: "ارتباط با کارکنان", link: "../../BossContact/BossContact.html" },
+                { text: "ارتباطات مردمی", link: "../../BossContact/PublicRelations.html" },
+                { text: "ارتباطات پارلمانی و دولتی", link: "#" },
+                { text: "ارتباط با سایر سازمان‌ها و نهادها", link: "#" }
+            ]
+        }
+    };
+
+    const faDigits = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+
+    function openPopup(key) {
+        const data = popupsData[key];
+        if (!data) return;
+
+        document.getElementById('popup-title').innerText = data.title;
+        const body = document.getElementById('popup-body');
+        body.innerHTML = '';
+
+        data.buttons.forEach((btn, idx) => {
+            const a = document.createElement('a');
+            a.href = btn.link;
+            a.target = "_blank";
+            a.rel = "noopener";
+            a.className = "popup-btn" + (btn.link === "#" ? " disabled" : "");
+            a.style.setProperty('--k', idx);
+            a.innerHTML = `<span class="num">${faDigits(idx + 1)}</span>` +
+                          `<span class="label">${btn.text}</span>` +
+                          `<i class="fa-solid fa-chevron-left"></i>`;
+            body.appendChild(a);
+        });
+
+        document.getElementById('popup-overlay').classList.add('active');
+        document.getElementById('popup-content').classList.add('active');
+    }
+
+    function closePopup() {
+        document.getElementById('popup-overlay').classList.remove('active');
+        document.getElementById('popup-content').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
+
+    /* بستن پاپ‌آپ با کشیدن به پایین */
+    (function () {
+        const sheet = document.getElementById('popup-content');
+        let startY = null, dy = 0;
+        sheet.addEventListener('touchstart', e => {
+            if (sheet.scrollTop <= 0) startY = e.touches[0].clientY;
+        }, { passive: true });
+        sheet.addEventListener('touchmove', e => {
+            if (startY === null) return;
+            dy = Math.max(0, e.touches[0].clientY - startY);
+            sheet.style.transition = 'none';
+            sheet.style.transform = `translate(-50%, ${dy}px)`;
+        }, { passive: true });
+        sheet.addEventListener('touchend', () => {
+            if (startY === null) return;
+            sheet.style.transition = '';
+            sheet.style.transform = '';
+            if (dy > 110) closePopup();
+            startY = null; dy = 0;
+        });
+    })();
+
+    /* ================= افکت نور دنبال‌کننده روی کارت‌ها ================= */
+    document.querySelectorAll('.card').forEach(card => {
+        const move = e => {
+            const r = card.getBoundingClientRect();
+            const p = e.touches ? e.touches[0] : e;
+            card.style.setProperty('--mx', (p.clientX - r.left) + 'px');
+            card.style.setProperty('--my', (p.clientY - r.top) + 'px');
+        };
+        card.addEventListener('pointermove', move);
+        card.addEventListener('touchstart', move, { passive: true });
+    });
+
+    /* ================= جستجوی هوشمند بین کارت‌ها ================= */
+    (function () {
+        const input   = document.getElementById('search-input');
+        const clearBtn= document.getElementById('clear-search');
+        const cards   = [...document.querySelectorAll('.card')];
+        const groups  = [...document.querySelectorAll('.group')];
+        const empty   = document.getElementById('empty');
+
+        const norm = s => (s || '')
+            .replace(/[يى]/g, 'ی')
+            .replace(/ك/g, 'ک')
+            .replace(/\u200c/g, ' ')
+            .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+            .replace(/\s+/g, ' ')
+            .trim()
+            .toLowerCase();
+
+        function apply() {
+            const q = norm(input.value);
+            let shown = 0;
+
+            cards.forEach(c => {
+                const hay = norm((c.dataset.search || '') + ' ' + c.textContent);
+                const ok = !q || hay.includes(q);
+                c.style.display = ok ? '' : 'none';
+                if (ok) shown++;
+            });
+
+            groups.forEach(g => {
+                const any = [...g.querySelectorAll('.card')].some(c => c.style.display !== 'none');
+                g.style.display = any ? '' : 'none';
+            });
+
+            empty.style.display = shown ? 'none' : 'block';
+            clearBtn.classList.toggle('show', input.value.length > 0);
+        }
+
+        input.addEventListener('input', apply);
+        clearBtn.addEventListener('click', () => {
+            input.value = '';
+            apply();
+            input.focus();
+        });
+    })();
+
+    /* ================= تاریخ و ساعت شمسی ================= */
+    (function () {
+        const dEl = document.getElementById('today-date');
+        const tEl = document.getElementById('today-time');
+        if (!dEl || !tEl) return;
+
+        function tick() {
+            const now = new Date();
+            try {
+                dEl.textContent = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+                    weekday: 'long', day: 'numeric', month: 'long'
+                }).format(now);
+                tEl.textContent = new Intl.DateTimeFormat('fa-IR', {
+                    hour: '2-digit', minute: '2-digit', hour12: false
+                }).format(now);
+            } catch (e) {
+                dEl.textContent = now.toLocaleDateString('fa-IR');
+            }
+        }
+        tick();
+        setInterval(tick, 30000);
+    })();
+</script>
+
+<script src="tracker.js?v=107"></script>
+
+</body>
+</html>
