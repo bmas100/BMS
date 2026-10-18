@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>گزارش تحلیلی طرح آبادانی و پیشرفت منظومه‌های روستایی</title>
+<!-- فونت وزیرمتن: در شبکهٔ بسته (اینترانت) فایل فونت را روی سرور محلی قرار داده و آدرس زیر را تغییر دهید -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css">
+<style>
+:root{
+  --bg:#f1f5f8; --ink:#0f172a; --muted:#64748b; --card:#ffffff; --line:#e4eaf0;
+  --plan:#1d6fb8; --exec:#d9731a; --green:#12936f; --purple:#7c4dbd; --teal:#0e8a9b; --red:#d64545;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);line-height:1.85;-webkit-text-size-adjust:100%;overflow-x:hidden}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
+.ic{width:1em;height:1em;display:block}
+i[data-ic]{display:inline-flex;width:1.15em;height:1.15em;flex:none}
+
+/* ---------- Banner ---------- */
+.banner{position:relative;overflow:hidden;color:#fff;padding:34px 0 120px;border-radius:0 0 40px 40px;
+  background:radial-gradient(900px 400px at 85% -10%,rgba(246,196,83,.28),transparent 60%),
+             radial-gradient(700px 400px at 0% 110%,rgba(56,189,248,.25),transparent 60%),
+             linear-gradient(135deg,#053b34 0%,#0a6a56 48%,#12788a 100%)}
+.banner .deco{position:absolute;inset:0;pointer-events:none}
+.banner .hills{position:absolute;bottom:-1px;left:0;width:100%;height:110px}
+.banner-in{position:relative;z-index:2}
+.sys-badge{display:inline-flex;align-items:center;gap:8px;font-size:13px;padding:5px 14px;border-radius:999px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.22);margin-bottom:16px}
+.banner h1{font-size:clamp(23px,4.2vw,40px);font-weight:800;line-height:1.55;max-width:880px}
+.banner h1 span{color:#f6c453}
+.banner p.sub{margin-top:10px;font-size:clamp(13.5px,1.8vw,16px);opacity:.92;max-width:760px}
+.caps{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cap{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:999px;font-size:14.5px;font-weight:600;color:#fff;text-decoration:none;
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.38);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:.25s}
+.cap.link{background:linear-gradient(135deg,#f8cf6a,#e8892b);color:#3a2200;border:0;box-shadow:0 6px 18px rgba(232,137,43,.4)}
+.cap.link:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(232,137,43,.5)}
+.bstats{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:26px;font-size:13.5px}
+.bstats div{display:flex;align-items:center;gap:8px;opacity:.95}
+.bstats b{font-size:18px;color:#f6c453;font-weight:800}
+
+/* ---------- Layout helpers ---------- */
+.grid{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.kgrid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+section{margin-top:34px}
+.sec-h{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.sec-h .si{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:21px;color:#fff;flex:none}
+.sec-h h2{font-size:clamp(17px,2.4vw,21px);font-weight:800}
+.sec-h p{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ---------- Rings ---------- */
+.rings{margin-top:-78px;position:relative;z-index:3}
+.ring{background:var(--card);border-radius:20px;padding:18px 14px 16px;text-align:center;box-shadow:0 10px 30px rgba(15,23,42,.09);border:1px solid var(--line);position:relative;overflow:hidden}
+.ring:before{content:"";position:absolute;top:0;right:0;left:0;height:4px;background:var(--c)}
+.ring svg{width:124px;height:124px;display:block;margin:0 auto}
+.ring .t{font-weight:700;font-size:14.5px;margin-top:6px}
+.ring .s{font-size:12px;color:var(--muted)}
+.ring circle.v{transition:stroke-dasharray 1.3s cubic-bezier(.2,.8,.2,1)}
+
+/* ---------- KPI cards ---------- */
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;gap:14px;align-items:center;box-shadow:0 2px 8px rgba(15,23,42,.04);transition:.25s;position:relative;overflow:hidden}
+.kpi:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(15,23,42,.1)}
+.kpi:after{content:"";position:absolute;left:-26px;bottom:-26px;width:90px;height:90px;border-radius:50%;background:var(--c);opacity:.06}
+.kpi-ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:26px;flex:none}
+.kpi-bd{min-width:0}
+.kpi-val{font-size:25px;font-weight:800;line-height:1.3;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.kpi-val small{font-size:12px;font-weight:500;color:var(--muted)}
+.kpi-lbl{font-size:13px;color:#334155;line-height:1.7}
+.kpi-note{display:inline-block;margin-top:4px;font-size:11.5px;font-weight:600;padding:1px 10px;border-radius:999px}
+
+/* ---------- Tabs & panels ---------- */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;background:#fff;padding:6px;border-radius:16px;border:1px solid var(--line);margin-bottom:14px;width:max-content;max-width:100%}
+.tab{font-family:inherit;border:0;background:transparent;color:#475569;font-size:14px;font-weight:600;padding:9px 18px;border-radius:12px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.2s}
+.tab:hover{background:#f1f5f9}
+.tab.active{background:linear-gradient(135deg,#0a6a56,#12788a);color:#fff;box-shadow:0 6px 14px rgba(10,106,86,.28)}
+.tabpanel{display:none}
+.tabpanel.active{display:block;animation:fade .45s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.tabpanel .grid{margin-bottom:14px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 16px 14px;min-width:0;box-shadow:0 2px 8px rgba(15,23,42,.04)}
+.panel h3{font-size:15.5px;font-weight:700;display:flex;align-items:center;gap:8px}
+.panel h3 i{color:var(--teal);font-size:18px}
+.panel .ph{font-size:12.5px;color:var(--muted);margin:2px 0 8px}
+.chart{width:100%;min-height:100px}
+.chart svg{display:block;margin:0 auto;direction:ltr;max-width:100%;overflow:visible}
+.chart svg text{unicode-bidi:plaintext;font-family:inherit}
+.legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:12.5px;margin:6px 0 4px;color:#334155}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:11px;height:11px;border-radius:4px;display:inline-block}
+.sl{animation:fade .8s ease both}
+.rbar{transform-box:fill-box;transform-origin:center bottom;animation:grow .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes grow{from{transform:scaleY(0)}}
+.hb{transform-box:fill-box;transform-origin:right center;animation:growx .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes growx{from{transform:scaleX(0)}}
+.gv{animation:gdash 1.2s ease both}
+@keyframes gdash{from{stroke-dasharray:0 100}}
+
+/* ---------- Analytic cards ---------- */
+.acard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(15,23,42,.04);display:flex;flex-direction:column;gap:6px;transition:.25s}
+.acard:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(15,23,42,.1)}
+.acard:before{content:"";position:absolute;top:0;bottom:0;right:0;width:5px;background:var(--c)}
+.ah{display:flex;align-items:center;gap:10px}
+.ah .ai{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:21px;flex:none}
+.ah h4{font-size:14.5px;font-weight:700;flex:1;line-height:1.6}
+.tag{font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.tag.info{background:#e0f0fc;color:#1d6fb8}.tag.ok{background:#dcf5ec;color:#0c7a5c}.tag.warn{background:#fdeacf;color:#b25a0b}
+.am{font-size:30px;font-weight:800;color:var(--c);line-height:1.3}
+.am small{font-size:12.5px;color:var(--muted);font-weight:500;margin-right:6px}
+.acard p{font-size:13.2px;color:#334155;line-height:1.95}
+.minis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+.minis div{background:#f4f7fa;border-radius:12px;padding:8px 6px;text-align:center}
+.minis b{display:block;font-size:16px;font-weight:800;color:var(--c)}
+.minis span{font-size:11px;color:var(--muted)}
+
+/* ---------- Table ---------- */
+.tw{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:auto;box-shadow:0 2px 8px rgba(15,23,42,.04)}
+table{width:100%;border-collapse:collapse;min-width:640px;font-size:13.5px}
+th{background:#f4f7fa;font-weight:700;padding:12px 14px;text-align:right;color:#334155;white-space:nowrap}
+td{padding:11px 14px;border-top:1px solid var(--line);white-space:nowrap}
+td.n{font-weight:700;font-variant-numeric:tabular-nums}
+td .ti{display:inline-flex;align-items:center;gap:8px}
+td .ti i{color:var(--teal)}
+.pb{display:flex;align-items:center;gap:10px;min-width:190px}
+.pb .tr{flex:1;height:10px;background:#e9eef3;border-radius:99px;overflow:hidden}
+.pb .tr b{display:block;height:100%;border-radius:99px;background:linear-gradient(270deg,#12936f,#0e8a9b)}
+.pb span{font-weight:700;min-width:52px;text-align:left}
+.dash{color:#a0aab6}
+
+/* ---------- Recommendations ---------- */
+.reco{background:linear-gradient(135deg,#053b34,#0a6a56 55%,#12788a);color:#fff;border-radius:22px;padding:22px 22px 18px;position:relative;overflow:hidden}
+.reco h3{display:flex;align-items:center;gap:10px;font-size:18px;margin-bottom:10px}
+.reco ul{list-style:none;display:grid;gap:10px}
+.reco li{display:flex;gap:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:11px 14px;font-size:13.8px;line-height:1.9}
+.reco li i{color:#f6c453;font-size:20px;margin-top:3px}
+footer{margin:34px 0 28px;text-align:center;font-size:12.5px;color:var(--muted);line-height:2}
+
+/* ---------- Responsive ---------- */
+@media(max-width:1000px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.g2,.g3{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:560px){
+  .banner{padding:26px 0 110px;border-radius:0 0 28px 28px}
+  .kgrid{grid-template-columns:minmax(0,1fr)}
+  .g4{gap:10px}
+  .ring{padding:14px 8px}
+  .ring svg{width:104px;height:104px}
+  .ring .t{font-size:13px}
+  .tabs{width:100%}.tab{flex:1;justify-content:center;padding:9px 8px;font-size:13px}
+  .cap{font-size:13.5px;padding:8px 16px}
+  .kpi-val{font-size:22px}
+  .minis b{font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== BANNER ===================== -->
+<header class="banner">
+  <svg class="deco" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.4" fill="#fff" opacity=".13"/></pattern>
+    </defs>
+    <rect width="1200" height="400" fill="url(#dots)"/>
+    <!-- network of villages (منظومه) -->
+    <g stroke="#fff" stroke-opacity=".28" stroke-width="1.4" fill="none">
+      <line x1="1010" y1="70" x2="1100" y2="130"/><line x1="1100" y1="130" x2="1040" y2="205"/>
+      <line x1="1040" y1="205" x2="940" y2="165"/><line x1="940" y1="165" x2="1010" y2="70"/>
+      <line x1="1010" y1="70" x2="1040" y2="205"/><line x1="1100" y1="130" x2="1160" y2="215"/>
+      <line x1="940" y1="165" x2="870" y2="95"/>
+    </g>
+    <g fill="#f6c453"><circle cx="1010" cy="70" r="7"/><circle cx="1100" cy="130" r="5"/><circle cx="1040" cy="205" r="8"/><circle cx="940" cy="165" r="5"/><circle cx="1160" cy="215" r="4"/><circle cx="870" cy="95" r="4"/></g>
+    <g fill="none" stroke="#f6c453" stroke-opacity=".35"><circle cx="1010" cy="70" r="18"/><circle cx="1040" cy="205" r="20"/></g>
+  </svg>
+  <svg class="hills" viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 80 C150 20 300 100 470 60 C640 20 760 95 930 55 C1050 28 1130 60 1200 40 L1200 110 L0 110Z" fill="#ffffff" opacity=".10"/>
+    <path d="M0 95 C180 50 330 105 520 78 C700 52 850 105 1020 76 C1100 62 1160 80 1200 70 L1200 110 L0 110Z" fill="#f1f5f8"/>
+    <!-- houses -->
+    <g fill="#0a6a56" opacity=".55">
+      <path d="M120 88 l14-12 14 12v12h-28z"/><path d="M165 92 l11-10 11 10v9h-22z"/>
+      <path d="M690 92 l13-11 13 11v10h-26z"/><path d="M730 95 l10-9 10 9v7h-20z"/>
+      <path d="M980 84 l12-10 12 10v11h-24z"/>
+    </g>
+  </svg>
+  <div class="wrap banner-in">
+    <div class="sys-badge"><i data-ic="award"></i>سامانه هوشمند مدیریتی ریاست بنیاد مسکن انقلاب اسلامی</div>
+    <h1> <span>طرح آبادانی و پیشرفت منظومه‌های روستایی</span></h1>
+    
+    <div class="caps">
+      <span class="cap"><i data-ic="calendar"></i>تاریخ گزارش: ۱۴۰۵/۰۷/۱۸</span>
+      <a class="cap link" href="./TarheManzume.pdf" target="_blank" rel="noopener"><i data-ic="file"></i>جزئیات گزارش<i data-ic="ext"></i></a>
+    </div>
+    <div class="bstats">
+      <div><i data-ic="users"></i><span><b id="b1"></b> نفر جمعیت روستایی در طرح</span></div>
+      <div><i data-ic="home"></i><span><b id="b2"></b> آبادی دارای سکنه</span></div>
+      <div><i data-ic="map"></i><span><b id="b3"></b> بخش دارای قرارداد</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ===================== RINGS ===================== -->
+<div class="rings">
+  <div class="grid g4" id="rings"></div>
+</div>
+
+<!-- ===================== KPI: PLAN ===================== -->
+<section>
+  <div class="sec-h"><div class="si" style="background:linear-gradient(135deg,#1d6fb8,#0e8a9b)"><i data-ic="file"></i></div>
+    <div><h2>شاخص‌های «تهیه طرح»</h2><p>وضعیت تهیه و تصویب طرح منظومه‌های روستایی</p></div></div>
+  <div class="grid kgrid" id="kpiPlan"></div>
+</section>
+
+<!-- ===================== KPI: EXEC ===================== -->
+<section>
+  <div class="sec-h"><div class="si" style="background:linear-gradient(135deg,#d9731a,#e8a33b)"><i data-ic="activity"></i></div>
+    <div><h2>شاخص‌های «اجرای طرح»</h2><p>دامنهٔ فعلی اجرای طرح در استان‌های هدف و سهم آن از طرح</p></div></div>
+  <div class="grid kgrid" id="kpiExec"></div>
+</section>
+
+<!-- ===================== DASHBOARD ===================== -->
+<section>
+  <div class="sec-h"><div class="si" style="background:linear-gradient(135deg,#7c4dbd,#1d6fb8)"><i data-ic="bar"></i></div>
+    <div><h2>داشبورد مدیریتی</h2><p>نمودارهای تعاملی با نمایش مقدار روی هر میله و هر بخش نمودار</p></div></div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="plan"><i data-ic="file"></i>تهیه طرح</button>
+    <button class="tab" data-tab="exec"><i data-ic="activity"></i>اجرای طرح</button>
+    <button class="tab" data-tab="cmp"><i data-ic="trend"></i>مقایسه و تحلیل</button>
+  </div>
+
+  <!-- تب: تهیه طرح -->
+  <div class="tabpanel active" id="tab-plan">
+    <div class="grid g3">
+      <div class="panel"><h3><i data-ic="file"></i>بخش‌های دارای قرارداد</h3><p class="ph">قرارداد منعقد شده از کل بخش‌ها</p><div class="chart" id="p_g1"></div></div>
+      <div class="panel"><h3><i data-ic="check"></i>بخش‌های دارای طرح مصوب</h3><p class="ph">مصوب در شورای برنامه‌ریزی و توسعهٔ استان</p><div class="chart" id="p_g2"></div></div>
+      <div class="panel"><h3><i data-ic="layers"></i>آبادی‌های ۲۰ خانوار و بیشتر</h3><p class="ph">سهم از کل آبادی‌های تحت پوشش طرح</p><div class="chart" id="p_g3"></div></div>
+    </div>
+    <div class="grid g2">
+      <div class="panel"><h3><i data-ic="bar"></i>شمار واحدهای پوشش‌داده‌شده و اقدامات حقوقی</h3><p class="ph">شهرستان، بخش، قرارداد، مصوبه و تفاهم‌نامه</p><div class="chart" id="p_bar"></div></div>
+      <div class="panel"><h3><i data-ic="pie"></i>وضعیت تصویب طرح بخش‌ها</h3><p class="ph">بخش‌های دارای مصوبه در برابر بدون مصوبه</p><div class="chart" id="p_dn1"></div></div>
+    </div>
+    <div class="grid g2">
+      <div class="panel"><h3><i data-ic="pie"></i>ترکیب آبادی‌ها بر اساس تعداد خانوار</h3><p class="ph">آبادی‌های تحت پوشش طرح</p><div class="chart" id="p_dn2"></div></div>
+      <div class="panel"><h3><i data-ic="target"></i>پیشرفت اقدامات در سطح بخش‌ها</h3><p class="ph">قرارداد و مصوبه نسبت به کل ۲۳۹ بخش</p><div class="chart" id="p_hb"></div></div>
+    </div>
+  </div>
+
+  <!-- تب: اجرای طرح -->
+  <div class="tabpanel" id="tab-exec">
+    <div class="grid g3">
+      <div class="panel"><h3><i data-ic="flag"></i>استان‌های هدف دارای تفاهم‌نامه</h3><p class="ph">۱۵ استان هدف اجرا</p><div class="chart" id="e_g1"></div></div>
+      <div class="panel"><h3><i data-ic="layers"></i>آبادی‌های ۲۰ خانوار و بیشتر</h3><p class="ph">سهم از آبادی‌های تحت پوشش اجرا</p><div class="chart" id="e_g2"></div></div>
+      <div class="panel"><h3><i data-ic="users"></i>سهم جمعیت روستایی</h3><p class="ph">از کل جمعیت تحت پوشش اجرا</p><div class="chart" id="e_g3"></div></div>
+    </div>
+    <div class="grid g2">
+      <div class="panel"><h3><i data-ic="users"></i>جمعیت تحت پوشش اجرای طرح</h3><p class="ph">جمعیت روستایی و کل جمعیت (نفر)</p><div class="chart" id="e_pop"></div></div>
+      <div class="panel"><h3><i data-ic="map"></i>واحدهای تحت پوشش اجرا</h3><p class="ph">شهرستان، بخش، استان هدف و استان دارای تفاهم‌نامه</p><div class="chart" id="e_bar"></div></div>
+    </div>
+    <div class="grid g2">
+      <div class="panel"><h3><i data-ic="pie"></i>ترکیب جمعیت تحت پوشش اجرا</h3><p class="ph">روستایی در برابر سایر جمعیت (نفر)</p><div class="chart" id="e_dn1"></div></div>
+      <div class="panel"><h3><i data-ic="pie"></i>ترکیب آبادی‌های تحت پوشش اجرا</h3><p class="ph">۲۰ خانوار و بیشتر در برابر کمتر از ۲۰ خانوار</p><div class="chart" id="e_dn2"></div></div>
+    </div>
+  </div>
+
+  <!-- تب: مقایسه -->
+  <div class="tabpanel" id="tab-cmp">
+    <div class="grid g2">
+      <div class="panel"><h3><i data-ic="bar"></i>مقایسهٔ تهیه طرح و اجرا: شهرستان، بخش و استان</h3><p class="ph">تعداد واحدها</p><div class="chart" id="c_units"></div></div>
+      <div class="panel"><h3><i data-ic="home"></i>مقایسهٔ تهیه طرح و اجرا: آبادی‌ها</h3><p class="ph">کل آبادی‌ها و آبادی‌های ۲۰ خانوار و بیشتر</p><div class="chart" id="c_vil"></div></div>
+    </div>
+    <div class="grid g2">
+      <div class="panel"><h3><i data-ic="users"></i>مقایسهٔ جمعیت (نفر)</h3><p class="ph">جمعیت روستایی در طرح و اجرا، و کل جمعیت تحت پوشش اجرا</p><div class="chart" id="c_pop"></div></div>
+      <div class="panel"><h3><i data-ic="target"></i>درصد پوشش اجرا نسبت به تهیه طرح</h3><p class="ph">هر شاخص: اجرا ÷ تهیه طرح</p><div class="chart" id="c_hb"></div></div>
+    </div>
+    <div class="grid g2">
+      <div class="panel"><h3><i data-ic="share"></i>نمودار راداری پوشش اجرا</h3><p class="ph">درصد اجرا از طرح در ۶ شاخص</p><div class="chart" id="c_radar"></div></div>
+      <div class="panel"><h3><i data-ic="pie"></i>سهم اجرا از جمعیت روستایی طرح</h3><p class="ph">جمعیت در اجرا در برابر جمعیت در انتظار اجرا (نفر)</p><div class="chart" id="c_dn"></div></div>
+    </div>
+    <div class="grid g1">
+      <div class="panel"><h3><i data-ic="layers"></i>ترکیب آبادی‌ها بر اساس اندازه: طرح در برابر اجرا</h3><p class="ph">سهم و تعداد آبادی‌های ۲۰ خانوار و بیشتر در دو مرحله</p><div class="chart" id="c_stack"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ANALYTIC CARDS ===================== -->
+<section>
+  <div class="sec-h"><div class="si" style="background:linear-gradient(135deg,#12936f,#0e8a9b)"><i data-ic="bulb"></i></div>
+    <div><h2>کارت‌های تحلیلی</h2><p>برداشت‌های مدیریتی محاسبه‌شده از داده‌های گزارش</p></div></div>
+  <div class="grid g3" id="analytics"></div>
+</section>
+
+<!-- ===================== TABLE ===================== -->
+<section>
+  <div class="sec-h"><div class="si" style="background:linear-gradient(135deg,#334155,#64748b)"><i data-ic="layers"></i></div>
+    <div><h2>جدول تفصیلی شاخص‌ها</h2><p>مقایسهٔ مقادیر تهیه طرح و اجرای طرح همراه با درصد پوشش</p></div></div>
+  <div class="tw"><table id="tbl"></table></div>
+</section>
+
+<!-- ===================== RECOMMENDATIONS ===================== -->
+<section>
+  <div class="reco">
+    <h3><i data-ic="target"></i>جمع‌بندی و پیشنهادهای مدیریتی</h3>
+    <ul id="reco"></ul>
+  </div>
+</section>
+
+<footer>
+  منبع داده‌ها: «خلاصه گزارش عملکرد طرح آبادانی و پیشرفت منظومه‌های روستایی» — بنیاد مسکن انقلاب اسلامی (تاریخ گزارش: ۱۴۰۵/۰۷/۱۸)<br>
+  درصدها، نسبت‌ها و میانگین‌ها توسط سامانه از اعداد گزارش محاسبه شده‌اند و در گزارش اصلی درج نشده‌اند.
+</footer>
+</main>
+
+<script>
+/* =====================  Helpers  ===================== */
+const fa=n=>Number(n).toLocaleString('fa-IR');
+const fd=(n,d=1)=>Number(n).toLocaleString('fa-IR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fp=(n,d=1)=>fd(n,d)+'٪';
+
+const C={plan:'#1d6fb8',exec:'#d9731a',green:'#12936f',purple:'#7c4dbd',teal:'#0e8a9b',red:'#d64545',slate:'#64748b',gold:'#b7791f'};
+
+const ICONS={
+ users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+ home:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+ pin:'<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+ map:'<polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>',
+ file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+ check:'<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+ flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
+ layers:'<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+ activity:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',
+ target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+ pie:'<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>',
+ bar:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+ trend:'<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+ award:'<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>',
+ alert:'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+ ext:'<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>',
+ calendar:'<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+ brief:'<rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+ building:'<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/>',
+ share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>',
+ bulb:'<path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/>',
+ hourglass:'<path d="M5 22h14M5 2h14M17 22v-4.17a2 2 0 0 0-.59-1.42L12 12l-4.41 4.41A2 2 0 0 0 7 17.83V22M7 2v4.17a2 2 0 0 0 .59 1.42L12 12l4.41-4.41A2 2 0 0 0 17 6.17V2"/>',
+ scale:'<line x1="12" y1="3" x2="12" y2="21"/><path d="M5 7h14"/><path d="M5 7l-3 8a3 3 0 0 0 6 0z"/><path d="M19 7l-3 8a3 3 0 0 0 6 0z"/>'
+};
+const ic=n=>`<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]||''}</svg>`;
+const paintIcons=()=>document.querySelectorAll('i[data-ic]').forEach(e=>{if(!e.firstChild)e.innerHTML=ic(e.dataset.ic)});
+
+/* =====================  Data  ===================== */
+const P={pop:5232522,villages:13014,cities:136,districts:239,v20:10381,contract:239,approved:130,mou:30};
+const E={ruralPop:736218,pop:1279206,villages:2208,cities:25,districts:41,provinces:15,v20:1355,mou:15};
+
+const r={pop:E.ruralPop/P.pop*100,vil:E.villages/P.villages*100,city:E.cities/P.cities*100,dist:E.districts/P.districts*100,v20:E.v20/P.v20*100,mou:E.mou/P.mou*100};
+const popLeft=P.pop-E.ruralPop, vilLeft=P.villages-E.villages, cityLeft=P.cities-E.cities, distLeft=P.districts-E.districts;
+const v20planPct=P.v20/P.villages*100, v20execPct=E.v20/E.villages*100;
+const nonRural=E.pop-E.ruralPop, nonRuralPct=nonRural/E.pop*100, ruralPct=E.ruralPop/E.pop*100, ratio=E.pop/E.ruralPop;
+const avgPlan=P.pop/P.villages, avgExec=E.ruralPop/E.villages;
+const vdPlan=P.villages/P.districts, vdExec=E.villages/E.districts;
+const apprPct=P.approved/P.districts*100, noAppr=P.districts-P.approved;
+const v20less=P.villages-P.v20, v20lessE=E.villages-E.v20;
+const spare=P.approved-E.districts;
+
+/* =====================  Banner stats  ===================== */
+document.getElementById('b1').textContent=fa(P.pop);
+document.getElementById('b2').textContent=fa(P.villages);
+document.getElementById('b3').textContent=fa(P.contract);
+
+/* =====================  Rings  ===================== */
+const rings=[
+ {t:'پوشش جمعیت روستایی در اجرا',v:r.pop,s:`${fa(E.ruralPop)} از ${fa(P.pop)} نفر`,c:C.plan},
+ {t:'پوشش آبادی‌ها در اجرا',v:r.vil,s:`${fa(E.villages)} از ${fa(P.villages)} آبادی`,c:C.green},
+ {t:'پوشش بخش‌ها در اجرا',v:r.dist,s:`${fa(E.districts)} از ${fa(P.districts)} بخش`,c:C.exec},
+ {t:'استان‌های دارای تفاهم‌نامه در اجرا',v:r.mou,s:`${fa(E.mou)} از ${fa(P.mou)} استان`,c:C.purple}
+];
+document.getElementById('rings').innerHTML=rings.map((k,i)=>`
+ <div class="ring" style="--c:${k.c}">
+  <svg viewBox="0 0 120 120">
+   <circle cx="60" cy="60" r="48" fill="none" stroke="#e8edf2" stroke-width="12"/>
+   <circle class="v" cx="60" cy="60" r="48" fill="none" stroke="${k.c}" stroke-width="12" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100" data-v="${k.v}" transform="rotate(-90 60 60)"/>
+   <text x="60" y="68" text-anchor="middle" font-size="22" font-weight="800" fill="#0f172a" style="font-family:inherit">${fp(k.v)}</text>
+  </svg>
+  <div class="t">${k.t}</div><div class="s">${k.s}</div>
+ </div>`).join('');
+setTimeout(()=>document.querySelectorAll('.ring circle.v').forEach(c=>c.setAttribute('stroke-dasharray',`${c.dataset.v} 100`)),200);
+
+/* =====================  KPI cards  ===================== */
+const kpiPlan=[
+ {i:'users',c:C.plan,v:P.pop,u:'نفر',l:'جمعیت روستایی تحت پوشش'},
+ {i:'home',c:C.green,v:P.villages,u:'آبادی',l:'تعداد کل آبادی‌های دارای سکنه تحت پوشش'},
+ {i:'building',c:C.teal,v:P.cities,u:'شهرستان',l:'تعداد شهرستان‌های تحت پوشش'},
+ {i:'map',c:C.purple,v:P.districts,u:'بخش',l:'تعداد بخش‌های تحت پوشش'},
+ {i:'layers',c:C.gold,v:P.v20,u:'آبادی',l:'آبادی‌های دارای ۲۰ خانوار و بیشتر تحت پوشش',n:fp(v20planPct)+' از کل آبادی‌ها'},
+ {i:'file',c:C.plan,v:P.contract,u:'بخش',l:'بخش‌های دارای قرارداد منعقد شده',n:'۱۰۰٪ بخش‌ها'},
+ {i:'check',c:C.green,v:P.approved,u:'بخش',l:'بخش‌های دارای طرح مصوب در شورای برنامه‌ریزی و توسعه استان',n:fp(apprPct)+' بخش‌ها'},
+ {i:'brief',c:C.red,v:P.mou,u:'استان',l:'استان‌های دارای تفاهم‌نامه با استانداری'}
+];
+const kpiExec=[
+ {i:'users',c:C.exec,v:E.ruralPop,u:'نفر',l:'جمعیت روستایی تحت پوشش',n:fp(r.pop)+' از طرح'},
+ {i:'users',c:C.plan,v:E.pop,u:'نفر',l:'جمعیت تحت پوشش (کل)',n:fd(ratio,2)+' برابر جمعیت روستایی'},
+ {i:'home',c:C.green,v:E.villages,u:'آبادی',l:'تعداد کل آبادی‌های دارای سکنه تحت پوشش',n:fp(r.vil)+' از طرح'},
+ {i:'building',c:C.teal,v:E.cities,u:'شهرستان',l:'تعداد شهرستان‌های تحت پوشش',n:fp(r.city)+' از طرح'},
+ {i:'map',c:C.purple,v:E.districts,u:'بخش',l:'تعداد بخش‌های تحت پوشش',n:fp(r.dist)+' از طرح'},
+ {i:'target',c:C.red,v:E.provinces,u:'استان',l:'تعداد استان‌های هدف'},
+ {i:'layers',c:C.gold,v:E.v20,u:'آبادی',l:'آبادی‌های دارای ۲۰ خانوار و بیشتر تحت پوشش',n:fp(r.v20)+' از طرح'},
+ {i:'brief',c:C.exec,v:E.mou,u:'استان',l:'استان‌های دارای تفاهم‌نامه با استانداری',n:fp(r.mou,0)+' از طرح'}
+];
+const kpiCard=k=>`<div class="kpi" style="--c:${k.c}"><div class="kpi-ic" style="background:${k.c}1f;color:${k.c}">${ic(k.i)}</div>
+ <div class="kpi-bd"><div class="kpi-val"><span data-count="${k.v}">${fa(k.v)}</span><small>${k.u}</small></div><div class="kpi-lbl">${k.l}</div>
+ ${k.n?`<div class="kpi-note" style="background:${k.c}18;color:${k.c}">${k.n}</div>`:''}</div></div>`;
+document.getElementById('kpiPlan').innerHTML=kpiPlan.map(kpiCard).join('');
+document.getElementById('kpiExec').innerHTML=kpiExec.map(kpiCard).join('');
+
+function countUp(el){const v=+el.dataset.count,t0=performance.now(),d=1100;
+ (function f(t){const p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);el.textContent=fa(Math.round(v*e));if(p<1)requestAnimationFrame(f)})(t0)}
+if('IntersectionObserver' in window){
+ const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){countUp(x.target);io.unobserve(x.target)}}),{threshold:.4});
+ document.querySelectorAll('[data-count]').forEach(e=>io.observe(e));
+}
+
+/* =====================  SVG chart toolkit  ===================== */
+const tx=(x,y,t,o={})=>`<text x="${x}" y="${y}" text-anchor="${o.a||'middle'}" font-size="${o.s||12}" font-weight="${o.w||500}" fill="${o.c||'#334155'}">${t}</text>`;
+function wrapTxt(s,max){const w=s.split(' '),L=[];let cur='';w.forEach(x=>{const t=(cur?cur+' ':'')+x;if(t.length<=max||!cur)cur=t;else{L.push(cur);cur=x}});if(cur)L.push(cur);return L}
+function getBox(id){const b=document.getElementById(id);return{b,W:Math.max(Math.floor(b.getBoundingClientRect().width),240)}}
+const gradDef=(gid,c)=>`<linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}"/><stop offset="1" stop-color="${c}" stop-opacity=".72"/></linearGradient>`;
+const gradDefH=(gid,c)=>`<linearGradient id="${gid}" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="${c}" stop-opacity=".78"/><stop offset="1" stop-color="${c}"/></linearGradient>`;
+const legendHTML=a=>`<div class="legend">${a.map(x=>`<span><i style="background:${x.color}"></i>${x.name}</span>`).join('')}</div>`;
+
+/* ---------- Vertical bars (single / grouped) ---------- */
+function barChart(id,o){
+ const{b,W}=getBox(id),H=o.h||300,k=o.series.length,n=o.labels.length;
+ const m={t:34,b:64,l:6,r:6},pw=W-m.l-m.r,ph=H-m.t-m.b;
+ const mx=o.max||Math.max(...o.series.flatMap(s=>s.values))*1.14;
+ const gw=pw/n,gap=4,bw=Math.min(o.maxBar||72,(gw*.8-(k-1)*gap)/k);
+ const fs=bw<42?10:(bw<56?11:12.5);
+ const fmt=o.fmt||fa;
+ let defs='',grid='',bars='',labs='',used={};
+ for(let i=0;i<=4;i++){const y=m.t+ph-ph*i/4;grid+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y}" y2="${y}" stroke="${i?'#edf1f5':'#cbd5e1'}" stroke-dasharray="${i?'4 4':'0'}"/>`}
+ o.series.forEach((s,j)=>{
+  s.values.forEach((v,i)=>{
+   const col=(o.colors&&k===1)?o.colors[i]:s.color;
+   const gid=`g_${id}_${col.slice(1)}`;if(!used[gid]){used[gid]=1;defs+=gradDef(gid,col)}
+   const h=Math.max(2,ph*v/mx),x=m.l+gw*i+gw/2-(k*bw+(k-1)*gap)/2+j*(bw+gap),y=m.t+ph-h;
+   bars+=`<rect class="rbar" style="animation-delay:${(i*k+j)*60}ms" x="${x}" y="${y}" width="${bw}" height="${h}" rx="7" fill="url(#${gid})"><title>${s.name?s.name+': ':''}${fmt(v)}</title></rect>`;
+   labs+=tx(x+bw/2,y-7,fmt(v),{s:fs,w:800,c:'#0f172a'});
+  });
+ });
+ o.labels.forEach((l,i)=>{
+  wrapTxt(l,Math.max(7,Math.floor(gw/6.3))).slice(0,3).forEach((ln,q)=>{labs+=tx(m.l+gw*i+gw/2,m.t+ph+20+q*15,ln,{s:11.5,c:'#475569'})});
+ });
+ b.innerHTML=(k>1?legendHTML(o.series):'')+`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs>${defs}</defs>${grid}${bars}${labs}</svg>`;
+}
+
+/* ---------- Horizontal bars ---------- */
+function hbar(id,o){
+ const{b,W}=getBox(id),n=o.items.length,rowH=o.rowH||56,H=rowH*n+6,pad=4,max=o.max||Math.max(...o.items.map(i=>i.value));
+ let s='',defs='';
+ o.items.forEach((it,i)=>{
+  const y0=i*rowH+2,tw=W-pad*2,w=Math.max(6,tw*it.value/max),x=W-pad-w,txt=it.text,gid=`h_${id}_${i}`;
+  defs+=gradDefH(gid,it.color);
+  s+=tx(W-pad,y0+15,it.label,{a:'end',s:12.5,w:600,c:'#334155'});
+  s+=`<rect x="${pad}" y="${y0+23}" width="${tw}" height="22" rx="11" fill="#eef2f6"/>`;
+  s+=`<rect class="hb" style="animation-delay:${i*90}ms" x="${x}" y="${y0+23}" width="${w}" height="22" rx="11" fill="url(#${gid})"/>`;
+  const need=txt.length*6.4+22;
+  if(w>need)s+=tx(x+12,y0+38.5,txt,{a:'start',s:12,w:800,c:'#fff'});
+  else s+=tx(x-7,y0+38.5,txt,{a:'end',s:12,w:800,c:'#0f172a'});
+ });
+ b.innerHTML=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs>${defs}</defs>${s}</svg>`;
+}
+
+/* ---------- Donut ---------- */
+function arcPath(cx,cy,R,r,a0,a1){const p=(a,rad)=>[(cx+rad*Math.cos(a)).toFixed(2),(cy+rad*Math.sin(a)).toFixed(2)];
+ const L=a1-a0>Math.PI?1:0,A=p(a0,R),B=p(a1,R),Cc=p(a1,r),D=p(a0,r);
+ return `M${A[0]} ${A[1]}A${R} ${R} 0 ${L} 1 ${B[0]} ${B[1]}L${Cc[0]} ${Cc[1]}A${r} ${r} 0 ${L} 0 ${D[0]} ${D[1]}Z`}
+function donut(id,o){
+ const{b,W}=getBox(id),S=Math.min(W,300),R=S/2-4,r=R*.5,cx=W/2,cy=S/2,tot=o.data.reduce((a,d)=>a+d.value,0);
+ let a0=-Math.PI/2,s='';
+ o.data.forEach((d,i)=>{
+  const f=d.value/tot,a1=a0+f*2*Math.PI,am=(a0+a1)/2,rm=(R+r)/2;
+  s+=`<path class="sl" style="animation-delay:${i*140}ms" d="${arcPath(cx,cy,R,r,a0,a1)}" fill="${d.color}" stroke="#fff" stroke-width="3"><title>${d.label}: ${fa(d.value)}</title></path>`;
+  const x=cx+rm*Math.cos(am),y=cy+rm*Math.sin(am);
+  s+=tx(x,y-1,fp(f*100),{s:15,w:800,c:'#fff'})+tx(x,y+16,fa(d.value),{s:11.5,w:700,c:'#fff'});
+  a0=a1;
+ });
+ s+=tx(cx,cy-2,o.c1||'',{s:21,w:800,c:'#0f172a'})+tx(cx,cy+19,o.c2||'',{s:11.5,c:'#64748b'});
+ b.innerHTML=`<svg width="${W}" height="${S}" viewBox="0 0 ${W} ${S}">${s}</svg>`+
+  `<div class="legend">${o.data.map(d=>`<span><i style="background:${d.color}"></i>${d.label}: <b>${fa(d.value)}</b></span>`).join('')}</div>`;
+}
+
+/* ---------- Gauge (semi-circle) ---------- */
+function gauge(id,o){
+ const{b,W}=getBox(id),gw=Math.min(W,280),R=gw*.4,sw=Math.max(16,R*.22),cx=W/2,cy=R+sw/2+8,H=cy+46;
+ const d=`M${cx+R} ${cy}A${R} ${R} 0 0 0 ${cx-R} ${cy}`;
+ b.innerHTML=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <path d="${d}" fill="none" stroke="#e8edf2" stroke-width="${sw}" stroke-linecap="round" pathLength="100"/>
+  <path class="gv" d="${d}" fill="none" stroke="${o.color}" stroke-width="${sw}" stroke-linecap="round" pathLength="100" stroke-dasharray="${Math.max(o.v,.01)} 100"/>
+  ${tx(cx,cy-8,fp(o.v),{s:28,w:800,c:'#0f172a'})}
+  ${tx(cx,cy+16,o.sub,{s:12,c:'#64748b'})}
+  ${tx(cx+R,cy+sw/2+16,'۰٪',{s:10.5,c:'#94a3b8'})}${tx(cx-R,cy+sw/2+16,'۱۰۰٪',{s:10.5,c:'#94a3b8'})}
+ </svg>`;
+}
+
+/* ---------- Radar ---------- */
+function radar(id,o){
+ const{b,W}=getBox(id),S=Math.min(W,400),H=S+10,cx=W/2,cy=H/2,R=S/2-78,n=o.labels.length,mx=o.max;
+ const ang=i=>-Math.PI/2+i*2*Math.PI/n,pt=(i,v)=>[cx+R*v/mx*Math.cos(ang(i)),cy+R*v/mx*Math.sin(ang(i))];
+ let s='';
+ [.25,.5,.75,1].forEach(f=>{
+  s+=`<polygon points="${o.labels.map((_,i)=>pt(i,mx*f).join(',')).join(' ')}" fill="${f===1?'#f6f9fb':'none'}" stroke="#d5dde6" stroke-dasharray="${f===1?'0':'3 3'}"/>`;
+  s+=tx(cx+3,cy-R*f-3,fp(mx*f,0),{a:'start',s:9.5,c:'#94a3b8'});
+ });
+ o.labels.forEach((l,i)=>{
+  const [x2,y2]=pt(i,mx);s+=`<line x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}" stroke="#d5dde6"/>`;
+  const lx=cx+(R+16)*Math.cos(ang(i)),ly=cy+(R+16)*Math.sin(ang(i)),c=Math.cos(ang(i));
+  const a=Math.abs(c)<.2?'middle':(c>0?'start':'end');
+  wrapTxt(l,9).forEach((ln,q,arr)=>{s+=tx(lx,ly+(q-(arr.length-1)/2)*13+4+(Math.abs(c)<.2?(Math.sin(ang(i))>0?8:-6):0),ln,{a,s:11,w:600,c:'#334155'})});
+ });
+ s+=`<polygon class="sl" points="${o.values.map((v,i)=>pt(i,v).join(',')).join(' ')}" fill="${o.color}" fill-opacity=".25" stroke="${o.color}" stroke-width="2.5" stroke-linejoin="round"/>`;
+ o.values.forEach((v,i)=>{
+  const [x,y]=pt(i,v),[x2,y2]=[cx+(R*v/mx+14)*Math.cos(ang(i)),cy+(R*v/mx+14)*Math.sin(ang(i))];
+  s+=`<circle cx="${x}" cy="${y}" r="4.5" fill="#fff" stroke="${o.color}" stroke-width="2.5"/>`+tx(x2,y2+4,fp(v),{s:11,w:800,c:o.color});
+ });
+ b.innerHTML=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${s}</svg>`;
+}
+
+/* ---------- Stacked 100% horizontal ---------- */
+function stackH(id,o){
+ const{b,W}=getBox(id),rowH=84,H=rowH*o.rows.length+4,pad=4,tw=W-pad*2;let s='';
+ o.rows.forEach((row,i)=>{
+  const y0=i*rowH,tot=row.parts.reduce((a,p)=>a+p.value,0);let cum=0;
+  s+=tx(W-pad,y0+16,row.label,{a:'end',s:13,w:700,c:'#334155'});
+  row.parts.forEach((p,j)=>{
+   const w=tw*p.value/tot,x=W-pad-cum-w,f=p.value/tot*100;cum+=w;
+   s+=`<rect class="hb" style="animation-delay:${i*120+j*80}ms" x="${x+(j?0:0)}" y="${y0+26}" width="${Math.max(w-2,2)}" height="48" rx="${10}" fill="${p.color}"><title>${p.name}: ${fa(p.value)}</title></rect>`;
+   s+=tx(x+w/2-1,y0+48,fa(p.value),{s:13,w:800,c:'#fff'})+tx(x+w/2-1,y0+65,fp(f),{s:11.5,w:600,c:'#fff'});
+  });
+ });
+ b.innerHTML=legendHTML(o.legend)+`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${s}</svg>`;
+}
+
+/* =====================  Dashboard definitions  ===================== */
+const tabs={
+ plan:[
+  ()=>gauge('p_g1',{v:P.contract/P.districts*100,color:C.plan,sub:`${fa(P.contract)} از ${fa(P.districts)} بخش`}),
+  ()=>gauge('p_g2',{v:apprPct,color:C.green,sub:`${fa(P.approved)} از ${fa(P.districts)} بخش`}),
+  ()=>gauge('p_g3',{v:v20planPct,color:C.gold,sub:`${fa(P.v20)} از ${fa(P.villages)} آبادی`}),
+  ()=>barChart('p_bar',{labels:['شهرستان‌ها','بخش‌ها','بخش دارای قرارداد','بخش دارای طرح مصوب','استان دارای تفاهم‌نامه'],
+        series:[{name:'تعداد',values:[P.cities,P.districts,P.contract,P.approved,P.mou]}],colors:[C.teal,C.purple,C.plan,C.green,C.red],h:320}),
+  ()=>donut('p_dn1',{data:[{label:'دارای طرح مصوب',value:P.approved,color:C.green},{label:'فاقد مصوبه',value:noAppr,color:'#e0a43a'}],c1:fa(P.districts),c2:'بخش'}),
+  ()=>donut('p_dn2',{data:[{label:'۲۰ خانوار و بیشتر',value:P.v20,color:C.plan},{label:'کمتر از ۲۰ خانوار',value:v20less,color:'#9bb8d4'}],c1:fa(P.villages),c2:'آبادی'}),
+  ()=>hbar('p_hb',{max:100,items:[
+      {label:'بخش‌های دارای قرارداد منعقد شده',value:100,color:C.plan,text:`${fa(P.contract)} بخش (${fp(100,0)})`},
+      {label:'بخش‌های دارای طرح مصوب',value:apprPct,color:C.green,text:`${fa(P.approved)} بخش (${fp(apprPct)})`},
+      {label:'بخش‌های فاقد مصوبه',value:100-apprPct,color:'#e0a43a',text:`${fa(noAppr)} بخش (${fp(100-apprPct)})`}],rowH:64})
+ ],
+ exec:[
+  ()=>gauge('e_g1',{v:E.mou/E.provinces*100,color:C.purple,sub:`${fa(E.mou)} از ${fa(E.provinces)} استان`}),
+  ()=>gauge('e_g2',{v:v20execPct,color:C.gold,sub:`${fa(E.v20)} از ${fa(E.villages)} آبادی`}),
+  ()=>gauge('e_g3',{v:ruralPct,color:C.exec,sub:`${fa(E.ruralPop)} از ${fa(E.pop)} نفر`}),
+  ()=>barChart('e_pop',{labels:['جمعیت روستایی تحت پوشش','جمعیت تحت پوشش (کل)'],series:[{name:'نفر',values:[E.ruralPop,E.pop]}],colors:[C.exec,C.plan],h:320,maxBar:96}),
+  ()=>barChart('e_bar',{labels:['شهرستان‌ها','بخش‌ها','استان‌های هدف','استان دارای تفاهم‌نامه'],series:[{name:'تعداد',values:[E.cities,E.districts,E.provinces,E.mou]}],colors:[C.teal,C.purple,C.red,C.exec],h:320}),
+  ()=>donut('e_dn1',{data:[{label:'جمعیت روستایی',value:E.ruralPop,color:C.exec},{label:'سایر جمعیت',value:nonRural,color:'#e7b27c'}],c1:fa(E.pop),c2:'نفر'}),
+  ()=>donut('e_dn2',{data:[{label:'۲۰ خانوار و بیشتر',value:E.v20,color:C.green},{label:'کمتر از ۲۰ خانوار',value:v20lessE,color:'#8fd0bb'}],c1:fa(E.villages),c2:'آبادی'})
+ ],
+ cmp:[
+  ()=>barChart('c_units',{labels:['شهرستان','بخش','استان دارای تفاهم‌نامه'],series:[{name:'تهیه طرح',color:C.plan,values:[P.cities,P.districts,P.mou]},{name:'اجرای طرح',color:C.exec,values:[E.cities,E.districts,E.mou]}],h:320}),
+  ()=>barChart('c_vil',{labels:['کل آبادی‌های دارای سکنه','آبادی‌های ۲۰ خانوار و بیشتر'],series:[{name:'تهیه طرح',color:C.plan,values:[P.villages,P.v20]},{name:'اجرای طرح',color:C.exec,values:[E.villages,E.v20]}],h:320,maxBar:80}),
+  ()=>barChart('c_pop',{labels:['جمعیت روستایی (تهیه طرح)','جمعیت روستایی (اجرا)','جمعیت تحت پوشش (اجرا)'],series:[{name:'نفر',values:[P.pop,E.ruralPop,E.pop]}],colors:[C.plan,C.exec,'#e7b27c'],h:320,maxBar:90}),
+  ()=>hbar('c_hb',{max:60,rowH:58,items:[
+      {label:'استان‌های دارای تفاهم‌نامه',value:r.mou,color:C.purple,text:fp(r.mou)},
+      {label:'شهرستان‌ها',value:r.city,color:C.teal,text:fp(r.city)},
+      {label:'بخش‌ها',value:r.dist,color:C.exec,text:fp(r.dist)},
+      {label:'آبادی‌های دارای سکنه',value:r.vil,color:C.green,text:fp(r.vil)},
+      {label:'جمعیت روستایی',value:r.pop,color:C.plan,text:fp(r.pop)},
+      {label:'آبادی‌های ۲۰ خانوار و بیشتر',value:r.v20,color:C.gold,text:fp(r.v20)}]}),
+  ()=>radar('c_radar',{labels:['جمعیت روستایی','آبادی‌ها','شهرستان‌ها','بخش‌ها','آبادی ۲۰ خانوار و بیشتر','استان دارای تفاهم‌نامه'],values:[r.pop,r.vil,r.city,r.dist,r.v20,r.mou],max:60,color:C.exec}),
+  ()=>donut('c_dn',{data:[{label:'در اجرا',value:E.ruralPop,color:C.exec},{label:'در انتظار اجرا',value:popLeft,color:C.plan}],c1:fp(r.pop),c2:'پوشش اجرا'}),
+  ()=>stackH('c_stack',{legend:[{name:'۲۰ خانوار و بیشتر',color:C.plan},{name:'کمتر از ۲۰ خانوار',color:'#7aa7cf'}],rows:[
+      {label:'تهیه طرح — آبادی‌های تحت پوشش',parts:[{name:'۲۰ خانوار و بیشتر',value:P.v20,color:C.plan},{name:'کمتر از ۲۰ خانوار',value:v20less,color:'#7aa7cf'}]},
+      {label:'اجرای طرح — آبادی‌های تحت پوشش',parts:[{name:'۲۰ خانوار و بیشتر',value:E.v20,color:C.plan},{name:'کمتر از ۲۰ خانوار',value:v20lessE,color:'#7aa7cf'}]}]})
+ ]
+};
+let cur='plan';
+function renderTab(t){tabs[t].forEach(f=>f())}
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{
+ cur=btn.dataset.tab;
+ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===btn));
+ document.querySelectorAll('.tabpanel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+cur));
+ renderTab(cur);
+}));
+let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>renderTab(cur),180)});
+
+/* =====================  Analytic cards  ===================== */
+const an=[
+ {i:'users',c:C.plan,tag:'ظرفیت اجرا',tt:'info',t:'سهم اجرا از جمعیت روستایی طرح',m:fp(r.pop),u:'پوشش جمعیتی',
+  p:`اجرای طرح تا کنون ${fa(E.ruralPop)} نفر از ${fa(P.pop)} نفر جمعیت روستایی تحت پوشش طرح را در بر گرفته است؛ یعنی حدود یک‌هفتم جمعیت هدف. ${fa(popLeft)} نفر هنوز در انتظار ورود به فاز اجرا هستند.`},
+ {i:'home',c:C.green,tag:'پیشرفت',tt:'ok',t:'پوشش آبادی‌ها در اجرا',m:fp(r.vil),u:`${fa(E.villages)} از ${fa(P.villages)} آبادی`,
+  p:`نزدیک به ${fd(r.vil,0)} درصد آبادی‌های دارای سکنهٔ طرح وارد اجرا شده‌اند و ${fa(vilLeft)} آبادی باقی مانده است. نرخ پوشش آبادی‌ها اندکی بالاتر از نرخ پوشش جمعیت روستایی (${fp(r.pop)}) است.`},
+ {i:'map',c:C.purple,tag:'گسترهٔ جغرافیایی',tt:'info',t:'پوشش شهرستان و بخش در اجرا',m:`${fp(r.city)} | ${fp(r.dist)}`,u:'شهرستان | بخش',
+  p:`اجرا در ${fa(E.cities)} شهرستان از ${fa(P.cities)} شهرستان و ${fa(E.districts)} بخش از ${fa(P.districts)} بخش جریان دارد. ${fa(cityLeft)} شهرستان و ${fa(distLeft)} بخش هنوز وارد فاز اجرا نشده‌اند.`},
+ {i:'check',c:C.exec,tag:'گلوگاه احتمالی',tt:'warn',t:'وضعیت مصوبات شورای برنامه‌ریزی',m:fp(apprPct),u:`${fa(P.approved)} از ${fa(P.districts)} بخش`,
+  p:`قرارداد برای تمام ${fa(P.contract)} بخش منعقد شده، اما ${fa(noAppr)} بخش (${fp(100-apprPct)}) هنوز طرح مصوب ندارند. با فرض این‌که بخش‌های در حال اجرا از میان بخش‌های مصوب باشند، دست‌کم ${fa(spare)} بخش مصوب آمادهٔ ورود به فاز اجرا هستند.`},
+ {i:'brief',c:C.red,tag:'هماهنگی استانی',tt:'info',t:'تفاهم‌نامه با استانداری‌ها',m:fp(r.mou,0),u:`${fa(E.mou)} از ${fa(P.mou)} استان`,
+  p:`همهٔ ${fa(E.provinces)} استان هدف اجرا دارای تفاهم‌نامه‌اند (۱۰۰٪). به‌نظر می‌رسد ${fa(P.mou-E.mou)} استان دیگر دارای تفاهم‌نامه، هنوز وارد اجرا نشده‌اند و می‌توانند نخستین گزینه‌ها برای گسترش اجرا باشند.`},
+ {i:'layers',c:C.gold,tag:'تمرکز بر آبادی‌ها',tt:'warn',t:'سهم آبادی‌های ۲۰ خانوار و بیشتر',m:`${fp(v20planPct)} ← ${fp(v20execPct)}`,u:'طرح ← اجرا',
+  p:`در طرح، ${fp(v20planPct)} آبادی‌ها دست‌کم ۲۰ خانوار دارند، ولی در اجرا این سهم ${fp(v20execPct)} است؛ یعنی ${fd(v20planPct-v20execPct)} واحد درصد کمتر. نرخ پوشش اجرایی آبادی‌های ۲۰ خانوار و بیشتر (${fp(r.v20)}) از نرخ پوشش کل آبادی‌ها (${fp(r.vil)}) پایین‌تر است.`},
+ {i:'scale',c:C.teal,tag:'ترکیب جمعیت',tt:'info',t:'جمعیت تحت پوشش در برابر جمعیت روستایی اجرا',m:`${fd(ratio,2)} برابر`,u:`${fa(E.pop)} نفر`,
+  p:`کل جمعیت تحت پوشش اجرا ${fa(E.pop)} نفر است که ${fa(E.ruralPop)} نفر آن (${fp(ruralPct)}) روستایی است. ${fa(nonRural)} نفر (${fp(nonRuralPct)}) سایر جمعیت (احتمالاً ساکنان نقاط شهری و خدمات‌گیرنده در محدودهٔ منظومه‌ها) هستند.`},
+ {i:'bar',c:C.plan,tag:'میانگین‌ها',tt:'info',t:'اندازهٔ متوسط آبادی و بخش',m:`${fa(Math.round(avgPlan))} ← ${fa(Math.round(avgExec))}`,u:'نفر در هر آبادی (طرح ← اجرا)',
+  p:`میانگین جمعیت روستایی هر آبادی در طرح ${fa(Math.round(avgPlan))} نفر و در اجرا ${fa(Math.round(avgExec))} نفر است؛ یعنی اجرا نسبتاً در آبادی‌های کوچک‌تر آغاز شده. تعداد آبادی در هر بخش تقریباً یکسان است (طرح: ${fd(vdPlan)}، اجرا: ${fd(vdExec)}).`},
+ {i:'hourglass',c:C.exec,tag:'ظرفیت باقی‌مانده',tt:'ok',t:'ظرفیت باقی‌ماندهٔ اجرا',m:fa(vilLeft),u:'آبادی در انتظار اجرا',
+  p:'مقادیر زیر، تفاضل طرح و اجرا هستند:',minis:[[fa(distLeft),'بخش'],[fa(cityLeft),'شهرستان'],[fa(popLeft),'نفر جمعیت روستایی']]}
+];
+document.getElementById('analytics').innerHTML=an.map(a=>`
+ <div class="acard" style="--c:${a.c}">
+  <div class="ah"><div class="ai" style="background:${a.c}1f;color:${a.c}">${ic(a.i)}</div><h4>${a.t}</h4><span class="tag ${a.tt}">${a.tag}</span></div>
+  <div class="am">${a.m}<small>${a.u}</small></div>
+  <p>${a.p}</p>
+  ${a.minis?`<div class="minis">${a.minis.map(x=>`<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>`:''}
+ </div>`).join('');
+
+/* =====================  Table  ===================== */
+const rows=[
+ ['users','جمعیت روستایی تحت پوشش',P.pop,E.ruralPop,r.pop],
+ ['home','تعداد کل آبادی‌های دارای سکنه تحت پوشش',P.villages,E.villages,r.vil],
+ ['building','تعداد شهرستان‌های تحت پوشش',P.cities,E.cities,r.city],
+ ['map','تعداد بخش‌های تحت پوشش',P.districts,E.districts,r.dist],
+ ['layers','آبادی‌های دارای ۲۰ خانوار و بیشتر تحت پوشش',P.v20,E.v20,r.v20],
+ ['brief','استان‌های دارای تفاهم‌نامه با استانداری',P.mou,E.mou,r.mou],
+ ['file','بخش‌های دارای قرارداد منعقد شده',P.contract,null,null],
+ ['check','بخش‌های دارای طرح مصوب در شورای برنامه‌ریزی و توسعه استان',P.approved,null,null],
+ ['users','جمعیت تحت پوشش (کل)',null,E.pop,null],
+ ['target','تعداد استان‌های هدف',null,E.provinces,null]
+];
+document.getElementById('tbl').innerHTML=`<thead><tr><th>شاخص</th><th>تهیه طرح</th><th>اجرای طرح</th><th>سهم اجرا از تهیه طرح</th></tr></thead><tbody>`+
+ rows.map(x=>`<tr><td><span class="ti"><i>${ic(x[0])}</i>${x[1]}</span></td>
+  <td class="n">${x[2]==null?'<span class="dash">—</span>':fa(x[2])}</td>
+  <td class="n">${x[3]==null?'<span class="dash">—</span>':fa(x[3])}</td>
+  <td>${x[4]==null?'<span class="dash">—</span>':`<div class="pb"><div class="tr"><b style="width:${Math.min(100,x[4])}%"></b></div><span>${fp(x[4])}</span></div>`}</td></tr>`).join('')+`</tbody>`;
+
+/* =====================  Recommendations  ===================== */
+const reco=[
+ `پیگیری تصویب طرح ${fa(noAppr)} بخش فاقد مصوبه در شوراهای برنامه‌ریزی و توسعهٔ استان‌ها، به‌عنوان پیش‌نیاز اصلی گسترش اجرا.`,
+ `اولویت‌دهی به ورود بخش‌های دارای طرح مصوب و قرارداد به فاز اجرا؛ با فرض مصوب بودن بخش‌های در حال اجرا، دست‌کم ${fa(spare)} بخش مصوب هنوز اجرا نشده است.`,
+ `گسترش اجرا به استان‌های دارای تفاهم‌نامه که هنوز در فهرست ${fa(E.provinces)} استان هدف اجرا نیستند (${fa(P.mou-E.mou)} استان).`,
+ `رصد تناسب اجرا با اندازهٔ آبادی‌ها: سهم آبادی‌های ۲۰ خانوار و بیشتر در اجرا (${fp(v20execPct)}) کمتر از سهم آن‌ها در طرح (${fp(v20planPct)}) است و در اولویت‌بندی آبادی‌های بعدی باید بررسی شود.`
+];
+document.getElementById('reco').innerHTML=reco.map(t=>`<li><i>${ic('check')}</i><span>${t}</span></li>`).join('');
+
+/* =====================  Init  ===================== */
+paintIcons();
+renderTab(cur);
+</script>
+</body>
+</html>
