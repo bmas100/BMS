@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد جامع مدیریتی طرح خانه امید</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Vazirmatn Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { vazir: ['Vazirmatn', 'sans-serif'] },
+                    colors: {
+                        primary: '#1e3a8a',
+                        secondary: '#ea580c',
+                        accent: '#0ea5e9',
+                        success: '#16a34a',
+                        purple: '#9333ea'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Chart.js and Datalabels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; background-color: #f8fafc; }
+        .glass-capsule {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-capsule:hover { background: rgba(255, 255, 255, 0.25); transform: translateY(-2px); }
+        .chart-container { position: relative; margin: auto; height: 350px; width: 100%; }
+        .chart-container-lg { position: relative; margin: auto; height: 450px; width: 100%; }
+        table th, table td { white-space: nowrap; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="text-gray-800 pb-12">
+
+    <!-- ================= BANNER (Reduced Height) ================= -->
+    <header class="relative bg-gradient-to-l from-primary via-blue-900 to-accent text-white overflow-hidden shadow-xl rounded-b-3xl mb-8">
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0 100 L100 0 L100 100 Z" fill="white" />
+            </svg>
+        </div>
+
+        <div class="relative container mx-auto px-4 py-8 flex flex-col items-center text-center z-10">
+            <div class="bg-white/20 p-3 rounded-full mb-3 backdrop-blur-sm shadow-lg">
+                <i class="fa-solid fa-house-chimney-window text-4xl text-white"></i>
+            </div>
+            <h1 class="text-2xl md:text-4xl font-extrabold mb-2 drop-shadow-lg">گزارش طرح خانه امید</h1>
+            <p class="text-base md:text-lg font-medium mb-5 text-blue-50">
+                حمایت در تأمین مسکن اقشار کم درآمد | جلسه شورای مرکزی بنیاد مسکن انقلاب اسلامی
+            </p>
+            
+            <!-- Capsules -->
+            <div class="flex flex-wrap gap-4 justify-center">
+                <div class="glass-capsule px-5 py-2 rounded-full flex items-center gap-2 text-sm font-bold">
+                    <i class="fa-regular fa-calendar-check text-yellow-300"></i>
+                    <span>تاریخ گزارش: ۱۴۰۵/۰۷/۲۷</span>
+                </div>
+                <a href="./HopeHouseShora.pdf" target="_blank" class="glass-capsule px-5 py-2 rounded-full flex items-center gap-2 text-sm font-bold hover:bg-white/30 cursor-pointer">
+                    <i class="fa-solid fa-file-pdf text-red-400"></i>
+                    <span>جزئیات گزارش (PDF)</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= MAIN DASHBOARD ================= -->
+    <main class="container mx-auto px-4 md:px-6">
+
+        <!-- KPI Summary Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-2 h-full bg-primary"></div>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium mb-1">کل واحدهای هدف</p>
+                        <h3 class="text-3xl font-black text-gray-800">۲۲۰,۰۰۰</h3>
+                    </div>
+                    <div class="bg-blue-50 text-primary p-3 rounded-xl"><i class="fa-solid fa-city text-2xl"></i></div>
+                </div>
+                <div class="mt-4 text-sm text-gray-600 flex justify-between border-t pt-2">
+                    <span>روستایی: ۱۵۵,۰۰۰</span>
+                    <span>شهری: ۶۵,۰۰۰</span>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-2 h-full bg-success"></div>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium mb-1">تأمین زمین</p>
+                        <h3 class="text-3xl font-black text-gray-800">۱۳۲,۰۰۰ <span class="text-sm font-normal">واحد</span></h3>
+                    </div>
+                    <div class="bg-green-50 text-success p-3 rounded-xl"><i class="fa-solid fa-map-location-dot text-2xl"></i></div>
+                </div>
+                <div class="mt-4 text-sm text-gray-600 border-t pt-2">
+                    <span>مجموع تفاهم‌نامه‌ها و اراضی تأمین شده</span>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-2 h-full bg-secondary"></div>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium mb-1">منابع مالی مورد نیاز</p>
+                        <h3 class="text-3xl font-black text-gray-800">۲۳۸ <span class="text-sm font-normal">همت</span></h3>
+                    </div>
+                    <div class="bg-orange-50 text-secondary p-3 rounded-xl"><i class="fa-solid fa-coins text-2xl"></i></div>
+                </div>
+                <div class="mt-4 text-sm text-gray-600 border-t pt-2">
+                    <span>شامل تسهیلات، آورده متقاضی و...</span>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-2 h-full bg-purple"></div>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium mb-1">پیشرفت برنامه ۱۴۰۵</p>
+                        <h3 class="text-3xl font-black text-gray-800">۸۷٪</h3>
+                    </div>
+                    <div class="bg-purple-50 text-purple p-3 rounded-xl"><i class="fa-solid fa-chart-line text-2xl"></i></div>
+                </div>
+                <div class="mt-4 text-sm text-gray-600 border-t pt-2">
+                    <span>عملکرد تا مهر ۱۴۰۵ (از ۱۲۰,۰۰۰ واحد)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section 1: Distribution & Type -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 lg:col-span-2">
+                <div class="flex items-center gap-3 mb-4 border-b pb-3">
+                    <i class="fa-solid fa-chart-bar text-primary text-xl"></i>
+                    <h2 class="text-lg font-bold text-gray-800">توزیع ۲۲۰ هزار واحد به تفکیک استان (۱۵ استان برتر)</h2>
+                </div>
+                <div class="chart-container">
+                    <canvas id="provinceChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <div class="flex items-center gap-3 mb-4 border-b pb-3">
+                    <i class="fa-solid fa-chart-pie text-secondary text-xl"></i>
+                    <h2 class="text-lg font-bold text-gray-800">نوع ساخت واحدها</h2>
+                </div>
+                <div class="chart-container flex justify-center items-center">
+                    <canvas id="constructionTypeChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section 2: Execution Status & Rental Distribution -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <div class="flex items-center gap-3 mb-4 border-b pb-3">
+                    <i class="fa-solid fa-trowel-bricks text-accent text-xl"></i>
+                    <h2 class="text-lg font-bold text-gray-800">جزئیات پیشرفت فیزیکی واحدها</h2>
+                </div>
+                <div class="chart-container">
+                    <canvas id="progressChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <div class="flex items-center gap-3 mb-4 border-b pb-3">
+                    <i class="fa-solid fa-key text-purple text-xl"></i>
+                    <h2 class="text-lg font-bold text-gray-800">توزیع استانی مسکن استیجاری (۱,۵۰۰ واحد)</h2>
+                </div>
+                <div class="chart-container">
+                    <canvas id="rentalChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Resources Chart & Analytical Cards -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 lg:col-span-1">
+                <div class="flex items-center gap-3 mb-4 border-b pb-3">
+                    <i class="fa-solid fa-wallet text-success text-xl"></i>
+                    <h2 class="text-lg font-bold text-gray-800">ترکیب منابع مالی (همت)</h2>
+                </div>
+                <div class="chart-container">
+                    <canvas id="financeChart"></canvas>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gradient-to-br from-blue-50 to-white p-5 rounded-2xl border border-blue-100 shadow-sm">
+                    <div class="flex items-center gap-3 mb-3 text-primary">
+                        <i class="fa-solid fa-handshake-angle text-xl"></i>
+                        <h3 class="font-bold text-lg">تأمین زمین (۱۳۲ هزار واحد)</h3>
+                    </div>
+                    <ul class="text-gray-700 text-sm leading-7 space-y-2 list-disc list-inside">
+                        <li><strong>۵۰ هزار واحد:</strong> سازمان ملی زمین و مسکن</li>
+                        <li><strong>۲۵ هزار واحد:</strong> شرکت عمران شهرهای جدید</li>
+                        <li><strong>۲۰ هزار واحد:</strong> زمین رایگان حریم شهرها</li>
+                        <li><strong>۳۳ هزار قطعه:</strong> سامانه سماع و تم</li>
+                        <li><strong>۴ هزار واحد:</strong> اراضی اهدایی خیرین</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-50 to-white p-5 rounded-2xl border border-green-100 shadow-sm">
+                    <div class="flex items-center gap-3 mb-3 text-success">
+                        <i class="fa-solid fa-people-roof text-xl"></i>
+                        <h3 class="font-bold text-lg">نهادهای حمایتی (۵۲ هزار واحد)</h3>
+                    </div>
+                    <div class="text-gray-700 text-sm leading-7">
+                        <p class="mb-2"><strong>کمیته امداد (۴۴ هزار واحد):</strong> ۸ هزار روستایی، ۳۰ هزار شهری، ۶ هزار شهری بنیاد.</p>
+                        <p class="mb-2"><strong>سازمان بهزیستی (۸ هزار واحد):</strong> ۳,۹۰۰ روستایی، ۴,۱۰۰ شهری.</p>
+                        <p class="mt-3 text-success font-bold bg-green-100 p-2 rounded-lg text-center">مجموع اعتبارات: ۱۷ همت</p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-orange-50 to-white p-5 rounded-2xl border border-orange-100 shadow-sm md:col-span-2">
+                    <div class="flex items-center gap-3 mb-3 text-secondary">
+                        <i class="fa-solid fa-file-contract text-xl"></i>
+                        <h3 class="font-bold text-lg">تفاهم‌نامه تأمین مسکن استیجاری (سازمان ملی زمین و مسکن)</h3>
+                    </div>
+                    <p class="text-gray-700 text-sm leading-7 text-justify mb-2">
+                        تعریف ۱,۵۰۰ واحد مسکن استیجاری در سال نخست. تسهیلات قرض‌الحسنه ۴۰۰ میلیون تومان برای هر واحد، کمک بلاعوض ۳۰۰ میلیون تومان برای هر واحد، و تأمین هزینه آماده‌سازی توسط بنیاد مسکن.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Data Tables -->
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+            <!-- Subsidies Table -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-4 border-b border-gray-100 flex items-center gap-3 bg-gray-50">
+                    <i class="fa-solid fa-calculator text-secondary text-xl"></i>
+                    <h2 class="text-lg font-bold text-gray-800">یارانه واحدهای طرح خانه امید (میلیارد تومان)</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-sm">
+                        <thead class="bg-gray-100 text-gray-700 font-bold">
+                            <tr>
+                                <th class="p-3 border-b">موضوع</th>
+                                <th class="p-3 border-b">شهری (۶۵,۰۰۰)</th>
+                                <th class="p-3 border-b">روستایی (۱۵۵,۰۰۰)</th>
+                                <th class="p-3 border-b text-primary">مجموع کل</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50"><td class="p-3 font-medium">قیمت زمین</td><td class="p-3">۱۹,۵۰۰</td><td class="p-3">۴۶,۵۰۰</td><td class="p-3 font-bold text-gray-800">۶۶,۰۰۰</td></tr>
+                            <tr class="hover:bg-gray-50"><td class="p-3 font-medium">آماده‌سازی (بستر‌سازی)</td><td class="p-3">۶,۵۰۰</td><td class="p-3">۱۳,۹۵۰</td><td class="p-3 font-bold text-gray-800">۲۰,۴۵۰</td></tr>
+                            <tr class="hover:bg-gray-50"><td class="p-3 font-medium">صدور پروانه</td><td class="p-3">۱,۵۶۰</td><td class="p-3">۱,۳۹۵</td><td class="p-3 font-bold text-gray-800">۲,۹۵۵</td></tr>
+                            <tr class="hover:bg-gray-50"><td class="p-3 font-medium">خدمات مهندسی</td><td class="p-3">۱,۰۴۰</td><td class="p-3">۱,۷۰۵</td><td class="p-3 font-bold text-gray-800">۲,۷۴۵</td></tr>
+                            <tr class="bg-blue-50 font-bold text-primary"><td class="p-3">مجموع یارانه</td><td class="p-3">۲۸,۶۰۰</td><td class="p-3">۶۳,۵۵۰</td><td class="p-3">۹۲,۱۵۰</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Full Financial Resources Table -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-4 border-b border-gray-100 flex items-center gap-3 bg-gray-50">
+                    <i class="fa-solid fa-list-check text-primary text-xl"></i>
+                    <h2 class="text-lg font-bold text-gray-800">جزئیات کامل منابع مالی (همت / میلیارد تومان)</h2>
+                </div>
+                <div class="overflow-x-auto max-h-[350px] overflow-y-auto">
+                    <table class="w-full text-right text-sm">
+                        <thead class="bg-gray-100 text-gray-700 font-bold sticky top-0">
+                            <tr>
+                                <th class="p-2 border-b">لیست منابع</th>
+                                <th class="p-2 border-b">جزئیات</th>
+                                <th class="p-2 border-b">مبلغ</th>
+                                <th class="p-2 border-b">واحد</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr><td class="p-2">تسهیلات</td><td class="p-2">تسهیلات ساخت ۲۰ ساله</td><td class="p-2">۸۹</td><td class="p-2">همت</td></tr>
+                            <tr><td class="p-2">تسهیلات مهر/رسالت</td><td class="p-2">قرض الحسنه</td><td class="p-2">۱۷۰</td><td class="p-2">میلیارد</td></tr>
+                            <tr><td class="p-2">حساب ۱۰۰ امام</td><td class="p-2">کمک خیرین</td><td class="p-2">۵۲۶</td><td class="p-2">میلیارد</td></tr>
+                            <tr><td class="p-2">حساب ۱۰۰ امام</td><td class="p-2">مسئولیت اجتماعی</td><td class="p-2">۲</td><td class="p-2">همت</td></tr>
+                            <tr><td class="p-2">حساب ۱۰۰ امام</td><td class="p-2">واگذاری اراضی</td><td class="p-2">۳۸</td><td class="p-2">همت</td></tr>
+                            <tr><td class="p-2">حساب ۱۰۰ امام</td><td class="p-2">آماده‌سازی</td><td class="p-2">۲۰</td><td class="p-2">همت</td></tr>
+                            <tr><td class="p-2">نهادهای حمایتی</td><td class="p-2">کمیته امداد و بهزیستی</td><td class="p-2">۴.۵</td><td class="p-2">همت</td></tr>
+                            <tr><td class="p-2">اعتبارات دولتی</td><td class="p-2">اعتبارات ملی</td><td class="p-2">۲.۷۵</td><td class="p-2">همت</td></tr>
+                            <tr><td class="p-2">اعتبارات استانی</td><td class="p-2">توازن ۱ و ۲</td><td class="p-2">۸۶۴</td><td class="p-2">میلیارد</td></tr>
+                            <tr><td class="p-2">اعتبارات نفتی</td><td class="p-2">سهم سود بانک</td><td class="p-2">۵۰</td><td class="p-2">میلیارد</td></tr>
+                            <tr><td class="p-2">آورده متقاضی</td><td class="p-2">کمک خیرین</td><td class="p-2">۶۹</td><td class="p-2">همت</td></tr>
+                            <tr class="bg-blue-50 font-bold text-primary"><td class="p-2" colspan="2">مجموع کل</td><td class="p-2">۲۳۸</td><td class="p-2">همت</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ================= JAVASCRIPT CHARTS ================= -->
+    <script>
+        Chart.register(ChartDataLabels);
+        Chart.defaults.font.family = 'Vazirmatn, sans-serif';
+        Chart.defaults.color = '#475569';
+        
+        // Data Labels Config (Smaller font as requested)
+        const commonDataLabels = {
+            color: '#1e293b',
+            font: { size: 12, weight: 'bold', family: 'Vazirmatn' },
+            align: 'right',
+            anchor: 'end',
+            offset: 4,
+            clamp: true,
+            formatter: function(value) { return value.toLocaleString('fa-IR'); }
+        };
+
+        // 1. Province Distribution Chart
+        const provinceCtx = document.getElementById('provinceChart').getContext('2d');
+        new Chart(provinceCtx, {
+            type: 'bar',
+            data: {
+                labels: ['خراسان رضوی', 'سیستان و بلوچستان', 'آذربایجان شرقی', 'کرمان', 'خراسان جنوبی', 'همدان', 'بوشهر', 'گیلان', 'لرستان', 'اردبیل', 'ایلام', 'یزد', 'کهگیلویه', 'کرمانشاه', 'سمنان'],
+                datasets: [{
+                    label: 'تعداد واحد',
+                    data: [16332, 14813, 13749, 12349, 11512, 10855, 10646, 9376, 8662, 8449, 4956, 4920, 4298, 4253, 4192],
+                    backgroundColor: 'rgba(30, 58, 138, 0.8)',
+                    borderRadius: 4,
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                layout: { padding: { right: 25 } },
+                plugins: { legend: { display: false }, datalabels: commonDataLabels },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { callback: v => v.toLocaleString('fa-IR') } },
+                    x: { grid: { display: false }, ticks: { font: { size: 11 }, maxRotation: 45, minRotation: 45 } }
+                }
+            }
+        });
+
+        // 2. Construction Type Chart
+        const constructionCtx = document.getElementById('constructionTypeChart').getContext('2d');
+        new Chart(constructionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['فردی (۸۲٪)', 'بنیاد ساخت (۱۵٪)', 'مجموعه‌سازی (۳٪)'],
+                datasets: [{
+                    data: [82, 15, 3],
+                    backgroundColor: ['#3b82f6', '#f97316', '#9ca3af'],
+                    borderWidth: 2, borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false, cutout: '65%',
+                plugins: {
+                    legend: { position: 'bottom', labels: { padding: 15, font: { size: 12 } } },
+                    datalabels: {
+                        color: '#ffffff',
+                        font: { size: 14, weight: 'bold' },
+                        formatter: v => v + '٪'
+                    }
+                }
+            }
+        });
+
+        // 3. Execution Status Chart
+        const progressCtx = document.getElementById('progressChart').getContext('2d');
+        new Chart(progressCtx, {
+            type: 'bar',
+            data: {
+                labels: ['در دست اجرا', 'پایان یافته/تحویل', 'مرحله فونداسیون', 'مرحله اسکلت', 'مرحله سفت‌کاری'],
+                datasets: [{
+                    label: 'تعداد واحد',
+                    data: [105307, 32063, 59953, 99877, 32063],
+                    backgroundColor: ['#16a34a', '#0ea5e9', '#9333ea', '#ea580c', '#64748b'],
+                    borderRadius: 6,
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                layout: { padding: { right: 30 } },
+                plugins: { legend: { display: false }, datalabels: commonDataLabels },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { callback: v => v.toLocaleString('fa-IR') } },
+                    x: { grid: { display: false }, ticks: { font: { size: 11 } } }
+                }
+            }
+        });
+
+        // 4. Rental Housing Distribution Chart (Simplified representation)
+        const rentalCtx = document.getElementById('rentalChart').getContext('2d');
+        new Chart(rentalCtx, {
+            type: 'bar',
+            data: {
+                labels: ['آذربایجان شرقی', 'اصفهان', 'تهران', 'خراسان رضوی', 'سیستان و بلوچستان', 'فارس', 'خوزستان', 'کرمان', 'کرمانشاه'],
+                datasets: [{
+                    label: 'تعداد واحد',
+                    data: [100, 100, 100, 100, 100, 100, 80, 60, 60],
+                    backgroundColor: '#9333ea',
+                    borderRadius: 4,
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                layout: { padding: { right: 30 } },
+                plugins: { legend: { display: false }, datalabels: commonDataLabels },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { callback: v => v.toLocaleString('fa-IR') } },
+                    x: { grid: { display: false }, ticks: { font: { size: 11 } } }
+                }
+            }
+        });
+
+        // 5. Financial Resources Chart (Simplified Horizontal Bar Chart)
+        const financeCtx = document.getElementById('financeChart').getContext('2d');
+        new Chart(financeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['تسهیلات بانکی', 'حساب ۱۰۰ امام', 'خیرین و آورده', 'اعتبارات دولتی'],
+                datasets: [{
+                    label: 'مبلغ (همت)',
+                    data: [89, 71, 69, 9],
+                    backgroundColor: ['#3b82f6', '#16a34a', '#f59e0b', '#ef4444'],
+                    borderRadius: 4,
+                }]
+            },
+            options: {
+                indexAxis: 'y', // Makes it a horizontal bar chart
+                responsive: true, maintainAspectRatio: false,
+                layout: { padding: { left: 30 } }, // Padding for horizontal labels
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        color: '#1e293b',
+                        font: { size: 12, weight: 'bold' },
+                        anchor: 'end',
+                        align: 'left', // Labels on the left for horizontal bars
+                        formatter: v => v + ' همت'
+                    }
+                },
+                scales: {
+                    x: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { display: false } },
+                    y: { grid: { display: false }, ticks: { font: { size: 12, weight: 'bold' } } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
