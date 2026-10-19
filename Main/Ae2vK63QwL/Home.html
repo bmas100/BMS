@@ -403,14 +403,18 @@ const sections = [
     /* { t: "عمران روستایی", ic: "fa-tractor", h: 120 }, */
     { t: "منظومه روستایی", ic: "fa-house-circle-check", h: 175 , link: "../../TarheManzume/TarheManzume.html" },
     { t: "طرح‌های هادی", ic: "fa-road", h: 50 , link: "../../TarheHadi/TarheHadi.html"},
-    { t: "امور زمین", ic: "fa-map", h: 95 }, 
+    { t: "امور زمین", ic: "fa-map", h: 95 , link: "../../LandAffairs/LandAffairs.html"}, 
     { t: "بازسازی جنگ رمضان", ic: "fa-person-digging", h: 8, link: "https://bmas100.github.io/War/WarReportShora.html" },
     { t: "خانه امید", ic: "fa-house-chimney-window", h: 335, link: "../../HopeHouseMob/HouseHopeShora.html" },
     { t: "خدمات فنی", ic: "fa-file-signature", h: 20 },
     { t: "خیرین و حساب 100", ic: "fa-hand-holding-dollar", h: 45, popup: "Hesab100" }
   ]},
   { title: "ارتباطات و رسانه", c1: "#f59e0b", c2: "#ef4444", items: [
-    { t: "ارتباط با ریاست", ic: "fa-comments", h: 175, popup: "BossContact" },
+  /*  { t: "ارتباط با ریاست", ic: "fa-comments", h: 175, popup: "BossContact" }, */
+
+    { t: "ارتباط با ریاست", ic: "fa-comments", h: 175, link: "../../PrsReport/PrsReport.html" },
+    { t: "ارتباطات مردمی", ic: "fa-comments", h: 175, link: "../../BossContact/PublicRelations.html" },
+    
     { t: "امور مجلس", ic: "fa-landmark", h: 320, link: "../../Parliament/Parliament.html" },
     { t: "رسانه‌های خبری", ic: "fa-globe", h: 200, link: "../../NewsMedia/NewsMedia.html" }
   ]},
@@ -579,7 +583,7 @@ document.querySelectorAll('.card').forEach(card => {
 })();
 </script>
 
-<script src="tracker.js?v=115"></script>
+<script src="tracker.js?v=117"></script>
 
 </body>
 </html>
