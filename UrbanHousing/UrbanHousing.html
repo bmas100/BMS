@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>معاونت مسکن و عمران شهری | داشبورد تحلیلی</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+:root{
+  --navy:#0b2f4e; --navy2:#12466f; --teal:#1f8a8a; --green:#4caf7a; --lime:#8ab17d;
+  --amber:#f4a62a; --orange:#e8743b; --red:#d94f4f; --blue:#3b82c4; --sky:#9cc3e6;
+  --bg:#eef3f8; --card:#ffffff; --ink:#1b2a3a; --muted:#6b7b8c; --line:#e1e8f0;
+  --shadow:0 6px 22px rgba(11,47,78,.08);
+  --pcols:4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Vazirmatn',Tahoma,sans-serif;background:var(--bg);color:var(--ink);line-height:1.8;font-size:15px}
+a{text-decoration:none;color:inherit}
+
+/* ---------- Banner ---------- */
+.banner{position:relative;overflow:hidden;color:#fff;
+  background:linear-gradient(135deg,#071f36 0%,#0b2f4e 38%,#14618a 75%,#1f8a8a 100%);
+  padding:16px 20px 20px}
+.banner::before{content:"";position:absolute;inset:0;opacity:.14;
+  background-image:
+   radial-gradient(circle at 12% 20%,#fff 0 2px,transparent 3px),
+   radial-gradient(circle at 70% 70%,#fff 0 2px,transparent 3px),
+   linear-gradient(0deg,transparent 94%,rgba(255,255,255,.5) 95%),
+   linear-gradient(90deg,transparent 94%,rgba(255,255,255,.5) 95%);
+  background-size:90px 90px,120px 120px,46px 46px,46px 46px}
+.skyline{position:absolute;bottom:0;left:0;right:0;height:60px;opacity:.2}
+.banner-inner{position:relative;max-width:1280px;margin:0 auto}
+.banner-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .logo{width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.14);display:grid;place-items:center;font-size:23px;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(6px)}
+.brand small{display:block;opacity:.8;font-size:12px}
+.brand b{font-size:14.5px}
+.capsules{display:flex;gap:10px;flex-wrap:wrap}
+.capsule{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:999px;font-weight:600;font-size:13px;transition:.25s}
+.capsule.date{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4)}
+.capsule.link{background:linear-gradient(90deg,var(--amber),var(--orange));color:#fff;box-shadow:0 6px 16px rgba(232,116,59,.45)}
+.capsule.link:hover{transform:translateY(-2px);filter:brightness(1.07)}
+.banner h1{margin-top:14px;font-size:clamp(21px,3vw,32px);font-weight:800;line-height:1.5}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.tag{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:1px 12px;border-radius:8px;font-size:12.5px}
+
+/* ---------- Nav ---------- */
+.nav{position:sticky;top:0;z-index:50;background:linear-gradient(90deg,#082640,#0f4a78 55%,#157a86);box-shadow:0 6px 18px rgba(8,38,64,.28);border-bottom:3px solid var(--amber)}
+.nav-in{max-width:1280px;margin:0 auto;display:flex;gap:8px;overflow-x:auto;padding:9px 14px;scrollbar-width:none}
+.nav-in::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;padding:7px 16px;border-radius:12px;font-size:13.5px;color:#dcebf7;font-weight:600;display:flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);transition:.2s}
+.nav a i{color:var(--amber)}
+.nav a:hover{background:rgba(255,255,255,.18);color:#fff;transform:translateY(-1px)}
+.nav a.on{background:linear-gradient(90deg,var(--amber),var(--orange));color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(232,116,59,.45)}
+.nav a.on i{color:#fff}
+
+/* ---------- Layout ---------- */
+.wrap{max-width:1280px;margin:0 auto;padding:0 16px 40px}
+.kpis{margin-top:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{background:var(--card);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow);display:flex;gap:14px;align-items:center;position:relative;overflow:hidden;border:1px solid var(--line);transition:.25s}
+.kpi:hover{transform:translateY(-3px)}
+.kpi::after{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c,var(--blue))}
+.kpi .ic{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;font-size:21px;color:#fff;background:var(--c,var(--blue));flex:none}
+.kpi .t{font-size:12.5px;color:var(--muted)}
+.kpi .v{font-size:23px;font-weight:800;color:var(--navy);line-height:1.3}
+.kpi .v small{font-size:12px;font-weight:500;color:var(--muted);margin-right:4px}
+.sec{margin-top:34px;scroll-margin-top:70px}
+.sec-h{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sec-h .bar{width:6px;height:30px;border-radius:6px;background:var(--c,var(--teal))}
+.sec-h h2{font-size:20px;color:var(--navy)}
+.sec-h p{color:var(--muted);font-size:13px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(12,1fr)}
+.card{background:var(--card);border-radius:18px;padding:16px;box-shadow:var(--shadow);border:1px solid var(--line);min-width:0}
+.card h3{font-size:15px;color:var(--navy);margin-bottom:2px;display:flex;align-items:center;gap:8px}
+.card h3 i{color:var(--c,var(--teal))}
+.card .note{font-size:12px;color:var(--muted);margin-bottom:8px}
+.c3{grid-column:span 3}.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}
+.ch{position:relative;height:300px}
+.ch.tall{height:360px}.ch.short{height:230px}
+
+/* gauges */
+.gauges{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+.g{text-align:center}
+.g .gc{position:relative;aspect-ratio:2/1.05;width:100%}
+.g .gc canvas{position:absolute;inset:0}
+.g .gv{position:absolute;bottom:0;left:0;right:0;font-weight:800;font-size:19px;line-height:1.2}
+.g .gl{font-size:12.5px;font-weight:700;color:var(--navy);margin-top:6px}
+.g .gs{font-size:11px;color:var(--muted)}
+
+/* province tiles */
+.pgrid{display:grid;grid-template-columns:repeat(var(--pcols),1fr);gap:10px}
+.pt{background:#f6f9fc;border:1px solid var(--line);border-radius:12px;padding:8px 10px;min-width:0}
+.pt .n{font-size:12.5px;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt .trk{height:12px;background:#d9e4ef;border-radius:99px;overflow:hidden;margin:6px 0 4px}
+.pt .fil{height:100%;border-radius:99px;transition:width .6s}
+.pt .fil.over{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.3) 0 6px,transparent 6px 12px)}
+.pt .v{font-size:13px;font-weight:800}
+.pt .v em{font-style:normal;font-size:10px;color:var(--muted);font-weight:500;margin-right:4px}
+
+/* province profile (bullet bars) */
+.pf{margin-top:6px}
+.pf-r{margin:12px 0}
+.pf-r .l{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;gap:8px}
+.pf-r .l b{white-space:nowrap}
+.pf-t{position:relative;height:16px;background:#e3ebf4;border-radius:99px}
+.pf-f{position:absolute;top:0;bottom:0;right:0;border-radius:99px;background:linear-gradient(270deg,var(--teal),var(--blue));transition:width .5s}
+.pf-m{position:absolute;top:-4px;bottom:-4px;width:3px;background:var(--orange);border-radius:3px}
+.pf-d{font-size:11.5px;font-weight:700;margin-right:6px}
+
+/* analytic cards */
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ins{background:var(--card);border-radius:18px;padding:18px;border:1px solid var(--line);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.ins::before{content:"";position:absolute;top:-30px;left:-30px;width:110px;height:110px;border-radius:50%;background:var(--c);opacity:.1}
+.ins .h{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.ins .h i{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--c);color:#fff}
+.ins .h b{color:var(--navy);font-size:14.5px}
+.ins .big{font-size:28px;font-weight:800;color:var(--c);margin:2px 0}
+.ins p{font-size:13px;color:#475667}
+.pill{display:inline-block;font-size:11.5px;padding:1px 10px;border-radius:999px;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);font-weight:700;margin-top:6px}
+
+.prow{margin:10px 0}
+.prow .lbl{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.prow .trk{height:10px;background:#e8eef5;border-radius:99px;overflow:hidden}
+.prow .fil{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--teal),var(--blue))}
+
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 6px}
+.tab{border:1px solid var(--line);background:#f6f9fc;padding:5px 12px;border-radius:999px;font-family:inherit;font-size:12.5px;cursor:pointer;color:var(--navy2)}
+.tab.on{background:var(--navy2);color:#fff;border-color:var(--navy2)}
+select{font-family:inherit;padding:6px 12px;border-radius:10px;border:1px solid var(--line);background:#f6f9fc;font-size:13px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-left:5px;vertical-align:-1px}
+
+.tw{overflow-x:auto;border-radius:12px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:620px}
+th{background:var(--navy2);color:#fff;padding:8px;font-weight:600;position:sticky;top:0;white-space:nowrap}
+td{padding:6px 8px;text-align:center;border-bottom:1px solid var(--line)}
+td:first-child{text-align:right;font-weight:600;background:#f6f9fc;white-space:nowrap}
+.tw.hm{max-height:520px;overflow:auto}
+
+footer{margin-top:40px;text-align:center;color:var(--muted);font-size:12.5px;padding:20px}
+
+/* ---------- Responsive ---------- */
+@media(max-width:1000px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .insights{grid-template-columns:repeat(2,1fr)}
+  .c3,.c4{grid-column:span 6}.c5,.c6,.c7,.c8{grid-column:span 12}
+  :root{--pcols:3}
+}
+@media(max-width:620px){
+  body{font-size:14px}
+  .banner{padding:12px 14px 14px}
+  .brand .logo{width:40px;height:40px;font-size:19px}
+  .kpis{gap:10px}
+  .kpi{padding:12px;gap:10px}
+  .kpi .ic{width:40px;height:40px;font-size:17px;border-radius:12px}
+  .kpi .v{font-size:18px}
+  .insights{grid-template-columns:1fr}
+  .c3,.c4,.c5,.c6,.c7,.c8{grid-column:span 12}
+  .ch{height:270px}.ch.tall{height:340px}
+  .capsule{font-size:12.5px;padding:6px 14px}
+  .nav a{padding:6px 12px;font-size:13px}
+  :root{--pcols:3}
+  .pgrid{gap:6px}
+  .pt{padding:6px 7px}
+  .pt .n{font-size:11px}
+  .pt .v{font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ BANNER ============ -->
+<header class="banner" id="top">
+  <svg class="skyline" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="#fff"><path d="M0 80V50h40V30h30v20h30V20h40v30h30V35h50v45h40V25h35v55h40V40h45V15h40v65h40V45h50V28h30v52h60V38h40V55h40V22h45v58h40V42h50v38h50V30h40v50h40V48h40V35h40v45h60V50h50v30z"/></svg>
+  <div class="banner-inner">
+    <div class="banner-top">
+      <div class="brand">
+        <div class="logo"><i class="fa-solid fa-house-chimney-window"></i></div>
+        <div><b>بنیاد مسکن انقلاب اسلامی</b><small>سامانه هوشمند مدیریتی ریاست بنیاد</small></div>
+      </div>
+      <div class="capsules">
+        <span class="capsule date"><i class="fa-regular fa-calendar-days"></i> تاریخ گزارش: ۱۴۰۵/۰۷/۱۵</span>
+        <a class="capsule link" href="./UrbanHousing.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> جزئیات گزارش</a>
+      </div>
+    </div>
+    <h1>معاونت مسکن و عمران شهری</h1>
+    <div class="tags">
+      <span class="tag"><i class="fa-solid fa-earth-asia"></i> کل کشور</span>
+      <span class="tag"><i class="fa-solid fa-helmet-safety"></i> بنیادساخت و انبوه‌ساز</span>
+      <span class="tag"><i class="fa-solid fa-chart-pie"></i> ۳۱ استان</span>
+    </div>
+  </div>
+</header>
+
+<nav class="nav"><div class="nav-in" id="navIn">
+  <a href="#projects"><i class="fa-solid fa-city"></i> وضعیت پروژه‌ها</a>
+  <a href="#finance"><i class="fa-solid fa-sack-dollar"></i> وضعیت مالی</a>
+  <a href="#applicants"><i class="fa-solid fa-users"></i> وضعیت متقاضیان</a>
+  <a href="#provinces"><i class="fa-solid fa-map-location-dot"></i> مقایسه استانی</a>
+  <a href="#insights"><i class="fa-solid fa-lightbulb"></i> تحلیل‌ها و نکات مدیریتی</a>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ============ KPI CARDS ============ -->
+<section class="kpis">
+  <div class="kpi" style="--c:var(--blue)"><div class="ic"><i class="fa-solid fa-building"></i></div><div><div class="t">واحدهای تعریف‌شده</div><div class="v"><span data-count="78809">0</span><small>واحد</small></div></div></div>
+  <div class="kpi" style="--c:var(--orange)"><div class="ic"><i class="fa-solid fa-hammer"></i></div><div><div class="t">شروع عملیات اجرایی تاکنون</div><div class="v"><span data-count="78624">0</span><small>واحد</small></div></div></div>
+  <div class="kpi" style="--c:var(--green)"><div class="ic"><i class="fa-solid fa-flag-checkered"></i></div><div><div class="t">پایان‌یافته تا ابتدای سال</div><div class="v"><span data-count="14534">0</span><small>واحد</small></div></div></div>
+  <div class="kpi" style="--c:var(--amber)"><div class="ic"><i class="fa-solid fa-person-digging"></i></div><div><div class="t">در دست اجرا (سال جاری)</div><div class="v"><span data-count="64090">0</span><small>واحد</small></div></div></div>
+  <div class="kpi" style="--c:var(--teal)"><div class="ic"><i class="fa-solid fa-gauge-high"></i></div><div><div class="t">متوسط پیشرفت پروژه‌ها</div><div class="v"><span data-count="68">0</span><small>درصد</small></div></div></div>
+  <div class="kpi" style="--c:#8e5bc4"><div class="ic"><i class="fa-solid fa-coins"></i></div><div><div class="t">هزینه‌کرد به‌ازای ۱٪ پیشرفت هر واحد</div><div class="v"><span data-count="14">0</span><small>میلیون تومان</small></div></div></div>
+  <div class="kpi" style="--c:var(--navy2)"><div class="ic"><i class="fa-solid fa-file-signature"></i></div><div><div class="t">واحدهای دارای عقد قرارداد</div><div class="v"><span data-count="77038">0</span><small>واحد</small></div></div></div>
+  <div class="kpi" style="--c:var(--red)"><div class="ic"><i class="fa-solid fa-user-group"></i></div><div><div class="t">تعداد کل متقاضیان</div><div class="v"><span data-count="75892">0</span><small>نفر</small></div></div></div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section class="sec" id="projects">
+  <div class="sec-h" style="--c:var(--green)"><div class="bar"></div><div><h2>وضعیت کلی پروژه‌ها</h2><p>توزیع واحدها بر اساس درصد پیشرفت فیزیکی (پیشرفت بلوک)</p></div></div>
+  <div class="grid">
+    <div class="card c8" style="--c:var(--green)"><h3><i class="fa-solid fa-chart-column"></i> توزیع واحدها بر اساس درصد پیشرفت پروژه</h3><div class="note">تعداد واحد در هر بازه پیشرفت</div><div class="ch tall"><canvas id="cProgress"></canvas></div></div>
+    <div class="card c4" style="--c:var(--amber)"><h3><i class="fa-solid fa-chart-pie"></i> ترکیب واحدها: پایان‌یافته و در دست اجرا</h3><div class="note">بر مبنای ۷۸٬۶۲۴ واحد دارای شروع عملیات</div><div class="ch tall"><canvas id="cDonutState"></canvas></div></div>
+
+    <div class="card c5" style="--c:var(--blue)"><h3><i class="fa-solid fa-ruler-combined"></i> مقیاس پروژه‌ها (تعداد واحد در هر پروژه)</h3><div class="note">تعداد پروژه — میانگین: ۴۸ واحد در هر پروژه</div><div class="ch"><canvas id="cScale"></canvas></div></div>
+    <div class="card c7" style="--c:var(--orange)"><h3><i class="fa-solid fa-stairs"></i> زنجیره پیشرفت مراحل ساخت (شاخص‌های کل کشور)</h3><div class="note">جمع شاخص هر مرحله در سطح کشور (بلوک‌ها/واحدها)</div><div class="ch"><canvas id="cChain"></canvas></div></div>
+
+    <div class="card c12" style="--c:var(--teal)"><h3><i class="fa-solid fa-scale-balanced"></i> نسبت شاخص‌های مراحل ساخت (میانگین کشوری)</h3><div class="note">نسبت هر مرحله به مرحله بعد؛ نسبت بالاتر یعنی فاصله بیشتر میان دو مرحله</div><div class="ch short"><canvas id="cStageRatio"></canvas></div></div>
+  </div>
+</section>
+
+<!-- ============ FINANCE ============ -->
+<section class="sec" id="finance">
+  <div class="sec-h" style="--c:var(--amber)"><div class="bar"></div><div><h2>وضعیت مالی</h2><p>منابع، برداشت و مانده — ارقام به میلیارد تومان</p></div></div>
+  <div class="grid">
+    <div class="card c3" style="--c:var(--navy2)"><h3><i class="fa-solid fa-file-contract"></i> قرارداد</h3>
+      <div class="prow"><div class="lbl"><span>واحدهای دارای عقد قرارداد</span><b>۷۷٬۰۳۸ واحد</b></div><div class="trk"><div class="fil" style="width:97.8%"></div></div></div>
+      <div class="prow"><div class="lbl"><span>واحدهای سررسیدشده</span><b>۱۱٬۹۹۷ واحد</b></div><div class="trk"><div class="fil" style="width:15.6%;background:linear-gradient(90deg,var(--amber),var(--red))"></div></div></div>
+      <div class="prow"><div class="lbl"><span>پروژه‌های سررسیدشده</span><b>۱۶۱ پروژه</b></div></div>
+      <div class="prow"><div class="lbl"><span>بیشترین روز سررسیدشده</span><b>۷۶۳ روز</b></div></div>
+    </div>
+    <div class="card c5" style="--c:var(--amber)"><h3><i class="fa-solid fa-money-bill-trend-up"></i> منابع، برداشت و باقی‌مانده</h3><div class="note">آورده متقاضی و تسهیلات (میلیارد تومان)</div><div class="ch"><canvas id="cFin"></canvas></div></div>
+    <div class="card c4" style="--c:var(--green)"><h3><i class="fa-solid fa-percent"></i> نرخ برداشت از منابع</h3><div class="note">درصد برداشت نسبت به منابع</div>
+      <div class="gauges">
+        <div class="g"><div class="gc"><canvas id="gAll"></canvas><div class="gv" style="color:#2e9e6b">۷۵٫۶٪</div></div><div class="gl">کل منابع</div><div class="gs">۷۳٬۱۰۸ از ۹۶٬۶۹۶</div></div>
+        <div class="g"><div class="gc"><canvas id="gContrib"></canvas><div class="gv" style="color:#d98a0b">۹۵٫۵٪</div></div><div class="gl">آورده متقاضی</div><div class="gs">۴۶٬۹۴۰ از ۴۹٬۱۴۰</div></div>
+        <div class="g"><div class="gc"><canvas id="gFac"></canvas><div class="gv" style="color:#e8743b">۵۵٫۰٪</div></div><div class="gl">تسهیلات</div><div class="gs">۲۶٬۱۶۷ از ۴۷٬۵۵۶</div></div>
+      </div>
+      <div class="legend" style="justify-content:center"><span><i style="background:#4caf7a"></i>برداشت‌شده</span><span><i style="background:#dbe5ef"></i>باقی‌مانده</span></div>
+    </div>
+
+    <div class="card c6" style="--c:var(--blue)"><h3><i class="fa-solid fa-chart-simple"></i> تعداد متقاضیان بر حسب بازه آورده</h3><div class="note">گروه‌بندی مطابق گزارش مرجع</div><div class="ch"><canvas id="cContribBins"></canvas></div></div>
+    <div class="card c6" style="--c:var(--orange)"><h3><i class="fa-solid fa-code-compare"></i> مقایسه تعداد واحد و متقاضی موثر (بر اساس آورده)</h3><div class="note">به تفکیک میزان پیشرفت فیزیکی بلوک‌ها</div><div class="ch"><canvas id="cUnitsApp"></canvas></div></div>
+
+    <div class="card c6" style="--c:var(--red)"><h3><i class="fa-solid fa-arrows-up-down"></i> میزان اختلاف (واحد − متقاضی موثر)</h3><div class="note">مقدار منفی یعنی تعداد متقاضی موثر بیش از واحد است</div><div class="ch"><canvas id="cDiff"></canvas></div></div>
+    <div class="card c6" style="--c:var(--navy2)"><h3><i class="fa-solid fa-table"></i> جدول تطبیق واحد و متقاضی موثر</h3><div class="note">&nbsp;</div>
+      <div class="tw"><table>
+        <thead><tr><th>پیشرفت فیزیکی</th><th>تعداد واحد</th><th>متقاضی موثر</th><th>اختلاف</th></tr></thead>
+        <tbody id="diffBody"></tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ APPLICANTS ============ -->
+<section class="sec" id="applicants">
+  <div class="sec-h" style="--c:var(--blue)"><div class="bar"></div><div><h2>وضعیت متقاضیان</h2><p>۷۵٬۸۹۲ متقاضی · ۷۶٬۹۸۰ تخصیص‌یافته · میانگین آورده ۶۳۷ میلیون تومان</p></div></div>
+  <div class="grid">
+    <div class="card c6" style="--c:var(--blue)"><h3><i class="fa-solid fa-wallet"></i> توزیع خانوار بر اساس میزان آورده (میلیون تومان)</h3><div class="note">عدد کنار میله = تعداد خانوار؛ درصد داخل پرانتز = سهم از کل متقاضیان</div><div class="ch tall"><canvas id="cContribDist"></canvas></div></div>
+    <div class="card c6" style="--c:var(--teal)"><h3><i class="fa-solid fa-ranking-star"></i> توزیع متقاضیان بر اساس دهک درآمدی</h3><div class="note">تعداد خانوار و سهم درصدی</div><div class="ch tall"><canvas id="cDecile"></canvas></div></div>
+
+    <div class="card c5" style="--c:var(--orange)"><h3><i class="fa-solid fa-chart-pie"></i> سهم دهک‌ها از متقاضیان</h3><div class="note">دهک‌های ۱ تا ۴ مجموعاً ۲۵٬۵۵۵ خانوار</div><div class="ch tall"><canvas id="cDecilePie"></canvas></div></div>
+    <div class="card c7" style="--c:#8e5bc4"><h3><i class="fa-solid fa-hand-holding-heart"></i> دهک‌های ۱ تا ۴ بر اساس میزان آورده</h3><div class="note">۲۵٬۵۵۵ خانوار — بازه آورده به میلیون تومان</div><div class="ch tall"><canvas id="cLow4"></canvas></div></div>
+
+    <div class="card c5" style="--c:var(--red)"><h3><i class="fa-solid fa-people-roof"></i> متقاضیان تحت پوشش نهادهای حمایتی</h3><div class="note">جمعاً ۷٬۹۰۸ خانوار</div><div class="ch"><canvas id="cSupport"></canvas></div></div>
+    <div class="card c7" style="--c:var(--green)"><h3><i class="fa-solid fa-bars-progress"></i> متقاضیان به تفکیک درصد پیشرفت پروژه‌ها</h3><div class="note">تعداد متقاضی در هر بازه پیشرفت</div><div class="ch"><canvas id="cAppProgress"></canvas></div></div>
+
+    <div class="card c12" style="--c:var(--amber)"><h3><i class="fa-solid fa-hourglass-half"></i> منابع مورد نیاز از متقاضی به تفکیک مرحله پیشرفت</h3><div class="note">مقادیر مطابق نمودار «درصد پیشرفت پروژه‌ها» در گزارش مرجع</div><div class="ch short"><canvas id="cNeeded"></canvas></div></div>
+  </div>
+</section>
+
+<!-- ============ PROVINCES ============ -->
+<section class="sec" id="provinces">
+  <div class="sec-h" style="--c:var(--teal)"><div class="bar"></div><div><h2>مقایسه استانی شاخص‌های پیشرفت</h2><p>نسبت هر شاخص به شاخص بعدی به تفکیک استان (درصد)</p></div></div>
+  <div class="grid">
+    <div class="card c12" style="--c:var(--teal)"><h3><i class="fa-solid fa-ranking-star"></i> رتبه‌بندی استان‌ها بر اساس شاخص انتخابی</h3>
+      <div class="tabs" id="idxTabs"></div>
+      <div class="note" id="idxNote"></div>
+      <div class="pgrid" id="provGrid"></div>
+      <div class="legend">
+        <span><i style="background:#e8743b"></i>کمتر از ۱۰۰٪</span>
+        <span><i style="background:#1f8a8a"></i>۱۰۰ تا ۱۵۰٪</span>
+        <span><i style="background:#12466f"></i>بیش از ۱۵۰٪</span>
+        <span><i style="background:repeating-linear-gradient(45deg,#888 0 3px,#ccc 3px 6px)"></i>راه‌راه: بیش از ۱۰۰٪ (نوار تا سقف ۱۰۰٪ پر می‌شود)</span>
+      </div>
+    </div>
+    <div class="card c5" style="--c:var(--blue)"><h3><i class="fa-solid fa-gauge-simple-high"></i> پروفایل استان در برابر میانگین کشور</h3>
+      <div class="note"><select id="provSel"></select></div>
+      <div class="pf" id="pf"></div>
+      <div class="legend"><span><i style="background:linear-gradient(90deg,#1f8a8a,#3b82c4)"></i>مقدار استان</span><span><i style="background:#e8743b;width:4px"></i>میانگین کشوری</span><span>مقیاس نوار: ۰ تا ۳۰۰٪</span></div>
+    </div>
+    <div class="card c7" style="--c:var(--orange)"><h3><i class="fa-solid fa-table-cells"></i> نقشه حرارتی شاخص‌ها به تفکیک استان</h3><div class="note">رنگ پررنگ‌تر یعنی نسبت بالاتر؛ «—» یعنی عدم نمایش در گزارش مرجع</div>
+      <div class="tw hm"><table><thead><tr><th>استان</th><th>تخصیصی ← بلوک</th><th>تخصیصی ← فونداسیون</th><th>فونداسیون ← اسکلت</th><th>اسکلت ← سفتکاری</th><th>سفتکاری ← نازک‌کاری</th><th>نازک‌کاری ← پایانی</th></tr></thead><tbody id="hmBody"></tbody></table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSIGHTS ============ -->
+<section class="sec" id="insights">
+  <div class="sec-h" style="--c:var(--amber)"><div class="bar"></div><div><h2>کارت‌های تحلیلی و نکات مدیریتی</h2><p>برداشت‌های محاسبه‌شده از داده‌های گزارش</p></div></div>
+  <div class="insights">
+    <div class="ins" style="--c:#2e9e6b"><div class="h"><i class="fa-solid fa-flag-checkered"></i><b>تکمیل پروژه‌ها</b></div><div class="big">۱۸٫۴٪</div><p>۱۴٬۵۳۴ واحد از ۷۸٬۸۰۹ واحد تعریف‌شده پایان یافته و ۴۳٫۱٪ متقاضیان در پروژه‌هایی با پیشرفت بالای ۸۰٪ هستند.</p><span class="pill">متوسط پیشرفت: ۶۸٪</span></div>
+    <div class="ins" style="--c:#d94f4f"><div class="h"><i class="fa-solid fa-triangle-exclamation"></i><b>سررسیدهای معوق</b></div><div class="big">۱۵٫۶٪</div><p>۱۱٬۹۹۷ واحد (۱۶۱ پروژه) از قراردادها سررسید شده‌اند و حداکثر تأخیر ثبت‌شده ۷۶۳ روز است.</p><span class="pill">نیازمند پیگیری ویژه</span></div>
+    <div class="ins" style="--c:#e8743b"><div class="h"><i class="fa-solid fa-landmark"></i><b>شکاف برداشت تسهیلات</b></div><div class="big">۵۵٫۰٪</div><p>برداشت تسهیلات ۲۶٬۱۶۷ از ۴۷٬۵۵۶ میلیارد تومان است، در حالی که برداشت آورده متقاضی به ۹۵٫۵٪ رسیده است. ۹۰٫۷٪ مانده منابع (۲۱٬۳۸۹ از ۲۳٬۵۸۹ میلیارد تومان) تسهیلات است.</p><span class="pill">پیگیری آزادسازی تسهیلات</span></div>
+
+    <div class="ins" style="--c:#3b82c4"><div class="h"><i class="fa-solid fa-wallet"></i><b>توان مالی متقاضیان</b></div><div class="big">۴۱٫۴٪</div><p>۳۱٬۴۴۷ متقاضی آورده‌ای بیش از ۷۰۰ میلیون تومان دارند؛ در مقابل ۴٫۰٪ زیر ۱۰۰ میلیون تومان (۲٬۸۸۶ نفر) هستند.</p><span class="pill">میانگین آورده: ۶۳۷ م.ت</span></div>
+    <div class="ins" style="--c:#8e5bc4"><div class="h"><i class="fa-solid fa-hand-holding-heart"></i><b>اقشار کم‌درآمد</b></div><div class="big">۳۳٫۷٪</div><p>دهک‌های ۱ تا ۴ برابر ۲۵٬۵۵۵ خانوار هستند و ۷٬۹۰۸ خانوار (۱۰٫۴٪ متقاضیان) تحت پوشش بهزیستی، کمیته امداد، بنیاد شهید و طلاب‌اند.</p><span class="pill">نیازمند حمایت مالی</span></div>
+    <div class="ins" style="--c:#1f8a8a"><div class="h"><i class="fa-solid fa-ruler-combined"></i><b>ریزمقیاس بودن پروژه‌ها</b></div><div class="big">۷۹٫۳٪</div><p>۱٬۳۱۰ پروژه از ۱٬۶۵۲ پروژه کمتر از ۵۰ واحد دارند؛ تنها ۲۱ پروژه بیش از ۵۰۰ واحدی هستند.</p><span class="pill">میانگین: ۴۸ واحد</span></div>
+
+    <div class="ins" style="--c:#f4a62a"><div class="h"><i class="fa-solid fa-code-compare"></i><b>عدم تعادل واحد و متقاضی</b></div><div class="big">۶٬۰۴۸−</div><p>در بازه پیشرفت ۲۰ تا ۴۰ درصد متقاضی موثر ۶٬۰۴۸ نفر بیش از واحد است؛ در بازه ۴۰ تا ۶۰ درصد، واحدها ۷٬۷۰۳ بیش از متقاضی موثرند.</p><span class="pill">تطبیق متقاضی با واحد</span></div>
+    <div class="ins" style="--c:#d94f4f"><div class="h"><i class="fa-solid fa-map-location-dot"></i><b>استان‌های کم‌ترین نسبت بلوک</b></div><div class="big">لرستان ۸۴٪</div><p>در نسبت واحد تخصیصی به بلوک، لرستان (۸۴٪)، مرکزی (۸۶٪) و کرمان (۸۷٪) پایین‌ترین مقادیر را دارند؛ ۵ استان ۱۰۰٪ هستند.</p><span class="pill">میانگین کشوری: ۹۷٪</span></div>
+    <div class="ins" style="--c:#12466f"><div class="h"><i class="fa-solid fa-road-barrier"></i><b>کندی عبور از مراحل</b></div><div class="big">همدان ۳۸۸٪</div><p>بالاترین نسبت اسکلت به سفتکاری در همدان است؛ اردبیل ۳۰۰٪ و کرمانشاه ۲۵۸٪ در رتبه‌های بعدی. نسبت فونداسیون به اسکلت در خوزستان (۲۱۶٪) بیشینه است.</p><span class="pill">تمرکز بازرسی‌ها</span></div>
+  </div>
+</section>
+
+<footer>
+  <i class="fa-solid fa-house-chimney"></i> معاونت مسکن و عمران شهری — بنیاد مسکن انقلاب اسلامی · گزارش تاریخ ۱۴۰۵/۰۷/۱۵ ·
+  <a href="./UrbanHousing.pdf" target="_blank" rel="noopener" style="color:var(--navy2);font-weight:700">جزئیات گزارش (PDF)</a>
+</footer>
+</main>
+
+<script>
+/* ============ Helpers ============ */
+const fa = n => Number(n).toLocaleString('fa-IR');
+const pct = n => fa(n)+'٪';
+const C = {navy:'#0b2f4e',navy2:'#12466f',teal:'#1f8a8a',green:'#4caf7a',lime:'#8ab17d',amber:'#f4a62a',orange:'#e8743b',red:'#d94f4f',blue:'#3b82c4',sky:'#9cc3e6',purple:'#8e5bc4'};
+const ratioCol=v=>v<100?C.orange:(v<=150?C.teal:C.navy2);
+
+/* ---------- Province data ---------- */
+// [تخصیصی←بلوک, تخصیصی←فونداسیون, فونداسیون←اسکلت, اسکلت←سفتکاری, سفتکاری←نازک‌کاری, نازک‌کاری←پایانی]
+const P={
+'آذربایجان شرقی':[96,122,132,188,160,103],'آذربایجان غربی':[94,236,144,210,260,101],'اردبیل':[99,105,110,300,166,121],
+'اصفهان':[92,157,132,230,156,102],'البرز':[98,103,127,235,105,100],'ایلام':[95,100,118,166,271,106],
+'بوشهر':[94,165,149,139,125,106],'تهران':[100,100,102,236,191,200],'چهارمحال و بختیاری':[94,146,123,196,124,111],
+'خراسان جنوبی':[100,115,138,127,131,101],'خراسان رضوی':[93,128,133,145,163,150],'خراسان شمالی':[94,103,105,128,127,121],
+'خوزستان':[93,175,216,145,119,110],'زنجان':[99,121,103,136,145,142],'سمنان':[96,122,115,131,105,112],
+'سیستان و بلوچستان':[100,124,159,166,186,100],'فارس':[99,119,null,null,79,110],'قزوین':[99,100,100,103,100,106],
+'قم':[100,108,100,101,99,106],'کردستان':[98,143,122,124,145,127],'کرمان':[87,164,183,183,91,106],
+'کرمانشاه':[95,217,191,258,271,160],'کهگیلویه و بویراحمد':[94,113,120,140,100,100],'گلستان':[97,118,113,217,187,96],
+'گیلان':[null,197,118,116,null,null],'لرستان':[84,255,190,208,156,110],'مازندران':[100,100,100,100,106,115],
+'مرکزی':[86,155,118,171,138,119],'هرمزگان':[90,114,143,171,188,125],'همدان':[96,134,120,388,152,136],'یزد':[98,null,172,241,94,77]
+};
+const natAvg=[97,152,146,196,165,123];
+const idxNames=['تخصیصی ← بلوک','تخصیصی ← فونداسیون','فونداسیون ← اسکلت و سقف','اسکلت و سقف ← سفتکاری','سفتکاری ← نازک‌کاری','نازک‌کاری ← کارهای پایانی'];
+const idxNotes=[
+ 'نسبت شاخص تعداد واحد تخصیصی به شاخص تعداد واحد بلوک — میانگین کشوری ۹۷٪ (واحد تخصیصی کل کشور ۲۲۲٬۳۵۱ و بلوک کل کشور ۲۳۳٬۴۲۰)',
+ 'نسبت شاخص تعداد واحد تخصیصی به شاخص فونداسیون — میانگین کشوری ۱۵۲٪ (فونداسیون کل کشور ۱۵۸٬۰۲۸)',
+ 'نسبت شاخص فونداسیون به شاخص اسکلت و سقف — میانگین کشوری ۱۴۶٪ (اسکلت و سقف کل کشور ۱۰۷٬۰۹۸)',
+ 'نسبت شاخص اسکلت و سقف به شاخص سفتکاری — میانگین کشوری ۱۹۶٪ (سفتکاری کل کشور ۶۲٬۴۷۰)',
+ 'نسبت شاخص سفتکاری به شاخص نازک‌کاری — میانگین کشوری ۱۶۵٪ (نازک‌کاری کل کشور ۴۷٬۴۷۳)',
+ 'نسبت شاخص نازک‌کاری به شاخص کارهای پایانی — میانگین کشوری ۱۲۳٪ (کارهای پایانی کل کشور ۴۲٬۴۳۲)'
+];
+
+/* ---------- Province tiles (progress bars) ---------- */
+let curIdx=0;
+const tabs=document.getElementById('idxTabs');
+idxNames.forEach((n,i)=>{const b=document.createElement('button');b.className='tab'+(i===0?' on':'');b.textContent=n;b.onclick=()=>{curIdx=i;[...tabs.children].forEach((x,j)=>x.classList.toggle('on',j===i));drawProv()};tabs.appendChild(b)});
+function drawProv(){
+  document.getElementById('idxNote').textContent=idxNotes[curIdx];
+  const rows=Object.entries(P).filter(([k,v])=>v[curIdx]!=null).map(([k,v])=>[k,v[curIdx]]).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('provGrid').innerHTML=rows.map(([n,v])=>{
+    const c=ratioCol(v);
+    return `<div class="pt" title="${n}: ${pct(v)}"><div class="n">${n}</div><div class="trk"><div class="fil${v>100?' over':''}" style="width:${Math.min(v,100)}%;background-color:${c}"></div></div><div class="v" style="color:${c}">${pct(v)}</div></div>`;
+  }).join('');
+}
+drawProv();
+
+/* ---------- Province profile (bullet bars vs national average) ---------- */
+const sel=document.getElementById('provSel');
+Object.keys(P).forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=k;sel.appendChild(o)});
+sel.value='تهران';
+function drawProfile(){
+  const v=P[sel.value];
+  document.getElementById('pf').innerHTML=v.map((x,i)=>{
+    const avg=natAvg[i];
+    if(x==null)return `<div class="pf-r"><div class="l"><span>${idxNames[i]}</span><b style="color:#aaa">—</b></div><div class="pf-t"></div></div>`;
+    const d=x-avg,dc=d>=0?C.navy2:C.orange,ar=d>0?'▲':(d<0?'▼':'●');
+    const w=Math.min(x/300*100,100),m=Math.min(avg/300*100,100);
+    return `<div class="pf-r"><div class="l"><span>${idxNames[i]}</span><b>${pct(x)}<span class="pf-d" style="color:${dc}">${ar} ${fa(Math.abs(d))}</span></b></div><div class="pf-t"><div class="pf-f" style="width:${w}%"></div><div class="pf-m" style="right:calc(${m}% - 1px)" title="میانگین کشوری ${pct(avg)}"></div></div></div>`;
+  }).join('');
+}
+sel.onchange=drawProfile;drawProfile();
+
+/* ---------- Heatmap ---------- */
+document.getElementById('hmBody').innerHTML=Object.entries(P).map(([k,v])=>'<tr><td>'+k+'</td>'+v.map(x=>{
+  if(x==null)return '<td style="color:#aaa">—</td>';
+  const t=Math.min(x,300)/300;const bg=`rgba(18,70,111,${(.08+t*.72).toFixed(2)})`;
+  return `<td style="background:${bg};color:${t>.45?'#fff':'#1b2a3a'};font-weight:400;font-size:11.5px">${pct(x)}</td>`}).join('')+'</tr>').join('');
+
+/* ---------- Nav scroll-spy ---------- */
+(function(){
+  const links=[...document.querySelectorAll('#navIn a')];
+  const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  if(!('IntersectionObserver' in window))return;
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const i=secs.indexOf(e.target);links.forEach((l,j)=>l.classList.toggle('on',j===i));links[i].scrollIntoView({block:'nearest',inline:'center'})}})},{rootMargin:'-35% 0px -60% 0px'});
+  secs.forEach(s=>s&&io.observe(s));
+})();
+
+/* ---------- KPI count-up ---------- */
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const target=+el.dataset.count,dur=1200,t0=performance.now();
+  (function step(t){const p=Math.min((t-t0)/dur,1),e=1-Math.pow(1-p,3);el.textContent=fa(Math.round(target*e));if(p<1)requestAnimationFrame(step)})(t0);
+});
+
+/* ============ Charts ============ */
+if(typeof Chart==='undefined'){
+  document.querySelectorAll('.ch,.gc').forEach(e=>e.innerHTML='<p style="padding:20px;color:#999">بارگذاری کتابخانه نمودار ممکن نشد (اتصال اینترنت/CDN را بررسی کنید).</p>');
+}else{
+
+Chart.register(ChartDataLabels);
+Chart.defaults.font.family="Vazirmatn, Tahoma, sans-serif";
+Chart.defaults.font.size=12;
+Chart.defaults.color='#4a5a6b';
+Chart.defaults.maintainAspectRatio=false;
+Chart.defaults.responsive=true;
+Chart.defaults.plugins.tooltip.rtl=true;
+Chart.defaults.plugins.tooltip.textDirection='rtl';
+Chart.defaults.plugins.tooltip.titleAlign='right';
+Chart.defaults.plugins.tooltip.bodyAlign='right';
+Chart.defaults.plugins.tooltip.callbacks.label=c=>' '+(c.dataset.label?c.dataset.label+': ':'')+fa(c.parsed.y!==undefined&&c.chart.options.indexAxis!=='y'?c.parsed.y:(c.parsed.x!==undefined?c.parsed.x:c.parsed));
+Chart.defaults.plugins.legend.rtl=true;
+Chart.defaults.plugins.legend.labels.usePointStyle=true;
+Chart.defaults.plugins.legend.labels.boxWidth=8;
+
+/* جابه‌جایی افقی مستقل Data Labelها برای هر نمودار (پیکسل):
+   مقدار مثبت = راست، مقدار منفی = چپ، صفر = بدون جابه‌جایی.
+   اگر لازم بود، فقط عدد روبه‌روی شناسه همان نمودار را تغییر دهید. */
+const DATA_LABEL_SHIFT_X={
+  cProgress:25, cDonutState:0, cScale:12, cChain:-420, cStageRatio:15,
+  cFin:25, cContribBins:25, cUnitsApp:25, cDiff:25, cContribDist:-150,
+  cDecile:0, cDecilePie:25, cLow4:25, cSupport:-290, cAppProgress:28, cNeeded:20
+};
+const drawDataLabels=ChartDataLabels.afterDatasetsDraw;
+ChartDataLabels.afterDatasetsDraw=function(chart,args,options){
+  const shift=DATA_LABEL_SHIFT_X[chart.canvas.id]??0;
+  if(!shift)return drawDataLabels.call(this,chart,args,options);
+  const ctx=chart.ctx;
+  ctx.save();
+  ctx.translate(shift,0);
+  try{return drawDataLabels.call(this,chart,args,options);}
+  finally{ctx.restore();}
+};
+Chart.defaults.plugins.datalabels={display:true,color:'#1b2a3a',font:{weight:700,size:11},formatter:v=>fa(v),anchor:'end',align:'end',clamp:true,padding:0};
+const dl=(o={})=>Object.assign({display:true,anchor:'end',align:'end',color:'#1b2a3a',font:{weight:700,size:11},formatter:v=>fa(v),clamp:true,padding:0},o);
+const dlH=(o={})=>dl(Object.assign({offset:-15,padding:3,backgroundColor:'rgba(255,255,255,.93)',borderColor:'#d3dfeb',borderWidth:1,borderRadius:6},o));
+const grid={color:'rgba(0,0,0,.06)'};
+const vScales=(extra={})=>({x:{reverse:true,grid:{display:false},ticks:{maxRotation:55,minRotation:0,autoSkip:false,font:{size:11}}},y:{position:'right',beginAtZero:true,grace:'14%',grid,ticks:{callback:v=>fa(v)}},...extra});
+const hScales={x:{reverse:true,beginAtZero:true,grid,ticks:{callback:v=>fa(v)}},y:{position:'right',grid:{display:false}}};
+const mk=(id,cfg)=>new Chart(document.getElementById(id),cfg);
+const grad=(n,a,b)=>{const out=[];for(let i=0;i<n;i++){const t=n===1?0:i/(n-1);out.push(`rgb(${Math.round(a[0]+(b[0]-a[0])*t)},${Math.round(a[1]+(b[1]-a[1])*t)},${Math.round(a[2]+(b[2]-a[2])*t)})`)}return out};
+
+/* ---------- Data ---------- */
+const progLabels=['شروع‌نشده','(۰،۱۰]','(۱۰،۲۰]','(۲۰،۳۰]','(۳۰،۴۰]','(۴۰،۵۰]','(۵۰،۶۰]','(۶۰،۷۰]','(۷۰،۸۰]','(۸۰،۹۰]','(۹۰،۱۰۰)','پایان‌یافته'];
+const projUnits=[1038,3593,3561,2099,1627,9313,11533,6608,6282,8118,3709,20992];
+const appByProg=[116,1102,2825,3674,8070,7948,7980,4080,7350,10111,4766,17870];
+
+/* 1) project progress */
+mk('cProgress',{type:'bar',data:{labels:progLabels,datasets:[{label:'تعداد واحد',data:projUnits,backgroundColor:grad(12,[200,225,190],[46,125,50]),borderRadius:8}]},
+ options:{plugins:{legend:{display:false},datalabels:dl()},scales:vScales()}});
+
+/* 2) donut state */
+mk('cDonutState',{type:'doughnut',data:{labels:['پایان‌یافته','در دست اجرا'],datasets:[{data:[14534,64090],backgroundColor:[C.green,C.amber],borderWidth:3,borderColor:'#fff'}]},
+ options:{cutout:'55%',plugins:{legend:{position:'bottom'},datalabels:{color:'#fff',anchor:'center',align:'center',padding:0,textAlign:'center',font:{weight:800,size:13},formatter:(v,c)=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return fa(v)+'\n('+pct(Math.round(v/t*1000)/10).replace('.','٫')+')'}}}}});
+
+/* 3) project scale */
+mk('cScale',{type:'bar',data:{labels:['≤ ۵۰','(۵۰،۲۰۰]','(۲۰۰،۳۵۰]','(۳۵۰،۵۰۰]','> ۵۰۰'],datasets:[{label:'تعداد پروژه',data:[1310,262,43,16,21],backgroundColor:[C.blue,C.teal,C.green,C.amber,C.orange],borderRadius:8}]},
+ options:{plugins:{legend:{display:false},datalabels:dl()},scales:vScales()}});
+
+/* 4) progress chain */
+mk('cChain',{type:'bar',data:{labels:['واحد تخصیصی','بلوک','فونداسیون','اسکلت و سقف','سفتکاری','نازک‌کاری','کارهای پایانی'],datasets:[{label:'جمع کل کشور',data:[222351,233420,158028,107098,62470,47473,42432],backgroundColor:grad(7,[18,70,111],[244,166,42]),borderRadius:8}]},
+ options:{indexAxis:'y',layout:{padding:{left:56}},plugins:{legend:{display:false},datalabels:dlH()},scales:hScales}});
+
+/* 5) stage ratio */
+mk('cStageRatio',{type:'bar',data:{labels:idxNames,datasets:[{label:'میانگین کشوری (٪)',data:natAvg,backgroundColor:grad(6,[31,138,138],[232,116,59]),borderRadius:8}]},
+ options:{plugins:{legend:{display:false},datalabels:dl({formatter:v=>pct(v)}),tooltip:{callbacks:{label:c=>' '+pct(c.parsed.y)}}},scales:vScales({y:{position:'right',beginAtZero:true,grace:'16%',grid,ticks:{callback:v=>pct(v)}}})}});
+
+/* 6) finance stacked */
+const finCats=['منابع (۹۶٬۶۹۶)','برداشت (۷۳٬۱۰۸)','باقی‌مانده (۲۳٬۵۸۹)'];
+const finDL=()=>dl({anchor:c=>c.raw<5000?'end':'center',align:c=>c.raw<5000?'end':'center',color:c=>c.raw<5000?'#1b2a3a':'#fff'});
+mk('cFin',{type:'bar',data:{labels:finCats,datasets:[
+  {label:'آورده متقاضی',data:[49140,46940,2200],backgroundColor:C.amber,borderRadius:6,datalabels:finDL()},
+  {label:'تسهیلات',data:[47556,26167,21389],backgroundColor:C.orange,borderRadius:6,datalabels:finDL()}]},
+ options:{plugins:{legend:{position:'bottom'}},scales:{x:{reverse:true,stacked:true,grid:{display:false}},y:{position:'right',stacked:true,beginAtZero:true,grace:'8%',grid,ticks:{callback:v=>fa(v)}}}}});
+
+/* 7) gauges (values are shown by the HTML label inside each gauge) */
+const gauge=(id,val,color)=>mk(id,{type:'doughnut',data:{labels:['برداشت‌شده','باقی‌مانده'],datasets:[{data:[val,100-val],backgroundColor:[color,'#dbe5ef'],borderWidth:0,borderRadius:4}]},
+ options:{rotation:-90,circumference:180,cutout:'72%',layout:{padding:2},plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+pct(c.parsed)}}}}});
+gauge('gAll',75.6,'#2e9e6b');gauge('gContrib',95.5,'#f0a020');gauge('gFac',55.0,C.orange);
+
+/* 8) contribution bins (applicants) */
+mk('cContribBins',{type:'bar',data:{labels:['≤ ۵۰','(۵۰،۲۰۰]','(۲۰۰،۳۵۰]','(۳۵۰،۵۰۰]','(۵۰۰،۶۵۰]','> ۶۵۰'],datasets:[{label:'تعداد متقاضی',data:[342,5528,12896,10300,19656,3347],backgroundColor:grad(6,[156,195,230],[18,70,111]),borderRadius:8}]},
+ options:{plugins:{legend:{display:false},datalabels:dl()},scales:vScales()}});
+
+/* 9) units vs effective applicants */
+const bandLbl=['کمتر از ۲۰٪','۲۰ تا ۴۰٪','۴۰ تا ۶۰٪','۶۰ تا ۸۰٪','بیشتر از ۸۰٪'];
+const bandUnits=[8192,3726,20846,12890,32819],bandApp=[6590,9774,13143,14339,31673],bandDiff=[1602,-6048,7703,-1449,1146];
+mk('cUnitsApp',{type:'bar',data:{labels:bandLbl,datasets:[
+ {label:'تعداد واحد',data:bandUnits,backgroundColor:C.blue,borderRadius:6},
+ {label:'متقاضی موثر',data:bandApp,backgroundColor:C.orange,borderRadius:6}]},
+ options:{plugins:{legend:{position:'bottom'},datalabels:dl({font:{weight:700,size:10},padding:3})},scales:vScales()}});
+
+/* 10) diff diverging */
+mk('cDiff',{type:'bar',data:{labels:bandLbl,datasets:[{label:'اختلاف',data:bandDiff,backgroundColor:bandDiff.map(v=>v>=0?C.green:C.red),borderRadius:6}]},
+ options:{plugins:{legend:{display:false},datalabels:dl({formatter:v=>(v<0?'−':'')+fa(Math.abs(v)),align:c=>c.raw<0?'start':'end',anchor:'end'}),tooltip:{callbacks:{label:c=>' '+(c.parsed.y<0?'−':'')+fa(Math.abs(c.parsed.y))}}},
+ scales:vScales({y:{position:'right',grace:'18%',grid,ticks:{callback:v=>(v<0?'−':'')+fa(Math.abs(v))}}})}});
+document.getElementById('diffBody').innerHTML=bandLbl.map((l,i)=>`<tr><td>${l}</td><td>${fa(bandUnits[i])}</td><td>${fa(bandApp[i])}</td><td style="font-weight:800;color:${bandDiff[i]<0?C.red:'#2e8b57'}">${bandDiff[i]<0?'−':''}${fa(Math.abs(bandDiff[i]))}</td></tr>`).join('');
+
+/* 11) contribution distribution */
+const cdL=['کمتر از ۱۰۰','۱۰۰ تا ۲۰۰','۲۰۰ تا ۳۰۰','۳۰۰ تا ۴۰۰','۴۰۰ تا ۵۰۰','۵۰۰ تا ۶۰۰','۶۰۰ تا ۷۰۰','بیشتر از ۷۰۰'];
+const cdV=[2886,4929,5932,6964,8018,8484,7232,31447],cdP=[4,6,8,9,11,11,10,41];
+const cdMax=Math.max(...cdV);
+const cdLabelInside=c=>!!c.chart.chartArea && c.chart.chartArea.width*c.raw/cdMax>=88;
+mk('cContribDist',{
+  type:'bar',
+  data:{labels:cdL,datasets:[{label:'تعداد خانوار',data:cdV,backgroundColor:grad(8,[170,200,235],[18,70,111]),borderRadius:8}]},
+  options:{
+    indexAxis:'y',
+    layout:{padding:{left:112,right:8}},
+    plugins:{
+      legend:{display:false},
+      datalabels:{
+        display:true,
+        anchor:'end',
+        align:c=>cdLabelInside(c)?'start':'end',
+        offset:4,
+        clamp:true,
+        clip:false,
+        formatter:(v,c)=>fa(v)+' ('+pct(cdP[c.dataIndex])+')',
+        color:c=>cdLabelInside(c)?'#fff':'#1b2a3a',
+        backgroundColor:c=>cdLabelInside(c)?'rgba(11,47,78,.88)':'rgba(255,255,255,.96)',
+        borderColor:'#d3dfeb',
+        borderWidth:1,
+        borderRadius:5,
+        padding:{top:3,right:5,bottom:3,left:5},
+        font:{weight:600,size:10}
+      }
+    },
+    scales:{
+      x:{...hScales.x,max:36000},
+      y:{...hScales.y,ticks:{font:{size:11}}}
+    }
+  }
+});
+
+/* 12) deciles */
+const dcL=['دهک ۱','دهک ۲','دهک ۳','دهک ۴','دهک ۵','دهک ۶','دهک ۷','دهک ۸','دهک ۹','دهک ۱۰'];
+const dcV=[2535,5767,7505,9748,8473,9017,8919,8555,7735,5352],dcP=[3,8,10,13,11,12,12,11,10,7];
+const dcCol=[...['#8c3f12','#b5541c','#d9792a','#e8903f'],...grad(6,[244,190,140],[90,140,190])];
+mk('cDecile',{type:'bar',data:{labels:dcL,datasets:[{label:'تعداد خانوار',data:dcV,backgroundColor:dcCol,borderRadius:8}]},
+ options:{plugins:{legend:{display:false},datalabels:dl({formatter:(v,c)=>fa(v)+'\n'+pct(dcP[c.dataIndex]),textAlign:'center',font:{weight:700,size:10},padding:3})},scales:vScales({y:{position:'right',beginAtZero:true,grace:'24%',grid,ticks:{callback:v=>fa(v)}}})}});
+
+/* 13) decile pie */
+mk('cDecilePie',{type:'doughnut',data:{labels:dcL,datasets:[{data:dcV,backgroundColor:dcCol,borderWidth:2,borderColor:'#fff'}]},
+ options:{cutout:'42%',plugins:{legend:{position:'bottom',labels:{boxWidth:8,font:{size:10.5}}},datalabels:{color:'#fff',anchor:'center',align:'center',padding:0,font:{weight:700,size:10.5},formatter:v=>fa(v),textStrokeColor:'rgba(0,0,0,.25)',textStrokeWidth:2}}}});
+
+/* 14) deciles 1-4 by contribution */
+mk('cLow4',{type:'bar',data:{labels:cdL,datasets:[{label:'تعداد خانوار (دهک ۱ تا ۴)',data:[1292,2030,2464,2738,3015,2987,2435,8594],backgroundColor:grad(8,[230,200,250],[100,50,150]),borderRadius:8}]},
+ options:{plugins:{legend:{display:false},datalabels:dl()},scales:vScales()}});
+
+/* 15) support institutions */
+const spL=['بنیاد شهید و امور ایثارگران','طلاب','بهزیستی','کمیته امداد امام خمینی'],spV=[328,1402,3135,3043],spP=[0.4,1.8,4.1,4.0];
+mk('cSupport',{type:'bar',data:{labels:spL,datasets:[{label:'تعداد خانوار',data:spV,backgroundColor:[C.red,C.amber,C.teal,C.blue],borderRadius:8}]},
+ options:{indexAxis:'y',layout:{padding:{left:96}},plugins:{legend:{display:false},datalabels:dlH({formatter:(v,c)=>fa(v)+'  ('+pct(spP[c.dataIndex]).replace('.','٫')+')'})},scales:{x:hScales.x,y:{position:'right',grid:{display:false},ticks:{font:{size:11}}}}}});
+
+/* 16) applicants by progress */
+mk('cAppProgress',{type:'bar',data:{labels:progLabels,datasets:[{label:'تعداد متقاضی',data:appByProg,backgroundColor:grad(12,[200,225,190],[46,125,50]),borderRadius:8}]},
+ options:{plugins:{legend:{display:false},datalabels:dl()},scales:vScales()}});
+
+/* 17) needed resources by stage */
+mk('cNeeded',{type:'bar',data:{labels:['شروع‌نشده','(۰–۲۰]','(۲۰–۴۵]','(۴۵–۷۰]','(۷۰–۹۰]','(۹۰–۱۰۰)','پایان‌یافته'],datasets:[{label:'منابع مورد نیاز از متقاضی',data:[0,763,6661,6887,7391,1305,3714],backgroundColor:grad(7,[250,214,150],[200,90,30]),borderRadius:8}]},
+ options:{plugins:{legend:{display:false},datalabels:dl()},scales:vScales()}});
+
+} // end Chart guard
+</script>
+</body>
+</html>
