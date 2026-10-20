@@ -1,5 +1,5 @@
 // متغیر نسخه: هر بار که کدها را تغییر می‌دهید، این عدد را یک شماره بالا ببرید (مثلاً v12)
-const APP_VERSION = 'v123'; 
+const APP_VERSION = 'v124'; 
 const CACHE_NAME = 'bonyad-dashboard-' + APP_VERSION; 
 
 self.addEventListener('install', (event) => {
