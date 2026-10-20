@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>گزارش تحلیلی خدمات فنی | معاونت عمران روستایی</title>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+<style>
+@font-face{
+  font-family:'VazirLocal';
+  src:local('Vazirmatn'),url('./fonts/Vazirmatn-Variable.woff2') format('woff2');
+  font-weight:100 900; font-display:swap;
+}
+
+/* ===================== رنگ‌ها و تم (روشن / تیره) ===================== */
+:root{
+  color-scheme:light;
+  --bg:#edf2f1; --card:#ffffff; --ink:#0f1f1e; --ink2:#46575a; --ink3:#7a898b;
+  --line:#e1e8e8; --grid:#e9eff0; --soft:#f4f8f8;
+  --brand:#0f766e; --brand2:#0b4f5c; --brand-soft:#d9f0ec; --gold:#e2a93b;
+  --div-pos:#2a78d6; --div-neg:#eb6834;
+  /* رنگ ثابت هر نوع خدمت (۷ خدمت) و رنگ متن روی آن */
+  --s1:#2a78d6; --s1-ink:#ffffff;   /* خدمات فنی */
+  --s2:#eb6834; --s2-ink:#1a1a19;   /* تعیین محدوده */
+  --s3:#1baf7a; --s3-ink:#1a1a19;   /* تغییر کاربری */
+  --s4:#eda100; --s4-ink:#1a1a19;   /* اصلاح معابر */
+  --s5:#e87ba4; --s5-ink:#1a1a19;   /* اصلاح ضوابط */
+  --s6:#008300; --s6-ink:#ffffff;   /* اصلاح محدوده */
+  --s7:#6250d6; --s7-ink:#ffffff;   /* پایان کار */
+  --shadow:0 1px 2px rgba(15,31,30,.05),0 6px 24px rgba(15,31,30,.06);
+}
+/* ===================== پایه ===================== */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Vazirmatn','VazirLocal','Vazir',Tahoma,'Segoe UI',sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.8; font-size:15px;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+svg.i{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:middle}
+.wrap{max-width:1440px;margin:0 auto;padding:0 20px}
+
+/* ===================== بنر ===================== */
+.banner{
+  position:relative; overflow:hidden; color:#fff; padding:10px 0 96px;
+  background:
+    radial-gradient(1000px 420px at 85% -10%, rgba(226,169,59,.28), transparent 60%),
+    radial-gradient(800px 500px at 10% 110%, rgba(47,183,166,.35), transparent 60%),
+    linear-gradient(135deg,#072f3a 0%,#0b4f5c 45%,#0f766e 100%);
+}
+.banner::before{ /* الگوی هندسی */
+  content:"";position:absolute;inset:0;opacity:.09;
+  background-image:
+    linear-gradient(30deg,#fff 12%,transparent 12.5%,transparent 87%,#fff 87.5%,#fff),
+    linear-gradient(150deg,#fff 12%,transparent 12.5%,transparent 87%,#fff 87.5%,#fff),
+    linear-gradient(30deg,#fff 12%,transparent 12.5%,transparent 87%,#fff 87.5%,#fff),
+    linear-gradient(150deg,#fff 12%,transparent 12.5%,transparent 87%,#fff 87.5%,#fff);
+  background-size:56px 98px; background-position:0 0,0 0,28px 49px,28px 49px;
+}
+.banner-in{position:relative;display:flex;align-items:center;justify-content:space-between;gap:30px}
+.banner-text{max-width:780px}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;font-weight:500;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);padding:5px 14px;border-radius:99px;backdrop-filter:blur(4px)}
+.sys{margin-top:16px;font-size:clamp(.85rem,1.4vw,1rem);font-weight:500;opacity:.92;letter-spacing:.2px}
+.banner h1{font-size:clamp(1.55rem,3.6vw,2.7rem);font-weight:800;line-height:1.5;margin:2px 0 4px;letter-spacing:-.2px}
+.banner h1 em{font-style:normal;color:var(--gold)}
+.banner p.lead{font-size:clamp(.92rem,1.5vw,1.08rem);opacity:.9;max-width:680px;font-weight:400}
+.capsules{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.cap{display:inline-flex;align-items:center;gap:9px;padding:9px 20px;border-radius:99px;font-weight:600;font-size:.95rem;text-decoration:none;transition:.2s}
+.cap.date{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;backdrop-filter:blur(6px)}
+.cap.link{background:var(--gold);color:#2a1d00;box-shadow:0 8px 22px rgba(226,169,59,.35)}
+.cap.link:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.banner-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.banner-tags span{display:inline-flex;gap:6px;align-items:center;font-size:.82rem;opacity:.9}
+.banner-tags span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.banner-art{flex:none;width:min(380px,34vw);opacity:.95}
+.banner-art svg{width:100%;height:auto;display:block}
+
+/* ===================== KPI ===================== */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:-62px;position:relative;z-index:3}
+.kpi{background:var(--card);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow);border:1px solid var(--line);position:relative;overflow:hidden;display:flex;flex-direction:column;gap:2px}
+.kpi::after{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--kc,var(--brand))}
+.kpi .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.kpi .ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--kc,var(--brand)) 14%,transparent);color:var(--kc,var(--brand))}
+.kpi .ico svg{width:22px;height:22px}
+.kpi .lbl{font-size:.82rem;color:var(--ink2);font-weight:500;line-height:1.5}
+.kpi .val{font-size:1.85rem;font-weight:800;line-height:1.3;letter-spacing:-.5px;margin-top:2px}
+.kpi .val small{font-size:.8rem;font-weight:500;color:var(--ink2);margin-inline-start:4px}
+.kpi .sub{font-size:.78rem;color:var(--ink3);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.spark{position:absolute;inset-inline-end:14px;bottom:10px;opacity:.9}
+.chip{display:inline-flex;align-items:center;gap:3px;padding:1px 8px;border-radius:99px;font-size:.75rem;font-weight:600;background:var(--soft);color:var(--ink2);border:1px solid var(--line)}
+.chip.up{color:#0b7a6e;background:color-mix(in srgb,#14b8a6 14%,transparent);border-color:transparent}
+.chip.dn{color:#b4531f;background:color-mix(in srgb,#eb6834 14%,transparent);border-color:transparent}
+.chip svg{width:12px;height:12px}
+
+/* ===================== نوار فیلتر ===================== */
+.filterbar{position:sticky;top:0;z-index:20;margin:30px 0 -10px;padding:10px 0;backdrop-filter:blur(10px);background:color-mix(in srgb,var(--bg) 82%,transparent)}
+.filterbar .in{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px 12px;box-shadow:var(--shadow);overflow-x:auto;scrollbar-width:none}
+.filterbar .in::-webkit-scrollbar{display:none}
+.filterbar .ft{display:flex;align-items:center;gap:7px;font-weight:600;font-size:.9rem;color:var(--ink2);white-space:nowrap}
+.seg{display:flex;gap:6px}
+.seg button,.btn{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--soft);color:var(--ink);padding:6px 16px;border-radius:10px;font-size:.88rem;font-weight:500;white-space:nowrap;transition:.15s}
+.seg button:hover,.btn:hover{border-color:var(--brand)}
+.seg button.on{background:var(--brand);color:#fff;border-color:var(--brand);font-weight:700}
+.sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px}
+
+/* ===================== چیدمان ===================== */
+section.sec{margin-top:34px}
+.sec-h{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.sec-h .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand2),var(--brand));color:#fff;box-shadow:0 6px 16px rgba(15,118,110,.3)}
+.sec-h h2{font-size:1.22rem;font-weight:800}
+.sec-h p{font-size:.85rem;color:var(--ink2);flex-basis:100%;margin-top:-6px;padding-inline-start:52px}
+.tag{font-size:.72rem;font-weight:600;padding:2px 10px;border-radius:99px;border:1px solid var(--line);color:var(--ink2);background:var(--soft);white-space:nowrap}
+.tag.f{background:var(--brand-soft);color:var(--brand);border-color:transparent}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);min-width:0;display:flex;flex-direction:column}
+.card>header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h3{font-size:1rem;font-weight:700;display:flex;align-items:center;gap:8px}
+.card h3 svg{color:var(--brand)}
+.card .sub{font-size:.8rem;color:var(--ink3);margin-bottom:10px}
+.card .note{font-size:.76rem;color:var(--ink3);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.chart{width:100%;min-height:60px;position:relative}
+.chart svg{display:block;max-width:100%;direction:rtl;font-family:inherit;overflow:visible}
+.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
+
+/* متن‌ها و خطوط داخل نمودار */
+svg text{direction:ltr;unicode-bidi:plaintext;font-family:inherit}
+.lb{fill:var(--ink);font-weight:600;font-size:11.5px}
+.ax{fill:var(--ink3);font-size:11px}
+.ax2{fill:var(--ink2);font-size:12px}
+.gl{stroke:var(--grid);stroke-width:1}
+.gl.base{stroke:var(--ink3);opacity:.6}
+.ctr1{fill:var(--ink);font-weight:800}
+.ctr2{fill:var(--ink3)}
+[data-tip]{cursor:pointer;transition:filter .12s}
+[data-tip]:hover{filter:brightness(1.1) saturate(1.1)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:2px 0 8px;font-size:.78rem;color:var(--ink2)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-inline-end:6px;vertical-align:-1px}
+
+/* tooltip */
+#tip{position:fixed;z-index:99;pointer-events:none;background:#0f1f1e;color:#fff;font-size:.8rem;padding:8px 12px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.28);opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s;max-width:260px;line-height:1.7}
+#tip.on{opacity:1;transform:none}
+#tip b{color:var(--gold)}
+
+/* ===================== کارت‌های خدمت ===================== */
+.svc-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
+.svc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden}
+.svc::before{content:"";position:absolute;top:0;inset-inline:0;height:4px;background:var(--c)}
+.svc .h{display:flex;align-items:center;gap:8px;font-weight:700;font-size:.88rem;line-height:1.4}
+.svc .t{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--c);color:var(--ci);flex:none}
+.svc .t svg{width:19px;height:19px}
+.svc .v{font-size:1.45rem;font-weight:800;line-height:1.3}
+.svc .bar{height:6px;background:var(--soft);border-radius:9px;overflow:hidden;border:1px solid var(--line)}
+.svc .bar i{display:block;height:100%;background:var(--c);border-radius:9px}
+.svc .m{font-size:.75rem;color:var(--ink2);display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.svc .top{font-size:.74rem;color:var(--ink2);border-top:1px dashed var(--line);padding-top:6px;margin-top:2px;line-height:1.6}
+.svc .top b{color:var(--ink)}
+
+/* ===================== لژند دونات ===================== */
+.dn-wrap{display:flex;flex-direction:column;gap:10px}
+.dn-leg{width:100%;border-collapse:collapse;font-size:.82rem}
+.dn-leg td{padding:5px 6px;border-bottom:1px solid var(--line)}
+.dn-leg tr:last-child td{border-bottom:0}
+.dn-leg td:first-child{white-space:nowrap}
+.dn-leg i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-inline-end:7px;vertical-align:-1px}
+.dn-leg td.n{text-align:left;font-weight:700;white-space:nowrap;direction:ltr}
+.dn-leg td.p{text-align:left;color:var(--ink2);white-space:nowrap;direction:ltr;width:1%}
+
+/* ===================== جدول‌ها ===================== */
+.tbl-wrap{overflow:auto;border-radius:14px;border:1px solid var(--line);max-height:620px}
+table.t{width:100%;border-collapse:separate;border-spacing:0;font-size:.84rem;min-width:760px}
+table.t th{position:sticky;top:0;background:var(--soft);z-index:2;padding:9px 8px;font-weight:700;color:var(--ink2);border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap;user-select:none;font-size:.78rem}
+table.t th:hover{color:var(--brand)}
+table.t td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap;font-variant-numeric:tabular-nums}
+table.t td:nth-child(2),table.t th:nth-child(2){text-align:start;position:sticky;inset-inline-start:0;background:var(--card);z-index:1;font-weight:600}
+table.t th:nth-child(2){background:var(--soft);z-index:3}
+table.t tr.sel td{outline:2px solid var(--brand);outline-offset:-2px}
+table.t tfoot td{position:sticky;bottom:0;background:var(--soft);font-weight:800}
+table.t tbody tr:hover td{filter:brightness(.97)}
+.search{font:inherit;border:1px solid var(--line);background:var(--soft);color:var(--ink);padding:6px 12px;border-radius:10px;font-size:.85rem;min-width:170px}
+.yoy td,.yoy th{cursor:default !important}
+table.t.yoy{min-width:0}
+.db{display:inline-block;height:5px;border-radius:5px;background:var(--brand);vertical-align:middle;margin-inline-start:6px;opacity:.75}
+
+/* ===================== کارت‌های تحلیلی ===================== */
+.ins-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.ins{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden}
+.ins .ih{display:flex;align-items:center;gap:10px}
+.ins .ii{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:color-mix(in srgb,var(--ic,var(--brand)) 15%,transparent);color:var(--ic,var(--brand));flex:none}
+.ins .it{font-weight:700;font-size:.92rem;line-height:1.5}
+.ins .iv{font-size:1.7rem;font-weight:800;line-height:1.3;color:var(--ic,var(--brand))}
+.ins p{font-size:.82rem;color:var(--ink2);line-height:1.95}
+.ins p b{color:var(--ink)}
+.ins .badge{margin-inline-start:auto}
+.key{background:linear-gradient(135deg,var(--card),var(--soft));border:1px solid var(--line);border-radius:18px;padding:18px 20px;box-shadow:var(--shadow);margin-top:22px}
+.key h3{display:flex;gap:8px;align-items:center;font-size:1.02rem;margin-bottom:8px}
+.key h3 svg{color:var(--gold)}
+.key ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 26px}
+.key li{font-size:.88rem;color:var(--ink2);padding-inline-start:20px;position:relative;line-height:1.95}
+.key li::before{content:"";position:absolute;inset-inline-start:2px;top:.85em;width:8px;height:8px;border-radius:3px;background:var(--brand);transform:rotate(45deg)}
+.key li b{color:var(--ink)}
+
+.profile-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+select.sel{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 14px;border-radius:12px;font-size:.92rem;font-weight:600;min-width:220px}
+.pstats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.pst{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.pst .l{font-size:.76rem;color:var(--ink2)}.pst .n{font-size:1.25rem;font-weight:800}
+
+footer.pg{margin:40px 0 30px;text-align:center;font-size:.8rem;color:var(--ink3);line-height:2}
+footer.pg b{color:var(--ink2)}
+
+/* ===================== واکنشگرا ===================== */
+@media (max-width:1180px){
+  .svc-grid{grid-template-columns:repeat(4,1fr)}
+  .ins-grid{grid-template-columns:repeat(2,1fr)}
+  .s3,.s4,.s5,.s6,.s7,.s8{grid-column:span 12}
+  .banner-art{display:none}
+}
+@media (max-width:900px){
+  .kpis{grid-template-columns:repeat(2,1fr);gap:12px}
+  .svc-grid{grid-template-columns:repeat(2,1fr)}
+  .key ul{grid-template-columns:1fr}
+  .pstats{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px){
+  body{font-size:14px}
+  .wrap{padding:0 12px}
+  .banner{padding:28px 0 84px}
+  .kpis{gap:10px}
+  .kpi{padding:12px}
+  .kpi .val{font-size:1.35rem}
+  .kpi .ico{width:34px;height:34px}
+  .kpi .ico svg{width:18px;height:18px}
+  .kpi .lbl{font-size:.74rem}
+  .spark{display:none}
+  .ins-grid{grid-template-columns:1fr}
+  .card{padding:14px}
+  .svc .v{font-size:1.2rem}
+  .cap{padding:8px 15px;font-size:.88rem}
+  select.sel{min-width:0;flex:1}
+  .sec-h p{padding-inline-start:0}
+}
+@media print{.filterbar{display:none}.card,.kpi,.svc,.ins{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<!-- ===================== مجموعه آیکون‌ها (SVG داخلی؛ بدون نیاز به اینترنت) ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15"/><path d="M15 6v15"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></symbol>
+    <symbol id="i-crop" viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M22 17l-8.5-8.5-5 5L2 7"/><path d="M16 17h6v-6"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+    <symbol id="i-bar" viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></symbol>
+    <symbol id="i-pie" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2l10 5-10 5L2 7z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-1.21 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98 1.21 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></symbol>
+    <symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-percent" viewBox="0 0 24 24"><path d="M19 5L5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></symbol>
+    <symbol id="i-dash" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
+    <symbol id="i-sum" viewBox="0 0 24 24"><path d="M18 7V4H6l6 8-6 8h12v-3"/></symbol>
+    <symbol id="i-radar" viewBox="0 0 24 24"><path d="M12 2l9 6.5-3.5 11h-11L3 8.5z"/><path d="M12 8l4.5 3.3-1.7 5.2H9.2l-1.7-5.2z"/></symbol>
+    <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="7" cy="16" r="3"/><circle cx="16" cy="8" r="4"/><circle cx="18" cy="18" r="2"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+  </defs>
+</svg>
+
+<!-- ===================== بنر ===================== -->
+<header class="banner">
+  <div class="wrap banner-in">
+    <div class="banner-text">
+      <div class="sys">سامانه هوشمند مدیریتی ریاست بنیاد</div>
+      <h1>گزارش تحلیلی <em>خدمات فنی</em></h1>
+      <div class="capsules">
+        <!-- کپسول ۱: تاریخ گزارش -->
+        <span class="cap date"><svg class="i"><use href="#i-cal"/></svg> تاریخ گزارش: 1405/07/18</span>
+        <!-- کپسول ۲: جزئیات گزارش (لینک به فایل PDF در یک تب جدید) -->
+        <a class="cap link" href="./TechnicalServices.pdf" target="_blank" rel="noopener"><svg class="i"><use href="#i-ext"/></svg> جزئیات گزارش</a>
+      </div>
+      <div class="banner-tags"><span>۳۱ استان</span><span>۷ نوع خدمت</span><span>۴ سال آماری</span></div>
+    </div>
+
+    <!-- تصویر تزئینی بنر -->
+    <div class="banner-art" aria-hidden="true">
+      <svg viewBox="0 0 380 260">
+        <circle cx="290" cy="62" r="34" fill="#e2a93b" opacity=".95"/>
+        <circle cx="290" cy="62" r="52" fill="#e2a93b" opacity=".15"/>
+        <path d="M0 220 Q70 140 150 190 T300 170 T380 200 V260 H0Z" fill="#fff" opacity=".12"/>
+        <path d="M0 240 Q90 180 180 220 T380 215 V260 H0Z" fill="#fff" opacity=".18"/>
+        <g fill="#fff"><g opacity=".95"><path d="M70 205 l32 -28 l32 28 v34 h-64z"/><rect x="92" y="215" width="20" height="24" fill="#0b4f5c"/></g>
+        <g opacity=".8"><path d="M150 212 l26 -22 l26 22 v27 h-52z"/><rect x="168" y="222" width="16" height="17" fill="#0b4f5c"/></g>
+        <g opacity=".7"><path d="M222 216 l22 -18 l22 18 v23 h-44z"/><rect x="237" y="225" width="14" height="14" fill="#0b4f5c"/></g></g>
+        <g stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".9"><path d="M40 110 v-30"/><path d="M62 110 v-52"/><path d="M84 110 v-72"/><path d="M106 110 v-44"/></g>
+        <g fill="#fff" opacity=".9"><circle cx="40" cy="76" r="5"/><circle cx="62" cy="54" r="5"/><circle cx="84" cy="34" r="5"/><circle cx="106" cy="62" r="5"/></g>
+        <path d="M40 76 L62 54 L84 34 L106 62" stroke="#e2a93b" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===================== کارت‌های عددی (KPI) ===================== -->
+  <div class="kpis" id="kpis"></div>
+
+  <!-- ===================== یافته‌های کلیدی ===================== -->
+  <div class="key">
+    <h3><svg class="i"><use href="#i-bulb"/></svg> یافته‌های کلیدی برای مدیریت</h3>
+    <ul id="keyNotes"></ul>
+  </div>
+
+  <!-- ===================== بخش ۱: روند چندساله ===================== -->
+  <section class="sec" id="sec-trend">
+    <div class="sec-h"><span class="ic"><svg class="i"><use href="#i-up"/></svg></span><h2>روند چندساله خدمات</h2><span class="tag">ثابت · مستقل از فیلتر</span>
+      <p>مقایسه‌ی سالانه‌ی حجم خدمات و ترکیب آن‌ها. سال ۱۴۰۵ ناقص است (تا تاریخ گزارش) و با هاشور نمایش داده می‌شود.</p></div>
+    <div class="grid">
+      <article class="card s5"><header><h3><svg class="i"><use href="#i-bar"/></svg> جمع کل خدمات هر سال</h3></header>
+        <div class="sub">ستون هاشورخورده: ۱۴۰۵ تا تاریخ گزارش · خط‌چین: برآورد خطی کل سال</div>
+        <div class="chart" id="c-yearTotal"></div>
+        <div class="note">برآورد سالانه ۱۴۰۵ فقط یک برون‌یابی خطی بر پایه‌ی سهم زمان سپری‌شده است و فصلی‌بودن فعالیت را در نظر نمی‌گیرد.</div></article>
+      <article class="card s7"><header><h3><svg class="i"><use href="#i-layers"/></svg> ترکیب خدمات به تفکیک سال (ستونی انباشته)</h3></header>
+        <div class="legend" id="lg-yearStack"></div>
+        <div class="chart" id="c-yearStack"></div>
+        <div class="note">برچسب بخش‌های کوچک (کمتر از حد قابل‌خواندن) حذف شده؛ مقدار دقیق همه‌ی خدمات در نمودار بعدی و جدول‌ها موجود است.</div></article>
+
+      <article class="card s7"><header><h3><svg class="i"><use href="#i-bar"/></svg> پنج خدمت کم‌حجم؛ مقایسه‌ی سالانه</h3></header>
+        <div class="legend" id="lg-minor"></div>
+        <div class="chart" id="c-minor"></div></article>
+      <article class="card s5"><header><h3><svg class="i"><use href="#i-pulse"/></svg> روند دو خدمت اصلی</h3></header>
+        <div class="legend" id="lg-major"></div>
+        <div class="chart" id="c-major"></div>
+        <div class="note">این دو خدمت بیش از ۹۰٪ کل حجم را تشکیل می‌دهند.</div></article>
+
+      <article class="card s4"><header><h3><svg class="i"><use href="#i-clock"/></svg> پیشرفت ۱۴۰۵ در برابر زمان</h3></header>
+        <div class="sub">نسبت خدمات ثبت‌شده‌ی ۱۴۰۵ به کل ۱۴۰۴، در مقایسه با سهم سال سپری‌شده</div>
+        <div class="chart" id="c-gauge"></div>
+        <div class="note" id="gaugeNote"></div></article>
+      <article class="card s8"><header><h3><svg class="i"><use href="#i-table"/></svg> ماتریس تغییرات سالانه به تفکیک خدمت</h3></header>
+        <div class="sub">درصد تغییر هر خدمت نسبت به سال قبل؛ برای ۱۴۰۵ سهم از کل ۱۴۰۴ (با خط مبنای زمان)</div>
+        <div class="tbl-wrap" style="max-height:none"><table class="t yoy" id="yoyTable"></table></div></article>
+    </div>
+  </section>
+
+  <!-- ===================== نوار فیلتر ===================== -->
+  <div class="filterbar">
+    <div class="in">
+      <span class="ft"><svg class="i"><use href="#i-filter"/></svg> سال گزارش:</span>
+      <div class="seg" id="yearSeg"></div>
+    </div>
+  </div>
+
+  <!-- ===================== بخش ۲: ترکیب خدمات ===================== -->
+  <section class="sec" id="sec-mix">
+    <div class="sec-h"><span class="ic"><svg class="i"><use href="#i-pie"/></svg></span><h2>ترکیب و سهم انواع خدمات</h2><span class="tag f">بر اساس سال انتخابی: <span class="yl"></span></span>
+      <p>سهم هر خدمت از مجموع و استان برتر هر خدمت</p></div>
+    <div class="svc-grid" id="svcCards"></div>
+    <div class="grid" style="margin-top:16px">
+      <article class="card s5"><header><h3><svg class="i"><use href="#i-pie"/></svg> سهم خدمات از مجموع · <span class="yl"></span></h3></header>
+        <div class="dn-wrap"><div class="chart" id="c-donut"></div><table class="dn-leg" id="donutLeg"></table></div></article>
+      <article class="card s7"><header><h3><svg class="i"><use href="#i-bar"/></svg> پنج خدمت کم‌حجم · <span class="yl"></span></h3></header>
+        <div class="sub">با حذف دو خدمت اصلی تا اختلاف‌ها دیده شود</div>
+        <div class="chart" id="c-minorBars"></div>
+        <div class="note" id="minorNote"></div></article>
+    </div>
+  </section>
+
+  <!-- ===================== بخش ۳: تحلیل استانی ===================== -->
+  <section class="sec" id="sec-prov">
+    <div class="sec-h"><span class="ic"><svg class="i"><use href="#i-map"/></svg></span><h2>تحلیل استانی</h2><span class="tag f">بر اساس سال انتخابی: <span class="yl"></span></span>
+      <p>رتبه‌بندی، تمرکز و ترکیب خدمات در ۳۱ استان</p></div>
+    <div class="grid">
+      <article class="card s6"><header><h3><svg class="i"><use href="#i-trophy"/></svg> ۱۰ استان برتر · <span class="yl"></span></h3></header>
+        <div class="sub">عدد کنار هر میله: تعداد خدمات و (سهم از کل کشور)</div>
+        <div class="chart" id="c-top10"></div></article>
+      <article class="card s6"><header><h3><svg class="i"><use href="#i-up"/></svg> منحنی تمرکز تجمعی استان‌ها</h3></header>
+        <div class="sub">سهم تجمعی استان‌ها از کل، به ترتیب رتبه (محور افقی: تعداد استان)</div>
+        <div class="chart" id="c-lorenz"></div>
+        <div class="note" id="lorenzNote"></div></article>
+
+      <article class="card s12"><header><h3><svg class="i"><use href="#i-layers"/></svg> ترکیب خدمات در همه‌ی استان‌ها · <span class="yl"></span></h3></header>
+        <div class="legend" id="lg-prov"></div>
+        <div class="chart" id="c-provStack"></div></article>
+
+      <article class="card s6"><header><h3><svg class="i"><use href="#i-dots"/></svg> نقشه‌ی حبابی: خدمات فنی در برابر تعیین محدوده</h3></header>
+        <div class="sub">اندازه‌ی حباب = مجموع خدمات استان (<span class="yl"></span>)</div>
+        <div class="chart" id="c-bubble"></div></article>
+      <article class="card s6"><header><h3><svg class="i"><use href="#i-percent"/></svg> درصد تغییر ۱۴۰۴ نسبت به ۱۴۰۳ به تفکیک استان</h3></header>
+        <div class="sub">آبی: افزایش · نارنجی: کاهش (ثابت، مستقل از فیلتر)</div>
+        <div class="chart" id="c-diverge"></div></article>
+    </div>
+  </section>
+
+  <!-- ===================== بخش ۴: پروفایل استان ===================== -->
+  <section class="sec" id="sec-profile">
+    <div class="sec-h"><span class="ic"><svg class="i"><use href="#i-pin"/></svg></span><h2>داشبورد استان</h2><span class="tag f">استان + سال انتخابی</span>
+      <p>یک استان را انتخاب کنید تا روند، ترکیب و تفاوت ساختار خدمات آن با میانگین کشور دیده شود</p></div>
+    <div class="card">
+      <div class="profile-bar"><label for="provSel" style="font-weight:600;font-size:.9rem">استان:</label><select class="sel" id="provSel"></select><span class="tag" id="provRank"></span></div>
+      <div class="pstats" id="pstats"></div>
+      <div class="grid" style="gap:14px">
+        <div class="s4"><h3 style="font-size:.95rem;margin-bottom:6px;display:flex;gap:6px;align-items:center"><svg class="i"><use href="#i-bar"/></svg> روند سالانه‌ی استان</h3><div class="chart" id="c-pTrend"></div></div>
+        <div class="s4"><h3 style="font-size:.95rem;margin-bottom:6px;display:flex;gap:6px;align-items:center"><svg class="i"><use href="#i-pie"/></svg> ترکیب خدمات · <span class="yl"></span></h3><div class="chart" id="c-pDonut"></div></div>
+        <div class="s4"><h3 style="font-size:.95rem;margin-bottom:6px;display:flex;gap:6px;align-items:center"><svg class="i"><use href="#i-radar"/></svg> ساختار خدمات در برابر کشور (٪)</h3>
+          <div class="legend"><span><i style="background:var(--brand)"></i>استان</span><span><i style="background:var(--ink3)"></i>میانگین کشور</span></div>
+          <div class="chart" id="c-pRadar"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== بخش ۵: جدول حرارتی ===================== -->
+  <section class="sec" id="sec-table">
+    <div class="sec-h"><span class="ic"><svg class="i"><use href="#i-table"/></svg></span><h2>جدول حرارتی استان × خدمت</h2><span class="tag f">بر اساس سال انتخابی: <span class="yl"></span></span>
+      <p>شدت رنگ هر ستون نسبت به بیشینه‌ی همان ستون است؛ با کلیک روی عنوان ستون، مرتب‌سازی انجام می‌شود</p></div>
+    <div class="card">
+      <div class="profile-bar"><input class="search" id="tblSearch" type="search" placeholder="جستجوی نام استان…"><span class="tag" id="tblCount"></span></div>
+      <div class="tbl-wrap"><table class="t" id="heat"></table></div>
+    </div>
+  </section>
+
+  <!-- ===================== بخش ۶: کارت‌های تحلیلی ===================== -->
+  <section class="sec" id="sec-ins">
+    <div class="sec-h"><span class="ic"><svg class="i"><use href="#i-bulb"/></svg></span><h2>کارت‌های تحلیلی</h2><span class="tag f">محاسبه‌ی خودکار از داده‌ها</span>
+      <p>برداشت‌های تحلیلی که به‌صورت خودکار از داده‌های جدول اکسل استخراج می‌شود (بخشی بر اساس سال انتخابی: <span class="yl"></span>)</p></div>
+    <div class="ins-grid" id="insGrid"></div>
+  </section>
+
+  <footer class="pg">
+    <b>سامانه هوشمند مدیریتی ریاست بنیاد مسکن انقلاب اسلامی</b><br>
+  </footer>
+</main>
+<div id="tip"></div>
+
+<script>
+/* =====================================================================
+   ۱) داده‌ها (استخراج‌شده از فایل اکسل خدمات فنی)
+   ترتیب مقادیر هر استان: خدمات فنی، تعیین محدوده، تغییر کاربری،
+   اصلاح معابر، اصلاح ضوابط، اصلاح محدوده، پایان کار
+   ===================================================================== */
+const DATA = {"years":{"1402":[["آذربایجان شرقی",[14818,9662,540,142,136,201,17]],["آذربایجان غربی",[9345,24324,126,63,40,56,658]],["اردبیل",[7306,5401,602,91,45,170,672]],["اصفهان",[9303,2694,750,288,69,386,67]],["البرز",[1761,2175,253,36,162,50,174]],["ایلام",[2330,2124,155,111,156,305,760]],["بوشهر",[7153,6418,59,23,4,77,27]],["تهران",[2529,3733,27,9,12,5,394]],["چهارمحال و بختیاری",[3602,1013,152,112,38,75,1223]],["خراسان جنوبی",[4136,644,143,42,3,148,850]],["خراسان رضوی",[16274,22404,370,206,80,112,862]],["خراسان شمالی",[6671,1816,216,97,103,131,452]],["خوزستان",[10248,4731,61,25,9,60,434]],["زنجان",[6004,1777,101,99,12,56,4]],["سمنان",[2967,1608,223,35,54,180,104]],["سیستان و بلوچستان",[12625,8124,4,3,0,5,555]],["فارس",[7245,9193,453,160,8,143,416]],["قزوین",[6924,2698,807,633,732,1147,284]],["قم",[1818,393,99,47,58,10,22]],["کردستان",[2549,2247,56,50,24,141,491]],["کرمان",[12049,2337,867,135,171,198,1180]],["کرمانشاه",[3461,3470,211,121,78,92,202]],["کهگیلویه و بویراحمد",[6110,5066,391,294,25,293,186]],["گلستان",[12566,5507,7,5,10,13,127]],["گیلان",[44555,22100,686,225,1003,37,45]],["لرستان",[7266,13941,60,13,31,10,310]],["مازندران",[40421,14189,11851,153,819,194,38]],["مرکزی",[7583,3541,564,323,73,318,331]],["هرمزگان",[12138,4589,85,10,0,191,46]],["همدان",[4996,12485,900,545,261,437,1002]],["یزد",[4068,1663,200,53,45,78,14]]],"1403":[["آذربایجان شرقی",[14785,9995,398,146,90,159,12]],["آذربایجان غربی",[8261,23562,238,91,63,76,1817]],["اردبیل",[6434,4728,395,99,27,113,1176]],["اصفهان",[8872,2309,771,332,57,248,155]],["البرز",[1136,1943,100,22,99,18,164]],["ایلام",[2750,1618,145,170,139,294,933]],["بوشهر",[7576,6709,98,33,4,113,68]],["تهران",[1738,5783,16,2,9,1,265]],["چهارمحال و بختیاری",[3136,890,72,79,29,46,1216]],["خراسان جنوبی",[3779,834,101,32,9,98,638]],["خراسان رضوی",[18648,20817,402,206,90,64,817]],["خراسان شمالی",[5067,1831,279,129,78,115,375]],["خوزستان",[10679,4998,69,34,2,98,361]],["زنجان",[6027,1727,88,116,18,32,17]],["سمنان",[2284,1362,220,56,78,131,103]],["سیستان و بلوچستان",[9157,7997,3,2,0,5,513]],["فارس",[6227,7589,440,153,4,139,558]],["قزوین",[7075,1749,680,831,777,1295,270]],["قم",[1154,367,109,35,56,9,93]],["کردستان",[2245,1773,46,24,28,87,555]],["کرمان",[10502,2585,608,99,104,74,1335]],["کرمانشاه",[3466,3229,194,100,59,49,235]],["کهگیلویه و بویراحمد",[4950,4607,314,205,38,99,220]],["گلستان",[11019,5485,13,13,5,19,97]],["گیلان",[30540,28352,330,421,1557,111,38]],["لرستان",[6375,13870,91,21,42,13,770]],["مازندران",[38691,18402,11079,304,1456,220,46]],["مرکزی",[6280,3551,611,319,96,320,237]],["هرمزگان",[10618,5603,108,43,0,115,63]],["همدان",[5206,10716,1008,767,350,389,1188]],["یزد",[4738,2107,191,69,55,72,16]]],"1404":[["آذربایجان شرقی",[13012,9919,286,112,57,119,13]],["آذربایجان غربی",[7087,27064,278,168,236,132,1783]],["اردبیل",[5561,4129,17,20,0,12,1155]],["اصفهان",[5895,1707,716,324,49,232,256]],["البرز",[1042,1768,70,17,96,106,71]],["ایلام",[2693,1164,188,154,117,304,646]],["بوشهر",[5971,6089,31,14,7,44,88]],["تهران",[1258,5864,3,0,2,0,177]],["چهارمحال و بختیاری",[2521,647,107,105,19,28,817]],["خراسان جنوبی",[3364,1444,57,15,5,49,139]],["خراسان رضوی",[12816,17037,307,163,77,73,647]],["خراسان شمالی",[3134,1876,178,121,94,133,187]],["خوزستان",[9221,3742,57,33,4,76,390]],["زنجان",[5329,1481,103,123,23,43,10]],["سمنان",[2186,1534,212,50,65,150,78]],["سیستان و بلوچستان",[9107,6576,1,0,0,11,434]],["فارس",[5158,8120,610,190,19,214,435]],["قزوین",[6161,1603,590,620,638,1068,145]],["قم",[1079,486,81,12,43,5,26]],["کردستان",[1406,1801,33,13,13,46,296]],["کرمان",[8712,2907,565,106,133,67,775]],["کرمانشاه",[2954,3122,145,71,24,23,148]],["کهگیلویه و بویراحمد",[3580,3343,201,187,17,112,310]],["گلستان",[9174,3282,32,36,16,9,14]],["گیلان",[29174,38578,1653,409,1162,82,40]],["لرستان",[5346,12247,57,24,19,15,354]],["مازندران",[41141,23923,12495,2490,2031,281,42]],["مرکزی",[5475,3451,597,370,126,295,178]],["هرمزگان",[7074,5350,60,20,3,44,47]],["همدان",[3596,9627,531,358,195,307,735]],["یزد",[4635,1740,181,74,33,74,7]]],"1405":[["آذربایجان شرقی",[8293,5562,177,71,31,69,8]],["آذربایجان غربی",[3553,10414,152,77,145,44,751]],["اردبیل",[4077,2853,0,1,0,0,406]],["اصفهان",[3591,756,181,106,18,63,26]],["البرز",[654,925,29,5,39,16,1]],["ایلام",[1596,594,60,34,40,125,303]],["بوشهر",[3208,3434,0,0,0,1,0]],["تهران",[722,4493,0,0,0,0,28]],["چهارمحال و بختیاری",[1331,324,37,18,4,16,240]],["خراسان جنوبی",[1974,805,19,11,1,15,0]],["خراسان رضوی",[6922,10183,86,43,22,22,259]],["خراسان شمالی",[1790,976,48,45,43,46,336]],["خوزستان",[4765,1633,15,8,2,10,283]],["زنجان",[3146,948,29,45,3,12,0]],["سمنان",[1120,746,55,15,15,44,23]],["سیستان و بلوچستان",[6259,3644,0,0,0,0,221]],["فارس",[3223,5540,239,83,8,73,120]],["قزوین",[3922,817,242,276,329,498,40]],["قم",[716,229,27,4,12,0,0]],["کردستان",[830,1507,12,1,1,1,87]],["کرمان",[4375,1832,130,27,26,18,145]],["کرمانشاه",[1703,1837,26,12,1,6,35]],["کهگیلویه و بویراحمد",[1499,1542,58,37,5,25,37]],["گلستان",[4112,1591,0,1,0,10,0]],["گیلان",[19413,22715,787,147,499,42,0]],["لرستان",[2360,6905,3,3,0,0,38]],["مازندران",[29287,14010,6737,1569,1279,154,0]],["مرکزی",[3862,1818,252,150,76,109,54]],["هرمزگان",[3514,3671,2,2,0,4,15]],["همدان",[1956,5702,63,49,31,73,103]],["یزد",[1637,737,78,23,12,36,0]]]}};
+
+/* =====================================================================
+   ۲) تنظیمات عمومی
+   ===================================================================== */
+// تاریخ گزارش (برای محاسبه‌ی سهم زمان سپری‌شده‌ی سال و برآورد سالانه)
+const REPORT = { y:1405, m:7, d:18 };
+
+/* =====================================================================
+   ۳) تنظیم برچسب‌های داده (Data Label) برای هر نمودار — اینجا را ویرایش کنید
+   ---------------------------------------------------------------------
+   x : جابجایی افقی برچسب‌ها بر حسب پیکسل
+         مقدار مثبت (+)  = حرکت به «راست»      مقدار منفی (−) = حرکت به «چپ»
+   y : جابجایی عمودی برچسب‌ها بر حسب پیکسل
+         مقدار مثبت (+)  = حرکت به «پایین»     مقدار منفی (−) = حرکت به «بالا»
+   size  : اندازه‌ی فونت برچسب (px)
+   minPx : (نمودارهای انباشته) کمترین ارتفاع/عرض قطعه برای نمایش برچسب داخل آن
+   tx,ty : جابجایی جداگانه‌ی برچسب «جمع کل» بالای ستون‌های انباشته
+   rot   : چرخش برچسب (درجه) — مثلاً -90 یعنی عمودی
+   ===================================================================== */
+const LABELS = {
+  // نمودار «جمع کل خدمات هر سال» (ستونی)
+  yearTotal : { x:0,  y:0,  size:12.5 },
+  // نمودار «ترکیب خدمات به تفکیک سال» (ستونی انباشته)
+  yearStack : { x:0,  y:0,  size:11, minPx:17, tx:0, ty:0 },
+  // نمودار «پنج خدمت کم‌حجم» (ستونی گروهی) — rot:-90 = برچسب عمودی بالای میله
+  minor     : { x:0,  y:0,  size:10.5, rot:-90 },
+  // نمودار «روند دو خدمت اصلی» (خطی)
+  major     : { x:0,  y:0,  size:11.5 },
+  // نمودار «پیشرفت ۱۴۰۵ در برابر زمان» (گیج)
+  gauge     : { x:0,  y:0,  size:12 },
+  // دونات «سهم خدمات» — برچسب داخل قطعه‌ها؛ قطعه‌های کوچک بیرون دونات می‌روند
+  donut     : { x:0,  y:0,  size:11.5, minShare:0.06, outDist:14, stagger:18 },
+  // نمودار میله‌ای «پنج خدمت کم‌حجم» (سال انتخابی)
+  minorBars : { x:0,  y:0,  size:12 },
+  // نمودار «۱۰ استان برتر» (میله‌ای افقی)
+  top10     : { x:0,  y:0,  size:11.5 },
+  // منحنی تمرکز تجمعی
+  lorenz    : { x:0,  y:0,  size:11.5 },
+  // نمودار ترکیب خدمات در همه‌ی استان‌ها (افقی انباشته)
+  provStack : { x:0,  y:0,  size:10, minPx:36, tx:0, ty:0 },
+  // نمودار حبابی (نام استان‌های برتر کنار حباب‌ها)
+  bubble    : { x:0,  y:0,  size:10.5, topN:6 },
+  // نمودار درصد تغییر استان‌ها (میله‌ای دوطرفه)
+  diverge   : { x:0,  y:0,  size:10.5 },
+  // داشبورد استان: روند سالانه
+  pTrend    : { x:0,  y:0,  size:12 },
+  // داشبورد استان: دونات ترکیب
+  pDonut    : { x:0,  y:0,  size:11, minShare:0.08, outDist:12, stagger:16 },
+  // داشبورد استان: رادار
+  pRadar    : { x:0,  y:0,  size:10.5 }
+};
+
+/* =====================================================================
+   ۴) تعریف خدمات (نام، آیکون، رنگ ثابت هر خدمت)
+   ===================================================================== */
+const SV = [
+  { name:'خدمات فنی',    icon:'i-wrench', c:'--s1', ink:'--s1-ink' },
+  { name:'تعیین محدوده', icon:'i-map',    c:'--s2', ink:'--s2-ink' },
+  { name:'تغییر کاربری', icon:'i-swap',   c:'--s3', ink:'--s3-ink' },
+  { name:'اصلاح معابر',  icon:'i-route',  c:'--s4', ink:'--s4-ink' },
+  { name:'اصلاح ضوابط',  icon:'i-file',   c:'--s5', ink:'--s5-ink' },
+  { name:'اصلاح محدوده', icon:'i-crop',   c:'--s6', ink:'--s6-ink' },
+  { name:'پایان کار',    icon:'i-check',  c:'--s7', ink:'--s7-ink' }
+];
+const MINOR = [2,3,4,5,6];   // پنج خدمت کم‌حجم
+const YEARS = Object.keys(DATA.years);        // ['1402','1403','1404','1405']
+const PARTIAL = '1405';                        // سال ناقص
+
+/* =====================================================================
+   ۵) ابزارهای کمکی
+   ===================================================================== */
+const PD = '۰۱۲۳۴۵۶۷۸۹';
+const toFa = s => String(s).replace(/\d/g, d => PD[d]);
+const fa  = n => (n<0?'−':'') + toFa(String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g,'٬'));
+const fd  = (n,d=1) => toFa(Math.abs(n).toFixed(d).replace('.','٫'));
+const pct = (n,d=1) => fd(n,d)+'٪';
+const ltr = s => '\u2066'+s+'\u2069';   // جلوگیری از جابجایی علامت + و − در متن راست‌به‌چپ
+const spct = n => ltr((n>0.0001?'+':n<-0.0001?'−':'') + fd(n,1)+'٪');
+const sum = a => a.reduce((x,y)=>x+y,0);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $ = s => document.querySelector(s);
+const ico = (id,cls='') => `<svg class="i ${cls}"><use href="#${id}"/></svg>`;
+const tipA = h => ` data-tip="${esc(h)}"`;
+const yLabel = y => y==='all' ? 'مجموع ۱۴۰۲ تا ۱۴۰۵' : toFa(y) + (y===PARTIAL?' (تا ۱۸ مهر)':'');
+const yShort = y => y==='all' ? 'مجموع ۴ سال' : toFa(y);
+
+function elapsedFrac(){
+  let d=0; for(let m=1;m<REPORT.m;m++) d += m<=6?31:30;
+  return (d+REPORT.d)/365;
+}
+const FRAC = elapsedFrac();
+
+// داده‌ی استان‌ها برای یک سال (یا مجموع)
+function rowsOf(y){
+  if(y!=='all') return DATA.years[y].map(([n,v])=>({n,v:v.slice(),t:sum(v)}));
+  const base = DATA.years[YEARS[0]];
+  return base.map(([n],i)=>{ const v=SV.map((_,k)=>sum(YEARS.map(yy=>DATA.years[yy][i][1][k]))); return {n,v,t:sum(v)}; });
+}
+const svcTot = y => SV.map((_,k)=>sum(rowsOf(y).map(r=>r.v[k])));
+const yTot = y => sum(rowsOf(y).map(r=>r.t));
+
+const state = { year:'1404', prov:'مازندران', sort:{k:'t',dir:-1}, q:'' };
+
+/* ---- مقیاس و تیک‌ها ---- */
+function niceTicks(max,n=4){
+  if(!(max>0)) return {max:1,t:[0,1]};
+  const raw=max/n, p=Math.pow(10,Math.floor(Math.log10(raw))), f=raw/p;
+  const s=(f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p, mx=Math.ceil(max/s-1e-9)*s, t=[];
+  for(let v=0; v<=mx+1e-9; v+=s) t.push(v);
+  return {max:mx,t};
+}
+
+/* ---- SVG helpers ---- */
+let UID=0;
+const svgOpen=(w,h)=>`<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img">`;
+function T(x,y,s,o={}){
+  const a=o.a==='r'?'end':o.a==='l'?'start':'middle';
+  const st=(o.size?`font-size:${o.size}px;`:'')+(o.style||'');
+  const tr=o.rot?` transform="rotate(${o.rot} ${x} ${y})"`:'';
+  return `<text x="${x}" y="${y}" text-anchor="${a}" class="${o.cls||'lb'}"${o.m?' dy=".35em"':''}${st?` style="${st}"`:''}${tr}>${s}</text>`;
+}
+const G=(L,inner,kx='x',ky='y')=>`<g transform="translate(${(L&&L[kx])||0} ${(L&&L[ky])||0})">${inner}</g>`;
+function pathV(x,y,w,h,r,round){ // ستون: y بالا، h ارتفاع؛ گرد در بالا
+  if(h<=0) return '';
+  r=Math.min(r,w/2,h);
+  return round?`M${x},${y+h}V${y+r}Q${x},${y} ${x+r},${y}H${x+w-r}Q${x+w},${y} ${x+w},${y+r}V${y+h}Z`:`M${x},${y}H${x+w}V${y+h}H${x}Z`;
+}
+function pathH(x1,x2,y,h,r,rl,rr){ // میله افقی از x1 تا x2؛ گرد در چپ/راست
+  const w=x2-x1; if(w<=0) return ''; r=Math.min(r,h/2,w);
+  const a=rl?r:0,b=rr?r:0;
+  return `M${x1+a},${y}H${x2-b}${b?`Q${x2},${y} ${x2},${y+b}`:''}V${y+h-b}${b?`Q${x2},${y+h} ${x2-b},${y+h}`:''}H${x1+a}${a?`Q${x1},${y+h} ${x1},${y+h-a}`:''}V${y+a}${a?`Q${x1},${y} ${x1+a},${y}`:''}Z`;
+}
+const hatchDef=id=>`<defs><pattern id="h${id}" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3.2" height="7" style="fill:var(--card);opacity:.5"/></pattern></defs>`;
+function legend(id,items){ const e=$('#'+id); if(e) e.innerHTML=items.map(s=>`<span><i style="background:var(${s.c||'--brand'})"></i>${s.name}</span>`).join(''); }
+
+/* =====================================================================
+   ۶) موتور نمودارها (SVG خالص، بدون کتابخانه‌ی خارجی)
+   ===================================================================== */
+
+/* ---- ستونی (گروهی/انباشته) ---- */
+function chartColumns(el,o){
+  const W=Math.max(el.clientWidth,260), H=o.h||320, id=++UID, L=o.lab||{};
+  const m={l:10,r:W<520?48:58,t:o.top??34,b:32};
+  const pw=W-m.l-m.r, ph=H-m.t-m.b, n=o.cats.length, cw=pw/n, ns=o.series.length, stack=o.mode==='stack';
+  let mx=0;
+  for(let c=0;c<n;c++){ const vs=o.series.map(s=>s.vals[c]); mx=Math.max(mx, stack?sum(vs):Math.max(...vs)); }
+  if(o.proj) mx=Math.max(mx,o.proj.val);
+  const tk=niceTicks(mx), Y=v=>m.t+ph-v/tk.max*ph, X=c=>m.l+pw-(c+.5)*cw; // راست‌به‌چپ
+  let s=svgOpen(W,H)+hatchDef(id), lab='', tot='';
+  tk.t.forEach((v,i)=>{ const y=Y(v); s+=`<line class="gl${i===0?' base':''}" x1="${m.l}" x2="${W-m.r}" y1="${y}" y2="${y}"/>`+T(W-m.r+8,y,fa(v),{a:'l',cls:'ax',m:1}); });
+  for(let c=0;c<n;c++){
+    if(stack){
+      let acc=0, last=-1; o.series.forEach((se,i)=>{ if(se.vals[c]>0) last=i; });
+      const bw=Math.min(cw*.6,o.maxBar||72);
+      o.series.forEach((se,si)=>{
+        const v=se.vals[c]; if(!(v>0)) return;
+        const y1=Y(acc+v), y0=Y(acc), d=pathV(X(c)-bw/2,y1,bw,y0-y1,5,si===last);
+        s+=`<path d="${d}" style="fill:var(${se.c});stroke:var(--card);stroke-width:2"${tipA(o.tip(si,c))}/>`;
+        if(o.hatch&&o.hatch.includes(c)) s+=`<path d="${d}" fill="url(#h${id})" pointer-events="none"/>`;
+        if(y0-y1>=(L.minPx||16)) lab+=T(X(c),(y0+y1)/2,fa(v),{m:1,size:L.size,style:`fill:var(${se.ink})`});
+        acc+=v;
+      });
+      if(o.totals) tot+=T(X(c),Y(acc)-8,fa(acc),{size:(L.size||11)+1.5,style:'font-weight:800'});
+    }else{
+      const bw=Math.min(cw*.82/ns-2,o.maxBar||44), all=ns*bw+(ns-1)*2;
+      o.series.forEach((se,si)=>{
+        const v=se.vals[c], x=X(c)+all/2-(si+1)*bw-si*2, y=Y(v), d=pathV(x,y,bw,Y(0)-y,4,true);
+        s+=`<path d="${d}" style="fill:var(${se.c})"${tipA(o.tip(si,c))}/>`;
+        if(o.hatch&&o.hatch.includes(c)) s+=`<path d="${d}" fill="url(#h${id})" pointer-events="none"/>`;
+        lab+= L.rot ? T(x+bw/2,y-6,fa(v),{a:'l',size:L.size,rot:L.rot}) : T(x+bw/2,y-8,fa(v),{size:L.size});
+      });
+    }
+    s+=T(X(c),H-10,o.cats[c],{cls:'ax2'});
+  }
+  if(o.proj){ // ستون برآورد (خط‌چین)
+    const c=o.proj.c, bw=Math.min(cw*.82-2,o.maxBar||44), x=X(c)-bw/2, y=Y(o.proj.val), y2=Y(o.proj.base);
+    s+=`<rect x="${x}" y="${y}" width="${bw}" height="${Math.max(y2-y,0)}" rx="5" style="fill:none;stroke:var(--brand);stroke-width:1.6;stroke-dasharray:5 4"${tipA(o.proj.tip)}/>`;
+    lab+=T(X(c),y-8,fa(o.proj.val),{size:L.size,style:'fill:var(--brand)'});
+    lab+=T(X(c),y-24,'برآورد سالانه',{cls:'ax',size:10.5});
+  }
+  el.innerHTML=s+G(L,lab)+G(L,tot,'tx','ty')+'</svg>';
+}
+
+/* ---- میله‌ای افقی (تکی/انباشته/دوطرفه) ---- */
+function chartBarsH(el,o){
+  const W=Math.max(el.clientWidth,260), L=o.lab||{}, catW=o.catW||(W<520?100:128), rowH=o.rowH||26, bh=o.barH||16;
+  const n=o.cats.length, m={t:8,b:28,l:8,r:catW}, H=m.t+m.b+n*rowH, neg=!!o.neg, stack=o.mode==='stack';
+  const pad=o.pad||(W<520?58:74), left=m.l+pad, right=W-m.r-(neg?pad:0);
+  const tots=o.cats.map((_,i)=>stack?sum(o.series.map(s=>s.vals[i])):o.series[0].vals[i]);
+  let tk,X;
+  if(neg){ const lo0=Math.min(0,...tots), hi0=Math.max(0,...tots), st=niceTicks(Math.max(-lo0,hi0),W<520?1:3).t[1], lo=Math.floor(lo0/st)*st, hi=Math.ceil(hi0/st)*st;
+    tk={t:[]}; for(let v=lo; v<=hi+1e-9; v+=st) tk.t.push(v); X=v=>left+(v-lo)/(hi-lo)*(right-left); }
+  else { tk=niceTicks(Math.max(...tots),W<520?3:4); X=v=>right-v/tk.max*(right-left); }
+  const x0=neg?X(0):right;
+  let s=svgOpen(W,H), lab='', tot='';
+  tk.t.forEach(v=>{ const x=X(v); s+=`<line class="gl${v===0?' base':''}" x1="${x}" x2="${x}" y1="${m.t}" y2="${H-m.b}"/>`+T(x,H-10,(neg?(v>0?'+':v<0?'−':''):'')+fa(Math.abs(v))+(neg?'٪':''),{cls:'ax'}); });
+  o.cats.forEach((cat,i)=>{
+    const y=m.t+i*rowH+(rowH-bh)/2;
+    s+=T(W-6,y+bh/2,cat,{a:'r',cls:'ax2',m:1,size:W<520?11:12});
+    if(stack){
+      let acc=0,last=-1; o.series.forEach((se,k)=>{ if(se.vals[i]>0) last=k; });
+      o.series.forEach((se,k)=>{
+        const v=se.vals[i]; if(!(v>0)) return;
+        const xa=X(acc+v), xb=X(acc), d=pathH(xa,xb,y,bh,4,k===last,false);
+        s+=`<path d="${d}" style="fill:var(${se.c});stroke:var(--card);stroke-width:1.5"${tipA(o.tip(k,i))}/>`;
+        if(xb-xa>=(L.minPx||34)) lab+=T((xa+xb)/2,y+bh/2,fa(v),{m:1,size:L.size,style:`fill:var(${se.ink})`});
+        acc+=v;
+      });
+      tot+=T(X(acc)-6,y+bh/2,fa(acc),{a:'r',m:1,size:L.size||10,style:'font-weight:800'});
+    }else{
+      const v=o.series[0].vals[i], xe=X(v), col=o.colorFn?o.colorFn(v,i):o.series[0].c;
+      const x1=Math.min(x0,xe), x2=Math.max(x0,xe);
+      s+=`<path d="${pathH(x1,x2,y,bh,5,neg?v<0:true,neg?v>0:false)}" style="fill:var(${col})"${tipA(o.tip(0,i))}/>`;
+      const txt=o.fmt?o.fmt(v,i):fa(v);
+      lab+= (neg&&v>0) ? T(x2+6,y+bh/2,txt,{a:'l',m:1,size:L.size}) : T(x1-6,y+bh/2,txt,{a:'r',m:1,size:L.size});
+    }
+  });
+  el.innerHTML=s+G(L,lab)+G(L,tot,'tx','ty')+'</svg>';
+}
+
+/* ---- خطی ---- */
+function chartLine(el,o){
+  const W=Math.max(el.clientWidth,260), H=o.h||300, L=o.lab||{};
+  const m={l:14,r:W<520?48:58,t:34,b:32}, pw=W-m.l-m.r, ph=H-m.t-m.b, n=o.cats.length, cw=pw/n;
+  const mx=Math.max(...o.series.flatMap(s=>s.vals)), tk=niceTicks(o.yMax||mx), Y=v=>m.t+ph-v/tk.max*ph, X=c=>m.l+pw-(c+.5)*cw;
+  let s=svgOpen(W,H), lab='';
+  tk.t.forEach((v,i)=>{ const y=Y(v); s+=`<line class="gl${i===0?' base':''}" x1="${m.l}" x2="${W-m.r}" y1="${y}" y2="${y}"/>`+T(W-m.r+8,y,fa(v)+(o.unit||''),{a:'l',cls:'ax',m:1}); });
+  const ev=o.xEvery||1;
+  for(let c=0;c<n;c++) if(c%ev===0||c===n-1) s+=T(X(c),H-10,o.cats[c],{cls:'ax2'});
+  o.series.forEach((se,si)=>{
+    const pts=se.vals.map((v,c)=>[X(c),Y(v)]);
+    if(o.area) s+=`<path d="M${pts[0][0]},${Y(0)}${pts.map(p=>`L${p[0]},${p[1]}`).join('')}L${pts[n-1][0]},${Y(0)}Z" style="fill:var(${se.c});opacity:.12"/>`;
+    s+=`<path d="${pts.map((p,i)=>(i?'L':'M')+p[0]+','+p[1]).join('')}" fill="none" style="stroke:var(${se.c});stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round"/>`;
+    pts.forEach((p,c)=>{
+      const show=!o.labelAt||o.labelAt.includes(c);
+      s+=`<circle cx="${p[0]}" cy="${p[1]}" r="${show?4.5:3}" style="fill:var(${se.c});stroke:var(--card);stroke-width:2"/>`;
+      s+=`<circle cx="${p[0]}" cy="${p[1]}" r="14" fill="transparent"${tipA(o.tip(si,c))}/>`;
+      if(show) lab+=T(p[0],se.pos==='down'?p[1]+20:p[1]-11,o.fmt?o.fmt(se.vals[c],c):fa(se.vals[c]),{size:L.size});
+    });
+  });
+  el.innerHTML=s+G(L,lab)+'</svg>';
+}
+
+/* ---- دونات ---- */
+function chartDonut(el,o){
+  const L=o.lab||{}, W=Math.max(el.clientWidth,240), S=Math.min(W,o.h||360), H=S, cx=W/2, cy=H/2;
+  const R=S/2-(o.margin||42), r=R*.58, items=o.items.filter(d=>d.val>0), tot=sum(items.map(d=>d.val));
+  let a=-Math.PI/2, s=svgOpen(W,H), lab='', outs=[];
+  const P=(rad,ang)=>[cx+rad*Math.cos(ang),cy+rad*Math.sin(ang)];
+  items.forEach(d=>{
+    const sw=d.val/tot*Math.PI*2, a0=a, a1=a+Math.min(sw,Math.PI*2-1e-4); a+=sw;
+    const [x0,y0]=P(R,a0),[x1,y1]=P(R,a1),[x2,y2]=P(r,a1),[x3,y3]=P(r,a0), big=sw>Math.PI?1:0;
+    s+=`<path d="M${x0},${y0}A${R},${R} 0 ${big} 1 ${x1},${y1}L${x2},${y2}A${r},${r} 0 ${big} 0 ${x3},${y3}Z" style="fill:var(${d.c});stroke:var(--card);stroke-width:2"${tipA(o.tip(d))}/>`;
+    const mid=(a0+a1)/2, share=d.val/tot;
+    if(share>=(L.minShare||.06)){
+      const [tx,ty]=P((R+r)/2,mid);
+      lab+=T(tx,ty-(share>.12?6:0),fa(d.val),{m:1,size:L.size,style:`fill:var(${d.ink})`});
+      if(share>.12) lab+=T(tx,ty+10,pct(share*100,0),{m:1,size:(L.size||11)-1.5,style:`fill:var(${d.ink});font-weight:500`});
+    }else{ outs.push({mid,d,ang:mid}); }
+  });
+  // برچسب قطعه‌های کوچک: بیرون دونات، با رفع هم‌پوشانی عمودی و خط راهنما
+  [true,false].forEach(rt=>{
+    const arr=outs.filter(o=>(Math.cos(o.mid)>=0)===rt).map(o=>({...o,y:cy+(R+(L.outDist||14))*Math.sin(o.mid)})).sort((a,b)=>a.y-b.y), gap=(L.stagger||18)*.85;
+    if(arr.length) arr[0].y=Math.max(arr[0].y,10);
+    for(let i=1;i<arr.length;i++) arr[i].y=Math.max(arr[i].y,arr[i-1].y+gap);
+    const lim=H-6; if(arr.length&&arr[arr.length-1].y>lim){ arr[arr.length-1].y=lim; for(let i=arr.length-2;i>=0;i--) arr[i].y=Math.min(arr[i].y,arr[i+1].y-gap); }
+    arr.forEach(o=>{
+      const [bx,by]=P(R,o.mid),[mx,my]=P(R+8,o.mid), lx=cx+(rt?1:-1)*(R+(L.outDist||14)+14);
+      s+=`<path d="M${bx},${by}L${mx},${my}L${lx},${o.y}" style="stroke:var(--ink3);stroke-width:1" fill="none"/>`;
+      lab+=T(lx+(rt?4:-4),o.y,fa(o.d.val),{a:rt?'l':'r',m:1,size:L.size});
+    });
+  });
+  s+=T(cx,cy-8,fa(tot),{cls:'ctr1',size:S<300?18:22,m:1})+T(cx,cy+16,o.centerLabel||'مجموع',{cls:'ctr2',size:12,m:1});
+  el.innerHTML=s+G(L,lab)+'</svg>';
+}
+
+/* ---- گیج نیم‌دایره ---- */
+function chartGauge(el,o){
+  const L=o.lab||{}, W=Math.max(el.clientWidth,240), H=Math.min(236,W*.7), cx=W/2, cy=H-34, R=Math.min(W/2-26,H-84);
+  const pt=(p,rad)=>[cx+rad*Math.cos(p*Math.PI), cy-rad*Math.sin(p*Math.PI)];   // ۰٪ سمت راست → ۱۰۰٪ سمت چپ
+  const arc=(p0,p1,rad)=>{const [a,b]=pt(p0,rad),[c,d]=pt(p1,rad);return `M${a},${b}A${rad},${rad} 0 0 0 ${c},${d}`;};
+  const v=Math.min(o.value,1), t=Math.min(o.time,1);
+  let s=svgOpen(W,H);
+  s+=`<path d="${arc(0,1,R)}" fill="none" style="stroke:var(--soft);stroke-width:22;stroke-linecap:round"/><path d="${arc(0,1,R)}" fill="none" style="stroke:var(--line);stroke-width:1;opacity:0"/>`;
+  s+=`<path d="${arc(0,Math.max(v,.004),R)}" fill="none" style="stroke:var(--brand);stroke-width:22;stroke-linecap:round"${tipA(o.tip)}/>`;
+  const [a1,b1]=pt(t,R-17),[a2,b2]=pt(t,R+17),[a3,b3]=pt(t,R+30);
+  s+=`<path d="M${a1},${b1}L${a2},${b2}" style="stroke:var(--gold);stroke-width:3.5;stroke-linecap:round"/>`;
+  let lab=T(cx,cy-18,pct(o.value*100,1),{cls:'ctr1',size:28,m:1})+T(cx,cy+6,'از کل ۱۴۰۴ ثبت شده',{cls:'ctr2',size:11.5,m:1});
+  lab+=T(a3,b3,'زمان '+pct(o.time*100,1),{size:L.size||12,style:'fill:var(--ink2)',a:'m'});
+  lab+=T(cx+R,cy+22,'۰٪',{cls:'ax'})+T(cx-R,cy+22,'۱۰۰٪',{cls:'ax'});
+  el.innerHTML=s+G(L,lab)+'</svg>';
+}
+
+/* ---- رادار ---- */
+function chartRadar(el,o){
+  const L=o.lab||{}, W=Math.max(el.clientWidth,250), H=Math.min(W*1.0,340), cx=W/2, cy=H/2+4, R=Math.min(W,H)/2-(W<400?56:64), n=o.axes.length;
+  const mx=niceTicks(Math.max(...o.a.vals,...o.b.vals),3), ang=i=>-Math.PI/2-i*2*Math.PI/n;  // خلاف عقربه (متناسب با راست‌به‌چپ)
+  const P=(i,v)=>[cx+R*v/mx.max*Math.cos(ang(i)), cy+R*v/mx.max*Math.sin(ang(i))];
+  let s=svgOpen(W,H), lab='';
+  mx.t.slice(1).forEach(v=>{ s+=`<polygon points="${o.axes.map((_,i)=>P(i,v).join(',')).join(' ')}" fill="none" class="gl"/>`; s+=T(cx+4,cy-R*v/mx.max,fd(v,0)+'٪',{cls:'ax',a:'l',size:9.5}); });
+  o.axes.forEach((nm,i)=>{ const [x,y]=P(i,mx.max), [tx,ty]=P(i,mx.max*1.2); s+=`<line class="gl" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"/>`;
+    const side=Math.abs(tx-cx)<6?'m':(tx>cx?'l':'r'); s+=T(tx,ty-7,nm,{a:side,m:1,cls:'ax2',size:11});
+    lab+=T(tx,ty+8,pct(o.a.vals[i],1),{a:side,m:1,size:L.size,style:'fill:var(--brand)'}); });
+  s+=`<polygon points="${o.axes.map((_,i)=>P(i,o.b.vals[i]).join(',')).join(' ')}" style="fill:var(--ink3);fill-opacity:.12;stroke:var(--ink3);stroke-width:1.8;stroke-dasharray:5 4"/>`;
+  s+=`<polygon points="${o.axes.map((_,i)=>P(i,o.a.vals[i]).join(',')).join(' ')}" style="fill:var(--brand);fill-opacity:.22;stroke:var(--brand);stroke-width:2.4"/>`;
+  o.axes.forEach((nm,i)=>{ const [x,y]=P(i,o.a.vals[i]); s+=`<circle cx="${x}" cy="${y}" r="4" style="fill:var(--brand);stroke:var(--card);stroke-width:2"${tipA(o.tip(i))}/>`;
+  });
+  el.innerHTML=s+G(L,lab)+'</svg>';
+}
+
+/* ---- حبابی ---- */
+function chartBubble(el,o){
+  const W=Math.max(el.clientWidth,260), H=o.h||(W<520?340:560), L=o.lab||{}, m={l:14,r:W<520?50:60,t:20,b:44};
+  const pw=W-m.l-m.r, ph=H-m.t-m.b, tx=niceTicks(Math.max(...o.pts.map(p=>p.x)),4), ty=niceTicks(Math.max(...o.pts.map(p=>p.y)),4), mt=Math.max(...o.pts.map(p=>p.r));
+  const X=v=>m.l+pw-v/tx.max*pw, Y=v=>m.t+ph-v/ty.max*ph;   // محور افقی از راست
+  let s=svgOpen(W,H), lab='';
+  ty.t.forEach((v,i)=>{ s+=`<line class="gl${i===0?' base':''}" x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}"/>`+T(W-m.r+8,Y(v),fa(v),{a:'l',cls:'ax',m:1}); });
+  tx.t.forEach(v=>{ s+=`<line class="gl" x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${m.t+ph}"/>`+T(X(v),H-24,fa(v),{cls:'ax'}); });
+  s+=T(m.l+pw/2,H-6,o.xTitle,{cls:'ax2',size:11.5})+T(W-8,10,o.yTitle,{cls:'ax2',a:'r',size:11.5});
+  const sorted=o.pts.slice().sort((a,b)=>b.r-a.r), top=new Set(sorted.slice(0,L.topN||8).map(p=>p.n));
+  sorted.forEach(p=>{ const r=4+Math.sqrt(p.r/mt)*(W<520?18:26);
+    s+=`<circle cx="${X(p.x)}" cy="${Y(p.y)}" r="${r}" style="fill:var(--brand);fill-opacity:.55;stroke:var(--card);stroke-width:2"${tipA(o.tip(p))}/>`;
+    if(top.has(p.n)) lab+=T(X(p.x),Y(p.y)-r-6,p.n,{size:L.size,cls:'ax2',style:'font-weight:600;fill:var(--ink)'}); });
+  el.innerHTML=s+G(L,lab)+'</svg>';
+}
+
+/* =====================================================================
+   ۷) tooltip
+   ===================================================================== */
+const tip=$('#tip');
+function showTip(e){
+  const t=e.target.closest&&e.target.closest('[data-tip]');
+  if(!t){ tip.classList.remove('on'); return; }
+  tip.innerHTML=t.getAttribute('data-tip'); tip.classList.add('on');
+  const w=tip.offsetWidth,h=tip.offsetHeight; let x=e.clientX+14, y=e.clientY-h-12;
+  if(x+w>innerWidth-8) x=e.clientX-w-14; if(x<8) x=8; if(y<8) y=e.clientY+18;
+  tip.style.left=x+'px'; tip.style.top=y+'px';
+}
+document.addEventListener('pointermove',showTip); document.addEventListener('pointerdown',showTip);
+document.addEventListener('scroll',()=>tip.classList.remove('on'),{passive:true});
+
+/* =====================================================================
+   ۸) ساخت بخش‌ها
+   ===================================================================== */
+const tb=(h,rows)=>`<b>${h}</b><br>`+rows.map(r=>r.join(': ')).join('<br>');
+const delta=(a,b)=> b? (a-b)/b*100 : 0;
+const chipD=(p,suffix='')=>`<span class="chip ${p>=0?'up':'dn'}">${ico(p>=0?'i-up':'i-down')}${spct(p)}${suffix}</span>`;
+
+/* ---------- KPI ---------- */
+function buildKPIs(){
+  const T=YEARS.map(yTot), all=sum(T), t03=T[1], t04=T[2], t05=T[3], proj=t05/FRAC, monthly=t05/(FRAC*12);
+  const sAll=svcTot('all'), pr=rowsOf('all').sort((a,b)=>b.t-a.t)[0];
+  const spark=(vals,c)=>{const mx=Math.max(...vals);return `<svg class="spark" width="70" height="30" viewBox="0 0 70 30">${vals.map((v,i)=>`<rect x="${70-(i+1)*16-i*2}" y="${30-Math.max(v/mx*28,2)}" width="16" height="${Math.max(v/mx*28,2)}" rx="3" style="fill:${c};opacity:${.35+i*.2}"/>`).join('')}</svg>`;};
+  const list=[
+    {i:'i-sum',   c:'var(--brand)', l:'مجموع خدمات ۴ سال (۱۴۰۲ تا ۱۴۰۵)', v:all, u:'خدمت', sub:`<span>۱۴۰۵ تا ۱۸ مهر</span>`, sp:spark(T,'var(--brand)')},
+    {i:'i-bar',   c:'var(--s1)',    l:'خدمات سال ۱۴۰۴ (سال کامل اخیر)', v:t04, u:'خدمت', sub:chipD(delta(t04,t03))+'<span>نسبت به ۱۴۰۳</span>', sp:spark(T,'var(--s1)')},
+    {i:'i-clock', c:'var(--s2)',    l:'خدمات ۱۴۰۵ تا تاریخ گزارش', v:t05, u:'خدمت', sub:`<span class="chip">${pct(t05/t04*100)}</span><span>از کل ۱۴۰۴</span>`, sp:spark(T,'var(--s2)')},
+    {i:'i-target',c:'var(--gold)',  l:'برآورد کل‌سال ۱۴۰۵ (خطی)', v:Math.round(proj), u:'خدمت', sub:chipD(delta(proj,t04))+'<span>نسبت به ۱۴۰۴</span>'},
+    {i:'i-wrench',c:'var(--s1)',    l:'سهم «خدمات فنی» از مجموع ۴ سال', v:sAll[0]/all*100, u:'٪', dec:1, sub:`<span>${fa(sAll[0])} خدمت</span>`},
+    {i:'i-map',   c:'var(--s2)',    l:'سهم «تعیین محدوده» از مجموع ۴ سال', v:sAll[1]/all*100, u:'٪', dec:1, sub:`<span>${fa(sAll[1])} خدمت</span>`},
+    {i:'i-trophy',c:'var(--s7)',    l:'استان برتر در مجموع ۴ سال', txt:pr.n, sub:`<span>${fa(pr.t)} خدمت · ${pct(pr.t/all*100)} کل</span>`},
+    {i:'i-pulse', c:'var(--s3)',    l:'میانگین ماهانه‌ی خدمات در ۱۴۰۵', v:Math.round(monthly), u:'خدمت/ماه', sub:chipD(delta(monthly,t04/12))+'<span>نسبت به میانگین ۱۴۰۴</span>'}
+  ];
+  $('#kpis').innerHTML=list.map(k=>`<div class="kpi" style="--kc:${k.c}"><div class="top"><span class="lbl">${k.l}</span><span class="ico">${ico(k.i)}</span></div>
+    <div class="val">${k.txt?k.txt:`<span class="cnt" data-v="${k.v}" data-d="${k.dec||0}">${k.dec?fd(k.v,k.dec):fa(k.v)}</span><small>${k.u||''}</small>`}</div>
+    <div class="sub">${k.sub||''}</div>${k.sp||''}</div>`).join('');
+  // انیمیشن شمارنده
+  if(!matchMedia('(prefers-reduced-motion:reduce)').matches) document.querySelectorAll('.cnt').forEach(e=>{
+    const v=+e.dataset.v,d=+e.dataset.d,t0=performance.now();
+    (function f(t){const p=Math.min((t-t0)/900,1),q=1-Math.pow(1-p,3); e.textContent=d?fd(v*q,d):fa(v*q); if(p<1) requestAnimationFrame(f);})(t0);
+  });
+}
+
+/* ---------- یافته‌های کلیدی ---------- */
+function buildKey(){
+  const T=YEARS.map(yTot), r04=rowsOf('1404'), s=svcTot('1404'), s02=svcTot('1402');
+  const top=r04.slice().sort((a,b)=>b.t-a.t), top2=top.slice(0,2), top5=sum(top.slice(0,5).map(r=>r.t));
+  const t05=T[3], tt=FRAC*100, done=t05/T[2]*100;
+  const notes=[
+    `مجموع خدمات فنی ثبت‌شده در ۴ سال <b>${fa(sum(T))}</b> مورد است؛ حجم سالانه از <b>${fa(T[0])}</b> در ۱۴۰۲ به <b>${fa(T[2])}</b> در ۱۴۰۴ رسیده (<b>${spct(delta(T[2],T[0]))}</b>).`,
+    `تا ۱۸ مهر ۱۴۰۵ تعداد <b>${fa(t05)}</b> خدمت ثبت شده است؛ یعنی <b>${pct(done)}</b> از کل ۱۴۰۴ در حالی که <b>${pct(tt)}</b> از سال سپری شده — عملکرد ${done>=tt?'همگام با (یا جلوتر از)':'عقب‌تر از'} روند زمانی.`,
+    `دو خدمت «خدمات فنی» و «تعیین محدوده» در ۱۴۰۴ مجموعاً <b>${pct((s[0]+s[1])/sum(s)*100)}</b> کل حجم را دارند؛ سهم «تعیین محدوده» از <b>${pct(s02[1]/sum(s02)*100)}</b> (۱۴۰۲) به <b>${pct(s[1]/sum(s)*100)}</b> (۱۴۰۴) افزایش یافته است.`,
+    `تمرکز جغرافیایی بالا است: در ۱۴۰۴ دو استان <b>${top2[0].n}</b> و <b>${top2[1].n}</b> حدود <b>${pct((top2[0].t+top2[1].t)/T[2]*100)}</b> و ۵ استان برتر <b>${pct(top5/T[2]*100)}</b> کل خدمات را به خود اختصاص داده‌اند.`
+  ];
+  $('#keyNotes').innerHTML=notes.map(n=>`<li>${n}</li>`).join('');
+}
+
+/* ---------- نوار سال ---------- */
+function buildYearSeg(){
+  const opts=[...YEARS,'all'];
+  $('#yearSeg').innerHTML=opts.map(y=>`<button type="button" data-y="${y}" class="${y===state.year?'on':''}">${y==='all'?'مجموع ۴ سال':toFa(y)}</button>`).join('');
+}
+
+/* ---------- نمودارهای چندساله (ثابت) ---------- */
+function drawTrend(){
+  const cats=YEARS.map(toFa), totals=YEARS.map(yTot), full=YEARS.map(svcTot);
+  const iP=YEARS.indexOf(PARTIAL), hat=[iP], proj=totals[iP]/FRAC;
+  // ۱) جمع کل
+  chartColumns($('#c-yearTotal'),{ h:330, cats, mode:'group', lab:LABELS.yearTotal, top:54, maxBar:62,
+    series:[{name:'جمع',c:'--brand',vals:totals}], hatch:hat,
+    tip:(s,c)=>tb(yLabel(YEARS[c]),[['جمع خدمات',fa(totals[c])]]),
+    proj:{c:iP,val:proj,base:totals[iP],tip:tb('برآورد کل سال ۱۴۰۵',[['برآورد خطی',fa(proj)],['سهم زمان سپری‌شده',pct(FRAC*100)]])} });
+  // ۲) انباشته
+  const ser=SV.map((sv,k)=>({name:sv.name,c:sv.c,ink:sv.ink,vals:full.map(f=>f[k])}));
+  legend('lg-yearStack',SV);
+  chartColumns($('#c-yearStack'),{ h:360, cats, mode:'stack', totals:true, lab:LABELS.yearStack, series:ser, hatch:hat, top:40,
+    tip:(s,c)=>tb(`${SV[s].name} · ${yLabel(YEARS[c])}`,[['تعداد',fa(ser[s].vals[c])],['سهم',pct(ser[s].vals[c]/totals[c]*100)]]) });
+  // ۳) پنج خدمت کم‌حجم
+  const ms=MINOR.map(k=>({name:SV[k].name,c:SV[k].c,ink:SV[k].ink,vals:full.map(f=>f[k])}));
+  legend('lg-minor',ms);
+  chartColumns($('#c-minor'),{ h:350, cats, mode:'group', lab:LABELS.minor, series:ms, hatch:hat, top:62, maxBar:34,
+    tip:(s,c)=>tb(`${ms[s].name} · ${yLabel(YEARS[c])}`,[['تعداد',fa(ms[s].vals[c])]]) });
+  // ۴) دو خدمت اصلی (خطی)
+  const mj=[0,1].map(k=>({name:SV[k].name,c:SV[k].c,vals:full.map(f=>f[k]),pos:k===0?'up':'down'}));
+  legend('lg-major',mj);
+  chartLine($('#c-major'),{ h:330, cats, series:mj, lab:LABELS.major,
+    tip:(s,c)=>tb(`${mj[s].name} · ${yLabel(YEARS[c])}`,[['تعداد',fa(mj[s].vals[c])]]) });
+  // ۵) گیج
+  const done=totals[iP]/totals[iP-1];
+  chartGauge($('#c-gauge'),{ value:done, time:FRAC, lab:LABELS.gauge, tip:tb('پیشرفت ۱۴۰۵',[['ثبت‌شده',fa(totals[iP])],['کل ۱۴۰۴',fa(totals[iP-1])],['نسبت',pct(done*100)]]) });
+  $('#gaugeNote').innerHTML=`نوار زرد = سهم سال سپری‌شده (${pct(FRAC*100)}). ${done*100>=FRAC*100?'پیشرفت از مرز زمانی بالاتر است':'پیشرفت از مرز زمانی پایین‌تر است'}؛ اختلاف: <b>${fd(Math.abs(done-FRAC)*100,1)} واحد درصد</b>.`;
+  // ۶) ماتریس تغییرات
+  let h=`<thead><tr><th>خدمت</th>${['۱۴۰۳ به ۱۴۰۲','۱۴۰۴ به ۱۴۰۳','۱۴۰۵ (سهم از کل ۱۴۰۴)'].map(x=>`<th>${x}</th>`).join('')}<th>جمع ۴ سال</th></tr></thead><tbody>`;
+  SV.forEach((sv,k)=>{
+    const a=full.map(f=>f[k]); const cell=(p)=>{const c=p>=0?'var(--div-pos)':'var(--div-neg)', it=Math.min(Math.abs(p)/60,1)*45+6; return `<td style="background:color-mix(in srgb,${c} ${it}%,transparent)">${spct(p)}</td>`;};
+    const p05=a[3]/a[2]*100, it=Math.abs(p05-FRAC*100)>0?'':'';
+    h+=`<tr><td style="text-align:start;font-weight:600"><span style="display:inline-flex;align-items:center;gap:7px"><i style="width:10px;height:10px;border-radius:3px;background:var(${sv.c})"></i>${sv.name}</span></td>${cell(delta(a[1],a[0]))}${cell(delta(a[2],a[1]))}<td style="background:color-mix(in srgb,${p05>=FRAC*100?'var(--div-pos)':'var(--div-neg)'} ${Math.min(Math.abs(p05-FRAC*100)/60,1)*45+6}%,transparent)">${pct(p05)}</td><td>${fa(sum(a))}</td></tr>`;
+  });
+  const tt=full.map(f=>sum(f));
+  h+=`</tbody><tfoot><tr><td style="text-align:start">جمع کل</td><td>${spct(delta(tt[1],tt[0]))}</td><td>${spct(delta(tt[2],tt[1]))}</td><td>${pct(tt[3]/tt[2]*100)}</td><td>${fa(sum(tt))}</td></tr></tfoot>`;
+  $('#yoyTable').innerHTML=h;
+}
+
+/* ---------- کارت‌های خدمت (بسته به سال) ---------- */
+function drawSvcCards(){
+  const y=state.year, rows=rowsOf(y), st=svcTot(y), tot=sum(st), prev=y==='1402'||y==='all'?null:(y==='1405'?svcTot('1404'):svcTot(String(+y-1)));
+  $('#svcCards').innerHTML=SV.map((sv,k)=>{
+    const top=rows.slice().sort((a,b)=>b.v[k]-a.v[k])[0];
+    let d='';
+    if(prev){ d= y===PARTIAL ? `<span class="chip">${pct(st[k]/prev[k]*100,0)} از ۱۴۰۴</span>` : chipD(delta(st[k],prev[k])); } else d=`<span class="chip">${y==='all'?'۴ سال':'سال پایه'}</span>`;
+    return `<div class="svc" style="--c:var(${sv.c});--ci:var(${sv.ink})"><div class="h"><span class="t">${ico(sv.icon)}</span>${sv.name}</div>
+      <div class="v">${fa(st[k])}</div><div class="bar"><i style="width:${Math.max(st[k]/tot*100,1.5)}%"></i></div>
+      <div class="m"><span>سهم: <b>${pct(st[k]/tot*100)}</b></span>${d}</div>
+      <div class="top">استان برتر: <b>${top.n}</b><br>${fa(top.v[k])} (${pct(st[k]?top.v[k]/st[k]*100:0,0)} کل خدمت)</div></div>`;
+  }).join('');
+}
+
+/* ---------- ترکیب خدمات ---------- */
+function drawMix(){
+  const y=state.year, st=svcTot(y), tot=sum(st);
+  const items=SV.map((sv,k)=>({name:sv.name,val:st[k],c:sv.c,ink:sv.ink,k}));
+  // ترتیب: قطعه‌های کوچک بین قطعه‌های بزرگ قرار می‌گیرند تا برچسب‌ها روی هم نیفتند
+  const order=[0,3,1,4,2,5,6].map(i=>items[i]);
+  chartDonut($('#c-donut'),{ h:340, items:order, lab:LABELS.donut, centerLabel:'مجموع '+yShort(y),
+    tip:d=>tb(d.name,[['تعداد',fa(d.val)],['سهم',pct(d.val/tot*100,2)]]) });
+  $('#donutLeg').innerHTML=items.map(d=>`<tr><td><i style="background:var(${d.c})"></i>${d.name}</td><td class="n">${fa(d.val)}</td><td class="p">${pct(d.val/tot*100)}</td></tr>`).join('');
+  const ms=MINOR.map(k=>({k,v:st[k]})).sort((a,b)=>b.v-a.v);
+  chartBarsH($('#c-minorBars'),{ cats:ms.map(m=>SV[m.k].name), rowH:58, barH:32, series:[{c:'--brand',vals:ms.map(m=>m.v)}], lab:LABELS.minorBars, catW:110,
+    colorFn:(v,i)=>SV[ms[i].k].c, fmt:(v)=>`${fa(v)} (${pct(v/tot*100,2)})`, pad:110,
+    tip:(s,i)=>tb(SV[ms[i].k].name,[['تعداد',fa(ms[i].v)],['سهم از کل',pct(ms[i].v/tot*100,2)]]) });
+  const mt=sum(ms.map(m=>m.v));
+  $('#minorNote').innerHTML=`پنج خدمت کم‌حجم روی‌هم <b>${fa(mt)}</b> خدمت (${pct(mt/tot*100)} کل) هستند؛ بزرگ‌ترین آن‌ها «${SV[ms[0].k].name}» با ${pct(ms[0].v/mt*100,0)} این گروه است.`;
+}
+
+/* ---------- تحلیل استانی ---------- */
+function drawProv(){
+  const y=state.year, rows=rowsOf(y).sort((a,b)=>b.t-a.t), tot=sum(rows.map(r=>r.t));
+  // ۱۰ استان برتر
+  const t10=rows.slice(0,10);
+  chartBarsH($('#c-top10'),{ cats:t10.map((r,i)=>`${toFa(i+1)}. ${r.n}`), rowH:34, barH:20, series:[{c:'--brand',vals:t10.map(r=>r.t)}], lab:LABELS.top10, pad:W_PAD(),
+    fmt:(v)=>`${fa(v)} (${pct(v/tot*100,0)})`, tip:(s,i)=>tb(t10[i].n,[['مجموع',fa(t10[i].t)],['سهم از کشور',pct(t10[i].t/tot*100,2)],['رتبه',toFa(i+1)]]) });
+  // منحنی تمرکز
+  let acc=0; const cum=rows.map(r=>(acc+=r.t)/tot*100);
+  chartLine($('#c-lorenz'),{ h:330, cats:rows.map((_,i)=>toFa(i+1)), xEvery:5, yMax:100, unit:'٪', area:true, lab:LABELS.lorenz,
+    series:[{name:'سهم تجمعی',c:'--brand',vals:cum,pos:'down'}], labelAt:[0,2,4,9,14,19,30], fmt:v=>pct(v,0),
+    tip:(s,c)=>tb(`${toFa(c+1)} استان برتر`,[['سهم تجمعی',pct(cum[c],1)],['آخرین استان',rows[c].n]]) });
+  const half=cum.findIndex(v=>v>=50)+1, c80=cum.findIndex(v=>v>=80)+1;
+  $('#lorenzNote').innerHTML=`فقط <b>${toFa(half)}</b> استان نیمی از کل خدمات و <b>${toFa(c80)}</b> استان ${toFa(80)}٪ از خدمات را دارند.`;
+  // ترکیب در همه‌ی استان‌ها
+  legend('lg-prov',SV);
+  chartBarsH($('#c-provStack'),{ cats:rows.map(r=>r.n), mode:'stack', rowH:W_ROW(), barH:W_ROW()-8, lab:LABELS.provStack,
+    series:SV.map((sv,k)=>({name:sv.name,c:sv.c,ink:sv.ink,vals:rows.map(r=>r.v[k])})), pad:W_PAD(),
+    tip:(k,i)=>tb(`${rows[i].n} · ${SV[k].name}`,[['تعداد',fa(rows[i].v[k])],['سهم در استان',pct(rows[i].t?rows[i].v[k]/rows[i].t*100:0)],['جمع استان',fa(rows[i].t)]]) });
+  // حبابی
+  chartBubble($('#c-bubble'),{ pts:rows.map(r=>({n:r.n,x:r.v[0],y:r.v[1],r:r.t})), xTitle:'خدمات فنی (تعداد)', yTitle:'تعیین محدوده (تعداد)', lab:LABELS.bubble,
+    tip:p=>tb(p.n,[['خدمات فنی',fa(p.x)],['تعیین محدوده',fa(p.y)],['مجموع',fa(p.r)]]) });
+  // تغییرات ۱۴۰۴ به ۱۴۰۳
+  const a=rowsOf('1403'), b=rowsOf('1404'), ch=b.map((r,i)=>({n:r.n,p:delta(r.t,a[i].t),a:a[i].t,b:r.t})).sort((x,y)=>y.p-x.p);
+  chartBarsH($('#c-diverge'),{ cats:ch.map(c=>c.n), neg:true, rowH:W_ROW(), barH:W_ROW()-9, lab:LABELS.diverge, pad:W_PAD(),
+    series:[{c:'--div-pos',vals:ch.map(c=>c.p)}], colorFn:v=>v>=0?'--div-pos':'--div-neg', fmt:v=>spct(v),
+    tip:(s,i)=>tb(ch[i].n,[['۱۴۰۳',fa(ch[i].a)],['۱۴۰۴',fa(ch[i].b)],['تغییر',spct(ch[i].p)]]) });
+}
+const W_ROW=()=>innerWidth<560?24:26, W_PAD=()=>innerWidth<560?64:78;
+
+/* ---------- داشبورد استان ---------- */
+function drawProfile(){
+  const y=state.year, p=state.prov, nat=svcTot(y), natT=sum(nat), all=rowsOf(y).sort((a,b)=>b.t-a.t);
+  const me=all.find(r=>r.n===p), rank=all.findIndex(r=>r.n===p)+1;
+  $('#provRank').innerHTML=`رتبه ${toFa(rank)} از ۳۱ در ${yLabel(y)}`;
+  const t=YEARS.map(yy=>rowsOf(yy).find(r=>r.n===p).t);
+  const top=me.v.map((v,k)=>[v,k]).sort((a,b)=>b[0]-a[0])[0];
+  $('#pstats').innerHTML=[['مجموع خدمات ('+yShort(y)+')',fa(me.t)],['سهم از کل کشور',pct(me.t/natT*100)],['خدمت غالب',SV[top[1]].name],['تغییر ۱۴۰۴ نسبت به ۱۴۰۳',spct(delta(t[2],t[1]))]].map(x=>`<div class="pst"><div class="l">${x[0]}</div><div class="n">${x[1]}</div></div>`).join('');
+  chartColumns($('#c-pTrend'),{ h:300, cats:YEARS.map(toFa), mode:'group', lab:LABELS.pTrend, top:36, maxBar:54, hatch:[YEARS.indexOf(PARTIAL)],
+    series:[{c:'--brand',vals:t}], tip:(s,c)=>tb(p+' · '+yLabel(YEARS[c]),[['مجموع',fa(t[c])]]) });
+  chartDonut($('#c-pDonut'),{ h:300, margin:36, items:SV.map((sv,k)=>({name:sv.name,val:me.v[k],c:sv.c,ink:sv.ink})), lab:LABELS.pDonut, centerLabel:p,
+    tip:d=>tb(d.name,[['تعداد',fa(d.val)],['سهم در استان',pct(me.t?d.val/me.t*100:0,1)]]) });
+  chartRadar($('#c-pRadar'),{ axes:SV.map(s=>s.name), a:{vals:me.v.map(v=>me.t?v/me.t*100:0)}, b:{vals:nat.map(v=>v/natT*100)}, lab:LABELS.pRadar,
+    tip:i=>tb(SV[i].name,[['سهم در استان',pct(me.t?me.v[i]/me.t*100:0)],['سهم در کشور',pct(nat[i]/natT*100)]]) });
+}
+
+/* ---------- جدول حرارتی ---------- */
+function drawHeat(){
+  const rows=rowsOf(state.year), mx=SV.map((_,k)=>Math.max(...rows.map(r=>r.v[k]))), mt=Math.max(...rows.map(r=>r.t));
+  const rank=rows.slice().sort((a,b)=>b.t-a.t).map(r=>r.n);
+  const {k,dir}=state.sort;
+  let list=rows.filter(r=>r.n.includes(state.q.trim()));
+  list.sort((a,b)=>k==='n'?dir*a.n.localeCompare(b.n,'fa'):dir*((k==='t'?a.t:a.v[k])-(k==='t'?b.t:b.v[k])));
+  const th=(key,label)=>`<th data-k="${key}">${label}${String(state.sort.k)===String(key)?(dir<0?' ▼':' ▲'):''}</th>`;
+  let h=`<thead><tr><th>#</th>${th('n','استان')}${SV.map((s,i)=>th(i,s.name)).join('')}${th('t','جمع کل')}</tr></thead><tbody>`;
+  list.forEach(r=>{
+    h+=`<tr class="${r.n===state.prov?'sel':''}"><td style="color:var(--ink3)">${toFa(rank.indexOf(r.n)+1)}</td><td>${r.n}</td>`+
+      r.v.map((v,i)=>`<td style="background:color-mix(in srgb,var(--brand) ${Math.round(Math.sqrt(v/(mx[i]||1))*52)}%,transparent)">${fa(v)}</td>`).join('')+
+      `<td style="font-weight:800">${fa(r.t)}<span class="db" style="width:${Math.round(r.t/mt*44)}px"></span></td></tr>`;
+  });
+  const st=svcTot(state.year);
+  h+=`</tbody><tfoot><tr><td></td><td style="text-align:start">جمع کل کشور</td>${st.map(v=>`<td>${fa(v)}</td>`).join('')}<td>${fa(sum(st))}</td></tr></tfoot>`;
+  $('#heat').innerHTML=h; $('#tblCount').textContent=`${toFa(list.length)} استان`;
+}
+
+/* ---------- کارت‌های تحلیلی ---------- */
+function drawInsights(){
+  const y=state.year, rows=rowsOf(y), st=svcTot(y), tot=sum(st), sorted=rows.slice().sort((a,b)=>b.t-a.t);
+  const T=YEARS.map(yTot), full=YEARS.map(svcTot);
+  const a=rowsOf('1403'), b=rowsOf('1404'), ch=b.map((r,i)=>({n:r.n,d:r.t-a[i].t,p:delta(r.t,a[i].t)}));
+  const up=ch.slice().sort((x,y)=>y.d-x.d)[0], dn=ch.slice().sort((x,y)=>x.d-y.d)[0], big=ch.filter(c=>c.p<=-30);
+  const top3=sorted.slice(0,3), s3=sum(top3.map(r=>r.t))/tot*100;
+  const conc=SV.map((sv,k)=>{const t=rows.slice().sort((p,q)=>q.v[k]-p.v[k])[0];return {k,n:t.n,sh:st[k]?t.v[k]/st[k]*100:0};}).sort((p,q)=>q.sh-p.sh)[0];
+  const zeros=sum(rows.map(r=>r.v.filter(v=>v===0).length)), zr=rows.filter(r=>r.v.some(v=>v===0)).length;
+  const ratio=full.map(f=>f[1]/f[0]);
+  const fin=full.map(f=>f[6]), finMax=fin.indexOf(Math.max(...fin));
+  const mt3=rows.map(r=>({n:r.n,v:r.v[3]+r.v[4]+r.v[5]})).sort((p,q)=>q.v-p.v)[0];
+  const avg=tot/31, med=sorted[15].t, proj=T[3]/FRAC;
+  const cards=[
+    {c:'--brand',i:'i-trophy',t:'تمرکز در سه استان برتر',v:pct(s3),p:`در ${yLabel(y)} استان‌های <b>${top3.map(r=>r.n).join('، ')}</b> روی‌هم ${fa(sum(top3.map(r=>r.t)))} خدمت (${pct(s3,0)} کل کشور) دارند.`,f:1},
+    {c:'--s1',i:'i-layers',t:'شاخص تمرکز خدمت‌ها',v:pct((st[0]+st[1])/tot*100),p:`دو خدمت «خدمات فنی» (${pct(st[0]/tot*100,0)}) و «تعیین محدوده» (${pct(st[1]/tot*100,0)}) تقریباً همه‌ی حجم را می‌سازند؛ پنج خدمت دیگر فقط ${pct(100-(st[0]+st[1])/tot*100)}.`,f:1},
+    {c:'--s3',i:'i-flame',t:'بیشترین تمرکز استانی در یک خدمت',v:pct(conc.sh,0),p:`استان <b>${conc.n}</b> به‌تنهایی ${pct(conc.sh,0)} از کل «${SV[conc.k].name}» کشور را در ${yLabel(y)} دارد.`,f:1},
+    {c:'--s2',i:'i-pin',t:'میانگین و میانه‌ی استانی',v:fa(avg),p:`میانگین هر استان ${fa(avg)} و میانه ${fa(med)} خدمت است؛ فاصله‌ی میانگین و میانه نشان‌دهنده‌ی چولگی (وجود چند استان بسیار بزرگ) است.`,f:1},
+    {c:'--div-pos',i:'i-up',t:'بیشترین افزایش (۱۴۰۴ نسبت به ۱۴۰۳)',v:ltr('+'+fa(up.d)),p:`استان <b>${up.n}</b> با ${spct(up.p)} بیشترین رشد مطلق را داشته است.`},
+    {c:'--div-neg',i:'i-down',t:'بیشترین کاهش (۱۴۰۴ نسبت به ۱۴۰۳)',v:ltr('−'+fa(Math.abs(dn.d))),p:`استان <b>${dn.n}</b> با ${spct(dn.p)} بیشترین افت مطلق را ثبت کرده است.`},
+    {c:'--s5',i:'i-alert',t:'استان‌های با افت بیش از ۳۰٪',v:toFa(big.length)+' استان',p:big.length?`${big.sort((p,q)=>p.p-q.p).slice(0,4).map(c=>`${c.n} (${spct(c.p)})`).join('، ')}${big.length>4?' و …':''}.`:'هیچ استانی افت بیش از ۳۰٪ نداشته است.'},
+    {c:'--s2',i:'i-pulse',t:'نسبت تعیین محدوده به خدمات فنی',v:fd(ratio[2],2),p:`این نسبت از ${fd(ratio[0],2)} (۱۴۰۲) به ${fd(ratio[1],2)} (۱۴۰۳) و ${fd(ratio[2],2)} (۱۴۰۴) رسیده؛ در ۱۴۰۵ تا کنون ${fd(ratio[3],2)} است. یعنی سهم «تعیین محدوده» به «خدمات فنی» نزدیک شده است.`},
+    {c:'--s7',i:'i-check',t:'روند «پایان کار»',v:fa(fin[finMax]),p:`بیشینه‌ی «پایان کار» در ${toFa(YEARS[finMax])} ثبت شده (${fa(fin[finMax])}). مقادیر سالانه: ${fin.map((v,i)=>`${toFa(YEARS[i])}: ${fa(v)}`).join('، ')}.`},
+    {c:'--gold',i:'i-target',t:'برآورد کل‌سال ۱۴۰۵',v:fa(proj),p:`با فرض ادامه‌ی روند فعلی، کل ۱۴۰۵ حدود ${fa(proj)} خدمت (${spct(delta(proj,T[2]))} نسبت به ۱۴۰۴) برآورد می‌شود. این برآورد خطی است و فصلی‌بودن را در نظر نمی‌گیرد.`},
+    {c:'--s4',i:'i-percent',t:'سهم اصلاح معابر + ضوابط + محدوده',v:pct((st[3]+st[4]+st[5])/tot*100,2),p:`سه خدمت اصلاحی در ${yLabel(y)} روی‌هم ${fa(st[3]+st[4]+st[5])} خدمت‌اند؛ بیشترین سهم را استان <b>${mt3.n}</b> دارد (${fa(mt3.v)} خدمت، ${pct(mt3.v/Math.max(st[3]+st[4]+st[5],1)*100,0)} این گروه).`,f:1}
+  ];
+  $('#insGrid').innerHTML=cards.map(c=>`<div class="ins" style="--ic:var(${c.c})"><div class="ih"><span class="ii">${ico(c.i)}</span><span class="it">${c.t}</span>${c.f?`<span class="tag f badge">${yShort(y)}</span>`:''}</div><div class="iv">${c.v}</div><p>${c.p}</p></div>`).join('');
+}
+
+/* =====================================================================
+   ۹) اجرای کلی
+   ===================================================================== */
+// اجرای ایمن: خطای یک نمودار مانع رسم بقیه نمی‌شود
+function safe(fn){ try{ fn(); }catch(e){ console.error(fn.name,e); } }
+function renderFiltered(){
+  document.querySelectorAll('.yl').forEach(e=>e.textContent=yLabel(state.year));
+  [drawSvcCards,drawMix,drawProv,drawProfile,drawHeat,drawInsights].forEach(safe);
+}
+function renderAll(){ safe(drawTrend); renderFiltered(); }
+
+function init(){
+  safe(buildKPIs); safe(buildKey); buildYearSeg();
+  // انتخاب سال (روی کل نوار؛ با event delegation)
+  $('#yearSeg').addEventListener('click',e=>{ const b=e.target.closest('button[data-y]'); if(!b) return; state.year=b.dataset.y; buildYearSeg(); renderFiltered(); });
+  // انتخاب استان
+  const names=rowsOf('1404').map(r=>r.n).sort((a,b)=>a.localeCompare(b,'fa'));
+  $('#provSel').innerHTML=names.map(n=>`<option ${n===state.prov?'selected':''}>${n}</option>`).join('');
+  $('#provSel').onchange=e=>{ state.prov=e.target.value; drawProfile(); drawHeat(); };
+  $('#tblSearch').oninput=e=>{ state.q=e.target.value; drawHeat(); };
+  $('#heat').onclick=e=>{ const th=e.target.closest('th[data-k]'); if(!th) return; const k=th.dataset.k==='n'||th.dataset.k==='t'?th.dataset.k:+th.dataset.k;
+    state.sort = state.sort.k===k ? {k,dir:-state.sort.dir} : {k,dir:k==='n'?1:-1}; drawHeat(); };
+  renderAll();
+  let lw=innerWidth, tm; addEventListener('resize',()=>{ clearTimeout(tm); tm=setTimeout(()=>{ if(innerWidth!==lw){ lw=innerWidth; renderAll(); } },150); });
+}
+(document.fonts&&document.fonts.load?Promise.race([document.fonts.load('600 14px Vazirmatn'),new Promise(r=>setTimeout(r,1200))]):Promise.resolve()).then(init,init);
+</script>
+</body>
+</html>
