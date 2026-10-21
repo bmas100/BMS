@@ -397,6 +397,15 @@ const sections = [
     { t: "شرکت‌های تابعه", ic: "fa-building", h: 265, popup: "subsidiaries" },
     { t: "امور استان‌ها", ic: "fa-map-location-dot", h: 160, popup: "provinces" }
   ]},
+  { title: "ارتباطات و رسانه", c1: "#f59e0b", c2: "#ef4444", items: [
+  /*   { t: "ارتباط با ریاست", ic: "fa-comments", h: 175, popup: "BossContact" }, */
+
+    { t: "ارتباط کارکنان با ریاست", ic: "fa-user-tie", h: 110, link: "../../BossContact/PrsReport.html" },
+    { t: "ارتباطات مردمی", ic: "fa-users", h: 175, link: "../../BossContact/PublicRelations.html" }, 
+    
+    { t: "امور مجلس", ic: "fa-landmark", h: 320, link: "../../Parliament/Parliament.html" },
+    { t: "رسانه‌های خبری", ic: "fa-globe", h: 200, link: "../../NewsMedia/NewsMedia.html" }
+  ]},
   { title: "عمران و مسکن", c1: "#10b981", c2: "#06b6d4", items: [
     { t: "مسکن شهری", ic: "fa-city", h: 250, link: "../../UrbanHousing/UrbanHousing.html" },
     { t: "سکونتگاه‌های ناکارآمد", ic: "fa-house-crack", h: 355, link: "../../Inefficient/Inefficient.html" },
@@ -408,15 +417,6 @@ const sections = [
     { t: "خانه امید", ic: "fa-house-chimney-window", h: 335, link: "../../HopeHouseMob/HouseHopeShora.html" },
     { t: "خدمات فنی", ic: "fa-file-signature", h: 20, link: "../../RuralDevelopment/TechnicalServices/TechnicalServices.html" },
     { t: "خیرین و حساب 100", ic: "fa-hand-holding-dollar", h: 45, popup: "Hesab100" }
-  ]},
-  { title: "ارتباطات و رسانه", c1: "#f59e0b", c2: "#ef4444", items: [
-  /*   { t: "ارتباط با ریاست", ic: "fa-comments", h: 175, popup: "BossContact" }, */
-
-    { t: "ارتباط با ریاست", ic: "fa-user-tie", h: 175, link: "../../BossContact/PrsReport.html" },
-    { t: "ارتباطات مردمی", ic: "fa-users", h: 175, link: "../../BossContact/PublicRelations.html" }, 
-    
-    { t: "امور مجلس", ic: "fa-landmark", h: 320, link: "../../Parliament/Parliament.html" },
-    { t: "رسانه‌های خبری", ic: "fa-globe", h: 200, link: "../../NewsMedia/NewsMedia.html" }
   ]},
   { title: "پشتیبانی و منابع", c1: "#6366f1", c2: "#06b6d4", items: [
     { t: "اداری و پشتیبانی", ic: "fa-users-gear", h: 140, link: "../../HrmMob/HrmMob.html" },
@@ -583,7 +583,7 @@ document.querySelectorAll('.card').forEach(card => {
 })();
 </script>
 
-<script src="tracker.js?v=124"></script>
+<script src="tracker.js?v=125"></script>
 
 </body>
 </html>
