@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>داشبورد تحلیلی شورای معاونین ۱۴۰۵</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+:root{
+  --navy:#0b2a4a; --teal:#0e7490; --green:#16a34a; --amber:#f59e0b; --blue:#2563eb; --violet:#8b5cf6; --rose:#f43f5e;
+  --bg:#eef2f7; --card:#fff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --gold:#f2b134;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Vazirmatn',Tahoma,sans-serif;background:var(--bg);color:var(--ink);line-height:1.8;direction:rtl}
+a{color:inherit}
+.container{max-width:1280px;margin:0 auto;padding:0 16px; margin-top: 65px;}
+
+/* ===== Banner ===== */
+.banner{margin-bottom: -60px; position:relative;overflow:hidden;color:#fff;padding:0px 0 20px;background:linear-gradient(135deg,#0b2a4a 0%,#0e5a73 55%,#0f9d8a 100%)}
+.banner::before{content:'';position:absolute;inset:0;background-image:
+  radial-gradient(circle at 12% 25%,rgba(255,255,255,.12) 0 95px,transparent 96px),
+  radial-gradient(circle at 88% 75%,rgba(242,177,52,.22) 0 150px,transparent 151px),
+  repeating-linear-gradient(45deg,rgba(255,255,255,.045) 0 2px,transparent 2px 24px)}
+.banner .ghost{position:absolute;left:-30px;bottom:-40px;font-size:230px;opacity:.07;transform:rotate(-8deg)}
+.banner-inner{position:relative;display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.emblem{width:92px;height:92px;border-radius:26px;background:linear-gradient(145deg,var(--gold),#e08a00);display:grid;place-items:center;font-size:44px;color:#fff;box-shadow:0 12px 30px rgba(0,0,0,.28);flex:none}
+.banner h1{margin:0 0 6px;font-size:25px; font-weight:800;line-height:1.5; margin-top: -45px;}
+.banner p.sub{margin:0 0 16px;opacity:.9;font-size:clamp(.9rem,1.8vw,1.05rem)}
+.pills{display:flex;gap:10px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;font-weight:600;font-size:.92rem;text-decoration:none;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.14);backdrop-filter:blur(6px);color:#fff}
+.pill.link{background:var(--gold);color:#3b2a00;border-color:transparent;font-weight:700;transition:.2s}
+.pill.link:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.25)}
+.chips{position:relative;display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);padding:6px 14px;border-radius:12px;font-size:.85rem}
+.chip b{color:var(--gold);font-weight:800;margin-inline-start:4px}
+
+/* ===== Nav ===== */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .container{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+.nav a{white-space:nowrap;text-decoration:none;font-size:.85rem;font-weight:600;color:#334155;padding:6px 14px;border-radius:999px;background:#f1f5f9}
+.nav a:hover{background:var(--teal);color:#fff}
+
+/* ===== Sections ===== */
+section{margin:34px 0}
+.sec-title{display:flex;align-items:center;gap:10px;font-size:1.25rem;font-weight:800;margin:0 0 16px}
+.sec-title i{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--teal),#14b8a6);color:#fff;font-size:1rem}
+.sec-title small{font-weight:500;color:var(--muted);font-size:.82rem;margin-inline-start:auto}
+
+/* ===== KPI ===== */
+.kpis{margin-top:-58px;position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.kpi{background:var(--card);border-radius:18px;padding:16px 14px;box-shadow:0 6px 22px rgba(15,23,42,.08);position:relative;overflow:hidden;border-top:4px solid var(--c)}
+.kpi .ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:#fff;background:var(--c);font-size:1.05rem;margin-bottom:8px}
+.kpi .val{font-size:1.9rem;font-weight:800;line-height:1.2;color:var(--ink)}
+.kpi .val small{font-size:.9rem;font-weight:600;color:var(--muted);margin-inline-start:4px}
+.kpi .lbl{font-weight:700;font-size:.9rem;margin-top:2px}
+.kpi .hint{font-size:.76rem;color:var(--muted);margin-top:2px}
+.kpi::after{content:'';position:absolute;left:-18px;top:-18px;width:70px;height:70px;border-radius:50%;background:var(--c);opacity:.08}
+
+/* ===== Cards ===== */
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border-radius:18px;padding:18px;box-shadow:0 4px 18px rgba(15,23,42,.06);min-width:0}
+.card h3{margin:0 0 4px;font-size:1rem;font-weight:800;display:flex;gap:8px;align-items:center}
+.card h3 i{color:var(--teal)}
+.card .note{font-size:.8rem;color:var(--muted);margin:0 0 10px}
+.cbox{position:relative;height:320px}
+.cbox.tall{height:380px}
+.scrollx{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scrollx .inner{min-width:820px}
+.span2{grid-column:span 2}
+
+/* ===== Rings ===== */
+.rings{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.ring-card{text-align:center;padding:10px 4px}
+.ring{--p:50;--c:#2563eb;width:118px;height:118px;border-radius:50%;margin:0 auto 8px;display:grid;place-items:center;position:relative;background:conic-gradient(var(--c) calc(var(--p)*1%),#e2e8f0 0)}
+.ring::before{content:'';position:absolute;inset:12px;background:#fff;border-radius:50%}
+.ring span{position:relative;font-weight:800;font-size:1.15rem}
+.ring-card h4{margin:0;font-size:.9rem}
+.ring-card p{margin:0;font-size:.78rem;color:var(--muted)}
+
+/* ===== Progress list ===== */
+.plist{display:flex;flex-direction:column;gap:11px}
+.prow .top{display:flex;justify-content:space-between;font-size:.86rem;font-weight:600;margin-bottom:3px}
+.prow .top span:last-child{color:var(--muted);font-weight:700}
+.bar{height:11px;background:#e2e8f0;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:var(--c)}
+
+/* ===== Insights ===== */
+.insight{position:relative;border-inline-start:5px solid var(--c);padding-inline-start:16px}
+.insight .tag{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);padding:2px 10px;border-radius:99px}
+.insight .big{font-size:1.9rem;font-weight:800;color:var(--c);line-height:1.3;margin:6px 0 2px}
+.insight h4{margin:0 0 4px;font-size:1rem}
+.insight p{margin:0;font-size:.86rem;color:#475569}
+
+/* ===== Heatmap ===== */
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:.86rem}
+th,td{padding:9px 10px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+thead th{background:#f8fafc;font-weight:700;position:sticky;top:0}
+td.name,th.name{text-align:right;font-weight:600}
+.hm td.v{font-weight:800;border-radius:0}
+tfoot td{font-weight:800;background:#f8fafc}
+.mini{display:flex;height:10px;border-radius:99px;overflow:hidden;min-width:110px;background:#e2e8f0}
+.mini i{display:block;height:100%}
+.sess-bar{display:flex;align-items:center;gap:8px;min-width:120px}
+.sess-bar b{min-width:18px}
+.sess-bar .bar{flex:1;height:8px}
+td.txt{text-align:right;white-space:normal;min-width:260px;font-size:.82rem;color:#334155}
+.scroll-y{max-height:560px;overflow:auto;border-radius:12px;border:1px solid var(--line)}
+
+/* ===== Timeline ===== */
+.tl{position:relative;margin:0;padding:0 26px 0 0;list-style:none}
+.tl::before{content:'';position:absolute;right:9px;top:6px;bottom:6px;width:3px;background:linear-gradient(var(--teal),#14b8a6,var(--gold));border-radius:3px}
+.tl li{position:relative;margin-bottom:12px;background:#f8fafc;border-radius:12px;padding:10px 14px}
+.tl li::before{content:'';position:absolute;right:-24px;top:16px;width:15px;height:15px;border-radius:50%;background:#fff;border:4px solid var(--teal)}
+.tl .d{display:inline-block;font-size:.74rem;font-weight:700;background:var(--teal);color:#fff;padding:1px 10px;border-radius:99px;margin-inline-end:8px}
+.tl .j{font-size:.74rem;color:var(--muted)}
+.tl .t{font-size:.9rem;font-weight:600;margin-top:2px}
+.tl.compact li{margin-bottom:9px;padding:8px 12px}
+
+/* ===== Lists ===== */
+.ilist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.ilist li{display:flex;gap:10px;align-items:flex-start;font-size:.86rem;background:#f8fafc;padding:10px 12px;border-radius:12px}
+.ilist li i{margin-top:4px;color:var(--c,var(--teal));width:18px;text-align:center}
+.ilist li b{display:block;font-size:.88rem}
+.ilist li span{color:var(--muted);font-size:.78rem}
+
+/* ===== Members ===== */
+.members{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.mem{background:#f8fafc;border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center}
+.mem .av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--teal),#14b8a6);color:#fff;flex:none}
+.mem b{display:block;font-size:.9rem}
+.mem small{color:var(--muted);font-size:.76rem;line-height:1.5;display:block}
+
+footer{margin:40px 0 24px;text-align:center;font-size:.8rem;color:var(--muted)}
+footer .box{background:#fff;border-radius:16px;padding:16px;box-shadow:0 4px 18px rgba(15,23,42,.05);text-align:right}
+
+/* ===== Responsive ===== */
+@media (max-width:1100px){
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .g3,.g4{grid-template-columns:repeat(2,1fr)}
+  .members{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:720px){
+  .banner{padding:30px 0 88px}
+  .emblem{width:70px;height:70px;font-size:32px;border-radius:20px}
+  .kpis{grid-template-columns:repeat(2,1fr);gap:10px}
+  .kpi{padding:13px 11px}
+  .kpi .val{font-size:1.55rem}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .span2{grid-column:auto}
+  .rings{grid-template-columns:repeat(2,1fr)}
+  .members{grid-template-columns:1fr}
+  .cbox{height:300px}
+  .card{padding:14px}
+  .sec-title small{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= BANNER ================= -->
+<header class="banner">
+  <i class="fa-solid fa-landmark ghost"></i>
+  <div class="container">
+    <div class="banner-inner">
+      <div class="emblem"><i class="fa-solid fa-people-roof"></i></div>
+      <div style="flex:1;min-width:260px">
+        <h1>شورای معاونین بنیادمسکن انقلاب‌اسلامی</h1>
+        <p class="sub">سامانه هوشمند مدیریتی ریاست · جلسات ۱ تا ۲۹ · ۱۵ فروردین تا ۲۵ مهرسال ۱۴۰۵</p>
+        <div class="pills">
+          <span class="pill"><i class="fa-regular fa-calendar-check"></i> تاریخ گزارش: ۱۴۰۵/۰۸/۰۲</span>
+          <a class="pill link" href="./DeputiesCouncil.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> جزئیات گزارش</a>
+        </div>
+      </div>
+    </div>
+    <div class="chips">
+      <span class="chip"><i class="fa-solid fa-people-group"></i> جلسه <b>۲۹</b></span>
+      <span class="chip"><i class="fa-solid fa-list-check"></i> بند <b>۱۵۰</b></span>
+      <span class="chip"><i class="fa-solid fa-user-tie"></i> اعضای امضاکننده <b>۷</b></span>
+      <span class="chip"><i class="fa-solid fa-hourglass-half"></i> بازه <b>۱۹۶ روز</b></span>
+    </div>
+  </div>
+</header>
+
+<nav class="nav"><div class="container">
+  <a href="#kpi"><i class="fa-solid fa-gauge-high"></i> شاخص‌ها</a>
+  <a href="#dash"><i class="fa-solid fa-chart-pie"></i> داشبورد مدیریتی</a>
+  <a href="#trend"><i class="fa-solid fa-chart-line"></i> روند جلسات</a>
+  <a href="#topics"><i class="fa-solid fa-layer-group"></i> موضوعات</a>
+  <a href="#resp"><i class="fa-solid fa-sitemap"></i> مسئولیت‌ها</a>
+  <a href="#insights"><i class="fa-solid fa-lightbulb"></i> تحلیل‌ها</a>
+  <a href="#timeline"><i class="fa-solid fa-timeline"></i> مصوبات کلیدی</a>
+  <a href="#table"><i class="fa-solid fa-table"></i> جدول جلسات</a>
+</div></nav>
+
+<main class="container">
+
+<!-- ================= KPI ================= -->
+<div id="kpi" class="kpis">
+  <div class="kpi" style="--c:#0e7490"><div class="ico"><i class="fa-solid fa-people-group"></i></div><div class="val" data-count="29">۰</div><div class="lbl">جلسه برگزارشده</div><div class="hint">از ۱۵ فروردین تا ۲۵ مهر</div></div>
+  <div class="kpi" style="--c:#2563eb"><div class="ico"><i class="fa-solid fa-list-check"></i></div><div class="val" data-count="150">۰</div><div class="lbl">بند مصوب و تصمیم</div><div class="hint">مجموع بندهای صورتجلسه‌ها</div></div>
+  <div class="kpi" style="--c:#8b5cf6"><div class="ico"><i class="fa-solid fa-gauge-high"></i></div><div class="val" data-count="5.17" data-dec="1">۰</div><div class="lbl">میانگین بند در هر جلسه</div><div class="hint">حداقل ۲ · حداکثر ۸</div></div>
+  <div class="kpi" style="--c:#14b8a6"><div class="ico"><i class="fa-solid fa-calendar-days"></i></div><div class="val" data-count="196">۰<small>روز</small></div><div class="lbl">بازه گزارش</div><div class="hint">۲۸ هفته کاری</div></div>
+  <div class="kpi" style="--c:#f59e0b"><div class="ico"><i class="fa-solid fa-clock-rotate-left"></i></div><div class="val" data-count="7">۰<small>روز</small></div><div class="lbl">میانگین فاصله جلسات</div><div class="hint">ریتم تقریباً هفتگی</div></div>
+  <div class="kpi" style="--c:#16a34a"><div class="ico"><i class="fa-solid fa-circle-check"></i></div><div class="val" data-count="18">۰</div><div class="lbl">مصوبه قطعی</div><div class="hint">تصویب / تأیید نهایی</div></div>
+  <div class="kpi" style="--c:#1d4ed8"><div class="ico"><i class="fa-solid fa-bolt"></i></div><div class="val" data-count="103">۰</div><div class="lbl">تکلیف و مصوبه اجرایی</div><div class="hint">۶۸٫۷٪ کل بندها</div></div>
+  <div class="kpi" style="--c:#d97706"><div class="ico"><i class="fa-solid fa-hourglass-half"></i></div><div class="val" data-count="24">۰</div><div class="lbl">ارجاع به جلسه آتی</div><div class="hint">۱۶٪ کل بندها</div></div>
+  <div class="kpi" style="--c:#7c3aed"><div class="ico"><i class="fa-solid fa-file-lines"></i></div><div class="val" data-count="5">۰</div><div class="lbl">ارائه و بررسی گزارش</div><div class="hint">بدون تصمیم مستقل</div></div>
+  <div class="kpi" style="--c:#f43f5e"><div class="ico"><i class="fa-solid fa-bullhorn"></i></div><div class="val" data-count="9">۰</div><div class="lbl">جلسه با تأکید ویژه ریاست</div><div class="hint">۳۱٪ جلسات</div></div>
+  <div class="kpi" style="--c:#0891b2"><div class="ico"><i class="fa-solid fa-sun"></i></div><div class="val" data-count="17">۰</div><div class="lbl">جلسه صبحگاهی</div><div class="hint">شروع ۷:۳۰ تا ۸:۰۰</div></div>
+  <div class="kpi" style="--c:#ea580c"><div class="ico"><i class="fa-solid fa-chart-line"></i></div><div class="val" data-count="29">۰</div><div class="lbl">بیشترین بند در یک ماه</div><div class="hint">مرداد · ۵ جلسه</div></div>
+</div>
+
+<!-- ================= DASHBOARD ================= -->
+<section id="dash">
+  <h2 class="sec-title"><i class="fa-solid fa-chart-pie"></i> داشبورد مدیریتی <small>ماهیت تصمیمات شورا</small></h2>
+  <div class="grid g3">
+    <div class="card">
+      <h3><i class="fa-solid fa-bullseye"></i> نسبت‌های کلیدی تصمیم‌گیری</h3>
+      <p class="note">سهم هر نوع بند از مجموع ۱۵۰ بند</p>
+      <div class="rings">
+        <div class="ring-card"><div class="ring" style="--p:68.7;--c:#2563eb"><span>۶۸٫۷٪</span></div><h4>تکلیف اجرایی</h4><p>۱۰۳ بند</p></div>
+        <div class="ring-card"><div class="ring" style="--p:16;--c:#f59e0b"><span>۱۶٪</span></div><h4>ارجاع به جلسه آتی</h4><p>۲۴ بند</p></div>
+        <div class="ring-card"><div class="ring" style="--p:12;--c:#16a34a"><span>۱۲٪</span></div><h4>تصویب نهایی</h4><p>۱۸ بند</p></div>
+        <div class="ring-card"><div class="ring" style="--p:3.3;--c:#8b5cf6"><span>۳٫۳٪</span></div><h4>ارائه گزارش</h4><p>۵ بند</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3><i class="fa-solid fa-chart-pie"></i> ترکیب انواع بند</h3>
+      <p class="note">تعداد و درصد هر نوع بند</p>
+      <div class="cbox"><canvas id="cStatus"></canvas></div>
+    </div>
+    <div class="card">
+      <h3><i class="fa-solid fa-layer-group"></i> سهم موضوعی بندها</h3>
+      <p class="note">درصد از کل ۱۵۰ بند</p>
+      <div class="plist" id="topicBars"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TREND ================= -->
+<section id="trend">
+  <h2 class="sec-title"><i class="fa-solid fa-chart-line"></i> روند جلسات و بندها <small>به تفکیک جلسه و ماه</small></h2>
+  <div class="grid g2">
+    <div class="card span2">
+      <h3><i class="fa-solid fa-chart-column"></i> تعداد بندهای هر جلسه</h3>
+      <p class="note">طلایی: بیشینه (۸ بند) · خاکستری: کمینه (۲ بند) · خط‌چین قرمز: میانگین</p>
+      <div class="scrollx"><div class="inner"><div class="cbox"><canvas id="cSess"></canvas></div></div></div>
+    </div>
+    <div class="card span2">
+      <h3><i class="fa-solid fa-arrow-trend-up"></i> انباشت تجمعی بندهای مصوب</h3>
+      <p class="note">رشد تدریجی تعداد بندها تا ۱۵۰ بند در جلسه ۲۹</p>
+      <div class="scrollx"><div class="inner"><div class="cbox"><canvas id="cCum"></canvas></div></div></div>
+    </div>
+    <div class="card">
+      <h3><i class="fa-solid fa-chart-column"></i> ماهیت بندها به تفکیک ماه</h3>
+      <p class="note">نمودار میله‌ای انباشته · عدد بالای هر ستون: مجموع بندها</p>
+      <div class="cbox tall"><canvas id="cMonthStack"></canvas></div>
+    </div>
+    <div class="card">
+      <h3><i class="fa-solid fa-chart-simple"></i> جلسه و بند در هر ماه</h3>
+      <p class="note">ستون: تعداد جلسات · خط: تعداد بندها</p>
+      <div class="cbox tall"><canvas id="cMonthCombo"></canvas></div>
+    </div>
+    <div class="card">
+      <h3><i class="fa-solid fa-calendar-week"></i> مقایسه سه‌ماهه‌ها</h3>
+      <p class="note">سه‌ماهه سوم تا ۲۵ مهر (ناقص)</p>
+      <div class="cbox"><canvas id="cQuarter"></canvas></div>
+    </div>
+    <div class="card">
+      <h3><i class="fa-solid fa-sun"></i> ساعت شروع جلسات</h3>
+      <p class="note">گذار به جلسات صبحگاهی از جلسه ۱۲ به بعد</p>
+      <div class="cbox"><canvas id="cTime"></canvas></div>
+    </div>
+    <div class="card">
+      <h3><i class="fa-solid fa-calendar-day"></i> روز برگزاری جلسات</h3>
+      <p class="note">توزیع جلسات بر حسب روز هفته</p>
+      <div class="cbox"><canvas id="cDay"></canvas></div>
+    </div>
+    <div class="card">
+      <h3><i class="fa-solid fa-gauge"></i> ارجاع به جلسه آتی؛ سه‌ماهه اول در برابر بقیه سال</h3>
+      <p class="note">ارجاع‌ها در ۴ ماه اخیر به شدت کاهش یافته است</p>
+      <div class="cbox"><canvas id="cDefer"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TOPICS ================= -->
+<section id="topics">
+  <h2 class="sec-title"><i class="fa-solid fa-layer-group"></i> تحلیل موضوعی <small>طبقه‌بندی ۷ حوزه</small></h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3><i class="fa-solid fa-chart-pie"></i> توزیع موضوعی بندها</h3>
+      <p class="note">۷ حوزه اصلی تصمیم‌گیری شورا</p>
+      <div class="cbox tall"><canvas id="cTopic"></canvas></div>
+    </div>
+    <div class="card">
+      <h3><i class="fa-solid fa-repeat"></i> پرونده‌های پرتکرار</h3>
+      <p class="note">تعداد جلسات‌ی که موضوع در دستور بوده است</p>
+      <div class="cbox tall"><canvas id="cRecur"></canvas></div>
+    </div>
+    <div class="card span2">
+      <h3><i class="fa-solid fa-fire"></i> نقشه حرارتی موضوع × ماه</h3>
+      <p class="note">هر خانه: تعداد بندهای هر حوزه در ماه · رنگ پررنگ‌تر یعنی تمرکز بیشتر</p>
+      <div class="tbl-wrap"><table class="hm" id="heat"></table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESPONSIBILITY ================= -->
+<section id="resp">
+  <h2 class="sec-title"><i class="fa-solid fa-sitemap"></i> بار مسئولیت واحدها <small>ارجاع صریح بندها</small></h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3><i class="fa-solid fa-ranking-star"></i> تعداد بندهای ارجاعی به هر واحد</h3>
+      <p class="note">بندهایی که واحد به‌طور صریح مسئول اقدام یا ارائه‌دهنده گزارش بوده است (مجموع ۱۲۳ ارجاع)</p>
+      <div class="cbox tall"><canvas id="cUnits"></canvas></div>
+    </div>
+    <div class="card">
+      <h3><i class="fa-solid fa-user-tie"></i> ترکیب هیئت‌ شورا</h3>
+      <p class="note">۷ عضو امضاکننده صورتجلسه‌ها (به‌علاوه ریاست بنیاد)</p>
+      <div class="members" style="grid-template-columns:repeat(2,1fr)">
+        <div class="mem"><div class="av"><i class="fa-solid fa-city"></i></div><div><b>معاون مسکن و عمران شهری</b><small>حمیدرضا سهرابی بیستونی (جلسات ۱–۱۲)<br>سید مهدی هدایت (جلسات ۱۳–۲۹)</small></div></div>
+        <div class="mem"><div class="av"><i class="fa-solid fa-tractor"></i></div><div><b>معاون توسعه و عمران روستایی</b><small>داریوش بلدی</small></div></div>
+        <div class="mem"><div class="av"><i class="fa-solid fa-diagram-project"></i></div><div><b>معاون برنامه‌ریزی</b><small>محمدحسین رحمانی‌خلیلی</small></div></div>
+        <div class="mem"><div class="av"><i class="fa-solid fa-handshake-angle"></i></div><div><b>معاون پشتیبانی و منابع انسانی</b><small>علیرضا فلاحی نصرالله‌آبادی</small></div></div>
+        <div class="mem"><div class="av"><i class="fa-solid fa-house-chimney-crack"></i></div><div><b>معاون بازسازی و مسکن روستایی</b><small>مجید جودی</small></div></div>
+        <div class="mem"><div class="av"><i class="fa-solid fa-chart-gantt"></i></div><div><b>مدیرکل نظارت راهبردی و مدیریت عملکرد</b><small>علی‌اکبر سلطانی‌نژاد</small></div></div>
+        <div class="mem" style="grid-column:1/-1"><div class="av"><i class="fa-solid fa-pen-nib"></i></div><div><b>مدیرکل حوزه ریاست و دبیر شورا</b><small>شهاب‌الدین دربندی</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INSIGHTS ================= -->
+<section id="insights">
+  <h2 class="sec-title"><i class="fa-solid fa-lightbulb"></i> کارت‌های تحلیلی <small>یافته‌های کلیدی گزارش</small></h2>
+  <div class="grid g4">
+    <div class="card insight" style="--c:#2563eb"><span class="tag"><i class="fa-solid fa-bolt"></i> سبک تصمیم‌گیری</span><div class="big">۵٫۷ برابر</div><h4>شورای اجراگرا</h4><p>به ازای هر مصوبه قطعی، ۵٫۷ تکلیف اجرایی صادر شده است؛ ۱۰۳ بند (۶۸٫۷٪) ماهیت «تکلیف و پیگیری» دارند.</p></div>
+    <div class="card insight" style="--c:#d97706"><span class="tag"><i class="fa-solid fa-hourglass-half"></i> کیفیت تصمیم‌سازی</span><div class="big">۷۵٪</div><h4>کاهش ارجاع به جلسه آتی</h4><p>۱۸ از ۲۴ بند ارجاعی در فروردین تا خرداد ثبت شد؛ از تیر تا ۲۵ مهر فقط ۶ بند به جلسه بعد موکول شده است.</p></div>
+    <div class="card insight" style="--c:#0e7490"><span class="tag"><i class="fa-solid fa-calendar-check"></i> انضباط جلسات</span><div class="big">۸۶٪</div><h4>ریتم هفتگی منظم</h4><p>۲۵ جلسه از ۲۹ جلسه روز شنبه برگزار شد و میانگین فاصله جلسات دقیقاً ۷ روز است.</p></div>
+    <div class="card insight" style="--c:#0891b2"><span class="tag"><i class="fa-solid fa-sun"></i> زمان‌بندی</span><div class="big">۱۷ از ۱۸</div><h4>گذار به جلسات صبحگاهی</h4><p>از جلسه ۱۲ به بعد، ۱۷ جلسه بین ۷:۳۰ تا ۸:۰۰ آغاز شد؛ در ۱۱ جلسه نخست هیچ جلسه‌ای ۷:۳۰ شروع نشد.</p></div>
+
+    <div class="card insight" style="--c:#16a34a"><span class="tag"><i class="fa-solid fa-chart-column"></i> محور اصلی</span><div class="big">۱۹ از ۲۹</div><h4>ارزیابی عملکرد؛ پرتکرارترین حوزه</h4><p>۳۱ بند (۲۰٫۷٪) به ارزیابی عملکرد اختصاص دارد و ۶۶٪ جلسات دست‌کم یک بند ارزیابی داشته‌اند.</p></div>
+    <div class="card insight" style="--c:#6366f1"><span class="tag"><i class="fa-solid fa-bullseye"></i> تمرکز دوگانه</span><div class="big">۴۰٪</div><h4>ارزیابی و پروژه‌ها</h4><p>دو حوزه «ارزیابی عملکرد» (۳۱ بند) و «پروژه‌ها، تجهیزات و اراضی» (۲۹ بند) روی هم ۶۰ بند، یعنی ۴۰٪ کل دستور را ساخته‌اند.</p></div>
+    <div class="card insight" style="--c:#f43f5e"><span class="tag"><i class="fa-solid fa-scale-balanced"></i> بار مسئولیت</span><div class="big">۴۴٪</div><h4>دو معاونت پرمسئولیت</h4><p>معاونت‌های برنامه‌ریزی و پشتیبانی هرکدام ۲۷ ارجاع دارند و مجموعاً ۵۴ از ۱۲۳ ارجاع (۴۴٪) را بر دوش دارند.</p></div>
+    <div class="card insight" style="--c:#8b5cf6"><span class="tag"><i class="fa-solid fa-repeat"></i> طولانی‌ترین پرونده</span><div class="big">۷ جلسه</div><h4>آیین‌نامه خدمات فنی</h4><p>اصلاح آیین‌نامه خدمات فنی بند ۵ ماده ۱۵ اساسنامه در ۷ جلسه و ۷۰ روز (۰۱/۲۲ تا ۰۳/۳۰) به تصویب رسید.</p></div>
+
+    <div class="card insight" style="--c:#14b8a6"><span class="tag"><i class="fa-solid fa-display"></i> تحول دیجیتال</span><div class="big">۷ جلسه</div><h4>سامانه‌ها تا پورتال نهایی</h4><p>از جلسه ویژه سامانه‌ها (۰۲/۱۴) تا تأیید نسخه نهایی پورتال (۰۶/۰۹) ۱۱۹ روز طول کشید و ۷ جلسه به این موضوع پرداختند.</p></div>
+    <div class="card insight" style="--c:#ea580c"><span class="tag"><i class="fa-solid fa-chart-line"></i> اوج فعالیت</span><div class="big">۲۹ بند</div><h4>مرداد؛ پرکارترین ماه</h4><p>مرداد با ۵ جلسه و ۲۹ بند اوج کار بوده؛ بیشترین بند در یک جلسه (۸ بند) در جلسات ۱۴ و ۱۷ ثبت شد.</p></div>
+    <div class="card insight" style="--c:#0f766e"><span class="tag"><i class="fa-solid fa-bullhorn"></i> جهت‌گیری ریاست</span><div class="big">۹ جلسه</div><h4>تأکیدات ریاست بنیاد</h4><p>در ۹ جلسه (۳۱٪) ریاست بنیاد تأکیدهای سیاستی ویژه داشته‌اند؛ از اطلاع‌رسانی و تعامل با مردم تا نظارت بر اختیارات تفویضی.</p></div>
+    <div class="card insight" style="--c:#b45309"><span class="tag"><i class="fa-solid fa-trophy"></i> نظام تشویق</span><div class="big">۷۳٪ ← ۷۰٪</div><h4>آستانه پاداش عملکرد</h4><p>حد نصاب پاداش از ۷۳٪ امتیاز استان اول (خرداد) به ۷۰٪ (تیر) کاهش یافت و در مهر برای مدیران کل دو استان اول ۴۵ روز حقوق تعیین شد.</p></div>
+  </div>
+
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card">
+      <h3><i class="fa-solid fa-bullhorn"></i> تأکیدات سیاستی ریاست بنیاد</h3>
+      <p class="note">استخراج‌شده از مقدمه صورتجلسه‌ها</p>
+      <ul class="ilist" style="--c:#f43f5e">
+        <li><i class="fa-solid fa-people-arrows"></i><div><b>تعامل با مردم آسیب‌دیده و اطلاع‌رسانی خدمات</b><span>جلسه ۱ · ۰۱/۱۵</span></div></li>
+        <li><i class="fa-solid fa-building-columns"></i><div><b>بهره‌گیری از تفویض اختیار به استانداران</b><span>جلسه ۳ · ۰۱/۲۹</span></div></li>
+        <li><i class="fa-solid fa-laptop-code"></i><div><b>تسهیل‌گری، کاهش هزینه و حداقل‌سازی فساد در سامانه‌ها</b><span>جلسه ۶ · ۰۲/۱۴</span></div></li>
+        <li><i class="fa-solid fa-mosque"></i><div><b>اطلاع‌رسانی فعال به ائمه جمعه درباره بازسازی</b><span>جلسه ۷ · ۰۲/۱۹</span></div></li>
+        <li><i class="fa-solid fa-file-invoice-dollar"></i><div><b>برگزاری مجمع عمومی سال مالی ۱۴۰۳ تا پایان خرداد</b><span>جلسه ۸ · ۰۲/۲۶</span></div></li>
+        <li><i class="fa-solid fa-eye"></i><div><b>نظارت مستمر بر حسن اجرای اختیارات تفویضی</b><span>جلسه ۱۱ · ۰۳/۲۳</span></div></li>
+        <li><i class="fa-solid fa-users-gear"></i><div><b>برنامه جامع مدیریت منابع انسانی</b><span>جلسه ۲۴ · ۰۶/۲۱</span></div></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><i class="fa-solid fa-trophy"></i> سیر تحول سیاست پاداش عملکرد</h3>
+      <p class="note">ارزیابی استان‌ها و تشویق مدیران و کارکنان</p>
+      <ul class="tl compact">
+        <li><span class="d">۰۳/۱۲</span><span class="j">جلسه ۱۰</span><div class="t">لوح و سفر مشهد برای ۳ استان برتر؛ پاداش تا ۱٫۵ برابر حقوق برای استان‌های دارای حداقل ۷۳٪ امتیاز رتبه اول؛ پاداش جنگ از ۱۵ تا ۴۵ روز حقوق</div></li>
+        <li><span class="d">۰۴/۲۷</span><span class="j">جلسه ۱۶</span><div class="t">آستانه به ۷۰٪ کاهش یافت و برای همه ارزیابی‌های بعدی تعمیم داده شد</div></li>
+        <li><span class="d">۰۷/۲۵</span><span class="j">جلسه ۲۹</span><div class="t">پاداش ۴۵ روز حقوق برای مدیران کل دو استان اول؛ تناسبی برای ≥۷۰٪؛ سقف تخصیص داخلی ۲ برابر و کف یک‌سوم میانگین استان</div></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><i class="fa-solid fa-flag-checkered"></i> اقلام در دست پیگیری</h3>
+      <p class="note">تکالیف باز از آخرین جلسات</p>
+      <ul class="ilist" style="--c:#0e7490">
+        <li><i class="fa-solid fa-house-user"></i><div><b>اصلاحیه دستورالعمل مسکن کارکنان</b><span>معاونت پشتیبانی · تا پایان مهر</span></div></li>
+        <li><i class="fa-solid fa-building"></i><div><b>کانسپت و تأمین مالی مجموعه اداری شرکت‌های تابعه</b><span>معاونت مسکن و عمران شهری · ظرف یک ماه</span></div></li>
+        <li><i class="fa-solid fa-sitemap"></i><div><b>جمع‌بندی ساختار معاونت‌ها</b><span>جلسه ۲۷ · ظرف یک ماه</span></div></li>
+        <li><i class="fa-solid fa-diagram-project"></i><div><b>چارچوب خدمات مدیریت طرح در پروژه‌های خاص</b><span>حوزه ریاست · ظرف یک ماه</span></div></li>
+        <li><i class="fa-solid fa-bed"></i><div><b>دستورالعمل خوابگاه‌های دفتر مرکزی</b><span>معاونت پشتیبانی · ظرف دو هفته</span></div></li>
+        <li><i class="fa-solid fa-award"></i><div><b>ویژگی‌ها و سطوح مسابقه تندیس «خانه امید»</b><span>معاونت بازسازی · ظرف دو هفته</span></div></li>
+        <li><i class="fa-solid fa-map-location-dot"></i><div><b>مدل سطح‌بندی استان‌ها</b><span>موسسه پژوهشی سوانح طبیعی</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TIMELINE ================= -->
+<section id="timeline">
+  <h2 class="sec-title"><i class="fa-solid fa-timeline"></i> خط زمان مصوبات قطعی <small>۱۸ مصوبه در ۱۵ جلسه</small></h2>
+  <div class="card"><ul class="tl" id="tl"></ul></div>
+</section>
+
+<!-- ================= TABLE ================= -->
+<section id="table">
+  <h2 class="sec-title"><i class="fa-solid fa-table"></i> جدول خلاصه ۲۹ جلسه <small>ترکیب بندها و موضوعات</small></h2>
+  <div class="card">
+    <p class="note"><span style="color:#16a34a">■</span> تصویب &nbsp; <span style="color:#f59e0b">■</span> ارجاع &nbsp; <span style="color:#2563eb">■</span> تکلیف &nbsp; <span style="color:#8b5cf6">■</span> گزارش</p>
+    <div class="scroll-y"><table id="sessTbl">
+      <thead><tr><th>#</th><th>تاریخ</th><th>روز</th><th>ساعت</th><th>تعداد بند</th><th>ترکیب بندها</th><th class="name">مهم‌ترین موضوعات</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="container"><div class="box">
+  <b><i class="fa-solid fa-circle-info"></i> یادداشت روش‌شناسی:</b>
+  منبع این گزارش، صورتجلسه‌های شورای معاونین سال ۱۴۰۵ (جلسات ۱ تا ۲۹) است. طبقه‌بندی بندها (تصویب، ارجاع، تکلیف، گزارش)، دسته‌بندی موضوعی و شمارش ارجاع مسئولیت‌ها تحلیلی بوده و بر اساس متن صورتجلسه‌ها انجام شده است؛ هر بند ممکن است چند واحد را مسئول کرده باشد. متن کامل در <a href="./DeputiesCouncil.pdf" target="_blank" rel="noopener" style="color:#0e7490;font-weight:700">فایل جزئیات گزارش</a> در دسترس است.
+</div></div></footer>
+
+<script>
+/* ================== Helpers ================== */
+const fa=(n,d=0)=>Number(n).toLocaleString('fa-IR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const toFa=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const sum=a=>a.reduce((x,y)=>x+y,0);
+
+/* ================== Data ==================
+   [n, date, day, time, [تصویب, ارجاع, تکلیف, گزارش], [ارزیابی, آیین‌نامه, منابع انسانی, سامانه, پروژه, بودجه, بازسازی/ارتباطات], موضوعات] */
+const S=[
+[1,'1405/01/15','شنبه','10:00',[0,0,6,0],[0,0,0,0,0,2,4],'بودجه ۱۴۰۵، برنامه سه‌ماهه، بازدید از استان‌ها در حوزه بازسازی، حساب ۱۰۰ امام (ره)'],
+[2,'1405/01/22','شنبه','10:30',[1,2,1,0],[0,2,0,0,1,1,0],'تصویب آیین‌نامه بکارگیری نیروی انسانی؛ انتقال پروژه‌های انتفاعی مسکن روستایی'],
+[3,'1405/01/29','شنبه','14:00',[1,2,2,0],[1,3,0,0,0,1,0],'تأیید کلیات بودجه ۱۴۰۵؛ جلسات نظارتی منظم با استان‌ها'],
+[4,'1405/02/05','شنبه','8:30',[1,1,3,0],[1,1,0,0,2,0,1],'تصویب اصلاحیه تعارض منافع؛ اراضی ملارد و دماوند؛ کارخانه بتن نهاوند'],
+[5,'1405/02/12','شنبه','8:30',[1,2,1,0],[0,0,2,0,1,1,0],'تصویب دستورالعمل کمیته سرمایه‌گذاری ثابت؛ مسکن کارکنان؛ ماموریت خارج از کشور'],
+[6,'1405/02/14','دوشنبه','14:00',[0,0,6,0],[1,0,0,5,0,0,0],'جلسه ویژه بررسی وضعیت سامانه‌های بنیاد'],
+[7,'1405/02/19','شنبه','9:00',[1,1,3,0],[1,3,1,0,0,0,0],'تصویب شیوه‌نامه ماموریت خارج از کشور؛ مسکن کارکنان؛ درجه‌بندی استان‌ها'],
+[8,'1405/02/26','شنبه','10:00',[0,1,1,0],[1,1,0,0,0,0,0],'مجمع عمومی سال مالی ۱۴۰۳؛ برنامه‌ریزی جلسه ارزیابی ۱۴۰۴ استان‌ها'],
+[9,'1405/03/09','شنبه','13:30',[2,2,1,1],[1,3,0,1,0,1,0],'گزارش ارزیابی ۱۴۰۴؛ تصویب مدل شاخص توزیع اعتبارات و اصلاحیه عواید زمین'],
+[10,'1405/03/12','سه‌شنبه','13:00',[1,0,5,0],[6,0,0,0,0,0,0],'جلسه ویژه ارزیابی ۱۴۰۴ استان‌ها؛ تصویب گزارش و سیاست پاداش'],
+[11,'1405/03/23','شنبه','8:30',[0,4,3,0],[1,1,1,0,2,1,1],'نظارت بر اختیارات تفویضی؛ ماشین‌آلات تخصصی؛ تعمیرگاه منطقه آزاد'],
+[12,'1405/03/25','دوشنبه','7:30',[0,1,1,0],[1,0,0,0,0,1,0],'شاخص‌های ارزیابی سه‌ماهه اول؛ سرفصل‌های درآمد و هزینه ۱۴۰۴'],
+[13,'1405/03/30','شنبه','7:30',[1,2,1,1],[0,1,0,1,2,1,0],'تصویب اصلاحیه آیین‌نامه خدمات فنی؛ گزارش درآمد و هزینه؛ سامانه‌های حوزه ریاست'],
+[14,'1405/04/06','شنبه','8:30',[0,0,8,0],[0,0,3,0,3,0,2],'مراسم بزرگداشت قائد شهید؛ ماشین‌آلات؛ اسکان مهران و تهران؛ تقویم افتتاح'],
+[15,'1405/04/20','شنبه','7:30',[2,0,3,0],[0,1,1,1,2,0,0],'تأیید خرید ماشین‌آلات و تقویم آموزشی مدیران؛ مجتمع زیستی'],
+[16,'1405/04/27','شنبه','7:30',[1,0,4,0],[1,1,0,0,0,1,2],'تأیید ارزیابی سه‌ماهه نخست؛ برنامه راهبردی آذربایجان شرقی'],
+[17,'1405/05/03','شنبه','7:30',[0,0,8,0],[2,0,3,0,2,1,0],'مسکن کارکنان؛ مجموعه اداری شرکت‌های تابعه؛ بلوک‌های رامسر'],
+[18,'1405/05/10','شنبه','7:30',[1,0,2,1],[0,1,0,1,0,0,2],'حساب ۱۰۰؛ تأیید دستورالعمل مکاتبات با نمایندگان مجلس'],
+[19,'1405/05/17','شنبه','7:30',[0,2,4,0],[1,1,2,0,1,1,0],'محلات الگو؛ اراضی تصرفی؛ اسکان همکاران در مهران'],
+[20,'1405/05/24','شنبه','7:30',[0,0,5,0],[0,1,0,1,1,1,1],'اصلاحیه اراضی تصرفی؛ سایت جدید بنیاد؛ آمادگی هفته دولت'],
+[21,'1405/05/31','شنبه','7:30',[2,0,4,0],[0,1,1,0,2,2,0],'تعهدات ایلام؛ تأیید سرفصل‌های مدیران کل؛ اصلاحیه واگذاری زمین روستایی'],
+[22,'1405/06/09','دوشنبه','7:30',[1,0,6,0],[3,0,1,1,2,0,0],'تأیید نسخه نهایی پورتال؛ پروژه‌های هفته دولت؛ پایش اطلاعات استان‌ها'],
+[23,'1405/06/14','شنبه','7:30',[0,0,4,0],[2,0,2,0,0,0,0],'سطح‌بندی استان‌ها؛ دستورالعمل خوابگاه‌ها و وضعیت نیروها'],
+[24,'1405/06/21','شنبه','7:30',[0,1,3,1],[3,0,1,0,1,0,0],'برنامه جامع منابع انسانی؛ مدل سطح‌بندی؛ شاخص‌های ارزیابی'],
+[25,'1405/06/28','شنبه','7:30',[1,2,4,0],[1,0,1,1,2,0,2],'تأیید شاخص‌های ارزیابی؛ سند فناوری؛ تندیس خانه امید'],
+[26,'1405/07/04','شنبه','8:00',[1,0,6,0],[2,1,2,0,2,0,0],'تأیید طرح بلوک‌های رامسر؛ زائرسرای مشهد؛ اسکان مهران'],
+[27,'1405/07/11','شنبه','7:30',[0,1,3,0],[0,0,2,0,1,1,0],'مدیریت مجتمع رامسر؛ ساختار معاونت‌ها؛ طرح مشترک بازارگاه'],
+[28,'1405/07/18','شنبه','7:30',[0,0,4,0],[1,0,0,0,1,1,1],'مجموعه اداری شرکت‌های تابعه؛ مسابقه تندیس؛ چارچوب مدیریت طرح'],
+[29,'1405/07/25','شنبه','7:30',[0,0,1,1],[1,0,0,0,1,0,0],'ارزیابی شش‌ماهه اول ۱۴۰۵ و پاداش عملکرد']
+].map(r=>({n:r[0],date:r[1],day:r[2],time:r[3],st:r[4],tp:r[5],note:r[6],m:parseInt(r[1].split('/')[1]),b:sum(r[4])}));
+
+const MONTHS=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر (تا ۲۵)'];
+const STC=['#16a34a','#f59e0b','#2563eb','#8b5cf6'];
+const STN=['تصویب / تأیید نهایی','ارجاع به جلسه آتی','تکلیف و مصوبه اجرایی','ارائه و بررسی گزارش'];
+const TN=['ارزیابی عملکرد','آیین‌نامه و دستورالعمل','منابع انسانی و رفاه','سامانه و فناوری','پروژه‌ها، تجهیزات و اراضی','برنامه، بودجه و سرمایه‌گذاری','بازسازی، ارتباطات و مناسبت‌ها'];
+const TC=['#0ea5e9','#6366f1','#14b8a6','#f43f5e','#f59e0b','#22c55e','#a855f7'];
+const TI=['fa-chart-column','fa-scale-balanced','fa-users','fa-display','fa-city','fa-coins','fa-house-chimney-crack'];
+
+const stTot=[0,1,2,3].map(i=>sum(S.map(s=>s.st[i])));
+const tpTot=[0,1,2,3,4,5,6].map(i=>sum(S.map(s=>s.tp[i])));
+const total=sum(S.map(s=>s.b));
+const monthSt=MONTHS.map((_,mi)=>[0,1,2,3].map(i=>sum(S.filter(s=>s.m===mi+1).map(s=>s.st[i]))));
+const monthTp=MONTHS.map((_,mi)=>[0,1,2,3,4,5,6].map(i=>sum(S.filter(s=>s.m===mi+1).map(s=>s.tp[i]))));
+const monthSess=MONTHS.map((_,mi)=>S.filter(s=>s.m===mi+1).length);
+const monthBands=monthSt.map(a=>sum(a));
+
+/* ================== Chart defaults ================== */
+Chart.register(ChartDataLabels);
+Chart.defaults.font.family="Vazirmatn, Tahoma, sans-serif";
+Chart.defaults.font.size=12;
+Chart.defaults.color='#334155';
+Chart.defaults.responsive=true;
+Chart.defaults.maintainAspectRatio=false;
+Chart.defaults.plugins.legend.rtl=true;
+Chart.defaults.plugins.legend.textDirection='rtl';
+Chart.defaults.plugins.legend.labels.usePointStyle=true;
+Chart.defaults.plugins.legend.labels.boxWidth=10;
+Chart.defaults.plugins.tooltip.rtl=true;
+Chart.defaults.plugins.tooltip.textDirection='rtl';
+Chart.defaults.plugins.tooltip.titleAlign='right';
+Chart.defaults.plugins.tooltip.bodyAlign='right';
+Chart.defaults.set('plugins.datalabels',{color:'#1e293b',font:{weight:'bold',size:12,family:"Vazirmatn, Tahoma, sans-serif"},formatter:v=>fa(v)});
+
+const centerText={id:'centerText',afterDraw(chart,args,opts){
+  if(!opts||!opts.text)return;
+  const {ctx,chartArea:{left,right,top,bottom}}=chart;
+  const x=(left+right)/2,y=(top+bottom)/2;
+  ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillStyle='#0f172a';ctx.font='800 28px Vazirmatn, Tahoma';ctx.fillText(opts.text,x,y-8);
+  ctx.fillStyle='#64748b';ctx.font='500 12px Vazirmatn, Tahoma';ctx.fillText(opts.sub,x,y+16);
+  ctx.restore();
+}};
+
+const gridC='#e2e8f0';
+const valAxis=(max,extra={})=>Object.assign({position:'right',beginAtZero:true,max,grid:{color:gridC},ticks:{callback:v=>fa(v),precision:0}},extra);
+const catAxis=(extra={})=>Object.assign({reverse:true,grid:{display:false}},extra);
+const outLabel=(total)=>({anchor:'end',align:'end',offset:6,clip:false,textAlign:'center',color:'#1e293b',
+  formatter:(v)=>fa(v)+'\n'+fa(v/total*100,1)+'٪'});
+
+function pieLike(id,type,labels,data,colors,cutout,center){
+  return new Chart(document.getElementById(id),{
+    type,data:{labels,datasets:[{data,backgroundColor:colors,borderColor:'#fff',borderWidth:3,hoverOffset:8}]},
+    options:{cutout,layout:{padding:{top:36,bottom:30,left:36,right:36}},
+      plugins:{legend:{position:'bottom',labels:{padding:12}},
+        datalabels:outLabel(sum(data)),
+        centerText:center||{},
+        tooltip:{callbacks:{label:c=>' '+c.label+': '+fa(c.raw)+' ('+fa(c.raw/sum(data)*100,1)+'٪)'}}}},
+    plugins:[centerText]
+  });
+}
+
+function initCharts(){
+  /* 1) بند هر جلسه */
+  const maxB=Math.max(...S.map(s=>s.b)),minB=Math.min(...S.map(s=>s.b));
+  const avg=total/S.length;
+  new Chart(document.getElementById('cSess'),{
+    data:{labels:S.map(s=>fa(s.n)),datasets:[
+      {type:'bar',data:S.map(s=>s.b),backgroundColor:S.map(s=>s.b===maxB?'#f2b134':s.b===minB?'#94a3b8':'#2563eb'),borderRadius:7,maxBarThickness:34,order:2,
+        datalabels:{anchor:'end',align:'end',offset:2,color:'#0f172a'}},
+      {type:'line',data:S.map(()=>avg),borderColor:'#ef4444',borderDash:[6,4],borderWidth:2,pointRadius:0,order:1,
+        datalabels:{display:c=>c.dataIndex===S.length-1,align:'top',anchor:'end',color:'#ef4444',offset:4,formatter:()=>'میانگین: '+fa(avg,1)}}
+    ]},
+    options:{layout:{padding:{top:22}},
+      scales:{x:catAxis({title:{display:true,text:'شماره جلسه'}}),y:valAxis(10)},
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        title:c=>'جلسه '+fa(S[c[0].dataIndex].n)+' — '+toFa(S[c[0].dataIndex].date),
+        label:c=>c.dataset.type==='line'?' میانگین: '+fa(avg,1):' تعداد بند: '+fa(c.raw)}}}}
+  });
+
+  /* 2) تجمعی */
+  let run=0;const cum=S.map(s=>run+=s.b);
+  new Chart(document.getElementById('cCum'),{
+    type:'line',
+    data:{labels:S.map(s=>fa(s.n)),datasets:[{data:cum,borderColor:'#0e7490',backgroundColor:'rgba(14,116,144,.15)',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#fff',pointBorderColor:'#0e7490',pointBorderWidth:2,
+      datalabels:{align:'top',anchor:'end',offset:4,font:{size:10,weight:'bold'},color:'#0e7490'}}]},
+    options:{layout:{padding:{top:22,left:8}},
+      scales:{x:catAxis({title:{display:true,text:'شماره جلسه'}}),y:valAxis(170)},
+      plugins:{legend:{display:false},tooltip:{callbacks:{title:c=>'جلسه '+fa(S[c[0].dataIndex].n)+' — '+toFa(S[c[0].dataIndex].date),label:c=>' مجموع تا این جلسه: '+fa(c.raw)}}}}
+  });
+
+  /* 3) انواع بند */
+  pieLike('cStatus','doughnut',STN,stTot,STC,'58%',{text:fa(total),sub:'بند'});
+
+  /* 4) ماهانه انباشته */
+  const monthDs=STN.map((n,i)=>({label:n,data:monthSt.map(m=>m[i]),backgroundColor:STC[i],borderRadius:4,
+    datalabels:{anchor:'center',align:'center',color:'#fff',display:c=>c.dataset.data[c.dataIndex]>0,font:{size:11,weight:'bold'}}}));
+  monthDs.push({type:'line',label:'جمع',data:monthBands,borderWidth:0,pointRadius:0,
+    datalabels:{align:'top',anchor:'end',color:'#0f172a',font:{size:14,weight:'800'},offset:2}});
+  new Chart(document.getElementById('cMonthStack'),{
+    type:'bar',data:{labels:MONTHS,datasets:monthDs},
+    options:{layout:{padding:{top:26}},
+      scales:{x:catAxis({stacked:true}),y:valAxis(34,{stacked:true})},
+      plugins:{legend:{position:'bottom',labels:{filter:i=>i.text!=='جمع'}},
+        tooltip:{filter:i=>i.dataset.label!=='جمع',callbacks:{label:c=>' '+c.dataset.label+': '+fa(c.raw)}}}}
+  });
+
+  /* 5) جلسه و بند ماهانه */
+  new Chart(document.getElementById('cMonthCombo'),{
+    data:{labels:MONTHS,datasets:[
+      {type:'bar',label:'تعداد جلسات',data:monthSess,backgroundColor:'#14b8a6',borderRadius:8,maxBarThickness:46,order:2,datalabels:{anchor:'end',align:'end',color:'#0f766e'}},
+      {type:'line',label:'تعداد بندها',data:monthBands,borderColor:'#f43f5e',backgroundColor:'#f43f5e',tension:.3,pointRadius:5,borderWidth:3,order:1,datalabels:{align:'top',anchor:'end',color:'#f43f5e',offset:4}}
+    ]},
+    options:{layout:{padding:{top:24}},scales:{x:catAxis(),y:valAxis(34)},plugins:{legend:{position:'bottom'}}}
+  });
+
+  /* 6) سه‌ماهه‌ها */
+  const qS=[0,0,0],qB=[0,0,0];S.forEach(s=>{const q=Math.floor((s.m-1)/3);qS[q]++;qB[q]+=s.b;});
+  new Chart(document.getElementById('cQuarter'),{
+    type:'bar',
+    data:{labels:[['سه‌ماهه اول','(فروردین–خرداد)'],['سه‌ماهه دوم','(تیر–شهریور)'],['سه‌ماهه سوم','(تا ۲۵ مهر)']],datasets:[
+      {label:'تعداد جلسات',data:qS,backgroundColor:'#0e7490',borderRadius:7,datalabels:{anchor:'end',align:'end'}},
+      {label:'تعداد بندها',data:qB,backgroundColor:'#f2b134',borderRadius:7,datalabels:{anchor:'end',align:'end'}}
+    ]},
+    options:{layout:{padding:{top:22}},scales:{x:catAxis(),y:valAxis(85)},plugins:{legend:{position:'bottom'}}}
+  });
+
+  /* 7) ساعت شروع */
+  const tg=[0,0,0,0];
+  S.forEach(s=>{const [h,m]=s.time.split(':').map(Number);const t=h*60+m;
+    if(t<=480)tg[0]++;else if(t<570)tg[1]++;else if(t<720)tg[2]++;else tg[3]++;});
+  new Chart(document.getElementById('cTime'),{
+    type:'bar',
+    data:{labels:['۷:۳۰ تا ۸:۰۰','۸:۳۰ تا ۹:۰۰','۱۰:۰۰ تا ۱۰:۳۰','۱۳:۰۰ تا ۱۴:۰۰'],datasets:[{data:tg,backgroundColor:['#0891b2','#38bdf8','#fbbf24','#fb7185'],borderRadius:8,maxBarThickness:60,datalabels:{anchor:'end',align:'end'}}]},
+    options:{layout:{padding:{top:22}},scales:{x:catAxis(),y:valAxis(22)},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fa(c.raw)+' جلسه'}}}}
+  });
+
+  /* 8) روز هفته */
+  const dn=['شنبه','دوشنبه','سه‌شنبه'];
+  const dd=dn.map(d=>S.filter(s=>s.day===d).length);
+  pieLike('cDay','pie',dn,dd,['#0e7490','#f2b134','#f43f5e'],0);
+
+  /* 9) ارجاع: سه‌ماهه اول در برابر بقیه */
+  const dQ1=sum(monthSt.slice(0,3).map(m=>m[1])),dRest=sum(monthSt.slice(3).map(m=>m[1]));
+  pieLike('cDefer','doughnut',['فروردین تا خرداد','تیر تا ۲۵ مهر'],[dQ1,dRest],['#f59e0b','#cbd5e1'],'55%',{text:fa(dQ1+dRest),sub:'بند ارجاعی'});
+
+  /* 10) موضوعی */
+  pieLike('cTopic','pie',TN,tpTot,TC,0);
+
+  /* 11) پرونده‌های پرتکرار */
+  const rec=[['آیین‌نامه خدمات فنی (تصویب شد)',7],['سامانه‌ها و پورتال بنیاد',7],['مجتمع گل‌نرگس رامسر',6],['ماشین‌آلات تخصصی (تصویب شد)',4],['مسکن کارکنان',4],['اسکان زائران در مهران',4],['سطح‌بندی استان‌ها',4],['برنامه آذربایجان شرقی',4],['تعمیرگاه منطقه آزاد',3]];
+  new Chart(document.getElementById('cRecur'),{
+    type:'bar',
+    data:{labels:rec.map(r=>r[0]),datasets:[{data:rec.map(r=>r[1]),backgroundColor:['#16a34a','#0ea5e9','#6366f1','#16a34a','#f59e0b','#14b8a6','#f43f5e','#a855f7','#64748b'],borderRadius:7,maxBarThickness:26,datalabels:{anchor:'end',align:'end'}}]},
+    options:{indexAxis:'y',layout:{padding:{left:24}},scales:{x:valAxis(9,{position:'bottom',reverse:true}),y:{position:'right',grid:{display:false},ticks:{font:{size:11}}}},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fa(c.raw)+' جلسه'}}}}
+  });
+
+  /* 12) واحدها */
+  const un=[['برنامه‌ریزی',27],['پشتیبانی و منابع انسانی',27],['نظارت راهبردی و عملکرد',16],['مسکن و عمران شهری',15],['حوزه ریاست',12],['بازسازی و مسکن روستایی',10],['توسعه و عمران روستایی',9],['موسسه سوانح طبیعی',7]];
+  new Chart(document.getElementById('cUnits'),{
+    type:'bar',
+    data:{labels:un.map(u=>u[0]),datasets:[{data:un.map(u=>u[1]),backgroundColor:['#2563eb','#0e7490','#6366f1','#14b8a6','#f59e0b','#f43f5e','#22c55e','#a855f7'],borderRadius:7,maxBarThickness:28,datalabels:{anchor:'end',align:'end'}}]},
+    options:{indexAxis:'y',layout:{padding:{left:24}},scales:{x:valAxis(32,{position:'bottom',reverse:true}),y:{position:'right',grid:{display:false},ticks:{font:{size:11}}}},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fa(c.raw)+' بند'}}}}
+  });
+}
+
+/* ================== DOM builders ================== */
+// سهم موضوعی
+document.getElementById('topicBars').innerHTML=TN.map((n,i)=>{
+  const p=tpTot[i]/total*100;
+  return `<div class="prow" style="--c:${TC[i]}"><div class="top"><span><i class="fa-solid ${TI[i]}" style="color:${TC[i]};margin-inline-end:6px"></i>${n}</span><span>${fa(tpTot[i])} بند · ${fa(p,1)}٪</span></div><div class="bar"><i style="width:${p*3.2}%"></i></div></div>`;
+}).join('');
+
+// نقشه حرارتی
+(function(){
+  const mx=Math.max(...monthTp.flat());
+  let h='<thead><tr><th class="name">حوزه موضوعی</th>'+MONTHS.map(m=>`<th>${m}</th>`).join('')+'<th>جمع</th></tr></thead><tbody>';
+  TN.forEach((n,i)=>{
+    h+=`<tr><td class="name"><i class="fa-solid ${TI[i]}" style="color:${TC[i]};margin-inline-end:6px"></i>${n}</td>`;
+    MONTHS.forEach((_,mi)=>{
+      const v=monthTp[mi][i];const a=v?(.12+.88*v/mx):0;
+      h+=`<td class="v" style="background:rgba(14,116,144,${a.toFixed(2)});color:${a>.55?'#fff':'#0f172a'}">${v?fa(v):'—'}</td>`;
+    });
+    h+=`<td class="v" style="background:#f1f5f9">${fa(tpTot[i])}</td></tr>`;
+  });
+  h+='</tbody><tfoot><tr><td class="name">جمع ماه</td>'+monthBands.map(v=>`<td>${fa(v)}</td>`).join('')+`<td>${fa(total)}</td></tr></tfoot>`;
+  document.getElementById('heat').innerHTML=h;
+})();
+
+// خط زمان مصوبات
+const TL=[
+['01/22',2,'آیین‌نامه بکارگیری نیروی انسانی'],
+['01/29',3,'کلیات بودجه سال ۱۴۰۵ بنیاد'],
+['02/05',4,'اصلاحیه دستورالعمل مدیریت تعارض منافع'],
+['02/12',5,'دستورالعمل کمیته سرمایه‌گذاری ثابت بنیاد'],
+['02/19',7,'شیوه‌نامه ماموریت خارج از کشور'],
+['03/09',9,'مدل شاخص توزیع استانی اعتبارات ملی و قیر؛ اصلاحیه دستورالعمل پروژه‌های اجرایی حاصل از عواید زمین'],
+['03/12',10,'گزارش ارزیابی عملکرد سال ۱۴۰۴ استان‌ها'],
+['03/30',13,'اصلاحیه آیین‌نامه اجرایی خدمات فنی (بند ۵ ماده ۱۵ اساسنامه)'],
+['04/20',15,'فهرست خرید ماشین‌آلات تخصصی؛ تقویم آموزشی مدیران ارشد'],
+['04/27',16,'گزارش ارزیابی عملکرد سه‌ماهه نخست ۱۴۰۵'],
+['05/10',18,'دستورالعمل تعاملات و مکاتبات با نمایندگان مجلس شورای اسلامی'],
+['05/31',21,'اصلاحیه مواد ۳۰ و ۳۱ دستورالعمل واگذاری زمین روستایی؛ سرفصل‌های ابلاغی به مدیران کل'],
+['06/09',22,'نسخه نهایی پورتال بنیاد مسکن انقلاب اسلامی'],
+['06/28',25,'شاخص‌های ارزیابی عملکرد ادارات کل استان‌ها'],
+['07/04',26,'طرح بلوک‌های جدید مجتمع گل‌نرگس رامسر']
+];
+document.getElementById('tl').innerHTML=TL.map(t=>`<li><span class="d">${toFa('1405/'+t[0])}</span><span class="j">جلسه ${fa(t[1])}</span><div class="t">${t[2]}</div></li>`).join('');
+
+// جدول جلسات
+document.querySelector('#sessTbl tbody').innerHTML=S.map(s=>{
+  const seg=s.st.map((v,i)=>v?`<i style="width:${v/s.b*100}%;background:${STC[i]}" title="${STN[i]}: ${fa(v)}"></i>`:'').join('');
+  return `<tr><td><b>${fa(s.n)}</b></td><td>${toFa(s.date)}</td><td>${s.day}</td><td>${toFa(s.time)}</td>
+    <td><div class="sess-bar"><b>${fa(s.b)}</b><div class="bar"><i style="width:${s.b/8*100}%;background:#0e7490"></i></div></div></td>
+    <td><div class="mini">${seg}</div></td><td class="txt">${s.note}</td></tr>`;
+}).join('');
+
+// شمارنده‌ها
+document.querySelectorAll('.val[data-count]').forEach(el=>{
+  const target=parseFloat(el.dataset.count),dec=parseInt(el.dataset.dec||'0');
+  const small=el.querySelector('small');const sm=small?small.outerHTML:'';
+  const t0=performance.now(),dur=1000;
+  (function step(t){
+    const k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,3);
+    el.innerHTML=fa(target*e,dec)+sm;
+    if(k<1)requestAnimationFrame(step);
+  })(t0);
+});
+
+// شروع نمودارها پس از بارگذاری فونت
+(async()=>{
+  try{await Promise.race([document.fonts.load('700 14px Vazirmatn'),new Promise(r=>setTimeout(r,2500))]);}catch(e){}
+  initCharts();
+})();
+</script>
+</body>
+</html>
