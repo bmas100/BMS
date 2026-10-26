@@ -14,7 +14,7 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- SheetJS (xlsx) Library for Reading Excel Client-Side -->
+    <!-- SheetJS (xlsx) Library -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
     <!-- Chart.js -->
@@ -83,16 +83,18 @@
     <!-- ================= MAIN CONTENT ================= -->
     <main class="max-w-7xl mx-auto px-4 md:px-8 pb-12">
         
-        <!-- Status / Error Notification if Excel fetch fails -->
-        <div id="statusAlert" class="hidden mb-6 p-4 rounded-2xl border flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <i id="statusIcon" class="fa-solid text-xl"></i>
-                <span id="statusMessage" class="text-sm font-medium"></span>
+        <!-- File Picker Alert Bar (Appears if local CORS blocks auto-fetch) -->
+        <div id="statusAlert" class="mb-6 p-4 rounded-2xl border bg-blue-50 border-blue-200 text-blue-900 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
+            <div class="flex items-center gap-3 text-center sm:text-right">
+                <i id="statusIcon" class="fa-solid fa-circle-info text-xl text-blue-600"></i>
+                <span id="statusMessage" class="text-sm font-medium">برای بارگذاری داده‌ها، لطفاً فایل اکسل <b>PrsReport.xlsx</b> را انتخاب کنید:</span>
             </div>
-            <button id="filePickerBtn" class="hidden bg-white hover:bg-gray-50 text-gray-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-gray-300 shadow-sm flex items-center gap-1.5 transition-all">
-                <i class="fa-solid fa-folder-open text-blue-500"></i> انتخاب فایل PrsReport.xlsx
-            </button>
-            <input type="file" id="excelFileInput" accept=".xlsx, .xls" class="hidden">
+            <div class="flex items-center gap-2">
+                <button onclick="document.getElementById('excelFileInput').click()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-md flex items-center gap-2 transition-all cursor-pointer">
+                    <i class="fa-solid fa-folder-open"></i> انتخاب فایل اکسل
+                </button>
+                <input type="file" id="excelFileInput" accept=".xlsx, .xls" class="hidden">
+            </div>
         </div>
 
         <!-- KPI Cards Dynamic Container -->
@@ -195,7 +197,6 @@
         let unitChartInst = null;
         let locationChartInst = null;
 
-        // Visual styles map per category
         const catStyles = {
             'پیشنهاد':         {icon:'fa-lightbulb',            bg:'bg-amber-50',  text:'text-amber-600',  chart:'#f59e0b'},
             'درخواست':         {icon:'fa-hand-holding-heart',   bg:'bg-teal-50',   text:'text-teal-600',   chart:'#14b8a6'},
@@ -208,16 +209,39 @@
 
         const chartColorPalette = ['#f59e0b', '#14b8a6', '#f43f5e', '#ef4444', '#f97316', '#a855f7', '#3b82f6', '#6366f1', '#10b981', '#ec4899', '#8b5cf6'];
 
-        // Init Chart.js plugins
         Chart.register(ChartDataLabels);
         Chart.defaults.font.family = 'Vazirmatn, sans-serif';
         Chart.defaults.color = '#4b5563';
 
         window.addEventListener('DOMContentLoaded', () => {
-            loadExcelData();
+            // Attempt automatic fetch first
+            attemptAutoFetch();
         });
 
-        // Helper to format mobile phone numbers
+        async function attemptAutoFetch() {
+            try {
+                const response = await fetch('PrsReport.xlsx', { cache: 'no-store' });
+                if (response.ok) {
+                    const arrayBuffer = await response.arrayBuffer();
+                    processWorkbook(arrayBuffer);
+                    return;
+                }
+            } catch (e) {
+                console.log("Auto-fetch restricted by local browser policy, waiting for file selection.");
+            }
+        }
+
+        // Handle File Input Selection
+        document.getElementById('excelFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                processWorkbook(e.target.result);
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
         function formatMobile(val) {
             if (!val) return 'نامشخص';
             let str = String(val).trim();
@@ -231,75 +255,15 @@
             return str || 'نامشخص';
         }
 
-        // Helper to parse dates for sorting
         function parseDate(val) {
             if (!val) return new Date(0);
             if (val instanceof Date) return val;
             let str = String(val).trim();
-            // Try standard date parsing
             let d = new Date(str);
             if (!isNaN(d.getTime())) return d;
             return new Date(0);
         }
 
-        // Load Excel data via fetch from PrsReport.xlsx
-        async function loadExcelData() {
-            showStatus('در حال بارگذاری اطلاعات از فایل PrsReport.xlsx...', 'loading');
-            try {
-                const response = await fetch('PrsReport.xlsx', { cache: 'no-store' });
-                if (!response.ok) {
-                    throw new Error(`خطا در دریافت فایل: ${response.statusText}`);
-                }
-                const arrayBuffer = await response.arrayBuffer();
-                processWorkbook(arrayBuffer);
-                hideStatus();
-            } catch (err) {
-                console.warn("Fetch failed, CORS or local file policy:", err);
-                showStatus('عدم امکان خوندن مستقیم PrsReport.xlsx (احتمالاً به دلیل اجرای محلی فایل بدون سرور). لطفاً فایل را دستی انتخاب کنید:', 'error');
-            }
-        }
-
-        // Handle File Input Selection
-        document.getElementById('excelFileInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                processWorkbook(e.target.result);
-                hideStatus();
-            };
-            reader.readAsArrayBuffer(file);
-        });
-
-        document.getElementById('filePickerBtn').addEventListener('click', () => {
-            document.getElementById('excelFileInput').click();
-        });
-
-        function showStatus(msg, type) {
-            const alert = document.getElementById('statusAlert');
-            const icon = document.getElementById('statusIcon');
-            const text = document.getElementById('statusMessage');
-            const btn = document.getElementById('filePickerBtn');
-
-            alert.classList.remove('hidden', 'bg-blue-50', 'border-blue-200', 'text-blue-800', 'bg-amber-50', 'border-amber-200', 'text-amber-800');
-
-            if (type === 'loading') {
-                alert.classList.add('bg-blue-50', 'border-blue-200', 'text-blue-800');
-                icon.className = 'fa-solid fa-circle-notch fa-spin text-blue-600';
-                btn.classList.add('hidden');
-            } else {
-                alert.classList.add('bg-amber-50', 'border-amber-200', 'text-amber-800');
-                icon.className = 'fa-solid fa-triangle-exclamation text-amber-600';
-                btn.classList.remove('hidden');
-            }
-            text.textContent = msg;
-        }
-
-        function hideStatus() {
-            document.getElementById('statusAlert').classList.add('hidden');
-        }
-
-        // Process Workbook Data
         function processWorkbook(buffer) {
             const data = new Uint8Array(buffer);
             const workbook = XLSX.read(data, { type: 'array', cellDates: true });
@@ -325,11 +289,9 @@
                 };
             });
 
-            // CRITICAL REQUIREMENT:
-            # Sort data from LAST DATE (newest) at top moving down to OLDER dates
+            // CRITICAL REQUIREMENT: Sort from newest date to oldest
             messages.sort((a, b) => b.dateObj - a.dateObj);
 
-            // Update Report Date in Banner
             if (messages.length > 0 && messages[0].dateObj.getTime() > 0) {
                 const latest = messages[0].dateObj;
                 const formattedDate = latest.toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -340,25 +302,33 @@
 
             document.getElementById('messagesCount').textContent = messages.length;
 
+            // Hide alert banner or change to success mode
+            const alertBox = document.getElementById('statusAlert');
+            alertBox.className = "mb-6 p-4 rounded-2xl border bg-emerald-50 border-emerald-200 text-emerald-900 flex items-center justify-between shadow-sm";
+            alertBox.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-circle-check text-xl text-emerald-600"></i>
+                    <span class="text-sm font-medium">اطلاعات فایل اکسل با موفقیت بارگذاری شد (${messages.length} پیام).</span>
+                </div>
+                <button onclick="document.getElementById('excelFileInput').click()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-all cursor-pointer">
+                    تغییر فایل اکسل
+                </button>
+            `;
+
             renderKPIs();
             renderCards();
             renderCharts();
         }
 
-        // Render Dynamic KPI Cards
         function renderKPIs() {
             const kpiContainer = document.getElementById('kpiContainer');
-            
-            // Count categories
             const catCounts = {};
             messages.forEach(m => {
                 catCounts[m.category] = (catCounts[m.category] || 0) + 1;
             });
 
             const total = messages.length;
-
             let html = `
-            <!-- Total Card -->
             <div class="bg-white rounded-2xl p-3 md:p-4 shadow-sm border border-gray-100 border-t-4 border-t-blue-500 flex items-center justify-between hover:shadow-md transition-shadow">
                 <div class="min-w-0">
                     <p class="text-gray-500 text-xs mb-1 flex items-center gap-1.5 whitespace-nowrap">
@@ -369,9 +339,7 @@
                 </div>
             </div>`;
 
-            // Sort categories by count descending for top KPI cards
             const sortedCats = Object.keys(catCounts).sort((a, b) => catCounts[b] - catCounts[a]);
-
             sortedCats.forEach(cat => {
                 const st = catStyles[cat] || {icon:'fa-tag', bg:'bg-gray-50', text:'text-gray-600', chart:'#6b7280'};
                 html += `
@@ -385,11 +353,9 @@
                     </div>
                 </div>`;
             });
-
             kpiContainer.innerHTML = html;
         }
 
-        // Render Cards (Newest to Oldest)
         function renderCards() {
             const container = document.getElementById('cardsContainer');
             if (messages.length === 0) {
@@ -399,14 +365,9 @@
 
             container.innerHTML = messages.map((m, idx) => {
                 const st = catStyles[m.category] || {icon:'fa-circle', bg:'bg-gray-50', text:'text-gray-600', chart:'#3b82f6'};
-                
-                // Format Date display
-                let dateDisplay = '';
-                if (m.dateObj.getTime() > 0) {
-                    dateDisplay = m.dateObj.toLocaleDateString('fa-IR') + ' ' + m.dateObj.toLocaleTimeString('fa-IR', {hour:'2-digit', minute:'2-digit'});
-                } else {
-                    dateDisplay = m.dateRaw || 'تاریخ نامشخص';
-                }
+                let dateDisplay = m.dateObj.getTime() > 0 
+                    ? m.dateObj.toLocaleDateString('fa-IR') + ' ' + m.dateObj.toLocaleTimeString('fa-IR', {hour:'2-digit', minute:'2-digit'})
+                    : (m.dateRaw || 'تاریخ نامشخص');
 
                 return `
                 <div onclick="openModal(${idx})" 
@@ -438,9 +399,7 @@
             }).join('');
         }
 
-        // Render Dynamic Charts
         function renderCharts() {
-            // Aggregations
             const categoryCounts = {};
             const unitCounts = {};
             const locationCounts = {};
@@ -451,7 +410,6 @@
                 locationCounts[m.location] = (locationCounts[m.location] || 0) + 1;
             });
 
-            // Destroy existing charts if re-rendering
             if (categoryChartInst) categoryChartInst.destroy();
             if (unitChartInst) unitChartInst.destroy();
             if (locationChartInst) locationChartInst.destroy();
@@ -482,9 +440,8 @@
                 }
             });
 
-            // 2. Unit Chart (Top units)
+            // 2. Unit Chart
             let sortedUnits = Object.entries(unitCounts).sort((a,b) => b[1] - a[1]);
-            // Limit to top 6 units for clean visualization if there are many
             if (sortedUnits.length > 7) {
                 const top = sortedUnits.slice(0, 6);
                 const otherSum = sortedUnits.slice(6).reduce((acc, curr) => acc + curr[1], 0);
@@ -492,15 +449,12 @@
                 sortedUnits = top;
             }
 
-            const unitLabels = sortedUnits.map(u => u[0]);
-            const unitData = sortedUnits.map(u => u[1]);
-
             unitChartInst = new Chart(document.getElementById('unitChart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: unitLabels,
+                    labels: sortedUnits.map(u => u[0]),
                     datasets: [{
-                        data: unitData,
+                        data: sortedUnits.map(u => u[1]),
                         backgroundColor: '#6366f1',
                         borderRadius: 6, barThickness: 24
                     }]
@@ -524,15 +478,12 @@
 
             // 3. Location Chart
             const sortedLocs = Object.entries(locationCounts).sort((a,b) => b[1] - a[1]);
-            const locLabels = sortedLocs.map(l => l[0]);
-            const locData = sortedLocs.map(l => l[1]);
-
             locationChartInst = new Chart(document.getElementById('locationChart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: locLabels,
+                    labels: sortedLocs.map(l => l[0]),
                     datasets: [{
-                        data: locData,
+                        data: sortedLocs.map(l => l[1]),
                         backgroundColor: '#10b981',
                         borderRadius: 6, barThickness: 24
                     }]
@@ -556,7 +507,6 @@
             });
         }
 
-        // ================ MODAL ================
         function openModal(idx) {
             const m = messages[idx];
             if (!m) return;
@@ -631,11 +581,9 @@
             document.body.style.overflow = '';
         }
 
-        // Close on backdrop click
         document.getElementById('modal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
-        // Close on ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeModal();
         });
