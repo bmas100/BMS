@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد مدیریتی سامانه ارتباط کارکنان با ریاست بنیاد مسکن</title>
+    
+    <!-- Vazirmatn Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- SheetJS (xlsx) Library for Reading Excel Client-Side -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { vazir: ['Vazirmatn', 'sans-serif'] },
+                    colors: { brand: { dark: '#1e3a8a', light: '#3b82f6' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; background-color: #f3f4f6; }
+        .banner-bg {
+            background: linear-gradient(135deg, #0b1736 0%, #173b78 58%, #1e40af 100%);
+            position: relative; overflow: hidden;
+        }
+        .banner-bg::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 0;
+        }
+        .chart-container { position: relative; height: 260px; width: 100%; }
+        .line-clamp-3 {
+            display: -webkit-box; -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .modal-scroll::-webkit-scrollbar { width: 6px; }
+        .modal-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+        .modal-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .modal-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+    <!-- ================= BANNER ================= -->
+    <header class="banner-bg text-white shadow-lg rounded-b-3xl mb-6 pb-5 pt-5 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-right">
+                <h1 class="text-xl md:text-3xl font-bold mb-2 flex items-center justify-center md:justify-start gap-3">
+                    <i class="fa-solid fa-building-columns text-blue-200"></i>
+                    سامانه ارتباط کارکنان با ریاست بنیاد مسکن
+                </h1>
+                <p class="text-blue-100 text-sm md:text-base">داشبورد مدیریتی و تحلیل پیام‌های دریافتی (اتصال پویا به اکسل)</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-3">
+                <div class="bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-5 py-2 flex items-center gap-2 shadow-sm">
+                    <i class="fa-regular fa-calendar-check text-blue-100"></i>
+                    <span class="text-sm font-medium" id="reportDateText">آخرین بروزرسانی: در حال دریافت...</span>
+                </div>
+                <a href="./PRS.pdf" target="_blank" class="bg-blue-600 hover:bg-blue-500 transition-colors border border-blue-400 rounded-full px-5 py-2 flex items-center gap-2 shadow-sm cursor-pointer group">
+                    <i class="fa-solid fa-file-pdf text-red-300 group-hover:text-red-200 transition-colors"></i>
+                    <span class="text-sm font-medium">جزئیات گزارش</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="max-w-7xl mx-auto px-4 md:px-8 pb-12">
+        
+        <!-- Status / Error Notification if Excel fetch fails -->
+        <div id="statusAlert" class="hidden mb-6 p-4 rounded-2xl border flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <i id="statusIcon" class="fa-solid text-xl"></i>
+                <span id="statusMessage" class="text-sm font-medium"></span>
+            </div>
+            <button id="filePickerBtn" class="hidden bg-white hover:bg-gray-50 text-gray-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-gray-300 shadow-sm flex items-center gap-1.5 transition-all">
+                <i class="fa-solid fa-folder-open text-blue-500"></i> انتخاب فایل PrsReport.xlsx
+            </button>
+            <input type="file" id="excelFileInput" accept=".xlsx, .xls" class="hidden">
+        </div>
+
+        <!-- KPI Cards Dynamic Container -->
+        <section id="kpiContainer" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 md:gap-5 mb-8">
+            <!-- Rendered by JS -->
+        </section>
+
+        <!-- Messages Cards -->
+        <section class="mb-10">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-5 gap-2">
+                <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                    <i class="fa-solid fa-inbox text-gray-500"></i>
+                    لیست پیام‌های دریافتی (<span id="messagesCount">۰</span> مورد)
+                </h2>
+                <div class="flex items-center gap-2 text-xs text-gray-500">
+                    <span class="bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1.5 rounded-full inline-flex items-center gap-1">
+                        <i class="fa-solid fa-arrow-down-wide-short"></i>
+                        ترتیب: از جدیدترین تاریخ به قدیمی‌تر
+                    </span>
+                    <span class="bg-gray-100 px-3 py-1.5 rounded-full hidden md:inline-flex items-center gap-1">
+                        <i class="fa-solid fa-hand-pointer"></i>
+                        برای مشاهده متن کامل، روی هر کارت کلیک کنید
+                    </span>
+                </div>
+            </div>
+            
+            <div id="cardsContainer" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-5">
+                <!-- Cards rendered by JS -->
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+            <!-- Pie Chart: Category -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-blue-500">
+                <h3 class="text-base font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-pie text-blue-500"></i>
+                    توزیع بر اساس دسته‌بندی
+                </h3>
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Bar Chart: Organizational Unit -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-indigo-500">
+                <h3 class="text-base font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-bar text-indigo-500"></i>
+                    توزیع بر اساس واحد سازمانی
+                </h3>
+                <div class="chart-container">
+                    <canvas id="unitChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Horizontal Bar: Location -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-emerald-500">
+                <h3 class="text-base font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-location-dot text-emerald-500"></i>
+                    توزیع بر اساس محل خدمت
+                </h3>
+                <div class="chart-container">
+                    <canvas id="locationChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= MODAL ================= -->
+    <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm p-3 sm:p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+            <!-- Modal Header -->
+            <div class="px-4 py-3 border-b border-gray-100 flex justify-between items-center bg-gradient-to-l from-blue-50 to-white flex-shrink-0">
+                <h3 class="font-bold text-base text-gray-800 flex items-center gap-2">
+                    <i class="fa-solid fa-envelope-open-text text-blue-500"></i>
+                    <span id="modalTitle">جزئیات پیام</span>
+                </h3>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-white border border-gray-200 hover:bg-red-50 hover:border-red-200 hover:text-red-500 flex items-center justify-center text-gray-600 transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="p-4 sm:p-5 overflow-y-auto modal-scroll flex-grow" id="modalBody">
+                <!-- Dynamic content -->
+            </div>
+            <!-- Modal Footer -->
+            <div class="px-4 py-2 border-t border-gray-100 bg-gray-50 flex justify-end flex-shrink-0">
+                <button onclick="closeModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-medium px-5 py-2 rounded-lg transition-colors">
+                    بستن
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        let messages = [];
+        let categoryChartInst = null;
+        let unitChartInst = null;
+        let locationChartInst = null;
+
+        // Visual styles map per category
+        const catStyles = {
+            'پیشنهاد':         {icon:'fa-lightbulb',            bg:'bg-amber-50',  text:'text-amber-600',  chart:'#f59e0b'},
+            'درخواست':         {icon:'fa-hand-holding-heart',   bg:'bg-teal-50',   text:'text-teal-600',   chart:'#14b8a6'},
+            'تقدیر و تشکر':    {icon:'fa-heart',                bg:'bg-rose-50',   text:'text-rose-500',   chart:'#f43f5e'},
+            'شکایت':           {icon:'fa-triangle-exclamation', bg:'bg-red-50',    text:'text-red-600',    chart:'#ef4444'},
+            'انتقاد':          {icon:'fa-circle-exclamation',   bg:'bg-orange-50', text:'text-orange-600', chart:'#f97316'},
+            'طرح و ایده':      {icon:'fa-diagram-project',      bg:'bg-purple-50', text:'text-purple-600', chart:'#a855f7'},
+            'ملاقات حضوری':    {icon:'fa-handshake',            bg:'bg-blue-50',   text:'text-blue-600',   chart:'#3b82f6'}
+        };
+
+        const chartColorPalette = ['#f59e0b', '#14b8a6', '#f43f5e', '#ef4444', '#f97316', '#a855f7', '#3b82f6', '#6366f1', '#10b981', '#ec4899', '#8b5cf6'];
+
+        // Init Chart.js plugins
+        Chart.register(ChartDataLabels);
+        Chart.defaults.font.family = 'Vazirmatn, sans-serif';
+        Chart.defaults.color = '#4b5563';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadExcelData();
+        });
+
+        // Helper to format mobile phone numbers
+        function formatMobile(val) {
+            if (!val) return 'نامشخص';
+            let str = String(val).trim();
+            if (str.includes('e+')) {
+                str = Number(val).toFixed(0);
+            }
+            str = str.replace(/\D/g, '');
+            if (str.length === 10 && str.startsWith('9')) {
+                str = '0' + str;
+            }
+            return str || 'نامشخص';
+        }
+
+        // Helper to parse dates for sorting
+        function parseDate(val) {
+            if (!val) return new Date(0);
+            if (val instanceof Date) return val;
+            let str = String(val).trim();
+            // Try standard date parsing
+            let d = new Date(str);
+            if (!isNaN(d.getTime())) return d;
+            return new Date(0);
+        }
+
+        // Load Excel data via fetch from PrsReport.xlsx
+        async function loadExcelData() {
+            showStatus('در حال بارگذاری اطلاعات از فایل PrsReport.xlsx...', 'loading');
+            try {
+                const response = await fetch('PrsReport.xlsx', { cache: 'no-store' });
+                if (!response.ok) {
+                    throw new Error(`خطا در دریافت فایل: ${response.statusText}`);
+                }
+                const arrayBuffer = await response.arrayBuffer();
+                processWorkbook(arrayBuffer);
+                hideStatus();
+            } catch (err) {
+                console.warn("Fetch failed, CORS or local file policy:", err);
+                showStatus('عدم امکان خوندن مستقیم PrsReport.xlsx (احتمالاً به دلیل اجرای محلی فایل بدون سرور). لطفاً فایل را دستی انتخاب کنید:', 'error');
+            }
+        }
+
+        // Handle File Input Selection
+        document.getElementById('excelFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                processWorkbook(e.target.result);
+                hideStatus();
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        document.getElementById('filePickerBtn').addEventListener('click', () => {
+            document.getElementById('excelFileInput').click();
+        });
+
+        function showStatus(msg, type) {
+            const alert = document.getElementById('statusAlert');
+            const icon = document.getElementById('statusIcon');
+            const text = document.getElementById('statusMessage');
+            const btn = document.getElementById('filePickerBtn');
+
+            alert.classList.remove('hidden', 'bg-blue-50', 'border-blue-200', 'text-blue-800', 'bg-amber-50', 'border-amber-200', 'text-amber-800');
+
+            if (type === 'loading') {
+                alert.classList.add('bg-blue-50', 'border-blue-200', 'text-blue-800');
+                icon.className = 'fa-solid fa-circle-notch fa-spin text-blue-600';
+                btn.classList.add('hidden');
+            } else {
+                alert.classList.add('bg-amber-50', 'border-amber-200', 'text-amber-800');
+                icon.className = 'fa-solid fa-triangle-exclamation text-amber-600';
+                btn.classList.remove('hidden');
+            }
+            text.textContent = msg;
+        }
+
+        function hideStatus() {
+            document.getElementById('statusAlert').classList.add('hidden');
+        }
+
+        // Process Workbook Data
+        function processWorkbook(buffer) {
+            const data = new Uint8Array(buffer);
+            const workbook = XLSX.read(data, { type: 'array', cellDates: true });
+            const firstSheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[firstSheetName];
+            
+            const rawJson = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+
+            messages = rawJson.map((row, index) => {
+                return {
+                    id: row.request_id || row['کد درخواست'] || (index + 1),
+                    tracking_code: row.tracking_code || row['کد پیگیری'] || '',
+                    name: (row.full_name || row['نام و نام خانوادگی'] || 'کاربر ناشناس').trim() || 'کاربر ناشناس',
+                    phone: formatMobile(row.mobile || row['تلفن همراه']),
+                    location: (row.service_location || row['محل خدمت'] || 'ستاد مرکزی').trim() || 'ستاد مرکزی',
+                    unit: (row.unit || row['واحد سازمانی'] || 'نامشخص').trim() || 'نامشخص',
+                    category: (row.category || row['دسته‌بندی'] || 'سایر').trim() || 'سایر',
+                    subject: (row.subject || row['موضوع'] || 'بدون موضوع').trim() || 'بدون موضوع',
+                    text: (row.message || row['متن پیام'] || '').trim(),
+                    status: (row.status || row['وضعیت'] || 'ثبت اولیه').trim() || 'ثبت اولیه',
+                    dateRaw: row.registered_at || row['تاریخ ثبت'] || '',
+                    dateObj: parseDate(row.registered_at || row['تاریخ ثبت'])
+                };
+            });
+
+            // CRITICAL REQUIREMENT:
+            # Sort data from LAST DATE (newest) at top moving down to OLDER dates
+            messages.sort((a, b) => b.dateObj - a.dateObj);
+
+            // Update Report Date in Banner
+            if (messages.length > 0 && messages[0].dateObj.getTime() > 0) {
+                const latest = messages[0].dateObj;
+                const formattedDate = latest.toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                document.getElementById('reportDateText').textContent = `آخرین بروزرسانی: ${formattedDate}`;
+            } else {
+                document.getElementById('reportDateText').textContent = `تعداد کل: ${messages.length} پیام`;
+            }
+
+            document.getElementById('messagesCount').textContent = messages.length;
+
+            renderKPIs();
+            renderCards();
+            renderCharts();
+        }
+
+        // Render Dynamic KPI Cards
+        function renderKPIs() {
+            const kpiContainer = document.getElementById('kpiContainer');
+            
+            // Count categories
+            const catCounts = {};
+            messages.forEach(m => {
+                catCounts[m.category] = (catCounts[m.category] || 0) + 1;
+            });
+
+            const total = messages.length;
+
+            let html = `
+            <!-- Total Card -->
+            <div class="bg-white rounded-2xl p-3 md:p-4 shadow-sm border border-gray-100 border-t-4 border-t-blue-500 flex items-center justify-between hover:shadow-md transition-shadow">
+                <div class="min-w-0">
+                    <p class="text-gray-500 text-xs mb-1 flex items-center gap-1.5 whitespace-nowrap">
+                        <span class="w-6 h-6 rounded-full bg-blue-50 text-blue-600 inline-flex flex-shrink-0 items-center justify-center text-sm"><i class="fa-solid fa-envelope-open-text"></i></span>
+                        <span>کل پیام‌ها</span>
+                    </p>
+                    <h3 class="text-lg sm:text-2xl font-bold text-gray-800">${total}</h3>
+                </div>
+            </div>`;
+
+            // Sort categories by count descending for top KPI cards
+            const sortedCats = Object.keys(catCounts).sort((a, b) => catCounts[b] - catCounts[a]);
+
+            sortedCats.forEach(cat => {
+                const st = catStyles[cat] || {icon:'fa-tag', bg:'bg-gray-50', text:'text-gray-600', chart:'#6b7280'};
+                html += `
+                <div class="bg-white rounded-2xl p-3 md:p-4 shadow-sm border border-gray-100 border-t-4 flex items-center justify-between hover:shadow-md transition-shadow" style="border-top-color: ${st.chart}">
+                    <div class="min-w-0">
+                        <p class="text-gray-500 text-xs mb-1 flex items-center gap-1.5 whitespace-nowrap">
+                            <span class="w-6 h-6 rounded-full ${st.bg} ${st.text} inline-flex flex-shrink-0 items-center justify-center text-sm"><i class="fa-solid ${st.icon}"></i></span>
+                            <span>${cat}</span>
+                        </p>
+                        <h3 class="text-lg sm:text-2xl font-bold ${st.text}">${catCounts[cat]}</h3>
+                    </div>
+                </div>`;
+            });
+
+            kpiContainer.innerHTML = html;
+        }
+
+        // Render Cards (Newest to Oldest)
+        function renderCards() {
+            const container = document.getElementById('cardsContainer');
+            if (messages.length === 0) {
+                container.innerHTML = `<div class="col-span-full bg-white p-8 rounded-2xl text-center text-gray-500">هیچ پیامی یافت نشد.</div>`;
+                return;
+            }
+
+            container.innerHTML = messages.map((m, idx) => {
+                const st = catStyles[m.category] || {icon:'fa-circle', bg:'bg-gray-50', text:'text-gray-600', chart:'#3b82f6'};
+                
+                // Format Date display
+                let dateDisplay = '';
+                if (m.dateObj.getTime() > 0) {
+                    dateDisplay = m.dateObj.toLocaleDateString('fa-IR') + ' ' + m.dateObj.toLocaleTimeString('fa-IR', {hour:'2-digit', minute:'2-digit'});
+                } else {
+                    dateDisplay = m.dateRaw || 'تاریخ نامشخص';
+                }
+
+                return `
+                <div onclick="openModal(${idx})" 
+                     class="relative bg-white rounded-2xl shadow-sm border border-gray-100 border-t-4 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.99] transition-all cursor-pointer flex flex-col" style="border-top-color:${st.chart}">
+                    <div class="px-3 py-2.5 border-b border-gray-50 bg-gray-50/50 flex justify-between items-center">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold flex-shrink-0">${m.id}</div>
+                            <span class="font-bold text-gray-700 text-sm truncate">${m.name}</span>
+                        </div>
+                        <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-medium whitespace-nowrap flex-shrink-0">${m.status}</span>
+                    </div>
+                    <div class="p-3 flex-grow">
+                        <div class="flex flex-wrap gap-1.5 mb-2">
+                            <span class="${st.bg} ${st.text} text-[10px] px-2 py-0.5 rounded-md flex items-center gap-1 font-medium">
+                                <i class="fa-solid ${st.icon}"></i> ${m.category}
+                            </span>
+                            <span class="bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded-md flex items-center gap-1 truncate max-w-[180px]">
+                                <i class="fa-solid fa-sitemap"></i> ${m.unit}
+                            </span>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2 text-sm bg-gradient-to-l from-blue-50 to-white border-r-4 border-blue-500 rounded-md px-3 py-2 leading-6 shadow-sm">${m.subject}</h4>
+                        <p class="text-xs text-gray-600 leading-relaxed line-clamp-3 whitespace-pre-line">${m.text}</p>
+                    </div>
+                    <div class="bg-gray-50 px-3 py-2 text-[10px] text-gray-500 flex justify-between items-center border-t border-gray-100 gap-2">
+                        <span class="flex items-center gap-1 min-w-0 truncate"><i class="fa-solid fa-location-dot"></i> ${m.location}</span>
+                        <span dir="ltr" class="flex-shrink-0 font-medium text-gray-600"><i class="fa-regular fa-clock text-gray-400 ml-1"></i>${dateDisplay}</span>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        // Render Dynamic Charts
+        function renderCharts() {
+            // Aggregations
+            const categoryCounts = {};
+            const unitCounts = {};
+            const locationCounts = {};
+
+            messages.forEach(m => {
+                categoryCounts[m.category] = (categoryCounts[m.category] || 0) + 1;
+                unitCounts[m.unit] = (unitCounts[m.unit] || 0) + 1;
+                locationCounts[m.location] = (locationCounts[m.location] || 0) + 1;
+            });
+
+            // Destroy existing charts if re-rendering
+            if (categoryChartInst) categoryChartInst.destroy();
+            if (unitChartInst) unitChartInst.destroy();
+            if (locationChartInst) locationChartInst.destroy();
+
+            // 1. Category Chart
+            const catLabels = Object.keys(categoryCounts);
+            const catData = Object.values(categoryCounts);
+            const catColors = catLabels.map((cat, i) => (catStyles[cat] && catStyles[cat].chart) ? catStyles[cat].chart : chartColorPalette[i % chartColorPalette.length]);
+
+            categoryChartInst = new Chart(document.getElementById('categoryChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: catLabels,
+                    datasets: [{
+                        data: catData,
+                        backgroundColor: catColors,
+                        borderWidth: 2, borderColor: '#ffffff', hoverOffset: 6
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { usePointStyle: true, padding: 12, font: { size: 11 }, boxWidth: 8 } },
+                        tooltip: { callbacks: { label: c => `${c.label}: ${c.raw} پیام` } },
+                        datalabels: { color: '#000', font: { weight: 'bold', size: 12 }, formatter: v => v }
+                    },
+                    cutout: '58%'
+                }
+            });
+
+            // 2. Unit Chart (Top units)
+            let sortedUnits = Object.entries(unitCounts).sort((a,b) => b[1] - a[1]);
+            // Limit to top 6 units for clean visualization if there are many
+            if (sortedUnits.length > 7) {
+                const top = sortedUnits.slice(0, 6);
+                const otherSum = sortedUnits.slice(6).reduce((acc, curr) => acc + curr[1], 0);
+                top.push(['سایر واحدها', otherSum]);
+                sortedUnits = top;
+            }
+
+            const unitLabels = sortedUnits.map(u => u[0]);
+            const unitData = sortedUnits.map(u => u[1]);
+
+            unitChartInst = new Chart(document.getElementById('unitChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: unitLabels,
+                    datasets: [{
+                        data: unitData,
+                        backgroundColor: '#6366f1',
+                        borderRadius: 6, barThickness: 24
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: c => `${c.raw} پیام` } },
+                        datalabels: {
+                            color: '#1f2937', anchor: 'end', align: 'top', offset: 3,
+                            font: { weight: 'bold', size: 11 }, formatter: v => v
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { precision: 0, font: { size: 10 } }, grid: { color: '#f3f4f6' } },
+                        x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 45, minRotation: 0 } }
+                    }
+                }
+            });
+
+            // 3. Location Chart
+            const sortedLocs = Object.entries(locationCounts).sort((a,b) => b[1] - a[1]);
+            const locLabels = sortedLocs.map(l => l[0]);
+            const locData = sortedLocs.map(l => l[1]);
+
+            locationChartInst = new Chart(document.getElementById('locationChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: locLabels,
+                    datasets: [{
+                        data: locData,
+                        backgroundColor: '#10b981',
+                        borderRadius: 6, barThickness: 24
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: c => `${c.raw} پیام` } },
+                        datalabels: {
+                            color: '#1f2937', anchor: 'end', align: 'right', offset: 4,
+                            font: { weight: 'bold', size: 11 }, formatter: v => v
+                        }
+                    },
+                    scales: {
+                        x: { beginAtZero: true, ticks: { precision: 0, font: { size: 10 } }, grid: { color: '#f3f4f6' } },
+                        y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+                    }
+                }
+            });
+        }
+
+        // ================ MODAL ================
+        function openModal(idx) {
+            const m = messages[idx];
+            if (!m) return;
+            const st = catStyles[m.category] || {icon:'fa-circle', bg:'bg-gray-50', text:'text-gray-600'};
+            
+            document.getElementById('modalTitle').textContent = `پیام شماره ${m.id} — ${m.name}`;
+            
+            let dateDisplay = m.dateObj.getTime() > 0 
+                ? m.dateObj.toLocaleDateString('fa-IR') + ' - ' + m.dateObj.toLocaleTimeString('fa-IR', {hour:'2-digit', minute:'2-digit'})
+                : (m.dateRaw || 'نامشخص');
+
+            document.getElementById('modalBody').innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex flex-wrap gap-2 items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="${st.bg} ${st.text} text-xs px-3 py-1 rounded-md flex items-center gap-1 font-medium">
+                                <i class="fa-solid ${st.icon}"></i> ${m.category}
+                            </span>
+                            <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-medium">
+                                <i class="fa-solid fa-circle-check text-[10px] ml-1"></i>${m.status}
+                            </span>
+                        </div>
+                        ${m.tracking_code ? `<span class="bg-gray-100 text-gray-600 text-xs px-2.5 py-1 rounded-lg">کد پیگیری: <b>${m.tracking_code}</b></span>` : ''}
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <div class="bg-gray-50 rounded-lg p-2.5 border border-gray-100">
+                            <div class="text-[10px] text-gray-500 mb-0.5 flex items-center gap-1"><i class="fa-solid fa-user"></i> نام و نام خانوادگی</div>
+                            <div class="font-bold text-sm text-gray-800">${m.name}</div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-2.5 border border-gray-100">
+                            <div class="text-[10px] text-gray-500 mb-0.5 flex items-center gap-1"><i class="fa-solid fa-phone"></i> تلفن همراه</div>
+                            <div class="font-bold text-sm text-gray-800" dir="ltr">${m.phone}</div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-2.5 border border-gray-100">
+                            <div class="text-[10px] text-gray-500 mb-0.5 flex items-center gap-1"><i class="fa-solid fa-location-dot"></i> محل خدمت</div>
+                            <div class="font-bold text-sm text-gray-800">${m.location}</div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-2.5 border border-gray-100">
+                            <div class="text-[10px] text-gray-500 mb-0.5 flex items-center gap-1"><i class="fa-solid fa-sitemap"></i> واحد سازمانی</div>
+                            <div class="font-bold text-sm text-gray-800">${m.unit}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50/50 rounded-lg p-2.5 border border-blue-100 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                        <div>
+                            <div class="text-[10px] text-blue-600 mb-0.5 flex items-center gap-1"><i class="fa-solid fa-tag"></i> موضوع</div>
+                            <div class="font-bold text-sm text-gray-800">${m.subject}</div>
+                        </div>
+                        <div class="text-xs text-gray-500 whitespace-nowrap">
+                            <i class="fa-regular fa-clock ml-1"></i>${dateDisplay}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="text-[11px] text-gray-500 mb-1.5 flex items-center gap-1"><i class="fa-solid fa-comment-dots"></i> متن کامل پیام</div>
+                        <div class="bg-gradient-to-bl from-blue-50 to-indigo-50/40 border border-blue-100 rounded-lg p-3.5 text-sm text-gray-700 leading-relaxed whitespace-pre-line max-h-60 overflow-y-auto modal-scroll">${m.text}</div>
+                    </div>
+                </div>
+            `;
+            
+            const modal = document.getElementById('modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Close on backdrop click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        // Close on ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
