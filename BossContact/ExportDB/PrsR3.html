@@ -299,8 +299,8 @@
     <div id="initialLoader" class="initial-loader" role="status" aria-live="polite">
         <div class="loader-card">
             <div class="loader-emblem"><i class="fa-solid fa-building-columns"></i></div>
-            <h2 class="loader-title">در حال آماده‌سازی داشبورد</h2>
-            <p id="loaderMessage" class="loader-message">در حال دریافت اطلاعات و آماده‌سازی صفحه...</p>
+            <h2 class="loader-title">در حال فراخوانی داده‌ها ...</h2>
+            <p id="loaderMessage" class="loader-message">در حال فراخوانی داده‌ها ...</p>
             <div class="loader-progress" role="progressbar" aria-label="درصد بارگذاری" aria-valuemin="0" aria-valuemax="100" aria-valuenow="10">
                 <div id="loaderProgressBar" class="loader-progress-bar"></div>
             </div>
@@ -419,10 +419,10 @@
             </div>
             <!-- Modal Footer -->
             <div class="modal-footer">
-                <button type="button" onclick="closeModal()" class="modal-footer-button modal-dismiss-button">بستن</button>
                 <button type="button" onclick="openTextEntryModal('Response')" class="modal-footer-button modal-response-button">پاسخ</button>
                 <button type="button" onclick="handleCloseRequest()" class="modal-footer-button modal-closeout-button">اختتام</button>
                 <button type="button" onclick="openTextEntryModal('Referral')" class="modal-footer-button modal-refer-button">ارجاع</button>
+                <button type="button" onclick="closeModal()" class="modal-footer-button modal-dismiss-button">بستن</button>
             </div>
         </div>
     </div>
@@ -559,7 +559,7 @@
             if (progress) progress.setAttribute('aria-valuenow', String(loaderProgress));
         }
 
-        function startInitialLoader(message = 'در حال دریافت اطلاعات و آماده‌سازی صفحه...') {
+        function startInitialLoader(message = 'در حال فراخوانی داده‌ها ...') {
             const loader = document.getElementById('initialLoader');
             if (!loader) return;
             loader.classList.remove('is-hidden');
@@ -727,7 +727,7 @@
 
             try {
                 const source = extractWorkbookRows(wb);
-                updateLoaderProgress(82, 'فایل اکسل خوانده شد؛ در حال همگام‌سازی با Google Sheets...');
+                updateLoaderProgress(82, 'فایل اطلاعات خوانده شد؛ در حال به‌روزرسانی داده‌ها...');
                 showStatus('syncing');
 
                 // Step 1: update Google Sheets before displaying the dashboard.
@@ -776,25 +776,25 @@
             const box = document.getElementById('statusBox');
             if (state === 'ok') { box.innerHTML = ''; return; }
             if (state === 'loading') {
-                box.innerHTML = `<div class="mb-6 bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center text-gray-500 text-sm"><i class="fa-solid fa-spinner fa-spin ml-2"></i>در حال خواندن PrsReport.xlsx ...</div>`;
+                box.innerHTML = `<div class="mb-6 bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center text-gray-500 text-sm"><i class="fa-solid fa-spinner fa-spin ml-2"></i>در حال فراخوانی داده‌ها ...</div>`;
                 return;
             }
             if (state === 'syncing') {
-                box.innerHTML = `<div class="mb-5 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800"><i class="fa-solid fa-cloud-arrow-up fa-bounce ml-2"></i>در حال بررسی شناسه‌ها و همگام‌سازی سطرهای جدید با شیت PrsRequests...</div>`;
+                box.innerHTML = `<div class="mb-5 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800"><i class="fa-solid fa-cloud-arrow-up fa-bounce ml-2"></i>در حال ثبت و به‌روزرسانی اطلاعات...</div>`;
                 return;
             }
             if (state === 'syncSuccess') {
                 const added = fa(detail.added ?? 0);
                 const skipped = fa(detail.duplicates ?? 0);
-                box.innerHTML = `<div class="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800"><i class="fa-solid fa-circle-check ml-2"></i>همگام‌سازی Google Sheets انجام شد؛ ${added} سطر جدید اضافه شد و ${skipped} سطر تکراری نادیده گرفته شد.</div>`;
+                box.innerHTML = `<div class="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800"><i class="fa-solid fa-circle-check ml-2"></i>اطلاعات با موفقیت به‌روزرسانی شد؛ ${added} پیام جدید ثبت شد و ${skipped} مورد تکراری نادیده گرفته شد.</div>`;
                 return;
             }
             if (state === 'syncError') {
-                box.innerHTML = `<div class="mb-5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800"><div class="font-bold mb-1"><i class="fa-solid fa-triangle-exclamation ml-2"></i>همگام‌سازی Google Sheets ناموفق بود</div><div class="leading-7">${esc(detail.message || 'خطای نامشخص')}</div><div class="mt-1 text-xs">داشبورد همچنان نمایش داده می‌شود؛ اتصال و مجوزهای Web App را بررسی کنید.</div></div>`;
+                box.innerHTML = `<div class="mb-5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800"><div class="font-bold mb-1"><i class="fa-solid fa-triangle-exclamation ml-2"></i>به‌روزرسانی اطلاعات انجام نشد.</div><div class="leading-7">لطفاً دوباره تلاش کنید. اگر مشکل ادامه داشت، با پشتیبانی سامانه تماس بگیرید.</div></div>`;
                 return;
             }
             if (state === 'config') {
-                box.innerHTML = `<div class="mb-5 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"><i class="fa-solid fa-link ml-2"></i>برای فعال‌شدن همگام‌سازی و دکمه‌های «ارجاع»، «پاسخ» و «اختتام»، آدرس Web App را در متغیر <code dir="ltr">GOOGLE_SCRIPT_URL</code> ابتدای تنظیمات JavaScript قرار دهید.</div>`;
+                box.innerHTML = `<div class="mb-5 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"><i class="fa-solid fa-circle-info ml-2"></i>قابلیت ثبت و پیگیری پیام‌ها در حال حاضر فعال نیست. لطفاً با پشتیبانی سامانه تماس بگیرید.</div>`;
                 return;
             }
             box.innerHTML = `
@@ -1027,9 +1027,9 @@
                 if (sheetStatusById[requestId]) sheetStatusById[requestId].action = 'مختومه';
                 closeModal();
                 renderCards();
-                showActionToast('وضعیت درخواست در شیت PrsRequests به «مختومه» تغییر کرد.');
+                showActionToast('درخواست با موفقیت مختومه شد.');
             } catch (error) {
-                showActionToast(error.message || 'ثبت اختتام ناموفق بود.', 'error');
+                showActionToast('ثبت اختتام انجام نشد. لطفاً دوباره تلاش کنید.', 'error');
             } finally {
                 setActionButtonsBusy(false);
             }
@@ -1061,9 +1061,9 @@
                 else sheetStatusById[requestId].referral = value;
                 closeModal();
                 renderCards();
-                showActionToast(isResponse ? 'پاسخ در ستون Response شیت PrsRequests ثبت شد.' : 'شرح ارجاع در شیت PrsRequests ثبت شد.');
+                showActionToast(isResponse ? 'پاسخ با موفقیت ثبت شد.' : 'ارجاع با موفقیت ثبت شد.');
             } catch (error) {
-                showActionToast(error.message || (isResponse ? 'ثبت پاسخ ناموفق بود.' : 'ثبت ارجاع ناموفق بود.'), 'error');
+                showActionToast(isResponse ? 'ثبت پاسخ انجام نشد. لطفاً دوباره تلاش کنید.' : 'ثبت ارجاع انجام نشد. لطفاً دوباره تلاش کنید.', 'error');
             } finally {
                 setActionButtonsBusy(false);
             }
