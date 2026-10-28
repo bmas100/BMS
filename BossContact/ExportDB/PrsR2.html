@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد مدیریتی سامانه ارتباط کارکنان با ریاست بنیاد مسکن</title>
+    
+    <!-- Vazirmatn Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { vazir: ['Vazirmatn', 'sans-serif'] },
+                    colors: { brand: { dark: '#1e3a8a', light: '#3b82f6' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; background-color: #f3f4f6; }
+        .banner-bg {
+            background: linear-gradient(135deg, #0b1736 0%, #173b78 58%, #1e40af 100%);
+            position: relative; overflow: hidden;
+        }
+        .banner-bg::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 0;
+        }
+        .chart-container { position: relative; height: 260px; width: 100%; }
+        .line-clamp-3 {
+            display: -webkit-box; -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .modal-scroll::-webkit-scrollbar { width: 6px; }
+        .modal-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+        .modal-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .modal-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* ============================================================
+           INDEPENDENT COMPONENT STYLES
+           Edit each class separately without affecting other sections.
+           ============================================================ */
+        .kpi-card {
+            padding: 10px 12px;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, .06);
+            transition: box-shadow .2s ease, transform .2s ease;
+        }
+        .kpi-card:hover { box-shadow: 0 5px 16px rgba(15, 23, 42, .09); }
+        .kpi-label { color: #111827 !important; font-weight: 800 !important; }
+        .kpi-label-text { color: #111827; font-weight: 800; }
+        .kpi-value { font-weight: 800; }
+
+        .messages-section-title {
+            display: flex; align-items: center; gap: 8px;
+            margin: 0; color: #1f2937; font-size: 1.25rem; font-weight: 800;
+        }
+        .messages-section-title-icon { color: #6b7280; }
+        .messages-section-note {
+            display: inline-flex; align-items: center; gap: 6px; width: fit-content;
+            padding: 6px 12px; border-radius: 999px;
+            background: #f3f4f6; color: #6b7280; font-size: 12px;
+        }
+
+        .chart-card {
+            padding: 20px; border-radius: 16px; background: #fff;
+            border: 1px solid #f3f4f6; border-top: 4px solid #3b82f6;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, .06);
+        }
+        .chart-card-category { border-top-color: #3b82f6; }
+        .chart-card-unit { border-top-color: #6366f1; }
+        .chart-card-location { border-top-color: #10b981; }
+        .chart-title {
+            display: flex; align-items: center; gap: 8px;
+            margin: 0 0 12px; color: #1f2937; font-size: 16px; font-weight: 800;
+        }
+        .chart-category-title-icon { color: #3b82f6; }
+        .chart-unit-title-icon { color: #6366f1; }
+        .chart-location-title-icon { color: #10b981; }
+
+        .modal-dialog {
+            display: flex; flex-direction: column; width: 100%; max-width: 42rem;
+            max-height: 92vh; overflow: hidden; border-radius: 16px;
+            background: #fff; box-shadow: 0 25px 60px rgba(0, 0, 0, .22);
+        }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-shrink: 0; padding: 12px 16px; border-bottom: 1px solid #f3f4f6;
+            background: linear-gradient(to left, #eff6ff, #fff);
+        }
+        .modal-heading {
+            display: flex; align-items: center; gap: 8px; margin: 0;
+            color: #111827; font-size: 16px; font-weight: 800;
+        }
+        .modal-heading-icon { color: #3b82f6; }
+        .modal-close-icon-button {
+            display: flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px; flex-shrink: 0; border-radius: 999px;
+            border: 1px solid #e5e7eb; background: #fff; color: #4b5563;
+            transition: background .2s ease, color .2s ease, border-color .2s ease;
+        }
+        .modal-close-icon-button:hover { background: #fef2f2; border-color: #fecaca; color: #ef4444; }
+        .modal-body { flex: 1 1 auto; overflow-y: auto; padding: 16px 20px; }
+        .modal-content-layout { display: flex; flex-direction: column; gap: 16px; }
+        .modal-status-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+        .modal-category-badge {
+            display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
+            border-radius: 6px; border: 1px solid color-mix(in srgb, var(--category-color, #6b7280) 22%, white);
+            background: color-mix(in srgb, var(--category-color, #6b7280) 10%, white);
+            color: var(--category-color, #6b7280); font-size: 12px; font-weight: 700;
+        }
+        .modal-status-badge {
+            display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px;
+            border-radius: 999px; background: #dcfce7; color: #15803d;
+            font-size: 12px; font-weight: 700;
+        }
+        .modal-message-id-badge {
+            display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px;
+            border: 1px solid #bfdbfe; border-radius: 999px;
+            background: #eff6ff; color: #1d4ed8; font-size: 12px; font-weight: 800;
+        }
+        .modal-info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+        .modal-info-card {
+            min-width: 0; padding: 10px; border: 1px solid #f3f4f6;
+            border-radius: 10px; background: #f9fafb;
+        }
+        .modal-info-label {
+            display: flex; align-items: center; gap: 5px; margin-bottom: 2px;
+            color: #6b7280; font-size: 10px; font-weight: 500;
+        }
+        .modal-info-value { color: #1f2937; font-size: 14px; font-weight: 800; overflow-wrap: anywhere; }
+        .modal-subject-section {
+            padding: 10px; border: 1px solid #dbeafe; border-radius: 10px;
+            background: rgba(239, 246, 255, .65);
+        }
+        .modal-subject-label {
+            display: flex; align-items: center; gap: 5px; margin-bottom: 2px;
+            color: #2563eb; font-size: 10px; font-weight: 600;
+        }
+        .modal-subject-value { color: #1f2937; font-size: 14px; font-weight: 800; overflow-wrap: anywhere; }
+        .modal-message-section { min-width: 0; }
+        .modal-message-label {
+            display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
+            color: #6b7280; font-size: 11px; font-weight: 600;
+        }
+        .modal-message-content {
+            max-height: 240px; overflow-y: auto; padding: 14px;
+            border: 1px solid #dbeafe; border-radius: 10px;
+            background: linear-gradient(to bottom left, #eff6ff, rgba(238, 242, 255, .4));
+            color: #374151; font-size: 14px; line-height: 1.9; white-space: pre-line;
+        }
+        .modal-footer {
+            display: flex; flex-shrink: 0; align-items: center; justify-content: flex-start;
+            gap: 8px; padding: 8px 16px; border-top: 1px solid #f3f4f6;
+            background: #f9fafb; direction: rtl;
+        }
+        .modal-footer-button {
+            padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 700;
+            transition: background .2s ease, border-color .2s ease, color .2s ease;
+        }
+        .modal-refer-button { border: 1px solid #bfdbfe; background: #eff6ff; color: #1d4ed8; }
+        .modal-refer-button:hover { background: #dbeafe; }
+        .modal-closeout-button { border: 1px solid #a7f3d0; background: #ecfdf5; color: #047857; }
+        .modal-closeout-button:hover { background: #d1fae5; }
+
+        /* Referral popup: each part can be styled independently */
+        .referral-modal-overlay { position: fixed; inset: 0; z-index: 70; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(15, 23, 42, .58); backdrop-filter: blur(5px); }
+        .referral-modal-overlay.hidden { display: none; }
+        .referral-dialog { width: 100%; max-width: 460px; overflow: hidden; border: 1px solid #dbeafe; border-radius: 16px; background: #fff; box-shadow: 0 24px 60px rgba(15, 23, 42, .28); }
+        .referral-modal-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid #e5e7eb; background: linear-gradient(to left, #eff6ff, #fff); }
+        .referral-modal-title { margin: 0; color: #1e3a8a; font-size: 15px; font-weight: 800; }
+        .referral-modal-close { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 1px solid #e5e7eb; border-radius: 50%; background: #fff; color: #64748b; }
+        .referral-modal-body { padding: 16px; }
+        .referral-textarea-label { display: block; margin-bottom: 8px; color: #374151; font-size: 12px; font-weight: 700; }
+        .referral-textarea { display: block; width: 100%; min-height: 132px; resize: vertical; padding: 11px 12px; border: 1px solid #cbd5e1; border-radius: 10px; outline: none; color: #1f2937; background: #fff; font: inherit; font-size: 13px; line-height: 1.9; }
+        .referral-textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, .13); }
+        .referral-modal-actions { display: flex; justify-content: flex-start; gap: 8px; margin-top: 12px; }
+        .referral-submit-button { padding: 9px 20px; border: 1px solid #1d4ed8; border-radius: 9px; background: #2563eb; color: #fff; font-size: 13px; font-weight: 800; }
+        .referral-submit-button:hover { background: #1d4ed8; }
+        .referral-submit-button:disabled, .modal-footer-button:disabled { cursor: wait; opacity: .6; }
+        .referral-cancel-button { padding: 9px 16px; border: 1px solid #e5e7eb; border-radius: 9px; background: #f9fafb; color: #4b5563; font-size: 13px; font-weight: 700; }
+
+        /* Action feedback toast */
+        .action-toast { position: fixed; z-index: 12000; right: 20px; bottom: 20px; max-width: min(460px, calc(100vw - 40px)); padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 12px; background: #fff; color: #1f2937; box-shadow: 0 12px 35px rgba(15, 23, 42, .18); font-size: 13px; line-height: 1.8; }
+        .action-toast.success { border-color: #a7f3d0; background: #ecfdf5; color: #065f46; }
+        .action-toast.error { border-color: #fecaca; background: #fef2f2; color: #991b1b; }
+        .modal-dismiss-button { border: 1px solid #e5e7eb; background: #e5e7eb; color: #374151; }
+        .modal-dismiss-button:hover { background: #d1d5db; }
+
+        @media (max-width: 480px) {
+            .modal-body { padding: 12px; }
+            .modal-info-grid { gap: 8px; }
+            .modal-info-card { padding: 8px; }
+            .modal-info-value, .modal-subject-value { font-size: 12px; }
+            .modal-footer { gap: 6px; padding: 8px 10px; }
+            .modal-footer-button { padding: 8px 12px; font-size: 12px; }
+        }
+
+        /* Initial loading screen */
+        .initial-loader {
+            position: fixed; inset: 0; z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+            padding: 24px;
+            background:
+                radial-gradient(circle at 15% 18%, rgba(96,165,250,.22), transparent 31%),
+                radial-gradient(circle at 86% 82%, rgba(30,64,175,.12), transparent 28%),
+                linear-gradient(135deg, #f8fafc 0%, #eef4ff 55%, #f8fafc 100%);
+            opacity: 1; visibility: visible;
+            transition: opacity .42s ease, visibility .42s ease;
+        }
+        .initial-loader.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-card {
+            width: min(430px, 100%); padding: 32px 26px 25px;
+            border: 1px solid rgba(148,163,184,.25); border-radius: 28px;
+            background: rgba(255,255,255,.94);
+            box-shadow: 0 24px 70px rgba(30,58,138,.15);
+            text-align: center;
+        }
+        .loader-emblem {
+            position: relative; display: grid; place-items: center;
+            width: 66px; height: 66px; margin: 0 auto 19px;
+            border-radius: 21px; color: white; font-size: 27px;
+            background: linear-gradient(145deg, #1e3a8a, #3b82f6);
+            box-shadow: 0 10px 24px rgba(37,99,235,.28);
+        }
+        .loader-emblem::after {
+            content: ''; position: absolute; inset: -7px; border-radius: 26px;
+            border: 2px solid rgba(59,130,246,.18);
+        }
+        .loader-title { color: #172554; font-size: 19px; font-weight: 800; }
+        .loader-message { min-height: 24px; margin-top: 8px; color: #64748b; font-size: 12px; line-height: 1.9; }
+        .loader-progress {
+            height: 8px; margin-top: 22px; overflow: hidden;
+            border-radius: 999px; background: #e8eef8;
+        }
+        .loader-progress-bar {
+            height: 100%; width: 10%; border-radius: inherit;
+            background: linear-gradient(90deg, #60a5fa, #2563eb, #1d4ed8);
+            box-shadow: 0 0 14px rgba(37,99,235,.24);
+            transition: width .35s ease;
+        }
+        .loader-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; color: #64748b; font-size: 11px; }
+        .loader-percent { color: #1d4ed8; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+        /* Angled blade of light across the banner */
+        .banner-bg::after {
+            content: ''; position: absolute; top: -65%; bottom: -65%; left: -34%;
+            width: 27%; transform: skewX(-25deg); pointer-events: none; z-index: 1;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.05) 22%,
+                rgba(191,219,254,.24) 52%, rgba(255,255,255,.08) 72%, transparent 100%);
+            animation: bannerBlade 8s ease-in-out infinite;
+        }
+        @keyframes bannerBlade {
+            0%, 8% { left: -34%; opacity: 0; }
+            18% { opacity: .9; }
+            58% { left: 125%; opacity: .75; }
+            70%, 100% { left: 125%; opacity: 0; }
+        }
+
+        /* Three-line message preview with a custom continuation label */
+        .message-preview {
+            position: relative; max-height: 4.875em; overflow: hidden;
+            line-height: 1.625;
+        }
+        .message-preview.is-truncated::after {
+            content: '... ادامه'; position: absolute; left: 0; bottom: 0;
+            padding: 0 5px 0 2px; white-space: nowrap; direction: rtl;
+            color: #2563eb; font-size: 10px; font-weight: 700;
+            background: rgba(255,255,255,.96); border-radius: 4px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .banner-bg::after { animation: none; }
+            .loader-progress-bar { transition: none; }
+            .initial-loader { transition: none; }
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+    <!-- ================= INITIAL LOADER ================= -->
+    <div id="initialLoader" class="initial-loader" role="status" aria-live="polite">
+        <div class="loader-card">
+            <div class="loader-emblem"><i class="fa-solid fa-building-columns"></i></div>
+            <h2 class="loader-title">در حال آماده‌سازی داشبورد</h2>
+            <p id="loaderMessage" class="loader-message">در حال دریافت اطلاعات و آماده‌سازی صفحه...</p>
+            <div class="loader-progress" role="progressbar" aria-label="درصد بارگذاری" aria-valuemin="0" aria-valuemax="100" aria-valuenow="10">
+                <div id="loaderProgressBar" class="loader-progress-bar"></div>
+            </div>
+            <div class="loader-meta">
+                <span>لطفاً کمی صبر کنید</span>
+                <span id="loaderPercent" class="loader-percent">۱۰٪</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= BANNER ================= -->
+    <header class="banner-bg text-white shadow-lg rounded-b-3xl mb-5 pb-4 pt-4 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-right">
+                <h1 class="text-xl md:text-3xl font-bold mb-2 flex items-center justify-center md:justify-start gap-3">
+                    <i class="fa-solid fa-building-columns text-blue-200"></i>
+                    سامانه ارتباط کارکنان با ریاست بنیاد مسکن
+                </h1>
+                <p class="text-blue-100 text-sm md:text-base">داشبورد مدیریتی و تحلیل پیام‌های دریافتی</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-3">
+                <div class="bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-5 py-2 flex items-center gap-2 shadow-sm">
+                    <i class="fa-regular fa-calendar-check text-blue-100"></i>
+                    <span class="text-sm font-medium">تاریخ گزارش: <span id="reportDate">—</span></span>
+                </div>
+            <!--
+                <a href="./PRS.pdf" target="_blank" class="bg-blue-600 hover:bg-blue-500 transition-colors border border-blue-400 rounded-full px-5 py-2 flex items-center gap-2 shadow-sm cursor-pointer group">
+                    <i class="fa-solid fa-file-pdf text-red-300 group-hover:text-red-200 transition-colors"></i>
+                    <span class="text-sm font-medium">جزئیات گزارش</span>
+                </a>
+            -->
+                
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="max-w-7xl mx-auto px-4 md:px-8 pb-12">
+        
+        <!-- KPI Cards (rendered by JS from xlsx) -->
+        <div id="statusBox"></div>
+        <section id="kpiContainer" class="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5 mb-8"></section>
+
+        <!-- Messages Cards -->
+        <section class="messages-section">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-5 gap-2">
+                <h2 class="messages-section-title">
+                    <i class="fa-solid fa-inbox messages-section-title-icon"></i>
+                    <span>لیست پیام‌های دریافتی (<span id="totalCount">۰</span> مورد)</span>
+                </h2>
+                <span class="messages-section-note">
+                    <i class="fa-solid fa-hand-pointer"></i>
+                    جدیدترین پیام‌ها در ابتدا · برای مشاهده متن کامل روی هر کارت کلیک کنید
+                </span>
+            </div>
+            
+            <div id="cardsContainer" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-5">
+                <!-- Cards rendered by JS -->
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+            <!-- Pie Chart: Category -->
+            <div class="chart-card chart-card-category">
+                <h3 class="chart-title chart-category-title">
+                    <i class="fa-solid fa-chart-pie chart-category-title-icon"></i>
+                    توزیع بر اساس دسته‌بندی
+                </h3>
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Bar Chart: Organizational Unit -->
+            <div class="chart-card chart-card-unit">
+                <h3 class="chart-title chart-unit-title">
+                    <i class="fa-solid fa-chart-bar chart-unit-title-icon"></i>
+                    توزیع بر اساس واحد سازمانی
+                </h3>
+                <div class="chart-container">
+                    <canvas id="unitChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Horizontal Bar: Location -->
+            <div class="chart-card chart-card-location">
+                <h3 class="chart-title chart-location-title">
+                    <i class="fa-solid fa-location-dot chart-location-title-icon"></i>
+                    توزیع بر اساس محل خدمت
+                </h3>
+                <div class="chart-container">
+                    <canvas id="locationChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= MODAL ================= -->
+    <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm p-3 sm:p-4">
+        <div class="modal-dialog">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-heading">
+                    <i class="fa-solid fa-envelope-open-text modal-heading-icon"></i>
+                    <span id="modalTitle">جزئیات پیام</span>
+                </h3>
+                <button type="button" onclick="closeModal()" class="modal-close-icon-button" aria-label="بستن پنجره">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body modal-scroll" id="modalBody">
+                <!-- Dynamic content -->
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" onclick="openReferralModal()" class="modal-footer-button modal-refer-button">ارجاع</button>
+                <button type="button" onclick="handleCloseRequest()" class="modal-footer-button modal-closeout-button">اختتام</button>
+                <button type="button" onclick="closeModal()" class="modal-footer-button modal-dismiss-button">بستن</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= REFERRAL POPUP ================= -->
+    <div id="referralModal" class="referral-modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="referralModalTitle">
+        <div class="referral-dialog">
+            <div class="referral-modal-header">
+                <h3 id="referralModalTitle" class="referral-modal-title"><i class="fa-solid fa-share-from-square ml-2"></i>شرح ارجاع</h3>
+                <button type="button" class="referral-modal-close" onclick="closeReferralModal()" aria-label="بستن پنجره ارجاع"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="referralForm" onsubmit="submitReferral(event)">
+                <div class="referral-modal-body">
+                    <label for="referralText" class="referral-textarea-label">شرح ارجاع را وارد کنید</label>
+                    <textarea id="referralText" class="referral-textarea" placeholder="شرح ارجاع..." required></textarea>
+                    <div class="referral-modal-actions">
+                        <button id="referralSubmitButton" type="submit" class="referral-submit-button"><i class="fa-solid fa-paper-plane ml-1"></i>ارجاع</button>
+                        <button type="button" class="referral-cancel-button" onclick="closeReferralModal()">انصراف</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="actionToast" class="action-toast hidden" role="status" aria-live="polite"></div>
+
+        <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // ================ CONFIG ================
+        const XLSX_FILE = './PrsReport.xlsx';   // فایل اکسل کنار همین HTML
+        // پس از Deploy کردن Google Apps Script، آدرس Web App را در این متغیر قرار دهید.
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzmJwXXzAnFgT4E890GC0psCgw2YGUEq8quZ49dLNCtMmy8DrnpmHWMcyVYRjfIoULV/exec';
+
+        // نگاشت ستون‌های اکسل (بر اساس نام سرستون، نه ترتیب)
+        const COL = {
+            id:'request_id', tracking:'tracking_code', name:'full_name', phone:'mobile',
+            location:'service_location', province:'province', county:'county',
+            holding:'holding', group:'company_group', unit:'unit', category:'category',
+            subject:'subject', text:'message', date:'registered_at', status:'status'
+        };
+
+        let messages = [];
+        let charts = [];
+        let activeMessage = null;
+        let toastTimer = null;
+        // Cards are shown only after a successful sync returns the latest Referral/Action values.
+        let sheetStatusesLoaded = false;
+        let sheetStatusById = Object.create(null);
+        const pendingGoogleRequests = new Map();
+
+        // ================ HELPERS ================
+        const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        const fa = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+        const pad = n => String(n).padStart(2, '0');
+        const clean = v => (v === null || v === undefined) ? '' : String(v).replace(/‌{2,}/g,'‌').trim();
+
+        // تبدیل تاریخ میلادی به شمسی
+        const jFmt = new Intl.DateTimeFormat('en-US-u-ca-persian-nu-latn', {year:'numeric', month:'2-digit', day:'2-digit'});
+        function toJalali(y, m, d) {
+            const parts = jFmt.formatToParts(new Date(y, m - 1, d, 12));
+            const g = t => parts.find(p => p.type === t).value;
+            return `${g('year')}/${g('month')}/${g('day')}`;
+        }
+
+        // خواندن تاریخ ثبت (متن، سریال اکسل یا Date) بدون وابستگی به منطقه زمانی
+        function parseDate(v) {
+            let y, mo, d, h = 0, mi = 0, s = 0;
+            if (v instanceof Date) {
+                y = v.getFullYear(); mo = v.getMonth() + 1; d = v.getDate();
+                h = v.getHours(); mi = v.getMinutes(); s = v.getSeconds();
+            } else if (typeof v === 'number') {
+                const p = XLSX.SSF.parse_date_code(v);
+                y = p.y; mo = p.m; d = p.d; h = p.H; mi = p.M; s = Math.round(p.S);
+            } else {
+                const m = String(v || '').match(/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
+                if (!m) return null;
+                [y, mo, d] = [+m[1], +m[2], +m[3]]; h = +(m[4] || 0); mi = +(m[5] || 0); s = +(m[6] || 0);
+            }
+            return {
+                key: Date.UTC(y, mo - 1, d, h, mi, s),
+                jDate: toJalali(y, mo, d),
+                time: `${pad(h)}:${pad(mi)}`
+            };
+        }
+
+        function normPhone(v) {
+            let p = clean(v).replace(/\D/g, '');
+            if (/^9\d{9}$/.test(p)) p = '0' + p;      // صفر ابتدایی که اکسل حذف کرده
+            return p || 'نامشخص';
+        }
+
+        // ================ LOAD & PARSE XLSX ================
+        function parseWorkbook(wb) {
+            const ws = wb.Sheets[wb.SheetNames[0]];
+            const rows = XLSX.utils.sheet_to_json(ws, {defval: '', raw: true});
+            const list = rows.map((r, i) => {
+                const dt = parseDate(r[COL.date]);
+                return {
+                    id: clean(r[COL.id]),
+                    tracking: clean(r[COL.tracking]),
+                    name: clean(r[COL.name]) || 'کاربر ناشناس',
+                    phone: normPhone(r[COL.phone]),
+                    location: clean(r[COL.location]) || 'نامشخص',
+                    province: clean(r[COL.province]),
+                    county: clean(r[COL.county]),
+                    holding: clean(r[COL.holding]),
+                    group: clean(r[COL.group]),
+                    unit: clean(r[COL.unit]) || 'نامشخص',
+                    category: clean(r[COL.category]) || 'نامشخص',
+                    subject: clean(r[COL.subject]) || 'بدون موضوع',
+                    text: String(r[COL.text] ?? '').trim(),
+                    status: clean(r[COL.status]) || 'ثبت اولیه',
+                    date: dt
+                };
+            }).filter(m => m.text || m.subject !== 'بدون موضوع');
+
+            // جدیدترین در ابتدا؛ در تاریخ‌های مساوی، شناسه بزرگ‌تر اول
+            list.sort((a, b) => ((b.date?.key ?? 0) - (a.date?.key ?? 0)) || (Number(b.id) - Number(a.id)));
+            return list;
+        }
+
+        let loaderProgress = 10;
+        let loaderInterval = null;
+
+        function updateLoaderProgress(value, message) {
+            loaderProgress = Math.max(0, Math.min(100, value));
+            const bar = document.getElementById('loaderProgressBar');
+            const percent = document.getElementById('loaderPercent');
+            const label = document.getElementById('loaderMessage');
+            const progress = document.querySelector('#initialLoader [role="progressbar"]');
+            if (bar) bar.style.width = loaderProgress + '%';
+            if (percent) percent.textContent = fa(loaderProgress) + '٪';
+            if (label && message) label.textContent = message;
+            if (progress) progress.setAttribute('aria-valuenow', String(loaderProgress));
+        }
+
+        function startInitialLoader(message = 'در حال دریافت اطلاعات و آماده‌سازی صفحه...') {
+            const loader = document.getElementById('initialLoader');
+            if (!loader) return;
+            loader.classList.remove('is-hidden');
+            loaderProgress = 10;
+            updateLoaderProgress(loaderProgress, message);
+            if (loaderInterval) clearInterval(loaderInterval);
+            loaderInterval = setInterval(() => {
+                if (loaderProgress >= 88) return;
+                const next = Math.min(88, loaderProgress + Math.max(2, Math.ceil((88 - loaderProgress) * 0.12)));
+                const label = next < 38
+                    ? 'در حال دریافت فایل اطلاعات...'
+                    : next < 68
+                        ? 'در حال پردازش پیام‌ها...'
+                        : 'در حال آماده‌سازی کارت‌ها و نمودارها...';
+                updateLoaderProgress(next, label);
+            }, 420);
+        }
+
+        function finishInitialLoader() {
+            const loader = document.getElementById('initialLoader');
+            if (!loader) return;
+            if (loaderInterval) {
+                clearInterval(loaderInterval);
+                loaderInterval = null;
+            }
+            updateLoaderProgress(100, 'داشبورد آماده است');
+            window.__dashboardReady = true;
+            setTimeout(() => loader.classList.add('is-hidden'), 280);
+        }
+
+        async function loadData() {
+            window.__dashboardInitStarted = true;
+            startInitialLoader();
+            showStatus('loading');
+            try {
+                const res = await fetch(XLSX_FILE + '?t=' + Date.now(), {cache: 'no-store'});
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const buf = await res.arrayBuffer();
+                await applyWorkbook(XLSX.read(buf, {type: 'array'}));
+            } catch (e) {
+                console.warn('خواندن خودکار فایل اکسل ممکن نشد:', e);
+                showStatus('error');
+                finishInitialLoader();
+            }
+        }
+
+        function loadFromPicker(file) {
+            if (!file) return;
+            startInitialLoader('در حال خواندن فایل اکسل انتخاب‌شده...');
+            showStatus('loading');
+            const reader = new FileReader();
+            reader.onload = async e => {
+                try { await applyWorkbook(XLSX.read(e.target.result, {type: 'array'})); }
+                catch (err) { console.error(err); showStatus('error'); finishInitialLoader(); }
+            };
+            reader.onerror = () => { showStatus('error'); finishInitialLoader(); };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function extractWorkbookRows(wb) {
+            const ws = wb.Sheets[wb.SheetNames[0]];
+            const grid = XLSX.utils.sheet_to_json(ws, {header: 1, defval: '', raw: true});
+            if (!grid.length) throw new Error('فایل اکسل خالی است یا سرستون ندارد.');
+            const headers = grid[0].map(v => String(v ?? '').trim());
+            const rows = grid.slice(1).filter(row => row.some(v => String(v ?? '').trim() !== ''));
+            if (!headers.some(h => h.toLowerCase() === 'request_id')) {
+                throw new Error('ستون request_id در سرستون‌های فایل اکسل پیدا نشد.');
+            }
+            return {headers, rows};
+        }
+
+        function isGoogleScriptConfigured() {
+            return /^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec(?:\?.*)?$/.test(GOOGLE_SCRIPT_URL) && !GOOGLE_SCRIPT_URL.includes('PASTE_YOUR_');
+        }
+
+        function ensureGoogleTransportFrame() {
+            let frame = document.getElementById('googleScriptTransportFrame');
+            if (!frame) {
+                frame = document.createElement('iframe');
+                frame.id = 'googleScriptTransportFrame';
+                frame.name = 'googleScriptTransportFrame';
+                frame.title = 'ارتباط با Google Sheets';
+                frame.style.cssText = 'display:none;width:0;height:0;border:0;';
+                document.body.appendChild(frame);
+            }
+            return frame;
+        }
+
+        window.addEventListener('message', function(event) {
+            const frame = document.getElementById('googleScriptTransportFrame');
+            if (!frame) return;
+            // HtmlService may deliver the message from a nested sandbox frame;
+            // accept only messages originating from the transport iframe or one of its children.
+            let sourceWindow = event.source;
+            let trustedSource = false;
+            for (let depth = 0; sourceWindow && depth < 6; depth++) {
+                if (sourceWindow === frame.contentWindow) { trustedSource = true; break; }
+                try {
+                    if (sourceWindow === sourceWindow.parent) break;
+                    sourceWindow = sourceWindow.parent;
+                } catch (_) { break; }
+            }
+            if (!trustedSource) return;
+            const data = event.data;
+            if (!data || data.channel !== 'prs-google-sheet' || !data.clientRequestId) return;
+            const pending = pendingGoogleRequests.get(data.clientRequestId);
+            if (!pending) return;
+            clearTimeout(pending.timeout);
+            pendingGoogleRequests.delete(data.clientRequestId);
+            if (data.ok) pending.resolve(data.result || {});
+            else pending.reject(new Error(data.error || 'عملیات Google Sheets ناموفق بود.'));
+        });
+
+        function sendGoogleScriptRequest(payload, timeoutMs = 60000) {
+            if (!isGoogleScriptConfigured()) {
+                return Promise.reject(new Error('آدرس Web App در متغیر GOOGLE_SCRIPT_URL تنظیم نشده است.'));
+            }
+            const frame = ensureGoogleTransportFrame();
+            const clientRequestId = 'prs_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+            const body = {...payload, clientRequestId};
+            return new Promise((resolve, reject) => {
+                const timeout = setTimeout(() => {
+                    pendingGoogleRequests.delete(clientRequestId);
+                    reject(new Error('پاسخی از Google Sheets دریافت نشد. آدرس Web App و مجوزهای Deploy را بررسی کنید.'));
+                }, timeoutMs);
+                pendingGoogleRequests.set(clientRequestId, {resolve, reject, timeout});
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = GOOGLE_SCRIPT_URL;
+                form.target = frame.name;
+                form.acceptCharset = 'UTF-8';
+                form.style.display = 'none';
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'payload';
+                input.value = JSON.stringify(body);
+                form.appendChild(input);
+                document.body.appendChild(form);
+                try {
+                    form.submit();
+                } catch (error) {
+                    clearTimeout(timeout);
+                    pendingGoogleRequests.delete(clientRequestId);
+                    reject(error);
+                } finally {
+                    setTimeout(() => form.remove(), 0);
+                }
+            });
+        }
+
+        async function applyWorkbook(wb) {
+            // Read and parse the complete Excel workbook first, but do not render the dashboard yet.
+            messages = parseWorkbook(wb);
+            sheetStatusesLoaded = false;
+            sheetStatusById = Object.create(null);
+
+            if (!isGoogleScriptConfigured()) {
+                // KPI cards and charts still use all Excel messages, but the work queue is kept
+                // hidden until Google Sheets statuses can be checked reliably.
+                renderAll();
+                showStatus('config');
+                finishInitialLoader();
+                return;
+            }
+
+            try {
+                const source = extractWorkbookRows(wb);
+                updateLoaderProgress(82, 'فایل اکسل خوانده شد؛ در حال همگام‌سازی با Google Sheets...');
+                showStatus('syncing');
+
+                // Step 1: update Google Sheets before displaying the dashboard.
+                const result = await sendGoogleScriptRequest({action: 'sync', headers: source.headers, rows: source.rows});
+                if (!Array.isArray(result.statuses)) {
+                    throw new Error('پاسخ اسکریپت شامل وضعیت Referral و Action نیست؛ لطفاً نسخه جدید Apps Script را منتشر کنید.');
+                }
+
+                applyRequestStatuses(result.statuses);
+                sheetStatusesLoaded = true;
+
+                // Step 2: render KPIs/charts from all Excel messages and cards from pending messages only.
+                renderAll();
+                showStatus('syncSuccess', result);
+            } catch (error) {
+                console.error('همگام‌سازی Google Sheets انجام نشد:', error);
+                // Continue showing Excel-based KPIs/charts, but fail closed for the action queue.
+                sheetStatusesLoaded = false;
+                renderAll();
+                showStatus('syncError', {message: error.message});
+            } finally {
+                finishInitialLoader();
+            }
+        }
+
+        function applyRequestStatuses(statuses) {
+            sheetStatusById = Object.create(null);
+            statuses.forEach(item => {
+                const id = clean(item && item.request_id);
+                if (!id) return;
+                sheetStatusById[id] = {
+                    referral: clean(item.Referral),
+                    action: clean(item.Action)
+                };
+            });
+            messages.forEach(message => {
+                const state = sheetStatusById[clean(message.id)] || {referral: '', action: ''};
+                message.referral = state.referral;
+                message.action = state.action;
+            });
+        }
+
+        function showStatus(state, detail = {}) {
+            const box = document.getElementById('statusBox');
+            if (state === 'ok') { box.innerHTML = ''; return; }
+            if (state === 'loading') {
+                box.innerHTML = `<div class="mb-6 bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center text-gray-500 text-sm"><i class="fa-solid fa-spinner fa-spin ml-2"></i>در حال خواندن PrsReport.xlsx ...</div>`;
+                return;
+            }
+            if (state === 'syncing') {
+                box.innerHTML = `<div class="mb-5 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800"><i class="fa-solid fa-cloud-arrow-up fa-bounce ml-2"></i>در حال بررسی شناسه‌ها و همگام‌سازی سطرهای جدید با شیت PrsRequests...</div>`;
+                return;
+            }
+            if (state === 'syncSuccess') {
+                const added = fa(detail.added ?? 0);
+                const skipped = fa(detail.duplicates ?? 0);
+                box.innerHTML = `<div class="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800"><i class="fa-solid fa-circle-check ml-2"></i>همگام‌سازی Google Sheets انجام شد؛ ${added} سطر جدید اضافه شد و ${skipped} سطر تکراری نادیده گرفته شد.</div>`;
+                return;
+            }
+            if (state === 'syncError') {
+                box.innerHTML = `<div class="mb-5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800"><div class="font-bold mb-1"><i class="fa-solid fa-triangle-exclamation ml-2"></i>همگام‌سازی Google Sheets ناموفق بود</div><div class="leading-7">${esc(detail.message || 'خطای نامشخص')}</div><div class="mt-1 text-xs">داشبورد همچنان نمایش داده می‌شود؛ اتصال و مجوزهای Web App را بررسی کنید.</div></div>`;
+                return;
+            }
+            if (state === 'config') {
+                box.innerHTML = `<div class="mb-5 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"><i class="fa-solid fa-link ml-2"></i>برای فعال‌شدن همگام‌سازی و دکمه‌های «ارجاع» و «اختتام»، آدرس Web App را در متغیر <code dir="ltr">GOOGLE_SCRIPT_URL</code> ابتدای تنظیمات JavaScript قرار دهید.</div>`;
+                return;
+            }
+            box.innerHTML = `
+                <div class="mb-6 bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-amber-900">
+                    <div class="font-bold mb-1 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation"></i> فایل PrsReport.xlsx به‌صورت خودکار بارگذاری نشد</div>
+                    <p class="leading-7 mb-3">این صفحه باید کنار فایل <span dir="ltr" class="font-mono">PrsReport.xlsx</span> و از طریق وب‌سرور باز شود (مرورگرها هنگام باز کردن مستقیم فایل از روی دیسک، خواندن فایل کناری را مجاز نمی‌دانند). در صورت نیاز می‌توانید فایل را به‌صورت دستی انتخاب کنید:</p>
+                    <label class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg cursor-pointer transition-colors">
+                        <i class="fa-solid fa-file-excel"></i> انتخاب فایل اکسل
+                        <input type="file" accept=".xlsx,.xls" class="hidden" onchange="loadFromPicker(this.files[0])">
+                    </label>
+                </div>`;
+        }
+
+        // ================ CATEGORY STYLES ================
+        const catStyles = {
+            'پیشنهاد':        {icon:'fa-lightbulb',            bg:'bg-amber-50',   text:'text-amber-600',   chart:'#f59e0b', kpi:'amber'},
+            'درخواست':        {icon:'fa-hand',                 bg:'bg-teal-50',    text:'text-teal-600',    chart:'#14b8a6', kpi:'teal'},
+            'تقدیر و تشکر':   {icon:'fa-heart',                bg:'bg-rose-50',    text:'text-rose-500',    chart:'#f43f5e', kpi:'rose'},
+            'شکایت':          {icon:'fa-triangle-exclamation', bg:'bg-red-50',     text:'text-red-600',     chart:'#ef4444', kpi:'red'},
+            'انتقاد':         {icon:'fa-comment-slash',        bg:'bg-orange-50',  text:'text-orange-600',  chart:'#f97316', kpi:'orange'},
+            'طرح و ایده':     {icon:'fa-wand-magic-sparkles',  bg:'bg-violet-50',  text:'text-violet-600',  chart:'#8b5cf6', kpi:'violet'},
+            'ملاقات حضوری':   {icon:'fa-handshake',            bg:'bg-sky-50',     text:'text-sky-600',     chart:'#0ea5e9', kpi:'sky'}
+        };
+        const defaultStyle = {icon:'fa-circle', bg:'bg-gray-50', text:'text-gray-600', chart:'#6b7280', kpi:'gray'};
+        const styleOf = c => catStyles[c] || defaultStyle;
+
+        function countBy(list, keyFn) {
+            const m = new Map();
+            list.forEach(x => { const k = keyFn(x); m.set(k, (m.get(k) || 0) + 1); });
+            return m;
+        }
+
+        // ================ RENDER ================
+        function renderAll() {
+            const latest = messages.find(m => m.date);
+            document.getElementById('reportDate').textContent = latest ? latest.date.jDate : '—';
+            renderKpis();
+            renderCards();
+            renderCharts();
+        }
+
+        function renderKpis() {
+            // Intentionally use every parsed Excel message, including referred/closed requests.
+            const counts = countBy(messages, m => m.category);
+            const cats = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+            const kpi = (label, icon, color, value) => `
+                <div class="kpi-card bg-white rounded-2xl p-2 md:p-3 shadow-sm border border-gray-100 border-t-4 border-t-${color}-500 flex items-center justify-between hover:shadow-md transition-shadow">
+                    <div class="min-w-0">
+                        <p class="kpi-label text-[10px] sm:text-xs mb-1 flex items-center gap-1 whitespace-nowrap">
+                            <span class="w-5 h-5 rounded-full bg-${color}-50 text-${color}-600 inline-flex flex-shrink-0 items-center justify-center text-xs"><i class="fa-solid ${icon}"></i></span>
+                            <span class="kpi-label-text">${esc(label)}</span>
+                        </p>
+                        <h3 class="kpi-value text-base sm:text-xl font-bold text-${color}-600">${fa(value)}</h3>
+                    </div>
+                </div>`;
+            document.getElementById('kpiContainer').innerHTML =
+                kpi('کل پیام‌ها', 'fa-envelope-open-text', 'blue', messages.length) +
+                cats.map(([c, n]) => { const s = styleOf(c); return kpi(c, s.icon, s.kpi, n); }).join('');
+        }
+
+        function renderCards() {
+            const container = document.getElementById('cardsContainer');
+            const visibleMessages = sheetStatusesLoaded
+                ? messages.filter(m => !clean(m.action) && !clean(m.referral))
+                : [];
+            document.getElementById('totalCount').textContent = fa(visibleMessages.length);
+
+            if (!sheetStatusesLoaded) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-white rounded-2xl border border-amber-200 p-5 text-sm text-amber-900 leading-7">
+                        <i class="fa-solid fa-shield-halved ml-2"></i>
+                        برای جلوگیری از نمایش دوباره پیام‌های ارجاع‌شده یا مختومه، کارتابل پس از اتصال موفق به Google Sheets نمایش داده می‌شود.
+                    </div>`;
+                return;
+            }
+
+            if (!visibleMessages.length) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-white rounded-2xl border border-gray-100 p-6 text-center text-sm text-gray-500">
+                        <i class="fa-solid fa-circle-check text-emerald-500 ml-2"></i>
+                        در حال حاضر پیام بازی برای پیگیری در کارتابل وجود ندارد.
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = visibleMessages.map(m => {
+                const idx = messages.indexOf(m);
+                const st = styleOf(m.category);
+                return `
+                <div onclick="openModal(${idx})"
+                     class="relative bg-white rounded-2xl shadow-sm border border-gray-100 border-t-4 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.99] transition-all cursor-pointer flex flex-col" style="border-top-color:${st.chart}">
+                    <div class="px-3 py-2.5 border-b border-gray-50 bg-gray-50/50 flex justify-between items-center">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <div class="h-7 min-w-7 px-2 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-[11px] font-bold flex-shrink-0">${esc(m.id || '—')}</div>
+                            <span class="font-bold text-gray-700 text-sm truncate">${esc(m.name)}</span>
+                        </div>
+                        <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-medium whitespace-nowrap flex-shrink-0">${esc(m.status)}</span>
+                    </div>
+                    <div class="p-3 flex-grow">
+                        <div class="flex flex-wrap gap-1.5 mb-2">
+                            <span class="${st.bg} ${st.text} text-[10px] px-2 py-0.5 rounded-md flex items-center gap-1">
+                                <i class="fa-solid ${st.icon}"></i> ${esc(m.category)}
+                            </span>
+                            <span class="bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded-md flex items-center gap-1 min-w-0">
+                                <i class="fa-solid fa-sitemap flex-shrink-0"></i> <span class="truncate">${esc(m.unit)}</span>
+                            </span>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2 text-sm bg-gradient-to-l from-blue-50 to-white border-r-4 border-blue-500 rounded-md px-3 py-2 leading-6 shadow-sm">${esc(m.subject)}</h4>
+                        <p class="text-xs text-gray-600 leading-relaxed message-preview whitespace-pre-line">${esc(m.text)}</p>
+                    </div>
+                    <div class="bg-gray-50 px-3 py-2 text-[10px] text-gray-500 flex justify-between items-center border-t border-gray-100 gap-2">
+                        <span class="flex items-center gap-1 min-w-0 truncate"><i class="fa-regular fa-clock"></i> ${m.date ? `${m.date.jDate} - ${m.date.time}` : 'نامشخص'}</span>
+                        <span dir="ltr" class="flex-shrink-0">${esc(m.phone)}</span>
+                    </div>
+                </div>`;
+            }).join('');
+            container.querySelectorAll('.message-preview').forEach(el => {
+                el.classList.toggle('is-truncated', el.scrollHeight > el.clientHeight + 1);
+            });
+        }
+
+        // ================ MODAL ================
+        function openModal(idx) {
+            const m = messages[idx];
+            activeMessage = m;
+            const st = styleOf(m.category);
+            const place = [m.location, m.province, m.county, m.holding, m.group].filter(Boolean).join(' › ');
+            document.getElementById('modalTitle').textContent = m.name;
+            const box = (icon, label, val, ltr) => `
+                <div class="modal-info-card">
+                    <div class="modal-info-label"><i class="fa-solid ${icon}"></i> <span>${label}</span></div>
+                    <div class="modal-info-value" ${ltr ? 'dir="ltr"' : ''}>${esc(val)}</div>
+                </div>`;
+            document.getElementById('modalBody').innerHTML = `
+                <div class="modal-content-layout">
+                    <div class="modal-status-row">
+                        <span class="modal-category-badge" style="--category-color:${st.chart}">
+                            <i class="fa-solid ${st.icon}"></i> ${esc(m.category)}
+                        </span>
+                        <span class="modal-status-badge">
+                            <i class="fa-solid fa-circle-check"></i>${esc(m.status)}
+                        </span>
+                        <span class="modal-message-id-badge"><i class="fa-solid fa-hashtag"></i> پیام ${esc(m.id || 'نامشخص')}</span>
+                    </div>
+                    <div class="modal-info-grid">
+                        ${box('fa-user', 'نام و نام خانوادگی', m.name)}
+                        ${box('fa-phone', 'تلفن همراه', m.phone, true)}
+                        ${box('fa-location-dot', 'محل خدمت', place)}
+                        ${box('fa-sitemap', 'واحد سازمانی', m.unit)}
+                        ${box('fa-calendar-days', 'تاریخ و ساعت ثبت', m.date ? `${m.date.jDate} - ${m.date.time}` : 'نامشخص')}
+                        ${box('fa-hashtag', 'کد رهگیری', m.tracking || 'نامشخص', true)}
+                    </div>
+                    <div class="modal-subject-section">
+                        <div class="modal-subject-label"><i class="fa-solid fa-tag"></i> <span>موضوع</span></div>
+                        <div class="modal-subject-value">${esc(m.subject)}</div>
+                    </div>
+                    <div class="modal-message-section">
+                        <div class="modal-message-label"><i class="fa-solid fa-comment-dots"></i> <span>متن کامل پیام</span></div>
+                        <div class="modal-message-content modal-scroll">${esc(m.text)}</div>
+                    </div>
+                </div>`;
+            const modal = document.getElementById('modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeReferralModal() {
+            const modal = document.getElementById('referralModal');
+            modal.classList.add('hidden');
+            const textarea = document.getElementById('referralText');
+            if (textarea) textarea.value = '';
+        }
+
+        function closeModal() {
+            closeReferralModal();
+            const modal = document.getElementById('modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+            activeMessage = null;
+        }
+
+        function openReferralModal() {
+            if (!activeMessage) return;
+            const modal = document.getElementById('referralModal');
+            modal.classList.remove('hidden');
+            const textarea = document.getElementById('referralText');
+            if (textarea) setTimeout(() => textarea.focus(), 50);
+        }
+
+        function showActionToast(message, type = 'success') {
+            const toast = document.getElementById('actionToast');
+            if (!toast) return;
+            toast.className = 'action-toast ' + (type === 'error' ? 'error' : 'success');
+            toast.textContent = message;
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.add('hidden'), 4500);
+        }
+
+        function setActionButtonsBusy(isBusy) {
+            document.querySelectorAll('.modal-footer-button, #referralSubmitButton, .referral-cancel-button').forEach(button => {
+                button.disabled = isBusy;
+            });
+        }
+
+        async function handleCloseRequest() {
+            if (!activeMessage) return;
+            const requestId = String(activeMessage.id ?? '').trim();
+            if (!requestId) {
+                showActionToast('شناسه درخواست موجود نیست؛ امکان ثبت اختتام وجود ندارد.', 'error');
+                return;
+            }
+            const message = activeMessage;
+            setActionButtonsBusy(true);
+            try {
+                await sendGoogleScriptRequest({action: 'update', request_id: requestId, field: 'Action', value: 'مختومه'});
+                message.action = 'مختومه';
+                if (sheetStatusById[requestId]) sheetStatusById[requestId].action = 'مختومه';
+                closeModal();
+                renderCards();
+                showActionToast('وضعیت درخواست در شیت PrsRequests به «مختومه» تغییر کرد.');
+            } catch (error) {
+                showActionToast(error.message || 'ثبت اختتام ناموفق بود.', 'error');
+            } finally {
+                setActionButtonsBusy(false);
+            }
+        }
+
+        async function submitReferral(event) {
+            event.preventDefault();
+            if (!activeMessage) return;
+            const requestId = String(activeMessage.id ?? '').trim();
+            const referral = document.getElementById('referralText').value.trim();
+            if (!referral) {
+                showActionToast('لطفاً شرح ارجاع را وارد کنید.', 'error');
+                return;
+            }
+            if (!requestId) {
+                showActionToast('شناسه درخواست موجود نیست؛ امکان ثبت ارجاع وجود ندارد.', 'error');
+                return;
+            }
+            const message = activeMessage;
+            setActionButtonsBusy(true);
+            try {
+                await sendGoogleScriptRequest({action: 'update', request_id: requestId, field: 'Referral', value: referral});
+                message.referral = referral;
+                if (sheetStatusById[requestId]) sheetStatusById[requestId].referral = referral;
+                closeModal();
+                renderCards();
+                showActionToast('شرح ارجاع در شیت PrsRequests ثبت شد.');
+            } catch (error) {
+                showActionToast(error.message || 'ثبت ارجاع ناموفق بود.', 'error');
+            } finally {
+                setActionButtonsBusy(false);
+            }
+        }
+
+        document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+        document.getElementById('referralModal').addEventListener('click', function(e) { if (e.target === this) closeReferralModal(); });
+        document.addEventListener('keydown', function(e) {
+            if (e.key !== 'Escape') return;
+            const referralModal = document.getElementById('referralModal');
+            if (referralModal && !referralModal.classList.contains('hidden')) closeReferralModal();
+            else closeModal();
+        });
+
+        // ================ CHARTS ================
+        Chart.register(ChartDataLabels);
+        Chart.defaults.font.family = 'Vazirmatn, sans-serif';
+        Chart.defaults.color = '#4b5563';
+
+        // فاصله برچسب‌های عددی هر سه نمودار؛ برای کم‌وزیاد کردن، فقط عدد 12 را تغییر دهید.
+        const CHART_DATALABEL_OFFSET = 12;
+        const unitPalette = ['#6366f1','#8b5cf6','#ec4899','#0ea5e9','#14b8a6','#f59e0b','#84cc16','#f97316','#9ca3af'];
+        const short = (s, n = 24) => s.length > n ? s.slice(0, n - 1) + '…' : s;
+
+        function renderCharts() {
+            charts.forEach(c => c.destroy());
+            charts = [];
+
+            // --- Doughnut: Category ---
+            const cat = [...countBy(messages, m => m.category).entries()].sort((a, b) => b[1] - a[1]);
+            charts.push(new Chart(document.getElementById('categoryChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: cat.map(x => x[0]),
+                    datasets: [{ data: cat.map(x => x[1]), backgroundColor: cat.map(x => styleOf(x[0]).chart),
+                                 borderWidth: 2, borderColor: '#ffffff', hoverOffset: 6 }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, cutout: '58%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { usePointStyle: true, padding: 10, font: { size: 11 }, boxWidth: 8 } },
+                        tooltip: { callbacks: { label: c => `${c.label}: ${c.raw} پیام` } },
+                        datalabels: { color: '#000', anchor: 'center', align: 'right', offset: CHART_DATALABEL_OFFSET, font: { weight: 'bold', size: 12 }, formatter: v => v }
+                    }
+                }
+            }));
+
+            // --- Horizontal Bar: Unit (۸ واحد پرتعداد + سایر) ---
+            const TOP = 8;
+            let units = [...countBy(messages, m => m.unit).entries()].sort((a, b) => b[1] - a[1]);
+            if (units.length > TOP + 1) {
+                const rest = units.slice(TOP).reduce((s, x) => s + x[1], 0);
+                units = units.slice(0, TOP).concat([['سایر واحدها', rest]]);
+            }
+            charts.push(new Chart(document.getElementById('unitChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: units.map(x => x[0]),
+                    datasets: [{ data: units.map(x => x[1]),
+                                 backgroundColor: units.map((x, i) => x[0] === 'نامشخص' || x[0] === 'سایر واحدها' ? '#9ca3af' : unitPalette[i % unitPalette.length]),
+                                 borderRadius: 6, barThickness: 16 }]
+                },
+                options: {
+                    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                    layout: { padding: { left: 18 } },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { title: i => units[i[0].dataIndex][0], label: c => `${c.raw} پیام` } },
+                        datalabels: { color: '#1f2937', anchor: 'end', align: 'right', offset: CHART_DATALABEL_OFFSET, font: { weight: 'bold', size: 11 }, formatter: v => v }
+                    },
+                    scales: {
+                        x: { beginAtZero: true, grace: '12%', ticks: { precision: 0, font: { size: 10 } }, grid: { color: '#f3f4f6' } },
+                        y: { grid: { display: false }, ticks: { font: { size: 10 }, callback(v) { return short(this.getLabelForValue(v)); } } }
+                    }
+                }
+            }));
+
+            // --- Horizontal Bar: Location ---
+            const locMap = new Map([['ستاد مرکزی', 0], ['بنیاد مسکن استان‌ها', 0], ['شرکت‌های تابعه', 0]]);
+            messages.forEach(m => locMap.set(m.location, (locMap.get(m.location) || 0) + 1));
+            const locs = [...locMap.entries()];
+            const locColors = ['#3b82f6','#10b981','#8b5cf6','#f59e0b','#ec4899','#14b8a6'];
+            charts.push(new Chart(document.getElementById('locationChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: locs.map(x => x[0]),
+                    datasets: [{ data: locs.map(x => x[1]), backgroundColor: locs.map((x, i) => locColors[i % locColors.length]), borderRadius: 6, barThickness: 26 }]
+                },
+                options: {
+                    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: c => `${c.raw} پیام` } },
+                        datalabels: { color: '#1f2937', anchor: 'end', align: 'right', offset: CHART_DATALABEL_OFFSET, font: { weight: 'bold', size: 12 }, formatter: v => v }
+                    },
+                    scales: {
+                        x: { beginAtZero: true, grace: '12%', ticks: { precision: 0, font: { size: 10 } }, grid: { color: '#f3f4f6' } },
+                        y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+                    }
+                }
+            }));
+        }
+
+        // ================ INIT ================
+        loadData();
+    </script>
+</body>
+</html>
