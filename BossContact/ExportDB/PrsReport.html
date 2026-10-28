@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
@@ -50,12 +51,106 @@
         .modal-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
         .modal-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .modal-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Initial loading screen */
+        .initial-loader {
+            position: fixed; inset: 0; z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+            padding: 24px;
+            background:
+                radial-gradient(circle at 15% 18%, rgba(96,165,250,.22), transparent 31%),
+                radial-gradient(circle at 86% 82%, rgba(30,64,175,.12), transparent 28%),
+                linear-gradient(135deg, #f8fafc 0%, #eef4ff 55%, #f8fafc 100%);
+            opacity: 1; visibility: visible;
+            transition: opacity .42s ease, visibility .42s ease;
+        }
+        .initial-loader.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-card {
+            width: min(430px, 100%); padding: 32px 26px 25px;
+            border: 1px solid rgba(148,163,184,.25); border-radius: 28px;
+            background: rgba(255,255,255,.94);
+            box-shadow: 0 24px 70px rgba(30,58,138,.15);
+            text-align: center;
+        }
+        .loader-emblem {
+            position: relative; display: grid; place-items: center;
+            width: 66px; height: 66px; margin: 0 auto 19px;
+            border-radius: 21px; color: white; font-size: 27px;
+            background: linear-gradient(145deg, #1e3a8a, #3b82f6);
+            box-shadow: 0 10px 24px rgba(37,99,235,.28);
+        }
+        .loader-emblem::after {
+            content: ''; position: absolute; inset: -7px; border-radius: 26px;
+            border: 2px solid rgba(59,130,246,.18);
+        }
+        .loader-title { color: #172554; font-size: 19px; font-weight: 800; }
+        .loader-message { min-height: 24px; margin-top: 8px; color: #64748b; font-size: 12px; line-height: 1.9; }
+        .loader-progress {
+            height: 8px; margin-top: 22px; overflow: hidden;
+            border-radius: 999px; background: #e8eef8;
+        }
+        .loader-progress-bar {
+            height: 100%; width: 10%; border-radius: inherit;
+            background: linear-gradient(90deg, #60a5fa, #2563eb, #1d4ed8);
+            box-shadow: 0 0 14px rgba(37,99,235,.24);
+            transition: width .35s ease;
+        }
+        .loader-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; color: #64748b; font-size: 11px; }
+        .loader-percent { color: #1d4ed8; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+        /* Angled blade of light across the banner */
+        .banner-bg::after {
+            content: ''; position: absolute; top: -65%; bottom: -65%; left: -34%;
+            width: 27%; transform: skewX(-25deg); pointer-events: none; z-index: 1;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.05) 22%,
+                rgba(191,219,254,.24) 52%, rgba(255,255,255,.08) 72%, transparent 100%);
+            animation: bannerBlade 8s ease-in-out infinite;
+        }
+        @keyframes bannerBlade {
+            0%, 8% { left: -34%; opacity: 0; }
+            18% { opacity: .9; }
+            58% { left: 125%; opacity: .75; }
+            70%, 100% { left: 125%; opacity: 0; }
+        }
+
+        /* Three-line message preview with a custom continuation label */
+        .message-preview {
+            position: relative; max-height: 4.875em; overflow: hidden;
+            line-height: 1.625;
+        }
+        .message-preview.is-truncated::after {
+            content: '... ادامه'; position: absolute; left: 0; bottom: 0;
+            padding: 0 5px 0 2px; white-space: nowrap; direction: rtl;
+            color: #2563eb; font-size: 10px; font-weight: 700;
+            background: rgba(255,255,255,.96); border-radius: 4px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .banner-bg::after { animation: none; }
+            .loader-progress-bar { transition: none; }
+            .initial-loader { transition: none; }
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased">
 
+    <!-- ================= INITIAL LOADER ================= -->
+    <div id="initialLoader" class="initial-loader" role="status" aria-live="polite">
+        <div class="loader-card">
+            <div class="loader-emblem"><i class="fa-solid fa-building-columns"></i></div>
+            <h2 class="loader-title">در حال آماده‌سازی داشبورد</h2>
+            <p id="loaderMessage" class="loader-message">در حال دریافت اطلاعات و آماده‌سازی صفحه...</p>
+            <div class="loader-progress" role="progressbar" aria-label="درصد بارگذاری" aria-valuemin="0" aria-valuemax="100" aria-valuenow="10">
+                <div id="loaderProgressBar" class="loader-progress-bar"></div>
+            </div>
+            <div class="loader-meta">
+                <span>لطفاً کمی صبر کنید</span>
+                <span id="loaderPercent" class="loader-percent">۱۰٪</span>
+            </div>
+        </div>
+    </div>
+
     <!-- ================= BANNER ================= -->
-    <header class="banner-bg text-white shadow-lg rounded-b-3xl mb-6 pb-5 pt-5 px-4 md:px-8">
+    <header class="banner-bg text-white shadow-lg rounded-b-3xl mb-5 pb-4 pt-4 px-4 md:px-8">
         <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="text-center md:text-right">
                 <h1 class="text-xl md:text-3xl font-bold mb-2 flex items-center justify-center md:justify-start gap-3">
@@ -67,12 +162,15 @@
             <div class="flex flex-wrap justify-center gap-3">
                 <div class="bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-5 py-2 flex items-center gap-2 shadow-sm">
                     <i class="fa-regular fa-calendar-check text-blue-100"></i>
-                    <span class="text-sm font-medium">تاریخ گزارش: 1405/07/27</span>
+                    <span class="text-sm font-medium">تاریخ گزارش: <span id="reportDate">—</span></span>
                 </div>
+            <!--
                 <a href="./PRS.pdf" target="_blank" class="bg-blue-600 hover:bg-blue-500 transition-colors border border-blue-400 rounded-full px-5 py-2 flex items-center gap-2 shadow-sm cursor-pointer group">
                     <i class="fa-solid fa-file-pdf text-red-300 group-hover:text-red-200 transition-colors"></i>
                     <span class="text-sm font-medium">جزئیات گزارش</span>
                 </a>
+            -->
+                
             </div>
         </div>
     </header>
@@ -80,75 +178,20 @@
     <!-- ================= MAIN CONTENT ================= -->
     <main class="max-w-7xl mx-auto px-4 md:px-8 pb-12">
         
-        <!-- KPI Cards (5 cards - sum of 4 categories = 21) -->
-        <section class="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 md:gap-5 mb-8">
-            <!-- Total -->
-            <div class="bg-white rounded-2xl p-3 md:p-4 shadow-sm border border-gray-100 border-t-4 border-t-blue-500 flex items-center justify-between hover:shadow-md transition-shadow">
-                <div class="min-w-0">
-                    <p class="text-gray-500 text-xs mb-1 flex items-center gap-1.5 whitespace-nowrap">
-                        <span class="w-6 h-6 rounded-full bg-blue-50 text-blue-600 inline-flex flex-shrink-0 items-center justify-center text-sm"><i class="fa-solid fa-envelope-open-text"></i></span>
-                        <span>کل پیام‌ها</span>
-                    </p>
-                    <h3 class="text-lg sm:text-2xl font-bold text-gray-800">21</h3>
-                </div>
-            </div>
-
-            <!-- Suggestion -->
-            <div class="bg-white rounded-2xl p-3 md:p-4 shadow-sm border border-gray-100 border-t-4 border-t-amber-500 flex items-center justify-between hover:shadow-md transition-shadow">
-                <div class="min-w-0">
-                    <p class="text-gray-500 text-xs mb-1 flex items-center gap-1.5 whitespace-nowrap">
-                        <span class="w-6 h-6 rounded-full bg-amber-50 text-amber-500 inline-flex flex-shrink-0 items-center justify-center text-sm"><i class="fa-solid fa-lightbulb"></i></span>
-                        <span>پیشنهادات</span>
-                    </p>
-                    <h3 class="text-lg sm:text-2xl font-bold text-amber-600">9</h3>
-                </div>
-            </div>
-
-            <!-- Request -->
-            <div class="bg-white rounded-2xl p-3 md:p-4 shadow-sm border border-gray-100 border-t-4 border-t-teal-500 flex items-center justify-between hover:shadow-md transition-shadow">
-                <div class="min-w-0">
-                    <p class="text-gray-500 text-xs mb-1 flex items-center gap-1.5 whitespace-nowrap">
-                        <span class="w-6 h-6 rounded-full bg-teal-50 text-teal-600 inline-flex flex-shrink-0 items-center justify-center text-sm"><i class="fa-solid fa-hand-holding-heart"></i></span>
-                        <span>درخواست‌ها</span>
-                    </p>
-                    <h3 class="text-lg sm:text-2xl font-bold text-teal-600">6</h3>
-                </div>
-            </div>
-
-            <!-- Appreciation -->
-            <div class="bg-white rounded-2xl p-3 md:p-4 shadow-sm border border-gray-100 border-t-4 border-t-rose-500 flex items-center justify-between hover:shadow-md transition-shadow">
-                <div class="min-w-0">
-                    <p class="text-gray-500 text-xs mb-1 flex items-center gap-1.5 whitespace-nowrap">
-                        <span class="w-6 h-6 rounded-full bg-rose-50 text-rose-500 inline-flex flex-shrink-0 items-center justify-center text-sm"><i class="fa-solid fa-heart"></i></span>
-                        <span>تقدیر و تشکر</span>
-                    </p>
-                    <h3 class="text-lg sm:text-2xl font-bold text-rose-500">5</h3>
-                </div>
-            </div>
-
-            <!-- Complaint -->
-            <div class="bg-white rounded-2xl p-3 md:p-4 shadow-sm border border-gray-100 border-t-4 border-t-red-500 flex items-center justify-between hover:shadow-md transition-shadow">
-                <div class="min-w-0">
-                    <p class="text-gray-500 text-xs mb-1 flex items-center gap-1.5 whitespace-nowrap">
-                        <span class="w-6 h-6 rounded-full bg-red-50 text-red-500 inline-flex flex-shrink-0 items-center justify-center text-sm"><i class="fa-solid fa-triangle-exclamation"></i></span>
-                        <span>شکایت</span>
-                    </p>
-                    <h3 class="text-lg sm:text-2xl font-bold text-red-500">1</h3>
-                </div>
-            </div>
-
-        </section>
+        <!-- KPI Cards (rendered by JS from xlsx) -->
+        <div id="statusBox"></div>
+        <section id="kpiContainer" class="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5 mb-8"></section>
 
         <!-- Messages Cards -->
         <section>
             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-5 gap-2">
                 <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
                     <i class="fa-solid fa-inbox text-gray-500"></i>
-                    لیست پیام‌های دریافتی (۲۱ مورد)
+                    <span>لیست پیام‌های دریافتی (<span id="totalCount">۰</span> مورد)</span>
                 </h2>
                 <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1.5 rounded-full inline-flex items-center gap-1 w-fit">
                     <i class="fa-solid fa-hand-pointer"></i>
-                    برای مشاهده متن کامل، روی هر کارت کلیک کنید
+                    جدیدترین پیام‌ها در ابتدا · برای مشاهده متن کامل روی هر کارت کلیک کنید
                 </span>
             </div>
             
@@ -221,125 +264,315 @@
         </div>
     </div>
 
-    <!-- ================= JAVASCRIPT ================= -->
+        <!-- ================= JAVASCRIPT ================= -->
     <script>
-        // ================ DATA ================
-        const messages = [
-            {id:1, name:"بهادر افشیدکیا", phone:"09127607693", location:"ستاد مرکزی", unit:"حوزه ریاست", category:"تقدیر و تشکر", subject:"بررسی سامانه", text:"با سلام تقدیر و راه اندازی سامانه\nسپاسگزارم\nبهادر افشیدکیا", status:"ثبت اولیه"},
-            {id:2, name:"کاربر ناشناس", phone:"09125404535", location:"ستاد مرکزی", unit:"روابط عمومی", category:"پیشنهاد", subject:"رفت و آمد", text:"لطفا برای سرویس ایاب و ذهاب پرسنل تدبیری بیندیشید", status:"ثبت اولیه"},
-            {id:3, name:"اشکان کاظمی", phone:"09124985479", location:"ستاد مرکزی", unit:"حوزه ریاست", category:"درخواست", subject:"تشکر و قدردانی از زحمات شما", text:"باسلام؛ تشکر از راه اندازی این سامانه", status:"ثبت اولیه"},
-            {id:4, name:"اشکان کاظمی", phone:"09124985479", location:"ستاد مرکزی", unit:"حوزه ریاست", category:"پیشنهاد", subject:"ساختار اداری", text:"عرض سلام و خسته نباشید خدمت جنابعالی\nآرزوی موفقیت و سربلندی از خداوند متعالی برایتان خواستارم\nامیدوارم در این برهه وشرایط سخت اقتصادی با برنامه های مدبرانه موفق باشید", status:"ثبت اولیه"},
-            {id:5, name:"کاربر ناشناس", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"پیشنهاد", subject:"پیشنهاد (نامشخص)", text:"جنابعالی چون فرد بسیار معتقد وپاکدستی هستید همه را با دید مثبت مینگرید البته این بسیار خوب و خداپسند است اما متاسفانه در مدیریت سابق در مدت ریاستی که بر عهده داشتند تا جایی که دستشان رسید متاسفانه نیروهایی را گماشتند که درحال حاضر هم با نبودش چنان حاکمیت مرموزی را انجام میدهد که احدی متوجه نمی شود لذا لازم است برای خنثی نمودن این شرایط حتی شده معاونت ها را اگر تغییر نمی دهید جابجایشان کنید تا خدشه ای به زحمات و تلاش های ینان وارد نشود", status:"ثبت اولیه"},
-            {id:6, name:"رامین میرزایی", phone:"09190240172", location:"ستاد مرکزی", unit:"حوزه ریاست", category:"پیشنهاد", subject:"تشکر از توجه تان به پرسنل", text:"سلام؛ تشکر از توجه تان به پرسنل", status:"ثبت اولیه"},
-            {id:7, name:"کاربر ناشناس", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"شکایت", subject:"بررسی مجدد قراردادهای حوزه پشتیبانی", text:"از ریاست محترم تقاضا دارم در قراردادهای بنیاد با پیمانکاران نظارت بیشتری صورت گیرد خصوصا حوزه تخصصی خودم ، حوزه پشتیبانی. من نمی گویم تخلفی اتفاق می افتد، در خیلی مواقع از ناآگاهی کارشناسان است ولی نحوه تنظیم قراردادها با پیمانکاران به گونه ای است که بنیاد نمی تواند خدمات مطلوب را دریافت کند و در نهایت یا قرارداد نیمه کاره انجام می شود یا دائم باید شارژ شود.", status:"ثبت اولیه"},
-            {id:8, name:"جمعی از پرسنل مسکن شهری", phone:"نامشخص", location:"ستاد مرکزی", unit:"معاونت مسکن شهری", category:"درخواست", subject:"مدیران مسکن شهری", text:"با سلام خدمت ریاست محترم؛\nبرای حل مشکل حوزه مسکن شهری ، تغییر معاون مسکن شهری و بازنشستگی آقای مهدی محمدی لازم بود اما کافی نیست.\nاز همینجا و بواسطه پل ارتباطی شما از آقای هدایت تقاضا میکنیم به واگذاری های قبلی ورود کند. ما هم با تمام توان در راستای شفاف سازی در کنار ایشان هستیم.\nان شاالله", status:"ثبت اولیه"},
-            {id:9, name:"کاربر ناشناس", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"تقدیر و تشکر", subject:"تشکر از توجه شما به پرسنل", text:"آقای خواجه دلجویی\nممنون از راه اندازی این پل ارتباطی\nامیدواریم هم ما قدر این شجاعت شما رو بدونیم\nو هم شما به اطمینان ما احترام بگذارید.", status:"ثبت اولیه"},
-            {id:10, name:"کاربر ناشناس", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"تقدیر و تشکر", subject:"تشکر از توجه پرسنل", text:"ممنون از توجه و اهمیتی که به پرسنل میدهید", status:"ثبت اولیه"},
-            {id:11, name:"کاربر ناشناس", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"درخواست", subject:"استفاده از نظرات کارشناسان", text:"برادر عزیزم آقا مهندس خوجه دلویی\nبا سلام و احترام\nاین دومین حرکت زیبای شما است.\nاولی اینکه در یک صف با پرسنل نماز می خوانید\nدومی هم راه اندازی این سامانه است.\nدرود بر شما که خلاقانه به پرسنل نزدیک می شوید.\n\nیک خواهشی هم دارم اینکه وضعیت تعاونی مسکن پرسنل را با جدیت بیشتری دنبال کنید. به خدا از ما بدبختر میان از همین سازمان ما خونه دار میشن و میرن و ما فقط نگاهشون میکنیم.\n\nومن الله توفیق در همه امور", status:"ثبت اولیه"},
-            {id:12, name:"کاربر ناشناس", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"پیشنهاد", subject:"پیشنهاد (نامشخص)", text:"پرسنل اینقدرها هم ترسناک نیستند که آقایان قبلی خوف روبرو شدن با آنها را داشتند. 😂\nبرای شما در ارائه خدمات صادقانه آرزوی توفیق روز افزون دارم.", status:"ثبت اولیه"},
-            {id:13, name:"پرسنل دفتر مرکزی", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"پیشنهاد", subject:"به استانها هم توجه کنید", text:"روی وضعیت پرسنل استانها بیشتر متمرکز باشید. حال دفتر مرکزی نسبت به اونها خیلی خیلی بهتره\nهر وقت میرم استان و مخصوصا شهرستان ها واقعا دلم براشون می سوزه\nممنون میشم توجه تان را به استانها بیشتر معطوف کنید", status:"ثبت اولیه"},
-            {id:14, name:"کاربر ناشناس", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"پیشنهاد", subject:"دیدار حضوری با پرسنل به صورت دوره‌ای", text:"با سلام خدمت آقای مهندس خواجه دلویی\nبا توجه به کاهش مراسمات مناسبتی و شرایط خاص بوجود آمده، پیشنهاد میکنم دو ماه یا حداقل سه ماه یکبار یک دیدار با پرسنل در سالن آمفی تئاتر داشته باشید. پرسنل همین که اهمیت شما را به خودشان ببینند دلگرمتر می شوند. باور کنید انگیزه در خیلی از پرسنل از بین رفته و این ملاقات ها هیچ نتیجه ای هم نداشته باشه حداقل حس خوبی به پرسنل میده", status:"ثبت اولیه"},
-            {id:15, name:"کاربر ناشناس", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"تقدیر و تشکر", subject:"قدردانی از شما", text:"ممنون از توجهتون و وقتی که برای پرسنل میزارید", status:"ثبت اولیه"},
-            {id:16, name:"کاربر ناشناس", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"تقدیر و تشکر", subject:"ذوق و افتخار از مصاحبه شما در برنامه پایش", text:"آقای خواجه دلویی سلام\nدر جمع خانوادگی مصاحبه شما رو دیدم و از اینکه بنیاد مسکن توسط چنین مدیری اداره میشه به خودم بالیدم.\nتسط در ارائه آمار، کلام اقناع کننده و صداقت در گفتار\nخیلی حال کردم مهندس........ درود بر شما\nخودم رو هم معرفی نمیکنم که فکر نکنید دارم چاپلوسی میکنم.", status:"ثبت اولیه"},
-            {id:17, name:"از کارمندان دفتر مرکزی", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"پیشنهاد", subject:"کمی نظارت بر واحد نظارت راهبردی!", text:"برادر بزرگوار آقای خواجه دلوئی با سلا م احترام\nلطفا کمی به واحد نظارت عملکرد نظارت بیشتری داشته باشید.\nمن چند روز پیش اتفاقی یکی از کارشناسان این دفتر رو دیدم گفت نمره فلان استان پس از ۲۰ روز کار کارشناسی شده 52 بعد با یک دقیقه صحبت من متقاعد شد نمره رو به 57 ارتقا بده !!!!!!! خداوکیلی خودم حرف خودمو قبول نداشتم از روی عرق اینکه اون استان زادگاه خودم بود چونه زدم\nخداشاهده عین حقیقت رو میگم", status:"ثبت اولیه"},
-            {id:18, name:"کاربر ناشناس", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"پیشنهاد", subject:"دستورالعمل نحوه فعالیت کارمندان در شرایط احتمال جنگ", text:"خدمت آقای مهندس خواجه دلویی خسته نباشید میگویم.\nیک پیشنهاد داشتم؛ با توجه به امکان درگیری نظامی و یا اعلام شرایط اضطراری در آینده نزدیک، لطفا از معاونین و مدیران کل بنیاد مسکن بخواهید جهت دورکاری پرسنل برنامه ای داشته باشند تا بنیاد با قرار گیری در این شرایط در عمل انجام شده قرار نگیرد و حتی الامکان بتوان از شرایط دورکاری به نحو درست با تقسیم کار قایل قبول بهره برد.\nمن میدانم در بعضی سازمانها این موضوع به صورت دستورالعمِل در آمده و آماده اجرا است.چون در سال گذشته عملا فشار کار روی دوش بعضی کارمندان بود و تازه باز هم خروجی درستی نداشتیم.", status:"ثبت اولیه"},
-            {id:19, name:"کاربر ناشناس", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"درخواست", subject:"انعطاف بیشتر برای خانم های در شرف بازنشستگی", text:"با سلام و احترام خدمت ریاست محترم\nلطفا در خصوص اضافه کار و کارانه خانم های بازنشسته کمی انعطاف بیشتری داشته باشید خصوصا آنهایی که سرپرستی خانواده را دارند.", status:"ثبت اولیه"},
-            {id:20, name:"کاربر ناشناس", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"درخواست", subject:"جمع آوری اطلاعات محرمانه از پوشه اشتراکی بنیاد", text:"با سلام و خسته نباشید خدمت برادر بزرگوار آقای مهندس خواجه دلویی\nضمن تشکر از دقت نظر و اهمیت ویژه شما به پرسنل ، درخواست میکنم دستور فرمایید اطلاعات محرمانه و شخصی پرسنل در پوشه اشتراکی درج نشود. از کپی شناسنامه همسر پرسنل تا لیست امور اداری تا گزارشات مالی همگی اسناد محرمانه هستند.\nحتی اگر این پوشه فقط مختص به کارکنان داخل باشد باز هم توجیهی برای درج اسناد محرمانه مالی و اداری و به اشتراک گذاری آنها وجود ندارد.", status:"ثبت اولیه"},
-            {id:21, name:"کاربر ناشناس", phone:"نامشخص", location:"ستاد مرکزی", unit:"نامشخص", category:"درخواست", subject:"ساختار سازمانی بنیاد مسکن", text:"جناب مهندس خوجه دلویی سلام،\nاز شما یه خواهش دارم اینکه یک فکری به حال ساختار سازمانی بنیاد مسکن نمایید.\nاین ساختار ویرانه داره یه سری کارمند رو تو این وضعیت اقتصادی بدخت و بلاتکلیف میکنه.", status:"ثبت اولیه"}
-        ];
+        // ================ CONFIG ================
+        const XLSX_FILE = './PrsReport.xlsx';   // فایل اکسل کنار همین HTML
+
+        // نگاشت ستون‌های اکسل (بر اساس نام سرستون، نه ترتیب)
+        const COL = {
+            id:'request_id', tracking:'tracking_code', name:'full_name', phone:'mobile',
+            location:'service_location', province:'province', county:'county',
+            holding:'holding', group:'company_group', unit:'unit', category:'category',
+            subject:'subject', text:'message', date:'registered_at', status:'status'
+        };
+
+        let messages = [];
+        let charts = [];
+
+        // ================ HELPERS ================
+        const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        const fa = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+        const pad = n => String(n).padStart(2, '0');
+        const clean = v => (v === null || v === undefined) ? '' : String(v).replace(/‌{2,}/g,'‌').trim();
+
+        // تبدیل تاریخ میلادی به شمسی
+        const jFmt = new Intl.DateTimeFormat('en-US-u-ca-persian-nu-latn', {year:'numeric', month:'2-digit', day:'2-digit'});
+        function toJalali(y, m, d) {
+            const parts = jFmt.formatToParts(new Date(y, m - 1, d, 12));
+            const g = t => parts.find(p => p.type === t).value;
+            return `${g('year')}/${g('month')}/${g('day')}`;
+        }
+
+        // خواندن تاریخ ثبت (متن، سریال اکسل یا Date) بدون وابستگی به منطقه زمانی
+        function parseDate(v) {
+            let y, mo, d, h = 0, mi = 0, s = 0;
+            if (v instanceof Date) {
+                y = v.getFullYear(); mo = v.getMonth() + 1; d = v.getDate();
+                h = v.getHours(); mi = v.getMinutes(); s = v.getSeconds();
+            } else if (typeof v === 'number') {
+                const p = XLSX.SSF.parse_date_code(v);
+                y = p.y; mo = p.m; d = p.d; h = p.H; mi = p.M; s = Math.round(p.S);
+            } else {
+                const m = String(v || '').match(/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
+                if (!m) return null;
+                [y, mo, d] = [+m[1], +m[2], +m[3]]; h = +(m[4] || 0); mi = +(m[5] || 0); s = +(m[6] || 0);
+            }
+            return {
+                key: Date.UTC(y, mo - 1, d, h, mi, s),
+                jDate: toJalali(y, mo, d),
+                time: `${pad(h)}:${pad(mi)}`
+            };
+        }
+
+        function normPhone(v) {
+            let p = clean(v).replace(/\D/g, '');
+            if (/^9\d{9}$/.test(p)) p = '0' + p;      // صفر ابتدایی که اکسل حذف کرده
+            return p || 'نامشخص';
+        }
+
+        // ================ LOAD & PARSE XLSX ================
+        function parseWorkbook(wb) {
+            const ws = wb.Sheets[wb.SheetNames[0]];
+            const rows = XLSX.utils.sheet_to_json(ws, {defval: '', raw: true});
+            const list = rows.map((r, i) => {
+                const dt = parseDate(r[COL.date]);
+                return {
+                    id: clean(r[COL.id]) || String(i + 1),
+                    tracking: clean(r[COL.tracking]),
+                    name: clean(r[COL.name]) || 'کاربر ناشناس',
+                    phone: normPhone(r[COL.phone]),
+                    location: clean(r[COL.location]) || 'نامشخص',
+                    province: clean(r[COL.province]),
+                    county: clean(r[COL.county]),
+                    holding: clean(r[COL.holding]),
+                    group: clean(r[COL.group]),
+                    unit: clean(r[COL.unit]) || 'نامشخص',
+                    category: clean(r[COL.category]) || 'نامشخص',
+                    subject: clean(r[COL.subject]) || 'بدون موضوع',
+                    text: String(r[COL.text] ?? '').trim(),
+                    status: clean(r[COL.status]) || 'ثبت اولیه',
+                    date: dt
+                };
+            }).filter(m => m.text || m.subject !== 'بدون موضوع');
+
+            // جدیدترین در ابتدا؛ در تاریخ‌های مساوی، شناسه بزرگ‌تر اول
+            list.sort((a, b) => ((b.date?.key ?? 0) - (a.date?.key ?? 0)) || (Number(b.id) - Number(a.id)));
+            return list;
+        }
+
+        let loaderProgress = 10;
+        let loaderInterval = null;
+
+        function updateLoaderProgress(value, message) {
+            loaderProgress = Math.max(0, Math.min(100, value));
+            const bar = document.getElementById('loaderProgressBar');
+            const percent = document.getElementById('loaderPercent');
+            const label = document.getElementById('loaderMessage');
+            const progress = document.querySelector('#initialLoader [role="progressbar"]');
+            if (bar) bar.style.width = loaderProgress + '%';
+            if (percent) percent.textContent = fa(loaderProgress) + '٪';
+            if (label && message) label.textContent = message;
+            if (progress) progress.setAttribute('aria-valuenow', String(loaderProgress));
+        }
+
+        function startInitialLoader(message = 'در حال دریافت اطلاعات و آماده‌سازی صفحه...') {
+            const loader = document.getElementById('initialLoader');
+            if (!loader) return;
+            loader.classList.remove('is-hidden');
+            loaderProgress = 10;
+            updateLoaderProgress(loaderProgress, message);
+            if (loaderInterval) clearInterval(loaderInterval);
+            loaderInterval = setInterval(() => {
+                if (loaderProgress >= 88) return;
+                const next = Math.min(88, loaderProgress + Math.max(2, Math.ceil((88 - loaderProgress) * 0.12)));
+                const label = next < 38
+                    ? 'در حال دریافت فایل اطلاعات...'
+                    : next < 68
+                        ? 'در حال پردازش پیام‌ها...'
+                        : 'در حال آماده‌سازی کارت‌ها و نمودارها...';
+                updateLoaderProgress(next, label);
+            }, 420);
+        }
+
+        function finishInitialLoader() {
+            const loader = document.getElementById('initialLoader');
+            if (!loader) return;
+            if (loaderInterval) {
+                clearInterval(loaderInterval);
+                loaderInterval = null;
+            }
+            updateLoaderProgress(100, 'داشبورد آماده است');
+            window.__dashboardReady = true;
+            setTimeout(() => loader.classList.add('is-hidden'), 280);
+        }
+
+        async function loadData() {
+            window.__dashboardInitStarted = true;
+            startInitialLoader();
+            showStatus('loading');
+            try {
+                const res = await fetch(XLSX_FILE + '?t=' + Date.now(), {cache: 'no-store'});
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const buf = await res.arrayBuffer();
+                applyWorkbook(XLSX.read(buf, {type: 'array'}));
+            } catch (e) {
+                console.warn('خواندن خودکار فایل اکسل ممکن نشد:', e);
+                showStatus('error');
+                finishInitialLoader();
+            }
+        }
+
+        function loadFromPicker(file) {
+            if (!file) return;
+            startInitialLoader('در حال خواندن فایل اکسل انتخاب‌شده...');
+            showStatus('loading');
+            const reader = new FileReader();
+            reader.onload = e => {
+                try { applyWorkbook(XLSX.read(e.target.result, {type: 'array'})); }
+                catch (err) { console.error(err); showStatus('error'); finishInitialLoader(); }
+            };
+            reader.onerror = () => { showStatus('error'); finishInitialLoader(); };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function applyWorkbook(wb) {
+            messages = parseWorkbook(wb);
+            showStatus('ok');
+            renderAll();
+            finishInitialLoader();
+        }
+
+        function showStatus(state) {
+            const box = document.getElementById('statusBox');
+            if (state === 'ok') { box.innerHTML = ''; return; }
+            if (state === 'loading') {
+                box.innerHTML = `<div class="mb-6 bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center text-gray-500 text-sm"><i class="fa-solid fa-spinner fa-spin ml-2"></i>در حال خواندن PrsReport.xlsx ...</div>`;
+                return;
+            }
+            box.innerHTML = `
+                <div class="mb-6 bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-amber-900">
+                    <div class="font-bold mb-1 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation"></i> فایل PrsReport.xlsx به‌صورت خودکار بارگذاری نشد</div>
+                    <p class="leading-7 mb-3">این صفحه باید کنار فایل <span dir="ltr" class="font-mono">PrsReport.xlsx</span> و از طریق وب‌سرور باز شود (مرورگرها هنگام باز کردن مستقیم فایل از روی دیسک، خواندن فایل کناری را مجاز نمی‌دانند). در صورت نیاز می‌توانید فایل را به‌صورت دستی انتخاب کنید:</p>
+                    <label class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg cursor-pointer transition-colors">
+                        <i class="fa-solid fa-file-excel"></i> انتخاب فایل اکسل
+                        <input type="file" accept=".xlsx,.xls" class="hidden" onchange="loadFromPicker(this.files[0])">
+                    </label>
+                </div>`;
+        }
 
         // ================ CATEGORY STYLES ================
         const catStyles = {
-            'پیشنهاد':         {icon:'fa-lightbulb',            bg:'bg-amber-50',  text:'text-amber-600',  chart:'#f59e0b'},
-            'درخواست':         {icon:'fa-hand',                 bg:'bg-teal-50',   text:'text-teal-600',   chart:'#14b8a6'},
-            'تقدیر و تشکر':    {icon:'fa-heart',                bg:'bg-rose-50',   text:'text-rose-500',   chart:'#f43f5e'},
-            'شکایت':           {icon:'fa-triangle-exclamation', bg:'bg-red-50',    text:'text-red-600',    chart:'#ef4444'}
+            'پیشنهاد':        {icon:'fa-lightbulb',            bg:'bg-amber-50',   text:'text-amber-600',   chart:'#f59e0b', kpi:'amber'},
+            'درخواست':        {icon:'fa-hand',                 bg:'bg-teal-50',    text:'text-teal-600',    chart:'#14b8a6', kpi:'teal'},
+            'تقدیر و تشکر':   {icon:'fa-heart',                bg:'bg-rose-50',    text:'text-rose-500',    chart:'#f43f5e', kpi:'rose'},
+            'شکایت':          {icon:'fa-triangle-exclamation', bg:'bg-red-50',     text:'text-red-600',     chart:'#ef4444', kpi:'red'},
+            'انتقاد':         {icon:'fa-comment-slash',        bg:'bg-orange-50',  text:'text-orange-600',  chart:'#f97316', kpi:'orange'},
+            'طرح و ایده':     {icon:'fa-wand-magic-sparkles',  bg:'bg-violet-50',  text:'text-violet-600',  chart:'#8b5cf6', kpi:'violet'},
+            'ملاقات حضوری':   {icon:'fa-handshake',            bg:'bg-sky-50',     text:'text-sky-600',     chart:'#0ea5e9', kpi:'sky'}
         };
+        const defaultStyle = {icon:'fa-circle', bg:'bg-gray-50', text:'text-gray-600', chart:'#6b7280', kpi:'gray'};
+        const styleOf = c => catStyles[c] || defaultStyle;
 
-        // ================ RENDER CARDS ================
+        function countBy(list, keyFn) {
+            const m = new Map();
+            list.forEach(x => { const k = keyFn(x); m.set(k, (m.get(k) || 0) + 1); });
+            return m;
+        }
+
+        // ================ RENDER ================
+        function renderAll() {
+            document.getElementById('totalCount').textContent = fa(messages.length);
+            const latest = messages.find(m => m.date);
+            document.getElementById('reportDate').textContent = latest ? latest.date.jDate : '—';
+            renderKpis();
+            renderCards();
+            renderCharts();
+        }
+
+        function renderKpis() {
+            const counts = countBy(messages, m => m.category);
+            const cats = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+            const kpi = (label, icon, color, value) => `
+                <div class="bg-white rounded-2xl p-2 md:p-3 shadow-sm border border-gray-100 border-t-4 border-t-${color}-500 flex items-center justify-between hover:shadow-md transition-shadow">
+                    <div class="min-w-0">
+                        <p class="text-gray-500 text-[10px] sm:text-xs mb-1 flex items-center gap-1 whitespace-nowrap">
+                            <span class="w-5 h-5 rounded-full bg-${color}-50 text-${color}-600 inline-flex flex-shrink-0 items-center justify-center text-xs"><i class="fa-solid ${icon}"></i></span>
+                            <span>${esc(label)}</span>
+                        </p>
+                        <h3 class="text-base sm:text-xl font-bold text-${color}-600">${fa(value)}</h3>
+                    </div>
+                </div>`;
+            document.getElementById('kpiContainer').innerHTML =
+                kpi('کل پیام‌ها', 'fa-envelope-open-text', 'blue', messages.length) +
+                cats.map(([c, n]) => { const s = styleOf(c); return kpi(c, s.icon, s.kpi, n); }).join('');
+        }
+
         function renderCards() {
             const container = document.getElementById('cardsContainer');
             container.innerHTML = messages.map((m, idx) => {
-                const st = catStyles[m.category] || {icon:'fa-circle', bg:'bg-gray-50', text:'text-gray-600'};
+                const st = styleOf(m.category);
                 return `
-                <div onclick="openModal(${idx})" 
-                     class="relative bg-white rounded-2xl shadow-sm border border-gray-100 border-t-4 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.99] transition-all cursor-pointer flex flex-col" style="border-top-color:${st.chart || '#3b82f6'}">
+                <div onclick="openModal(${idx})"
+                     class="relative bg-white rounded-2xl shadow-sm border border-gray-100 border-t-4 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.99] transition-all cursor-pointer flex flex-col" style="border-top-color:${st.chart}">
                     <div class="px-3 py-2.5 border-b border-gray-50 bg-gray-50/50 flex justify-between items-center">
                         <div class="flex items-center gap-2 min-w-0">
-                            <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold flex-shrink-0">${m.id}</div>
-                            <span class="font-bold text-gray-700 text-sm truncate">${m.name}</span>
+                            <div class="h-7 min-w-7 px-2 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-[11px] font-bold flex-shrink-0">${esc(m.id)}</div>
+                            <span class="font-bold text-gray-700 text-sm truncate">${esc(m.name)}</span>
                         </div>
-                        <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-medium whitespace-nowrap flex-shrink-0">${m.status}</span>
+                        <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-medium whitespace-nowrap flex-shrink-0">${esc(m.status)}</span>
                     </div>
                     <div class="p-3 flex-grow">
                         <div class="flex flex-wrap gap-1.5 mb-2">
                             <span class="${st.bg} ${st.text} text-[10px] px-2 py-0.5 rounded-md flex items-center gap-1">
-                                <i class="fa-solid ${st.icon}"></i> ${m.category}
+                                <i class="fa-solid ${st.icon}"></i> ${esc(m.category)}
                             </span>
-                            <span class="bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded-md flex items-center gap-1">
-                                <i class="fa-solid fa-sitemap"></i> ${m.unit}
+                            <span class="bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded-md flex items-center gap-1 min-w-0">
+                                <i class="fa-solid fa-sitemap flex-shrink-0"></i> <span class="truncate">${esc(m.unit)}</span>
                             </span>
                         </div>
-                        <h4 class="font-bold text-gray-900 mb-2 text-sm bg-gradient-to-l from-blue-50 to-white border-r-4 border-blue-500 rounded-md px-3 py-2 leading-6 shadow-sm">${m.subject}</h4>
-                        <p class="text-xs text-gray-600 leading-relaxed line-clamp-3 whitespace-pre-line">${m.text}</p>
+                        <h4 class="font-bold text-gray-900 mb-2 text-sm bg-gradient-to-l from-blue-50 to-white border-r-4 border-blue-500 rounded-md px-3 py-2 leading-6 shadow-sm">${esc(m.subject)}</h4>
+                        <p class="text-xs text-gray-600 leading-relaxed message-preview whitespace-pre-line">${esc(m.text)}</p>
                     </div>
                     <div class="bg-gray-50 px-3 py-2 text-[10px] text-gray-500 flex justify-between items-center border-t border-gray-100 gap-2">
-                        <span class="flex items-center gap-1 min-w-0 truncate"><i class="fa-solid fa-location-dot"></i> ${m.location}</span>
-                        <span dir="ltr" class="flex-shrink-0">${m.phone}</span>
+                        <span class="flex items-center gap-1 min-w-0 truncate"><i class="fa-regular fa-clock"></i> ${m.date ? `${m.date.jDate} - ${m.date.time}` : 'نامشخص'}</span>
+                        <span dir="ltr" class="flex-shrink-0">${esc(m.phone)}</span>
                     </div>
                 </div>`;
             }).join('');
+            container.querySelectorAll('.message-preview').forEach(el => {
+                el.classList.toggle('is-truncated', el.scrollHeight > el.clientHeight + 1);
+            });
         }
 
         // ================ MODAL ================
         function openModal(idx) {
             const m = messages[idx];
-            const st = catStyles[m.category] || {icon:'fa-circle', bg:'bg-gray-50', text:'text-gray-600'};
-            
+            const st = styleOf(m.category);
+            const place = [m.location, m.province, m.county, m.holding, m.group].filter(Boolean).join(' › ');
             document.getElementById('modalTitle').textContent = `پیام شماره ${m.id} — ${m.name}`;
-            
+            const box = (icon, label, val, ltr) => `
+                <div class="bg-gray-50 rounded-lg p-2.5 border border-gray-100 min-w-0">
+                    <div class="text-[10px] text-gray-500 mb-0.5 flex items-center gap-1"><i class="fa-solid ${icon}"></i> ${label}</div>
+                    <div class="font-bold text-sm text-gray-800 break-words" ${ltr ? 'dir="ltr"' : ''}>${esc(val)}</div>
+                </div>`;
             document.getElementById('modalBody').innerHTML = `
                 <div class="space-y-4">
                     <div class="flex flex-wrap gap-2 items-center">
                         <span class="${st.bg} ${st.text} text-xs px-3 py-1 rounded-md flex items-center gap-1 font-medium">
-                            <i class="fa-solid ${st.icon}"></i> ${m.category}
+                            <i class="fa-solid ${st.icon}"></i> ${esc(m.category)}
                         </span>
                         <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-medium">
-                            <i class="fa-solid fa-circle-check text-[10px] ml-1"></i>${m.status}
+                            <i class="fa-solid fa-circle-check text-[10px] ml-1"></i>${esc(m.status)}
                         </span>
                     </div>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        <div class="bg-gray-50 rounded-lg p-2.5 border border-gray-100">
-                            <div class="text-[10px] text-gray-500 mb-0.5 flex items-center gap-1"><i class="fa-solid fa-user"></i> نام و نام خانوادگی</div>
-                            <div class="font-bold text-sm text-gray-800">${m.name}</div>
-                        </div>
-                        <div class="bg-gray-50 rounded-lg p-2.5 border border-gray-100">
-                            <div class="text-[10px] text-gray-500 mb-0.5 flex items-center gap-1"><i class="fa-solid fa-phone"></i> تلفن همراه</div>
-                            <div class="font-bold text-sm text-gray-800" dir="ltr">${m.phone}</div>
-                        </div>
-                        <div class="bg-gray-50 rounded-lg p-2.5 border border-gray-100">
-                            <div class="text-[10px] text-gray-500 mb-0.5 flex items-center gap-1"><i class="fa-solid fa-location-dot"></i> محل خدمت</div>
-                            <div class="font-bold text-sm text-gray-800">${m.location}</div>
-                        </div>
-                        <div class="bg-gray-50 rounded-lg p-2.5 border border-gray-100">
-                            <div class="text-[10px] text-gray-500 mb-0.5 flex items-center gap-1"><i class="fa-solid fa-sitemap"></i> واحد سازمانی</div>
-                            <div class="font-bold text-sm text-gray-800">${m.unit}</div>
-                        </div>
+                    <div class="grid grid-cols-2 gap-2.5">
+                        ${box('fa-user', 'نام و نام خانوادگی', m.name)}
+                        ${box('fa-phone', 'تلفن همراه', m.phone, true)}
+                        ${box('fa-location-dot', 'محل خدمت', place)}
+                        ${box('fa-sitemap', 'واحد سازمانی', m.unit)}
+                        ${box('fa-calendar-days', 'تاریخ و ساعت ثبت', m.date ? `${m.date.jDate} - ${m.date.time}` : 'نامشخص')}
+                        ${box('fa-hashtag', 'کد رهگیری', m.tracking || 'نامشخص', true)}
                     </div>
-                    
                     <div class="bg-blue-50/50 rounded-lg p-2.5 border border-blue-100">
                         <div class="text-[10px] text-blue-600 mb-0.5 flex items-center gap-1"><i class="fa-solid fa-tag"></i> موضوع</div>
-                        <div class="font-bold text-sm text-gray-800">${m.subject}</div>
+                        <div class="font-bold text-sm text-gray-800">${esc(m.subject)}</div>
                     </div>
-                    
                     <div>
                         <div class="text-[11px] text-gray-500 mb-1.5 flex items-center gap-1"><i class="fa-solid fa-comment-dots"></i> متن کامل پیام</div>
-                        <div class="bg-gradient-to-bl from-blue-50 to-indigo-50/40 border border-blue-100 rounded-lg p-3.5 text-sm text-gray-700 leading-relaxed whitespace-pre-line max-h-60 overflow-y-auto modal-scroll">${m.text}</div>
+                        <div class="bg-gradient-to-bl from-blue-50 to-indigo-50/40 border border-blue-100 rounded-lg p-3.5 text-sm text-gray-700 leading-relaxed whitespace-pre-line max-h-60 overflow-y-auto modal-scroll">${esc(m.text)}</div>
                     </div>
-                </div>
-            `;
-            
+                </div>`;
             const modal = document.getElementById('modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -352,102 +585,98 @@
             modal.classList.remove('flex');
             document.body.style.overflow = '';
         }
-
-        // Close on backdrop click
-        document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-        // Close on ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeModal();
-        });
+        document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
         // ================ CHARTS ================
         Chart.register(ChartDataLabels);
         Chart.defaults.font.family = 'Vazirmatn, sans-serif';
         Chart.defaults.color = '#4b5563';
 
-        // --- Pie: Category ---
-        new Chart(document.getElementById('categoryChart').getContext('2d'), {
-            type: 'doughnut',
-            data: {
-                labels: ['پیشنهاد','درخواست','تقدیر و تشکر','شکایت'],
-                datasets: [{
-                    data: [9, 6, 5, 1],
-                    backgroundColor: ['#f59e0b','#14b8a6','#f43f5e','#ef4444'],
-                    borderWidth: 2, borderColor: '#ffffff', hoverOffset: 6
-                }]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom', labels: { usePointStyle: true, padding: 12, font: { size: 11 }, boxWidth: 8 } },
-                    tooltip: { callbacks: { label: c => `${c.label}: ${c.raw} پیام` } },
-                    datalabels: { color: '#000', font: { weight: 'bold', size: 13 }, formatter: v => v }
-                },
-                cutout: '58%'
-            }
-        });
+        const unitPalette = ['#6366f1','#8b5cf6','#ec4899','#0ea5e9','#14b8a6','#f59e0b','#84cc16','#f97316','#9ca3af'];
+        const short = (s, n = 24) => s.length > n ? s.slice(0, n - 1) + '…' : s;
 
-        // --- Bar: Unit ---
-        new Chart(document.getElementById('unitChart').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ['نامشخص','حوزه ریاست','روابط عمومی','معاونت مسکن شهری'],
-                datasets: [{
-                    data: [15, 4, 1, 1],
-                    backgroundColor: ['#9ca3af','#6366f1','#8b5cf6','#ec4899'],
-                    borderRadius: 6, barThickness: 26
-                }]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { callbacks: { label: c => `${c.raw} پیام` } },
-                    datalabels: {
-                        color: '#1f2937', anchor: 'end', align: 'top', offset: 3,
-                        font: { weight: 'bold', size: 12 }, formatter: v => v
-                    }
-                },
-                scales: {
-                    y: { beginAtZero: true, ticks: { stepSize: 3, font: { size: 10 } }, grid: { color: '#f3f4f6' } },
-                    x: { grid: { display: false }, ticks: { font: { size: 10 } } }
-                }
-            }
-        });
+        function renderCharts() {
+            charts.forEach(c => c.destroy());
+            charts = [];
 
-        // --- Horizontal Bar: Location ---
-        new Chart(document.getElementById('locationChart').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ['ستاد مرکزی','بنیاد مسکن استان‌ها','شرکت‌های تابعه'],
-                datasets: [{
-                    data: [21, 0, 0],
-                    backgroundColor: ['#3b82f6','#10b981','#8b5cf6'],
-                    borderRadius: 6, barThickness: 26
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true, maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { callbacks: { label: c => `${c.raw} پیام` } },
-                    datalabels: {
-                        color: '#1f2937', anchor: 'end', align: 'right', offset: 4,
-                        font: { weight: 'bold', size: 12 }, formatter: v => v
-                    }
+            // --- Doughnut: Category ---
+            const cat = [...countBy(messages, m => m.category).entries()].sort((a, b) => b[1] - a[1]);
+            charts.push(new Chart(document.getElementById('categoryChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: cat.map(x => x[0]),
+                    datasets: [{ data: cat.map(x => x[1]), backgroundColor: cat.map(x => styleOf(x[0]).chart),
+                                 borderWidth: 2, borderColor: '#ffffff', hoverOffset: 6 }]
                 },
-                scales: {
-                    x: { beginAtZero: true, max: 24, ticks: { stepSize: 6, font: { size: 10 } }, grid: { color: '#f3f4f6' } },
-                    y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+                options: {
+                    responsive: true, maintainAspectRatio: false, cutout: '58%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { usePointStyle: true, padding: 10, font: { size: 11 }, boxWidth: 8 } },
+                        tooltip: { callbacks: { label: c => `${c.label}: ${c.raw} پیام` } },
+                        datalabels: { color: '#000', font: { weight: 'bold', size: 12 }, formatter: v => v }
+                    }
                 }
+            }));
+
+            // --- Horizontal Bar: Unit (۸ واحد پرتعداد + سایر) ---
+            const TOP = 8;
+            let units = [...countBy(messages, m => m.unit).entries()].sort((a, b) => b[1] - a[1]);
+            if (units.length > TOP + 1) {
+                const rest = units.slice(TOP).reduce((s, x) => s + x[1], 0);
+                units = units.slice(0, TOP).concat([['سایر واحدها', rest]]);
             }
-        });
+            charts.push(new Chart(document.getElementById('unitChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: units.map(x => x[0]),
+                    datasets: [{ data: units.map(x => x[1]),
+                                 backgroundColor: units.map((x, i) => x[0] === 'نامشخص' || x[0] === 'سایر واحدها' ? '#9ca3af' : unitPalette[i % unitPalette.length]),
+                                 borderRadius: 6, barThickness: 16 }]
+                },
+                options: {
+                    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                    layout: { padding: { left: 18 } },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { title: i => units[i[0].dataIndex][0], label: c => `${c.raw} پیام` } },
+                        datalabels: { color: '#1f2937', anchor: 'end', align: 'right', offset: 3, font: { weight: 'bold', size: 11 }, formatter: v => v }
+                    },
+                    scales: {
+                        x: { beginAtZero: true, grace: '12%', ticks: { precision: 0, font: { size: 10 } }, grid: { color: '#f3f4f6' } },
+                        y: { grid: { display: false }, ticks: { font: { size: 10 }, callback(v) { return short(this.getLabelForValue(v)); } } }
+                    }
+                }
+            }));
+
+            // --- Horizontal Bar: Location ---
+            const locMap = new Map([['ستاد مرکزی', 0], ['بنیاد مسکن استان‌ها', 0], ['شرکت‌های تابعه', 0]]);
+            messages.forEach(m => locMap.set(m.location, (locMap.get(m.location) || 0) + 1));
+            const locs = [...locMap.entries()];
+            const locColors = ['#3b82f6','#10b981','#8b5cf6','#f59e0b','#ec4899','#14b8a6'];
+            charts.push(new Chart(document.getElementById('locationChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: locs.map(x => x[0]),
+                    datasets: [{ data: locs.map(x => x[1]), backgroundColor: locs.map((x, i) => locColors[i % locColors.length]), borderRadius: 6, barThickness: 26 }]
+                },
+                options: {
+                    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: c => `${c.raw} پیام` } },
+                        datalabels: { color: '#1f2937', anchor: 'end', align: 'right', offset: 4, font: { weight: 'bold', size: 12 }, formatter: v => v }
+                    },
+                    scales: {
+                        x: { beginAtZero: true, grace: '12%', ticks: { precision: 0, font: { size: 10 } }, grid: { color: '#f3f4f6' } },
+                        y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+                    }
+                }
+            }));
+        }
 
         // ================ INIT ================
-        renderCards();
+        loadData();
     </script>
 </body>
 </html>
