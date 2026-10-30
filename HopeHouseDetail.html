@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10283b">
+<title>داشبورد مدیریتی طرح خانه امید | بنیاد مسکن انقلاب اسلامی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+<style>
+:root{--navy:#10283b;--navy2:#173d52;--teal:#087e79;--teal2:#13a08f;--green:#25865d;--gold:#d7ad61;--ink:#1d3445;--muted:#6f8190;--bg:#f3f6f8;--line:#e4ebef;--white:#fff;--red:#c95b5b;--blue:#4b83bd;--shadow:0 12px 32px rgba(18,45,63,.075);--radius:20px;--font:'Vazirmatn',Tahoma,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:92px}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);overflow-x:hidden;line-height:1.8}a{color:inherit;text-decoration:none}button{font:inherit}.shell{width:min(1500px,calc(100% - 36px));margin:auto}.topbar{height:58px;background:#0b1e2d;color:#dce8ee;display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,calc((100vw - 1500px)/2));font-size:12px}.brand{display:flex;align-items:center;gap:10px;font-weight:800}.brand-mark{width:30px;height:30px;border-radius:10px;background:linear-gradient(145deg,#d8b76f,#f0dca7);display:grid;place-items:center;color:#18354a}.topbar-note{color:#9fb3bf}.hero{position:relative;isolation:isolate;overflow:hidden;border-radius:0 0 30px 30px;background:linear-gradient(112deg,#10283b 0%,#174c5a 58%,#087e79 100%);color:#fff;padding:38px 42px 34px;box-shadow:0 18px 40px rgba(13,48,65,.16)}.hero:before,.hero:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.11);border-radius:50%;z-index:-1}.hero:before{width:410px;height:410px;left:-100px;top:-240px;box-shadow:0 0 0 35px rgba(255,255,255,.025),0 0 0 80px rgba(255,255,255,.02)}.hero:after{width:300px;height:300px;right:32%;bottom:-260px;box-shadow:0 0 0 30px rgba(255,255,255,.035),0 0 0 65px rgba(255,255,255,.02)}.hero-inner{display:flex;align-items:center;justify-content:space-between;gap:30px;position:relative}.hero-copy{max-width:820px}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:#c6e5df;font-size:12px;font-weight:700;letter-spacing:.1px}.eyebrow i{width:7px;height:7px;border-radius:50%;background:#e1c27b;box-shadow:0 0 0 5px rgba(225,194,123,.13)}.hero h1{font-size:clamp(26px,3.1vw,42px);line-height:1.45;margin:10px 0 7px;font-weight:900;letter-spacing:-.7px}.hero p{margin:0;color:#d2e1e5;font-size:14px}.hero-kicker{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.pill{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.09);border-radius:999px;font-size:12px;color:#f4f8f9;backdrop-filter:blur(8px)}.pill strong{color:#ffe2a4}.pill.link{background:#f1d89e;border-color:#f1d89e;color:#20394a;font-weight:800}.hero-art{width:190px;min-width:160px;opacity:.92;filter:drop-shadow(0 16px 22px rgba(0,0,0,.16))}.hero-art svg{width:100%;height:auto}.hero-foot{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:28px;padding-top:18px;border-top:1px solid rgba(255,255,255,.15);font-size:11px;color:#c2d6dc}.hero-foot strong{color:#fff;font-size:13px}.nav-wrap{position:sticky;top:0;z-index:20;background:rgba(243,246,248,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(218,228,234,.8)}.nav{display:flex;align-items:center;gap:7px;overflow-x:auto;padding:11px 0;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.nav a{white-space:nowrap;padding:7px 12px;border-radius:999px;font-size:12px;color:#5e7280;transition:.2s}.nav a:hover{background:#e3efed;color:#087e79}.main{padding:28px 0 60px}.section{margin:0 0 34px;scroll-margin-top:86px}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:0 0 16px}.section-title{display:flex;align-items:center;gap:12px}.section-no{width:34px;height:34px;border-radius:12px;background:#e0efeb;color:var(--teal);display:grid;place-items:center;font-weight:900;font-size:13px}.section-head h2{font-size:19px;line-height:1.5;margin:0;font-weight:900;color:#1b3547}.section-head p{margin:2px 0 0;font-size:11px;color:var(--muted)}.section-tag{font-size:11px;color:#6c7f8d;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;white-space:nowrap}.kpi-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:13px}.kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 16px 14px;box-shadow:0 5px 18px rgba(20,49,66,.035);position:relative;overflow:hidden;min-width:0}.kpi:after{content:"";position:absolute;width:80px;height:80px;border-radius:50%;left:-28px;bottom:-43px;background:var(--tint,#e8f3f1);opacity:.85}.kpi-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.kpi-icon{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:var(--tint,#e8f3f1);color:var(--accent,var(--teal))}.kpi-label{font-size:11px;color:#71828d;font-weight:600}.kpi-value{font-size:clamp(21px,2vw,28px);line-height:1.4;font-weight:900;letter-spacing:-.6px;color:#19384a;margin:8px 0 1px;direction:rtl}.kpi-foot{font-size:10px;color:#8a99a2}.kpi.green{--tint:#e5f3ec;--accent:#21855a}.kpi.blue{--tint:#e8f0fa;--accent:#4a7eaf}.kpi.gold{--tint:#f7f0df;--accent:#ad8740}.kpi.red{--tint:#faeaea;--accent:#c05b5b}.kpi.purple{--tint:#f0ebf8;--accent:#8466a8}.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:19px;box-shadow:var(--shadow);min-width:0}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:13px}.panel-title{font-size:14px;font-weight:900;color:#1c3b4d;margin:0}.panel-sub{font-size:10px;color:#87959d;margin:3px 0 0}.panel-chip{background:#f0f6f5;color:#4d7771;border-radius:999px;padding:4px 9px;font-size:10px;white-space:nowrap}.chart-box{height:310px;position:relative;width:100%;max-width:100%;direction:ltr}.chart-box.medium{height:390px}.chart-box.tall{height:650px}.chart-box.xtall{height:760px}.chart-box canvas{width:100%!important;height:100%!important;max-width:100%}.insight-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:16px}.insight{border-radius:17px;padding:16px;background:#fff;border:1px solid var(--line);position:relative;min-width:0}.insight .mini{font-size:10px;color:#83919a}.insight strong{display:block;font-size:17px;color:#173a4d;margin:4px 0}.insight p{font-size:11px;color:#6f7f88;margin:0;line-height:1.8}.insight.emphasis{background:linear-gradient(130deg,#eaf5f1,#f8fbfa);border-color:#d5e9e1}.callout{border:1px solid #e8e1cc;background:#fbf8ef;border-radius:16px;padding:14px 16px;color:#75643e;font-size:11px;line-height:1.9;margin-top:14px}.callout strong{color:#6a552c}.table-panel{padding:0;overflow:hidden}.table-head{padding:17px 19px 12px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}.table-head h3{margin:0;font-size:14px}.table-head span{font-size:10px;color:#7e8c95}.table-wrap{padding:0 14px 14px;max-width:100%}table{width:100%;border-collapse:collapse;font-size:11px}thead th{background:#f4f7f8;color:#5c6e79;font-weight:800;padding:10px 9px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}tbody td{padding:10px 9px;border-bottom:1px solid #edf1f3;color:#354c5b;vertical-align:top}tbody tr:last-child td{border-bottom:0}tbody tr:hover{background:#f8fbfb}.num{font-variant-numeric:tabular-nums;font-weight:800;color:#1b4255;white-space:nowrap}.type-tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:9px;font-weight:800}.type-tag.rural{background:#e5f2eb;color:#27764e}.type-tag.urban{background:#e9f0fa;color:#4975a4}.mobile-cards{display:none}.table-note{padding:0 18px 16px;font-size:10px;color:#87949c}.data-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.data-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px}.data-card .label{font-size:10px;color:#7a8a94}.data-card .value{font-size:20px;font-weight:900;color:#1c4054;margin:3px 0}.data-card .detail{font-size:10px;color:#82919a}.action-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.action{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;gap:12px}.action-icon{flex:0 0 35px;width:35px;height:35px;border-radius:12px;background:#eaf3f2;color:#177c76;display:grid;place-items:center}.action h3{font-size:12px;margin:0 0 5px;color:#1c3a4b}.action p{font-size:11px;margin:0;color:#687b87;line-height:1.9}.timeline{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}.meeting{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;position:relative}.meeting:before{content:"";position:absolute;top:0;right:0;left:0;height:3px;border-radius:14px 14px 0 0;background:#168b80}.meeting b{display:block;font-size:11px;color:#1e4052}.meeting span{font-size:10px;color:#87949c}.quality{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.quality-item{background:#fff;border:1px solid #f0e3d7;border-right:3px solid #d39a57;border-radius:13px;padding:12px 14px;font-size:11px;color:#5e6f78;line-height:1.85}.quality-item strong{color:#9a6630}.quality-item .ref{color:#a1aab0;font-size:9px;display:block;margin-top:4px}.footer{background:#10283b;color:#b8cbd4;padding:23px 0;font-size:10px}.footer-inner{display:flex;justify-content:space-between;gap:15px;align-items:center}.footer strong{color:#fff}.top-btn{position:fixed;left:18px;bottom:18px;width:42px;height:42px;border:0;border-radius:14px;background:#10283b;color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.2);cursor:pointer;z-index:30}.btn{border:0;background:#0c7f79;color:#fff;border-radius:11px;padding:8px 13px;font-size:11px;font-weight:800;cursor:pointer}.btn:hover{background:#096b66}.filter-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.filter-row input{font-family:var(--font);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:11px;min-width:190px;outline:none}.filter-row input:focus{border-color:#74b8ad;box-shadow:0 0 0 3px rgba(8,126,121,.1)}
+@media(max-width:1150px){.kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.timeline{grid-template-columns:repeat(4,minmax(0,1fr))}.data-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.shell{width:calc(100% - 22px)}.topbar{height:50px;padding:0 12px}.topbar-note{display:none}.hero{padding:25px 18px 22px;border-radius:0 0 22px 22px}.hero-inner{gap:8px}.hero-art{width:105px;min-width:95px}.hero h1{font-size:24px}.hero p{font-size:12px}.hero-foot{margin-top:19px;align-items:flex-start;flex-direction:column}.hero-kicker{margin-top:14px}.pill{font-size:10px;padding:6px 10px}.nav{padding:8px 0}.nav a{font-size:10px;padding:6px 9px}.main{padding-top:20px}.section{margin-bottom:26px}.section-head{align-items:flex-start}.section-head h2{font-size:16px}.section-head p{font-size:10px}.section-tag{font-size:9px}.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.kpi{padding:12px;border-radius:15px}.kpi-value{font-size:22px}.kpi-label{font-size:10px}.kpi-icon{width:30px;height:30px}.grid-2,.grid-3{grid-template-columns:minmax(0,1fr);gap:12px}.panel{padding:14px;border-radius:16px}.panel-title{font-size:13px}.chart-box{height:275px}.chart-box.medium{height:340px}.chart-box.tall{height:650px}.chart-box.xtall{height:760px}.insight-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.insight{padding:12px}.insight strong{font-size:15px}.insight p{font-size:10px}.data-card-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.data-card{padding:12px}.data-card .value{font-size:18px}.action-grid{grid-template-columns:minmax(0,1fr)}.timeline{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.meeting{padding:10px}.quality{grid-template-columns:minmax(0,1fr)}.footer-inner{align-items:flex-start;flex-direction:column}.table-wrap{padding:0 10px 10px}table,thead,tbody,tr,th,td{display:block}thead{display:none}tbody tr{border:1px solid #e8eef1;border-radius:12px;margin:10px 0;padding:6px 10px;background:#fff}tbody td{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed #edf1f3;text-align:left;white-space:normal}tbody td:before{content:attr(data-label);font-weight:700;color:#7a8b95;text-align:right;max-width:54%;flex:0 0 54%;font-size:10px}tbody td:last-child{border-bottom:0}.num{white-space:normal}.table-head{padding:14px}.table-head h3{font-size:12px}.table-head span{font-size:9px}.filter-row input{width:100%;min-width:0}.filter-row{width:100%}.top-btn{left:11px;bottom:11px}}
+@media(max-width:380px){.hero-art{display:none}.kpi-value{font-size:20px}.section-tag{display:none}.insight-grid{grid-template-columns:1fr}.chart-box.tall{height:720px}}
+@media print{body{background:#fff}.topbar,.nav-wrap,.top-btn,.btn,.filter-row{display:none!important}.shell{width:100%}.hero{border-radius:0;box-shadow:none;print-color-adjust:exact;-webkit-print-color-adjust:exact}.panel,.kpi,.insight,.action,.meeting{box-shadow:none;break-inside:avoid}.section{break-inside:avoid}.chart-box{break-inside:avoid}.footer{print-color-adjust:exact;-webkit-print-color-adjust:exact}.main{padding-top:15px}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="brand"><span class="brand-mark">⌂</span><span>بنیاد مسکن انقلاب اسلامی</span></div><div class="topbar-note">سامانه هوشمند مدیریتی ریاست | گزارش‌های پایش ملی</div><div>داشبورد مدیریتی طرح خانه امید</div></div>
+<header class="hero">
+ <div class="shell">
+  <div class="hero-inner">
+   <div class="hero-copy">
+    <div class="eyebrow"><i></i> گزارش پایش ملی · سیزدهمین جلسه ستاد هماهنگی</div>
+    <h1>داشبورد مدیریتی طرح خانه امید</h1>
+    <p>نمای یکپارچه عملکرد اجرایی، تأمین زمین، منابع مالی، تفاهم‌نامه‌ها و مشارکت‌های مردمی</p>
+    <div class="hero-kicker">
+      <span class="pill">تاریخ گزارش: <strong>1405/08/02</strong></span>
+      <a class="pill link" href="./HopeHouse.pdf" target="_blank" rel="noopener">جزئیات گزارش</a>
+      <span class="pill">پوشش: ۳۱ استان</span>
+    </div>
+   </div>
+   <div class="hero-art" aria-hidden="true">
+    <svg viewBox="0 0 220 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+     <path d="M24 89 105 24l81 65v78H24V89Z" fill="#E7F0E8" fill-opacity=".12" stroke="#E7F0E8" stroke-opacity=".75" stroke-width="2"/>
+     <path d="m12 91 93-75 93 75" stroke="#F0D99D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+     <path d="M78 167v-48c0-15 12-27 27-27s27 12 27 27v48" fill="#E9F1E8" fill-opacity=".2" stroke="#E9F1E8" stroke-width="2"/>
+     <path d="M43 111h24v24H43zM153 111h24v24h-24z" fill="#D9B66D" fill-opacity=".55" stroke="#F2E4C3" stroke-width="1.5"/>
+     <path d="M16 169h188" stroke="#F2E4C3" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
+     <path d="M35 169v-17m150 17v-17" stroke="#F2E4C3" stroke-width="3" stroke-linecap="round"/>
+     <circle cx="191" cy="35" r="8" fill="#D9B66D"/><circle cx="191" cy="35" r="15" stroke="#D9B66D" stroke-opacity=".3"/>
+    </svg>
+   </div>
+  </div>
+  <div class="hero-foot"><span>مبنای تحلیل: اطلاعات ارائه‌شده در سیزدهمین جلسه ستاد هماهنگی طرح خانه امید</span><span><strong>۱۱۲٬۰۰۸</strong> واحد در دست اجرا · <strong>۸۶٪</strong> تحقق برنامه اعلام‌شده</span></div>
+ </div>
+</header>
+<div class="nav-wrap"><nav class="nav shell">
+ <a href="#overview">نمای کلان</a><a href="#execution">عملکرد اجرایی</a><a href="#land">تأمین زمین</a><a href="#finance">منابع مالی</a><a href="#agreements">تفاهم‌نامه‌ها</a><a href="#charity">مشارکت مردمی</a><a href="#decisions">مصوبات و پیگیری‌ها</a><a href="#quality">کنترل کیفیت داده</a>
+</nav></div>
+<main class="main shell">
+<section class="section" id="overview">
+ <div class="section-head"><div class="section-title"><span class="section-no">۰۱</span><div><h2>نمای کلان مدیریتی</h2><p>خلاصه شاخص‌های ملی تا تاریخ گزارش</p></div></div><span class="section-tag">شاخص‌های کلیدی</span></div>
+ <div class="kpi-grid">
+  <article class="kpi green"><div class="kpi-top"><span class="kpi-label">واحدهای در دست اجرا</span><span class="kpi-icon">⌂</span></div><div class="kpi-value">۱۱۲٬۰۰۸</div><div class="kpi-foot">مجموع کل کشور</div></article>
+  <article class="kpi"><div class="kpi-top"><span class="kpi-label">واحدهای روستایی</span><span class="kpi-icon">⌂</span></div><div class="kpi-value">۷۸٬۸۳۴</div><div class="kpi-foot">۷۰٪ از کل واحدها</div></article>
+  <article class="kpi blue"><div class="kpi-top"><span class="kpi-label">واحدهای شهری</span><span class="kpi-icon">▦</span></div><div class="kpi-value">۳۳٬۱۷۴</div><div class="kpi-foot">۳۰٪ از کل واحدها</div></article>
+  <article class="kpi gold"><div class="kpi-top"><span class="kpi-label">تحقق برنامه ۱۳۰ هزار واحدی</span><span class="kpi-icon">◔</span></div><div class="kpi-value">۸۶٪</div><div class="kpi-foot">عملکرد تا آبان ۱۴۰۵</div></article>
+  <article class="kpi purple"><div class="kpi-top"><span class="kpi-label">شروع عملیات اجرایی</span><span class="kpi-icon">⚒</span></div><div class="kpi-value">۹۲٪</div><div class="kpi-foot">درصد اعلامی کل کشور</div></article>
+  <article class="kpi red"><div class="kpi-top"><span class="kpi-label">واحدهای معرفی‌شده به بانک</span><span class="kpi-icon">▤</span></div><div class="kpi-value">۱۰۰٬۱۶۸</div><div class="kpi-foot">از ۱۱۲٬۰۰۸ واحد در دست اجرا</div></article>
+ </div>
+ <div class="grid-2" style="margin-top:16px">
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">ترکیب واحدهای در دست اجرا</h3><p class="panel-sub">تفکیک شهری و روستایی · تعداد واحد</p></div><span class="panel-chip">ترکیب سبد</span></div><div class="chart-box"><canvas id="chartRuralUrban"></canvas></div></article>
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">پیشرفت نسبت به برنامه سال ۱۴۰۵</h3><p class="panel-sub">برنامه ۱۳۰ هزار واحد در برابر عملکرد ثبت‌شده</p></div><span class="panel-chip">هدف‌گذاری</span></div><div class="chart-box"><canvas id="chartTarget"></canvas></div></article>
+ </div>
+ <div class="insight-grid">
+  <div class="insight emphasis"><span class="mini">تمرکز اصلی سبد اجرایی</span><strong>۴۳٬۴۷۳ واحد</strong><p>طرح ویژه روستایی دهک‌های ۱ تا ۴؛ بزرگ‌ترین ردیف برنامه‌های در دست اجرا</p></div>
+  <div class="insight"><span class="mini">سهم روستایی از کل</span><strong>حدود ۷۰٪</strong><p>وزن غالب برنامه اجرایی خانه امید در بخش روستایی قرار دارد.</p></div>
+  <div class="insight"><span class="mini">فاصله تا هدف ۱۳۰ هزار واحد</span><strong>۱۷٬۹۹۲ واحد</strong><p>فاصله محاسبه‌شده میان برنامه اعلامی و عملکرد ۱۱۲٬۰۰۸ واحدی</p></div>
+ </div>
+</section>
+
+<section class="section" id="execution">
+ <div class="section-head"><div class="section-title"><span class="section-no">۰۲</span><div><h2>عملکرد اجرایی و پیشرفت ساخت</h2><p>ترکیب روش ساخت، وضعیت مراحل اجرایی و توزیع استانی</p></div></div><span class="section-tag">۱۷ ردیف برنامه</span></div>
+ <div class="grid-2">
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">واحدهای شروع‌شده بر اساس نوع ساخت</h3><p class="panel-sub">سهم هر روش ساخت از کل واحدهای شروع‌شده</p></div></div><div class="chart-box"><canvas id="chartConstructionType"></canvas></div></article>
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">مراحل اجرایی در کل کشور</h3><p class="panel-sub">تعداد واحد ثبت‌شده در هر مرحله؛ مطابق جدول عملکرد</p></div></div><div class="chart-box medium"><canvas id="chartNationalStages"></canvas></div></article>
+ </div>
+ <article class="panel" style="margin-top:16px"><div class="panel-head"><div><h3 class="panel-title">تعداد واحدهای در دست اجرا به تفکیک برنامه</h3><p class="panel-sub">مقایسه ۹ ردیف روستایی و ۸ ردیف شهری</p></div><div class="filter-row"><input id="programSearch" type="search" placeholder="جست‌وجوی عنوان برنامه..." aria-label="جست‌وجوی برنامه"></div></div><div class="chart-box xtall"><canvas id="chartProgramUnits"></canvas></div></article>
+ <div class="grid-2" style="margin-top:16px">
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">توزیع واحدهای جاری در استان‌ها</h3><p class="panel-sub">مقادیر نمودار استانی پاورپوینت · تعداد واحد</p></div></div><div class="chart-box xtall"><canvas id="chartActiveProvince"></canvas></div><div class="callout">جمع مقادیر نمودار استانی <strong>۱۱۱٬۴۵۶ واحد</strong> است؛ در حالی که جمع کل جدول عملکرد <strong>۱۱۲٬۰۰۸ واحد</strong> اعلام شده است. اختلاف ۵۵۲ واحد در بخش کنترل کیفیت ثبت شده است.</div></article>
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">مقایسه مراحل اجرایی در سطح ملی</h3><p class="panel-sub">معرفی به بانک، قرارداد، پی‌کنی تا سفت‌کاری</p></div></div><div class="data-card-grid">
+    <div class="data-card"><div class="label">معرفی به بانک</div><div class="value">۱۰۰٬۱۶۸</div><div class="detail">واحد</div></div>
+    <div class="data-card"><div class="label">عقد قرارداد</div><div class="value">۶۱٬۶۹۴</div><div class="detail">واحد</div></div>
+    <div class="data-card"><div class="label">پی‌کنی</div><div class="value">۱۰۲٬۵۰۱</div><div class="detail">واحد</div></div>
+    <div class="data-card"><div class="label">فونداسیون</div><div class="value">۶۳٬۶۷۵</div><div class="detail">واحد</div></div>
+    <div class="data-card"><div class="label">اسکلت</div><div class="value">۵۱٬۲۷۰</div><div class="detail">واحد</div></div>
+    <div class="data-card"><div class="label">سقف</div><div class="value">۴۴٬۳۱۱</div><div class="detail">واحد</div></div>
+    <div class="data-card"><div class="label">سفت‌کاری</div><div class="value">۳۵٬۱۸۰</div><div class="detail">واحد</div></div>
+    <div class="data-card"><div class="label">شروع عملیات اجرایی</div><div class="value">۹۲٪</div><div class="detail">درصد کل کشور</div></div>
+  </div><div class="callout">مقادیر مراحل از جدول تجمیعی اسلاید ۹ استخراج شده‌اند؛ این مراحل لزوماً یک قیف خطی و متوالی نیستند و به همین دلیل به‌صورت مقایسه‌ای نمایش داده شده‌اند.</div></article>
+ </div>
+ <div class="table-panel panel" style="margin-top:16px"><div class="table-head"><h3>جزئیات ۱۷ برنامه اجرایی</h3><span>تعداد واحد در دست اجرا</span></div><div class="table-wrap"><table id="programTable"><thead><tr><th>نوع</th><th>عنوان برنامه</th><th>تعداد واحد</th><th>سهم از کل</th></tr></thead><tbody></tbody></table></div><div class="table-note">منبع: جدول «تعداد واحد در دست اجرا» در اسلاید ۷ پاورپوینت.</div></div>
+</section>
+
+<section class="section" id="land">
+ <div class="section-head"><div class="section-title"><span class="section-no">۰۳</span><div><h2>تأمین زمین و واگذاری به متقاضیان</h2><p>تفاهم‌نامه‌های زمین، عملکرد واگذاری روستایی و مسیر تبدیل زمین به واحد مسکونی</p></div></div><span class="section-tag">اولویت روستاهای حریم شهر</span></div>
+ <div class="kpi-grid">
+  <article class="kpi green"><div class="kpi-top"><span class="kpi-label">هدف تفاهم‌نامه جدید</span><span class="kpi-icon">▦</span></div><div class="kpi-value">۵۰٬۰۰۰</div><div class="kpi-foot">واحد مسکونی</div></article>
+  <article class="kpi blue"><div class="kpi-top"><span class="kpi-label">روستاهای حریم شهر</span><span class="kpi-icon">⌂</span></div><div class="kpi-value">۳۸٬۰۰۰</div><div class="kpi-foot">۷۶٪ هدف ۵۰ هزار واحدی</div></article>
+  <article class="kpi gold"><div class="kpi-top"><span class="kpi-label">روستاهای خارج حریم</span><span class="kpi-icon">⌖</span></div><div class="kpi-value">۱۲٬۰۰۰</div><div class="kpi-foot">۲۴٪ هدف ۵۰ هزار واحدی</div></article>
+  <article class="kpi purple"><div class="kpi-top"><span class="kpi-label">عملکرد کل واگذاری</span><span class="kpi-icon">✓</span></div><div class="kpi-value">۱۰۷٪</div><div class="kpi-foot">۲۱٬۴۸۰ واحد در برابر برنامه ۲۰ هزار</div></article>
+  <article class="kpi"><div class="kpi-top"><span class="kpi-label">قطعات زمین عملکردی</span><span class="kpi-icon">▤</span></div><div class="kpi-value">۱۵٬۵۳۸</div><div class="kpi-foot">قطعه زمین</div></article>
+  <article class="kpi red"><div class="kpi-top"><span class="kpi-label">واحد تحویل‌شده به متقاضیان</span><span class="kpi-icon">⌂</span></div><div class="kpi-value">۱۰٬۶۳۸</div><div class="kpi-foot">واحد مسکونی · اسلاید ۲۴</div></article>
+ </div>
+ <div class="grid-2" style="margin-top:16px">
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">توزیع استانی زمین برای ۵۰ هزار واحد</h3><p class="panel-sub">سهم برنامه‌ریزی‌شده هر استان · واحد</p></div></div><div class="chart-box xtall"><canvas id="chartLand50k"></canvas></div></article>
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">عملکرد واگذاری زمین به تفکیک استان</h3><p class="panel-sub">سهمیه در برابر واحدهای داخل و خارج حریم شهر</p></div></div><div class="chart-box xtall"><canvas id="chartLandProvince"></canvas></div></article>
+ </div>
+ <div class="grid-2" style="margin-top:16px">
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">درصد تحقق سهمیه واگذاری در استان‌ها</h3><p class="panel-sub">محاسبه از مجموع واحدهای داخل و خارج حریم تقسیم بر سهمیه استان</p></div></div><div class="chart-box xtall"><canvas id="chartLandAchievement"></canvas></div></article>
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">زنجیره تأمین زمین تا شروع ساخت</h3><p class="panel-sub">برنامه و عملکرد تجمیعی ارائه‌شده در اسلاید ۲۱</p></div></div><div class="chart-box medium"><canvas id="chartLandPipeline"></canvas></div><div class="callout">برنامه تأمین زمین برای ۱۳۲ هزار واحد؛ شناسایی و تخصیص زمین برای ۹۲ هزار واحد، صورت‌جلسه تحویل ۲۷ هزار، پروانه ساختمانی ۱۲٬۶۵۰، شروع عملیات ۱۰٬۷۲۵ و قرارداد واگذاری ۳٬۳۵۲ واحد اعلام شده است.</div></article>
+ </div>
+ <div class="insight-grid">
+  <div class="insight"><span class="mini">تفاهم‌نامه سازمان ملی زمین و مسکن</span><strong>۵۰ هزار واحد</strong><p>شناسایی ۵۲۶ قطعه زمین برای ۳۱ هزار واحد</p></div>
+  <div class="insight"><span class="mini">شرکت عمران شهرهای جدید</span><strong>۲۵ هزار واحد</strong><p>صورت‌جلسه تحویل زمین برای ۵٬۰۶۸ واحد در ۱۱ شهر جدید</p></div>
+  <div class="insight"><span class="mini">زمین رایگان بنیاد در روستاهای حریم شهر</span><strong>۲۱٬۴۸۰ واحد</strong><p>عملکرد گزارش‌شده از واگذاری داخل و خارج حریم شهر</p></div>
+ </div>
+</section>
+
+<section class="section" id="finance">
+ <div class="section-head"><div class="section-title"><span class="section-no">۰۴</span><div><h2>تسهیلات بانکی، اعتبارات و منابع مالی</h2><p>عملکرد بانک‌ها، منابع بلاعوض، اعتبارات استانی و برنامه زمان‌بندی مالی</p></div></div><span class="section-tag">پایش منابع و جذب</span></div>
+ <div class="kpi-grid">
+  <article class="kpi"><div class="kpi-top"><span class="kpi-label">سهمیه بانکی اختصاص‌یافته</span><span class="kpi-icon">▤</span></div><div class="kpi-value">۱۲۰٬۰۰۰</div><div class="kpi-foot">واحد</div></article>
+  <article class="kpi green"><div class="kpi-top"><span class="kpi-label">سهمیه ابلاغ‌شده بانک‌ها</span><span class="kpi-icon">✓</span></div><div class="kpi-value">۱۰۸٬۰۰۰</div><div class="kpi-foot">۹۰٪ سهمیه اختصاص‌یافته</div></article>
+  <article class="kpi blue"><div class="kpi-top"><span class="kpi-label">معرفی به بانک</span><span class="kpi-icon">⇢</span></div><div class="kpi-value">۵۸٬۸۸۷</div><div class="kpi-foot">۵۵٪ سهمیه ابلاغ‌شده</div></article>
+  <article class="kpi gold"><div class="kpi-top"><span class="kpi-label">قرارداد منعقدشده</span><span class="kpi-icon">✎</span></div><div class="kpi-value">۲۱٬۳۵۴</div><div class="kpi-foot">۳۶٪ نسبت به معرفی</div></article>
+  <article class="kpi purple"><div class="kpi-top"><span class="kpi-label">جذب ثبت‌شده بانک‌ها</span><span class="kpi-icon">₿</span></div><div class="kpi-value">۳۴٬۱۰۴</div><div class="kpi-foot">میلیارد ریال</div></article>
+  <article class="kpi red"><div class="kpi-top"><span class="kpi-label">اعتبار تکمیلی مهر ایران</span><span class="kpi-icon">＋</span></div><div class="kpi-value">۵۰۰٬۰۰۰</div><div class="kpi-foot">میلیون ریال · توزیع در ۳۱ استان</div></article>
+ </div>
+ <div class="grid-2" style="margin-top:16px">
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">عملکرد بانک‌های عامل</h3><p class="panel-sub">معرفی به بانک و قرارداد منعقدشده · تعداد</p></div></div><div class="chart-box medium"><canvas id="chartBanks"></canvas></div><div class="callout">این جدول مربوط به عملکرد بانک‌ها از محل اعتبار سال ۱۴۰۴ طرح ویژه نوسازی و بهسازی مسکن روستایی است؛ بنابراین با عدد ۱۰۰٬۱۶۸ معرفی به بانک در جدول تجمیعی کل طرح خانه امید، یک دامنه آماری فرض نشده است.</div></article>
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">مانده قابل برداشت و کمبود حساب استان‌ها</h3><p class="panel-sub">میلیارد ریال · مطابق نمودار اسلاید ۲۰</p></div></div><div class="chart-box xtall"><canvas id="chartAccountBalance"></canvas></div></article>
+ </div>
+ <div class="table-panel panel" style="margin-top:16px"><div class="table-head"><h3>جزئیات عملکرد بانک‌های عامل</h3><span>اعتبار سال ۱۴۰۴</span></div><div class="table-wrap"><table id="bankTable"><thead><tr><th>بانک</th><th>سهمیه اختصاصی</th><th>ابلاغ‌شده</th><th>معرفی به بانک</th><th>قرارداد</th><th>جذب (میلیارد ریال)</th></tr></thead><tbody></tbody></table></div></div>
+ <div class="grid-2" style="margin-top:16px">
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">کمک بلاعوض تخصیص‌یافته به استان‌ها</h3><p class="panel-sub">مقادیر نمودار استانی · میلیارد تومان</p></div></div><div class="chart-box xtall"><canvas id="chartGrantProvince"></canvas></div><div class="callout">در متن اسلاید ۱۹ مجموع پرداختی <strong>۱٬۲۸۲ میلیارد تومان</strong> و متوسط استانی ۴۱ میلیارد تومان اعلام شده است؛ جمع مقادیر نمودار استانی حدود ۱٬۲۶۲٫۳ میلیارد تومان است.</div></article>
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">اعتبارات دولتی ـ استانی</h3><p class="panel-sub">برنامه، مصوب و تخصیص به تفکیک استان · میلیارد تومان</p></div></div><div class="chart-box xtall"><canvas id="chartGovernmentProvincial"></canvas></div><div class="callout">جمع برنامه استانی در نمودار با رقم برنامه کل در جدول تجمیعی اسلاید ۲۸ یکسان نیست؛ برای جلوگیری از تلفیق ناهم‌مقیاس، هر دو منبع جداگانه نمایش داده شده‌اند.</div></article>
+ </div>
+ <div class="grid-2" style="margin-top:16px">
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">اعتبارات مسئولیت اجتماعی و مالیات‌های نشانه‌دار</h3><p class="panel-sub">برنامه، مصوب و تخصیص استانی · میلیارد تومان</p></div></div><div class="chart-box xtall"><canvas id="chartSocialProvincial"></canvas></div></article>
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">توزیع اعتبار تسهیلات تکمیلی مهر ایران</h3><p class="panel-sub">اعتبار تخصیصی هر استان · میلیون ریال</p></div></div><div class="chart-box xtall"><canvas id="chartLoanAllocation"></canvas></div></article>
+ </div>
+ <div class="grid-2" style="margin-top:16px">
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">برنامه تجمعی کل اعتبار مورد نیاز</h3><p class="panel-sub">مسیر زمانی خرداد تا اسفند · میلیارد تومان</p></div></div><div class="chart-box medium"><canvas id="chartFundingNeed"></canvas></div></article>
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">برنامه پیشرفت تجمعی فیزیکی</h3><p class="panel-sub">هدف ماهانه تا پایان سال · درصد</p></div></div><div class="chart-box medium"><canvas id="chartPhysicalProgress"></canvas></div></article>
+ </div>
+ <article class="panel" style="margin-top:16px"><div class="panel-head"><div><h3 class="panel-title">برنامه منابع مالی از محل حساب ۱۰۰ و تخصیص معاونت پشتیبانی</h3><p class="panel-sub">مقایسه نیاز تجمعی با تخصیص تجمعی ثبت‌شده · میلیارد تومان</p></div></div><div class="chart-box medium"><canvas id="chartAccount100"></canvas></div></article>
+ <div class="grid-2" style="margin-top:16px">
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">جذب کمک‌های نقدی استان‌ها</h3><p class="panel-sub">برنامه و عملکرد هفت‌ماهه · میلیارد ریال</p></div><span class="panel-chip">تحقق ۸۱٪</span></div><div class="chart-box xtall"><canvas id="chartCashDonations"></canvas></div><div class="callout">برنامه هفت‌ماهه: ۱٬۷۶۸ میلیارد ریال · عملکرد هفت‌ماهه: ۱٬۴۲۸ میلیارد ریال · تحقق اعلامی: ۸۱٪.</div></article>
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">جذب کمک‌های غیرنقدی استان‌ها</h3><p class="panel-sub">برنامه و عملکرد هفت‌ماهه · میلیارد ریال</p></div><span class="panel-chip">تحقق ۳۵۷٪</span></div><div class="chart-box xtall"><canvas id="chartNoncashDonations"></canvas></div><div class="callout">برنامه هفت‌ماهه: ۱٬۱۲۷ میلیارد ریال · عملکرد هفت‌ماهه: ۴٬۰۲۲ میلیارد ریال · تحقق اعلامی: ۳۵۷٪.</div></article>
+ </div>
+ <div class="insight-grid">
+  <div class="insight"><span class="mini">پرداخت از محل موافقت‌نامه ۱۴۰۴</span><strong>۷٬۲۳۰ میلیارد ریال</strong><p>میزان کمک بلاعوض پرداختی به استان‌ها در جدول اسلاید ۱۷</p></div>
+  <div class="insight"><span class="mini">خانوارهای بهره‌مند</span><strong>۹٬۷۳۰ خانوار</strong><p>۶٬۱۵۸ خانوار روستایی و ۳٬۵۷۲ خانوار شهری</p></div>
+  <div class="insight"><span class="mini">متوسط کمک به هر خانوار</span><strong>۷۷ میلیون تومان</strong><p>میانگین اعلام‌شده در گزارش</p></div>
+ </div>
+ <div class="insight-grid">
+  <div class="insight emphasis"><span class="mini">اعتبار مورد نیاز کل تا پایان سال</span><strong>۲۳٬۴۴۱ میلیارد تومان</strong><p>برنامه تجمعی کل اعتبار مورد نیاز در جدول زمان‌بندی</p></div>
+  <div class="insight"><span class="mini">نیاز از محل حساب ۱۰۰</span><strong>۲٬۳۳۴٫۳ میلیارد تومان</strong><p>برنامه تجمعی تا پایان اسفند</p></div>
+  <div class="insight"><span class="mini">تخصیص تجمعی تا مهر</span><strong>۱٬۱۲۴٫۶ میلیارد تومان</strong><p>رقم ثبت‌شده در جدول برنامه زمان‌بندی</p></div>
+ </div>
+ <div class="table-panel panel" style="margin-top:16px"><div class="table-head"><h3>خلاصه اعتبارات مصوب و تخصیص</h3><span>میلیارد تومان · اسلاید ۲۸</span></div><div class="table-wrap"><table><thead><tr><th>سرفصل</th><th>برنامه تا پایان سال</th><th>برنامه تا پایان آذر</th><th>مصوب</th><th>تخصیص</th></tr></thead><tbody>
+  <tr><td data-label="سرفصل">اعتبارات دولتی ـ استانی</td><td data-label="برنامه تا پایان سال" class="num">۸۶۴</td><td data-label="برنامه تا پایان آذر" class="num">۲۵۹</td><td data-label="مصوب" class="num">۷۵</td><td data-label="تخصیص" class="num">۰</td></tr>
+  <tr><td data-label="سرفصل">مسئولیت اجتماعی / مالیات‌های نشانه‌دار / بند خ ماده ۲۰</td><td data-label="برنامه تا پایان سال" class="num">۲٬۲۵۳</td><td data-label="برنامه تا پایان آذر" class="num">۹۰۰</td><td data-label="مصوب" class="num">۸۴۱</td><td data-label="تخصیص" class="num">۲۰۶</td></tr>
+  <tr><td data-label="سرفصل">مجموع اعلامی</td><td data-label="برنامه تا پایان سال" class="num">۳٬۷۴۹</td><td data-label="برنامه تا پایان آذر" class="num">۱٬۱۵۹</td><td data-label="مصوب" class="num">۹۱۶</td><td data-label="تخصیص" class="num">۲۰۶</td></tr>
+ </tbody></table></div></div>
+</section>
+
+<section class="section" id="agreements">
+ <div class="section-head"><div class="section-title"><span class="section-no">۰۵</span><div><h2>تفاهم‌نامه‌ها و عملکرد نهادهای حمایتی</h2><p>کمیته امداد، سازمان بهزیستی و طرح‌های بنیاد ساخت</p></div></div><span class="section-tag">تعهدات و پیشرفت</span></div>
+ <div class="data-card-grid">
+  <div class="data-card"><div class="label">هم‌افزایی تفاهم‌نامه‌های حمایتی</div><div class="value">۵۲٬۰۰۰</div><div class="detail">واحد مسکونی اعلام‌شده</div></div>
+  <div class="data-card"><div class="label">کمیته امداد ـ روستایی</div><div class="value">۸٬۰۰۰</div><div class="detail">واحد مسکونی</div></div>
+  <div class="data-card"><div class="label">کمیته امداد ـ شهری</div><div class="value">۳۰٬۰۰۰</div><div class="detail">واحد مسکونی</div></div>
+  <div class="data-card"><div class="label">بهزیستی ـ شهری و روستایی</div><div class="value">۸٬۰۰۰</div><div class="detail">۴٬۹۰۰ شهری + ۳٬۱۰۰ روستایی</div></div>
+ </div>
+ <div class="grid-2" style="margin-top:16px">
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">پیشرفت مراحل تفاهم‌نامه‌ها</h3><p class="panel-sub">تعداد واحد در هر مرحله؛ داده‌های اسلایدهای ۱۳ و ۱۵</p></div></div><div class="chart-box medium"><canvas id="chartMouStages"></canvas></div></article>
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">اعتبار مورد نیاز و تأمین‌شده تفاهم‌نامه‌ها</h3><p class="panel-sub">میلیارد ریال؛ چهار ردیف دارای جدول مالی</p></div></div><div class="chart-box medium"><canvas id="chartMouFunding"></canvas></div></article>
+ </div>
+ <div class="grid-3" style="margin-top:16px">
+  <div class="insight"><span class="mini">تفاهم‌نامه ۶ هزار واحد بنیاد ساخت شهری</span><strong>۳٬۹۵۲ واحد</strong><p>صورت‌جلسه‌شده تا ۱۴۰۵/۰۸/۰۲؛ ۳٬۰۰۶ پی‌کنی و ۱٬۰۳۱ سفت‌کاری</p></div>
+  <div class="insight"><span class="mini">تفاهم‌نامه بهزیستی</span><strong>۲٬۴۱۳ واحد</strong><p>مجموع واحدهای رسیده به مرحله سفت‌کاری در بخش شهری و روستایی</p></div>
+  <div class="insight"><span class="mini">بنیاد ایران پیشرفته</span><strong>۲۰٬۰۰۰ واحد</strong><p>تأمین مسکن برای دهک درآمدی ۱ تا ۴ در راستای صنعتی‌سازی و فناوری‌های نوین</p></div>
+ </div>
+ <div class="callout"><strong>توجه:</strong> رقم ۵۲ هزار واحد در متن گزارش به‌عنوان هم‌افزایی نهادهای حمایتی ذکر شده است. تفاهم‌نامه ۲۰ هزار واحدی بنیاد ایران پیشرفته نیز در همان اسلاید به‌صورت جداگانه آمده و در این عدد ادغام نشده است.</div>
+</section>
+
+<section class="section" id="charity">
+ <div class="section-head"><div class="section-title"><span class="section-no">۰۶</span><div><h2>مشارکت‌های مردمی، خیرین و ظرفیت شرکت‌ها</h2><p>کمک‌های نقدی و غیرنقدی، زمین‌های هبه‌شده و منابع مکمل</p></div></div><span class="section-tag">ظرفیت‌های پشتیبان</span></div>
+ <div class="kpi-grid">
+  <article class="kpi green"><div class="kpi-top"><span class="kpi-label">واحدهای عملکرد خیرین مسکن‌ساز</span><span class="kpi-icon">♥</span></div><div class="kpi-value">۴٬۳۳۲</div><div class="kpi-foot">واحد و پروانه ساختمانی</div></article>
+  <article class="kpi blue"><div class="kpi-top"><span class="kpi-label">زمین هبه‌شده</span><span class="kpi-icon">⌖</span></div><div class="kpi-value">۴۹ قطعه</div><div class="kpi-foot">۵ شهری + ۴۴ روستایی</div></article>
+  <article class="kpi gold"><div class="kpi-top"><span class="kpi-label">مساحت زمین هبه‌شده</span><span class="kpi-icon">▧</span></div><div class="kpi-value">۴۵٬۶۳۴</div><div class="kpi-foot">مترمربع · شهری و روستایی</div></article>
+  <article class="kpi purple"><div class="kpi-top"><span class="kpi-label">واحدهای در دست اجرا روی زمین هبه‌شده</span><span class="kpi-icon">⌂</span></div><div class="kpi-value">۱٬۵۸۹</div><div class="kpi-foot">۸۷۱ شهری + ۷۱۸ روستایی</div></article>
+  <article class="kpi red"><div class="kpi-top"><span class="kpi-label">عملکرد جذب کمک نقدی</span><span class="kpi-icon">₿</span></div><div class="kpi-value">۸۱٪</div><div class="kpi-foot">۱٬۴۲۸ از برنامه ۱٬۷۶۸ میلیارد ریال</div></article>
+  <article class="kpi"><div class="kpi-top"><span class="kpi-label">عملکرد جذب کمک غیرنقدی</span><span class="kpi-icon">▣</span></div><div class="kpi-value">۳۵۷٪</div><div class="kpi-foot">۴٬۰۲۲ از برنامه ۱٬۱۲۷ میلیارد ریال</div></article>
+ </div>
+ <div class="grid-2" style="margin-top:16px">
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">مانده مطالبات دفتر مشارکت‌های مردمی</h3><p class="panel-sub">میلیارد ریال</p></div></div><div class="chart-box"><canvas id="chartClaims"></canvas></div><div class="callout">مطالبات اعلامی مجموعاً ۸۲۰ میلیارد ریال است: مانده واریزی نقدی خیرین ۳۸۲ و مانده تعهد بنیاد در ازای کمک خیرین ۴۳۹ میلیارد ریال. اختلاف یک‌میلیاردی ناشی از گرد کردن ارقام گزارش است.</div></article>
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">منابع اعتبار بلاعوض</h3><p class="panel-sub">سرفصل‌های اعلام‌شده · میلیارد تومان</p></div></div><div class="chart-box"><canvas id="chartGrantSources"></canvas></div><div class="callout">مجموع اعلامی در اسلاید ۳۵ برابر ۲٬۳۳۴٫۳ میلیارد تومان است. جمع ساده ردیف‌های عدددار با احتساب ردیف ۲۷ میلیارد تومانی به ۲٬۳۸۵٫۳ می‌رسد؛ مغایرت ۵۱ میلیارد تومانی نیازمند تطبیق است.</div></article>
+ </div>
+ <div class="grid-2" style="margin-top:16px">
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">ظرفیت تعهد شرکت‌های تابعه</h3><p class="panel-sub">سهم شرکت‌ها در پروژه‌های خانه امید</p></div></div><div class="data-card-grid">
+   <div class="data-card"><div class="label">سهم شرکت‌ها</div><div class="value">۴٬۹۶۸٬۹۴۸</div><div class="detail">میلیون ریال</div></div>
+   <div class="data-card"><div class="label">تعداد واحدها</div><div class="value">۴٬۴۵۳</div><div class="detail">واحد مسکونی</div></div>
+  </div><div class="callout">در قراردادهای فی‌مابین بنیاد استان‌ها و شرکت‌های تابعه، سهم بدهی شرکت‌ها باید مشخص و تأمین مالی مازاد بر آن پیش‌بینی شود.</div></article>
+  <article class="panel"><div class="panel-head"><div><h3 class="panel-title">پروژه زمین ۳٫۳ هکتاری مهستان ـ هشتگرد</h3><p class="panel-sub">شهر جدید مهستان، استان البرز</p></div></div><div class="data-card-grid">
+   <div class="data-card"><div class="label">مساحت</div><div class="value">۳٫۳</div><div class="detail">هکتار</div></div>
+   <div class="data-card"><div class="label">تعداد قطعه</div><div class="value">۲۴</div><div class="detail">۲۲ مسکونی + ۲ تجاری</div></div>
+   <div class="data-card"><div class="label">ظرفیت ساخت</div><div class="value">حدود ۲۴۰</div><div class="detail">واحد مسکونی</div></div>
+   <div class="data-card"><div class="label">متوسط مساحت قطعه</div><div class="value">۶۸۰</div><div class="detail">مترمربع</div></div>
+  </div><div class="callout">بازطراحی قطعات و پلان معماری در گزارش در دست اقدام اعلام شده است.</div></article>
+ </div>
+ <div class="insight-grid">
+  <div class="insight"><span class="mini">بانک قرض‌الحسنه رسالت</span><strong>۱۰ میلیارد تومان در ماه</strong><p>امتیاز قرض‌الحسنه ماهانه برای طرح خانه امید طبق تفاهم‌نامه ۲۰ مهر ۱۴۰۵</p></div>
+  <div class="insight"><span class="mini">تسهیلات از محل رسوب منابع شرکت‌ها</span><strong>۲۵ فقره در ماه</strong><p>سقف فردی تا ۲۰۰ میلیون تومان، بازپرداخت ۳۶ ماهه؛ ۱۵۰ فقره در شش ماه</p></div>
+  <div class="insight"><span class="mini">تسهیلات تکمیلی مهر ایران</span><strong>۵۰۰ میلیارد ریال</strong><p>توزیع اعتبار استانی میان ۳۱ استان در سال ۱۴۰۵</p></div>
+ </div>
+</section>
+
+<section class="section" id="decisions">
+ <div class="section-head"><div class="section-title"><span class="section-no">۰۷</span><div><h2>مصوبات و محورهای پیگیری مدیریتی</h2><p>استخراج محورهای اقدام از متن صورت‌جلسه؛ وضعیت اجرا در فایل منبع گزارش نشده است</p></div></div><span class="section-tag">مسئولیت دستگاهی</span></div>
+ <div class="action-grid">
+  <article class="action"><span class="action-icon">⌂</span><div><h3>معاونت بازسازی و مسکن روستایی</h3><p>تهیه توزیع استانی هدف ۵۰ هزار واحد زمین بر اساس نیاز خانوارهای دهک ۱ تا ۴؛ اولویت واگذاری در روستاهای حریم شهر؛ ارائه گزارش عملکرد و مانده مطالبات تفاهم‌نامه‌ها با کمیته امداد و بهزیستی.</p></div></article>
+  <article class="action"><span class="action-icon">⌖</span><div><h3>معاونت توسعه و عمران روستایی</h3><p>تسریع در شناسایی اراضی مناسب و صورت‌جلسه انتقال در استان‌ها و ارائه گزارش متناسب با تعداد قطعات واگذاری‌شده در چارچوب تفاهم‌نامه ۲۰ هزار قطعه.</p></div></article>
+  <article class="action"><span class="action-icon">▤</span><div><h3>معاونت برنامه‌ریزی</h3><p>پیگیری معرفی شرکت‌های معتبر صنعتی‌سازی؛ پیگیری یک همت اوراق اسناد خزانه اسلامی (اخزا ۵۰۲) سه‌ساله با سررسید ۱۴۰۸؛ برگزاری مسابقه طراحی تندیس و لوح یادبود طرح خانه امید.</p></div></article>
+  <article class="action"><span class="action-icon">₿</span><div><h3>معاونت امور پشتیبانی و مدیریت منابع انسانی</h3><p>اختصاص ماهانه ۱۰ میلیارد تومان امتیاز قرض‌الحسنه از طریق بانک رسالت؛ واریز عواید فروش زمین به حساب مشترک؛ پیگیری منابع و تسهیلات تکمیلی طرح.</p></div></article>
+  <article class="action"><span class="action-icon">▣</span><div><h3>دفتر امور شرکت‌ها و مجامع</h3><p>تعیین سهم بدهی شرکت‌های تابعه در قراردادهای استان‌ها و پیش‌بینی تأمین مالی مازاد؛ اختصاص مرحله نخست ۲۵ فقره تسهیلات در ماه با سقف ۲۰۰ میلیون تومان و بازپرداخت ۳۶ ماهه.</p></div></article>
+  <article class="action"><span class="action-icon">♥</span><div><h3>دفتر مشارکت‌های مردمی و حساب ۱۰۰</h3><p>پیگیری کمک به ساخت مسکن استیجار از طریق انجمن‌های خیرین مسکن‌ساز؛ پایش جذب کمک‌های نقدی و غیرنقدی و مانده مطالبات.</p></div></article>
+  <article class="action"><span class="action-icon">▦</span><div><h3>هلدینگ نوسازی و عمران تهران</h3><p>بازطراحی قطعات و پلان معماری زمین ۳٫۳ هکتاری مهستان؛ تشکیل کمیته دو نفره برای تعیین قیمت روز زمین در کنار نظر کارشناس رسمی دادگستری.</p></div></article>
+  <article class="action"><span class="action-icon">▧</span><div><h3>روابط عمومی</h3><p>ارائه گزارش پخش کلیپ‌های کوتاه در رسانه ملی و پلتفرم‌های شبکه‌های مجازی و انعکاس اخبار طرح خانه امید.</p></div></article>
+ </div>
+ <div class="panel" style="margin-top:16px"><div class="panel-head"><div><h3 class="panel-title">تقویم جلسات ستاد هماهنگی</h3><p class="panel-sub">از جلسه نخست تا سیزدهمین جلسه گزارش‌شده</p></div><span class="panel-chip">۱۳ جلسه</span></div><div class="timeline">
+  <div class="meeting"><b>جلسه اول</b><span>۱۴۰۵/۰۳/۲۳</span></div><div class="meeting"><b>جلسه دوم</b><span>۱۴۰۵/۰۴/۰۲</span></div><div class="meeting"><b>جلسه سوم</b><span>۱۴۰۵/۰۴/۰۶</span></div><div class="meeting"><b>جلسه چهارم</b><span>۱۴۰۵/۰۴/۲۰</span></div><div class="meeting"><b>جلسه پنجم</b><span>۱۴۰۵/۰۴/۲۷</span></div><div class="meeting"><b>جلسه ششم</b><span>۱۴۰۵/۰۵/۰۳</span></div><div class="meeting"><b>جلسه هفتم</b><span>۱۴۰۵/۰۵/۱۰</span></div><div class="meeting"><b>جلسه هشتم</b><span>۱۴۰۵/۰۵/۲۴</span></div><div class="meeting"><b>جلسه نهم</b><span>۱۴۰۵/۰۶/۰۹</span></div><div class="meeting"><b>جلسه دهم</b><span>۱۴۰۵/۰۶/۲۱</span></div><div class="meeting"><b>جلسه یازدهم</b><span>۱۴۰۵/۰۷/۰۴</span></div><div class="meeting"><b>جلسه دوازدهم</b><span>۱۴۰۵/۰۷/۱۸</span></div><div class="meeting"><b>جلسه سیزدهم</b><span>۱۴۰۵/۰۸/۰۲</span></div>
+ </div></div>
+</section>
+
+<section class="section" id="quality">
+ <div class="section-head"><div class="section-title"><span class="section-no">۰۸</span><div><h2>ملاحظات و کنترل کیفیت داده‌ها</h2><p>مواردی که در فایل مبنا نیازمند تطبیق یا تأیید واحد مسئول هستند</p></div></div><span class="section-tag">شفافیت داده</span></div>
+ <div class="quality">
+  <div class="quality-item"><strong>اختلاف مجموع استانی واحدهای جاری:</strong> جمع نمودار استانی اسلاید ۱۱ برابر ۱۱۱٬۴۵۶ است؛ در حالی که جدول کل کشور ۱۱۲٬۰۰۸ واحد را نشان می‌دهد. اختلاف: ۵۵۲ واحد.<span class="ref">اسلایدهای ۷ و ۱۱</span></div>
+  <div class="quality-item"><strong>درصد شروع عملیات شهری:</strong> در ردیف مجموع شهری جدول مراحل اجرایی، مقدار این ستون به‌صورت «۸» درج شده؛ مقدار درصدی قابل اتکا از همان خانه استخراج نمی‌شود. مقدار کل کشور ۹۲٪ و روستایی ۹۱٪ است.<span class="ref">اسلاید ۹</span></div>
+  <div class="quality-item"><strong>واحدهای داخل حریم شهر:</strong> جدول عملکرد واگذاری، ۱۵٬۶۱۳ واحد داخل حریم را ثبت کرده؛ متن اسلاید بعد ۱۰٬۶۱۳ واحد نوشته است. اسلاید ۲۴ نیز ۱۰٬۶۳۸ واحد تحویل‌شده به متقاضیان را اعلام می‌کند؛ این سه شاخص باید از هم تفکیک و تطبیق شوند.<span class="ref">اسلایدهای ۲۲ تا ۲۴</span></div>
+  <div class="quality-item"><strong>برنامه کل اعتبارات تا پایان سال:</strong> جدول تجمیعی، ۳٬۷۴۹ میلیارد تومان اعلام کرده؛ اما جمع دو ردیف اعتبارات دولتی استانی (۸۶۴) و مسئولیت اجتماعی (۲٬۲۵۳) برابر ۳٬۱۱۷ میلیارد تومان است.<span class="ref">اسلاید ۲۸</span></div>
+  <div class="quality-item"><strong>کمک بلاعوض استانی:</strong> متن اسلاید ۱۹ مجموع پرداختی را ۱٬۲۸۲ میلیارد تومان اعلام می‌کند؛ جمع مقادیر نمودار استانی حدود ۱٬۲۶۲٫۳ میلیارد تومان است.<span class="ref">اسلاید ۱۹</span></div>
+  <div class="quality-item"><strong>اعتبارات بلاعوض و منابع:</strong> مجموع اعلامی اسلاید ۳۵ برابر ۲٬۳۳۴٫۳ میلیارد تومان است؛ جمع ساده ردیف‌های عدددار با احتساب ردیف ۲۷ میلیارد تومانی به ۲٬۳۸۵٫۳ می‌رسد. اختلاف: ۵۱ میلیارد تومان.<span class="ref">اسلاید ۳۵</span></div>
+  <div class="quality-item"><strong>برنامه اعتبارات دولتی استانی:</strong> جمع سری «برنامه» در نمودار استانی حدود ۱٬۴۹۶ میلیارد تومان است؛ رقم برنامه سالانه در جدول تجمیعی ۸۶۴ میلیارد تومان درج شده است.<span class="ref">اسلایدهای ۲۸ و ۲۹</span></div>
+  <div class="quality-item"><strong>تفاهم‌نامه ۸ هزار واحدی بهزیستی:</strong> در اسلاید ۱۲، ترکیب ۴٬۱۰۰ واحد شهری و ۳٬۹۰۰ واحد روستایی درج شده؛ اما اسلاید ۱۵ ترکیب ۴٬۹۰۰ واحد شهری و ۳٬۱۰۰ واحد روستایی را نشان می‌دهد. مجموع هر دو ۸ هزار واحد است، ولی توزیع شهری/روستایی متفاوت است.<span class="ref">اسلایدهای ۱۲ و ۱۵</span></div>
+  <div class="quality-item"><strong>کمک‌های غیرنقدی:</strong> عملکرد هفت‌ماهه ۴٬۰۲۲ و برنامه ۱٬۱۲۷ میلیارد ریال گزارش شده است؛ تحقق اعلامی ۳۵۷٪ است. به دلیل فاصله زیاد، پیشنهاد می‌شود مبنای ارزش‌گذاری و ثبت عملکرد غیرنقدی کنترل شود.<span class="ref">اسلاید ۴۵</span></div>
+ </div>
+ <div class="callout"><strong>قاعده نمایش:</strong> در این داشبورد، ارقام کلیدی مطابق مقادیر اعلام‌شده در فایل مبنا نمایش داده شده‌اند. موارد ناسازگار به‌صورت مستقل علامت‌گذاری شده‌اند و هیچ عددی برای رفع تناقض به‌صورت خودکار جایگزین نشده است.</div>
+</section>
+</main>
+<footer class="footer"><div class="shell footer-inner"><div><strong>سامانه هوشمند مدیریتی ریاست بنیاد مسکن</strong><br>داشبورد تحلیلی طرح خانه امید · سیزدهمین جلسه ستاد هماهنگی</div><div>تاریخ گزارش: ۱۴۰۵/۰۸/۰۲ · مبنای داده: فایل پاورپوینت پیوست</div></div></footer>
+<button class="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="بازگشت به بالا">↑</button>
+<script>
+const DATA={"land50k":{"labels":["خراسان رضوی","سیستان و بلوچستان","هرمزگان","آذربایجان غربی","کردستان","خوزستان","فارس","مازندران","گلستان","آذربایجان شرقی","کرمانشاه","گیلان","همدان","کرمان","اصفهان","تهران","خراسان شمالی","اردبیل","لرستان","کهگیلویه و بویراحمد","قم","یزد","خراسان جنوبی","بوشهر","مرکزی","ایلام","چهارمحال و بختیاری","البرز","قزوین","زنجان","سمنان"],"values":[2930.0,2478.0,2175.0,2075.0,2070.0,2040.0,1915.0,1885.0,1840.0,1780.0,1710.0,1695.0,1650.0,1632.0,1615.0,1592.0,1590.0,1525.0,1485.0,1390.0,1380.0,1310.0,1300.0,1298.0,1275.0,1240.0,1065.0,1055.0,1030.0,1020.0,955.0]},"constructionType":{"labels":["فردی","بنیاد ساخت","گروه ساخت","مجموعه سازی شخصی"],"values":[0.746,0.149,0.078,0.027]},"activeProvince":{"labels":["سیستان وبلوچستان","خراسان رضوی","فارس","اصفهان","کرمان","خراسان جنوبی","بوشهر","آذربایجان شرقی","خوزستان","خراسان شمالی","آذربایجان غربی","زنجان","گلستان","مازندران","هرمزگان","همدان","گیلان","کهگیلویه وبویراحمد","قزوین","اردبیل","ایلام","لرستان","کرمانشاه","یزد","مرکزی","چهارمحال وبختیاری","کردستان","سمنان","قم","تهران","البرز"],"values":[9342.359,8596.858,6902.966,6308.452,6158.644,5968.73,5735.171,5389.551,4757.29,4737.237,4581.531,4334.996,3997.633,3733.405,2834.557,2810.965,2788.553,2665.875,2222.349,2158.651,2074.9,1875.549,1872.011,1533.468,1514.595,1495.721,1338.836,1205.542,1067.53,874.077,578.0]},"grantProvince":{"labels":["سيستان وبلوچستان","فارس","خراسان رضوئ","كرمان","خراسان جنوبي","اصفهان","خوزستان","آذربايجان غربي","خراسان شمالي","آذربايجان شرقي","هرمزگان","کرمانشاه","گلستان","بوشهر","ايلام","يزد","زنجان","تهران","لرستان","همدان","كردستان","مرکزي","كهگيلويه وبويراحمد","اردبیل","قم","چهارمحال وبختياري","قزوين","مازندران","سمنان","البرز","گيلان"],"values":[157.454,87.386,84.508,64.352,55.087,53.923,48.052,47.772,46.084,43.877,43.519,40.81,39.156,39.028,34.32,31.861,30.82,30.598,30.478,30.11,26.816,25.972,23.631,22.487,19.935,19.657,19.493,19.34,17.657,14.601,13.469]},"accountAvailable":{"labels":["آذریابجان شرقی","سیستان و بلوچستان","کرمانشاه","آذربایجان غربی","اصفهان","البرز","سمنان","قزوین","خراسان جنوبی","اردبیل","کردستان","مازندران","لرستان","کهگیلویه و بویراحمد","گیلان","ایلام","خوزستان","خراسان شمالی","همدان","زنجان","چهارمحال بختیاری","فارس","گلستان","بوشهر","مرکزی","تهران","هرمزگان","قم","کرمان","یزد","خراسان رضوی"],"values":[0.811,29.999,1.463,63.595,0.0,0.352,0.0,7.045,0.582,20.584,5.112,0.0,1.948,3.632,6.333,9.799,25.017,34.593,30.676,34.198,39.744,43.912,48.66,50.134,52.716,57.015,58.184,60.871,106.913,146.594,142.694]},"accountShortage":{"labels":["آذریابجان شرقی","سیستان و بلوچستان","کرمانشاه","آذربایجان غربی","اصفهان","البرز","سمنان","قزوین","خراسان جنوبی","اردبیل","کردستان","مازندران","لرستان","کهگیلویه و بویراحمد","گیلان","ایلام","خوزستان","خراسان شمالی","همدان","زنجان","چهارمحال بختیاری","فارس","گلستان","بوشهر","مرکزی","تهران","هرمزگان","قم","کرمان","یزد","خراسان رضوی"],"values":[182.88,160.288,84.063,80.3,43.929,40.137,28.349,20.334,17.983,14.038,13.344,1.403,0.994,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]},"land":{"labels":["خراسان شمالی","گلستان","کرمان","خراسان جنوبی","فارس","تهران","لرستان","کهگیلویه و بویراحمد","زنجان","یزد","قم","خراسان رضوی","البرز","گیلان","آذربایجانشرقی","بوشهر","اصفهان","اردبیل","خوزستان","سمنان","کرمانشاه","مرکزی","کردستان","آذربایجانغربی","قزوین","هرمزگان","ایلام","سیستان و بلوچستان","همدان","چهارمحال و بختیاری","مازندران"],"quota":[620,565,1000,725,1350,210,640,410,500,345,150,1400,140,820,1175,600,1100,410,775,230,320,410,450,1130,345,600,345,1100,675,360,1100],"inside":[1418,730,1600,1135,775,282,56,138,592,405,0,726,80,230,1210,610,1105,410,475,230,320,410,428,647,300,210,170,581,340,0,0],"outside":[0,400,320,0,1112,0,800,410,0,0,170,783,70,633,0,0,0,0,300,0,0,0,0,379,0,211,49,0,0,110,120],"achievement":[228.7,200.0,192.0,156.6,139.8,134.3,133.8,133.7,118.4,117.4,113.3,107.8,107.1,105.2,103.0,101.7,100.5,100.0,100.0,100.0,100.0,100.0,95.1,90.8,87.0,70.2,63.5,52.8,50.4,30.6,10.9],"achieved":[1418,1130,1920,1135,1887,282,856,548,592,405,170,1509,150,863,1210,610,1105,410,775,230,320,410,428,1026,300,421,219,581,340,110,120]},"governmentProvincial":{"labels":["کهگیلویه وبویراحمد","چهارمحال وبختیاری","گلستان","قزوین","مازندران","البرز","گیلان","سمنان","لرستان","تهران","قم","مرکزی","ایلام","کردستان","آذربایجان غربی","اردبیل","زنجان","آذربایجان شرقی","هرمزگان","خوزستان","کرمان","یزد","خراسان شمالی","کرمانشاه","همدان","خراسان جنوبی","فارس","اصفهان","بوشهر","سیستان وبلوچستان","خراسان رضوی"],"program":[22.1,25.5,52.0,25.0,28.5,15.0,15.5,19.5,26.0,28.5,29.5,30.0,31.0,39.0,40.0,40.0,40.5,41.5,47.5,52.5,52.5,52.5,55.0,57.5,75.0,76.9,78.0,80.0,82.5,112.0,125.0],"approved":[25.0,20.0,21.3,7.2,1.7,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"allocated":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]},"socialProvincial":{"labels":["بوشهر","خوزستان","خراسان جنوبی","سیستان وبلوچستان","یزد","آذربایجان غربی","خراسان شمالی","مازندران","قزوین","قم","اردبیل","البرز","ایلام","کردستان","کرمانشاه","کهگیلویه وبویراحمد","لرستان","فارس","اصفهان","زنجان","سمنان","گلستان","گیلان","چهارمحال وبختیاری","تهران","خراسان رضوی","مرکزی","همدان","آذربایجان شرقی","هرمزگان","کرمان"],"program":[90.0,240.0,30.0,14.5,62.0,40.0,23.0,65.56,6.0,6.0,20.0,20.0,20.0,20.0,20.0,20.0,22.78,27.432,28.0,30.0,30.0,30.0,30.0,36.7136,40.0,50.998,60.0,60.0,80.0,240.0,790.0],"approved":[120.94,75.0,20.0,7.25,1.8457,600.0,11.5,4.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"allocated":[120.94,75.0,5.0,3.637,1.8457,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]},"financialNeed":{"labels":["خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"],"values":[937.646,3750.585,6563.523,9376.462,12189.401,15002.339,17815.278,19690.57,21565.863,23441.155]},"physicalProgress":{"labels":["خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"],"values":[0.02,0.08,0.14,0.2,0.26,0.32,0.38,0.42,0.46,0.5]},"account100Need":{"labels":["خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"],"values":[93.372,373.488,653.604,933.72,1213.836,1493.952,1774.068,1960.812,2147.556,2334.3]},"cashDonations":{"labels":["بوشهر","اصفهان","قم","فارس","تهران","خوزستان","آذربایجان غربی","اردبیل","البرز","کرمان","سمنان","آذربایجان شرقی","گلستان","کرمانشاه","زنجان","خراسان جنوبی","سیستان و بلوچستان","ایلام","مازندران","خراسان شمالی","کردستان","خراسان رضوی","همدان","گیلان","کهگیلویه و بویر احمد","مرکزی","هرمزگان","یزد","لرستان","چهار محال و بختیاری","قزوین"],"plan":[27.5,137.5,55.0,137.5,110.0,110.0,55.0,33.0,82.5,66.0,55.0,110.0,55.0,38.5,44.0,27.5,22.0,55.0,55.0,27.5,30.25,99.0,27.5,55.0,27.5,55.0,55.0,27.5,33.0,27.5,27.5],"actual":[94.368,210.8,119.555,177.252,147.716,109.9,51.547,37.377,51.263,43.999,37.535,52.729,32.376,26.35,27.64,20.949,17.808,27.0,25.649,17.0,13.99,24.75,9.309,12.657,8.3,11.428,7.331,5.0,4.5,0.8,0.72]},"noncashDonations":{"labels":["تهران","خراسان رضوی","خراسان جنوبی","همدان","آذربایجان غربی","فارس","گلستان","مازندران","اصفهان","البرز","زنجان","اردبیل","خوزستان","آذربایجان شرقی","کردستان","قزوین","مرکزی","بوشهر","کرمان","قم","سیستان و بلوچستان","سمنان","گیلان","یزد","خراسان شمالی","لرستان","ایلام","چهار محال و بختیاری","هرمزگان","کهگیلویه و بویر احمد","کرمانشاه"],"plan":[22.0,49.5,8.25,11.0,35.75,71.5,55.0,220.0,35.75,85.25,85.25,23.65,35.75,49.5,38.5,13.75,27.5,55.0,49.5,3.85,22.0,22.0,22.0,11.0,8.25,19.25,8.25,8.25,19.25,5.5,5.5],"actual":[788.04,752.184,145.341,161.6,269.642,366.09,247.487,332.808,120.45,133.463,132.8,63.436,64.554,75.9,60.917,35.233,46.362,64.882,59.28,14.445,29.229,17.575,13.906,8.0,4.727,4.885,2.719,2.6,2.187,0.863,0.85]},"programs":[{"name":"طرح ویژه روستایی دهک های 1 تا 4","type":"روستایی","units":43473},{"name":"طرح تامین مسکن محرومین انتقالی سنوات قبل (غیر تحت پوشش)","type":"روستایی","units":4042},{"name":"تفاهم نامه 8هزار واحدی روستایی کمیته امداد","type":"روستایی","units":988},{"name":"مسکن محرومین روستایی بنیاد ساخت انتقالی","type":"روستایی","units":10669},{"name":"مسکن محرومین روستایی بنیاد ساخت جدید","type":"روستایی","units":4153},{"name":"تکمیل واحدهای نیمه کاره مسکن محرومین روستایی (در مرحله فروش اقساطی)","type":"روستایی","units":5140},{"name":"طرح تأمین مسکن محرومین در سال 1405 دارای کمک بلاعوض","type":"روستایی","units":219},{"name":"تفاهم نامه 8 هزار با بهزیستی روستایی","type":"روستایی","units":1741},{"name":"پروژه های در دست اجرای طرح ویژه بهسازی سنوات گذشته  در دهک 1 تا 4  (دارای مشارکت مدنی)","type":"روستایی","units":8409},{"name":"طرح ویژه شهری دهک 1 تا 4","type":"شهری","units":15411},{"name":"پروژه های در دست اجرای مسکن محرومین شهری (انتقالی)","type":"شهری","units":6300},{"name":"تفاهم نامه 30هزار واحدی شهر زیر 25 هزار کمیته امداد","type":"شهری","units":1916},{"name":"تفاهم نامه 8 هزار واحدی بهزیستی","type":"شهری","units":1322},{"name":"مسکن استیجار","type":"شهری","units":248},{"name":"پروژه های دارای پیشرفت فیزیکی در انتظار معرفی به بانک","type":"شهری","units":2007},{"name":"پروژه های در دست اجرای طرح ویژه بهسازی سنوات گذشته در دهک 1 تا 4 (دارای مشارکت مدنی)","type":"شهری","units":4335},{"name":"واحدهای فاقد تسهیلات طرح ویژه مشمول کمک بلاعوض خانه امید","type":"شهری","units":1635}],"banks":[{"name":"تجارت","quota":24000,"announced":24000,"introduced":18310,"introducedPct":"76%","contracted":8372,"contractPct":"46%","absorption":16592},{"name":"رفاه","quota":12545,"announced":12545,"introduced":9663,"introducedPct":"77%","contracted":4333,"contractPct":"45%","absorption":7266},{"name":"سپه","quota":5455,"announced":5455,"introduced":3691,"introducedPct":"68%","contracted":1168,"contractPct":"32%","absorption":1442},{"name":"صادرات","quota":24000,"announced":24000,"introduced":13740,"introducedPct":"57%","contracted":5638,"contractPct":"41%","absorption":7247},{"name":"پست بانک","quota":6000,"announced":6000,"introduced":2462,"introducedPct":"41%","contracted":569,"contractPct":"23%","absorption":391},{"name":"ملت","quota":24000,"announced":24000,"introduced":7877,"introducedPct":"33%","contracted":1071,"contractPct":"14%","absorption":1041},{"name":"ملی","quota":24000,"announced":12000,"introduced":3144,"introducedPct":"26%","contracted":203,"contractPct":"6%","absorption":125}],"loanAlloc":{"labels":["آذربايجان شرقي","آذربايجان غربي","اردبيل","اصفهان","البرز","ايلام","بوشهر","تهران","چهارمحال وبختياري","خراسان جنوبی","خراسان رضوي","خراسان شمالي","خوزستان","زنجان","سمنان","سيستان وبلوچستان","فارس","قزوين","قم","كردستان","كرمان","كرمانشاه","كهگيلويه وبويراحمد","گلستان","گيلان","لرستان","مازندران","مركزي","هرمزگان","همدان","يزد"],"values":[20000,40000,15000,15000,10000,15000,15000,10000,15000,20000,20000,20000,20000,15000,10000,20000,20000,15000,10000,15000,20000,15000,10000,15000,15000,10000,15000,15000,15000,15000,15000]}};
+const FONT='Vazirmatn, Tahoma, sans-serif';
+const faNum=(v,dec=0)=>{if(v===null||v===undefined||Number.isNaN(Number(v)))return '—';return Number(v).toLocaleString('fa-IR',{maximumFractionDigits:dec,minimumFractionDigits:0});};
+const pct=(v)=>faNum(v,1)+'٪';
+const palette=['#0c827b','#d4ad61','#4d83b8','#55a47c','#8c72ad','#d17b68','#6b9da8','#a7b85a'];
+Chart.register(ChartDataLabels);
+Chart.defaults.font.family=FONT;Chart.defaults.color='#71818c';Chart.defaults.plugins.legend.labels.usePointStyle=true;Chart.defaults.plugins.legend.labels.boxWidth=8;Chart.defaults.plugins.legend.labels.boxHeight=8;Chart.defaults.plugins.legend.labels.padding=15;
+
+// تنظیمات مستقل محل Data Label نمودارها: برای جابه‌جایی، anchor / align / offset همان نمودار را تغییر دهید.
+const LABEL_LAYOUTS={
+  // نمودار ترکیب شهری و روستایی
+  chartRuralUrban:{anchor:'center',align:'center',offset:0},
+  // نمودار تحقق برنامه سالانه
+  chartTarget:{anchor:'center',align:'center',offset:0},
+  // نمودار نوع ساخت
+  chartConstructionType:{anchor:'center',align:'center',offset:0},
+  // نمودار مراحل اجرایی ملی
+  chartNationalStages:{anchor:'end',align:'end',offset:5},
+  // نمودار ۱۷ برنامه اجرایی
+  chartProgramUnits:{anchor:'end',align:'end',offset:5},
+  // نمودار توزیع استانی واحدهای جاری
+  chartActiveProvince:{anchor:'end',align:'end',offset:5},
+  // نمودار توزیع ۵۰ هزار واحد زمین
+  chartLand50k:{anchor:'end',align:'end',offset:5},
+  // نمودار سهمیه و عملکرد زمین در استان‌ها
+  chartLandProvince:{anchor:'end',align:'end',offset:4},
+  // نمودار درصد تحقق زمین در استان‌ها
+  chartLandAchievement:{anchor:'end',align:'end',offset:5},
+  // نمودار زنجیره تأمین زمین
+  chartLandPipeline:{anchor:'end',align:'end',offset:5},
+  // نمودار عملکرد بانک‌ها
+  chartBanks:{anchor:'end',align:'end',offset:5},
+  // نمودار کمک بلاعوض استانی
+  chartGrantProvince:{anchor:'end',align:'end',offset:5},
+  // نمودار موجودی و کمبود حساب استان‌ها
+  chartAccountBalance:{anchor:'end',align:'end',offset:4},
+  // نمودار اعتبارات دولتی استانی
+  chartGovernmentProvincial:{anchor:'end',align:'end',offset:4},
+  // نمودار اعتبارات مسئولیت اجتماعی
+  chartSocialProvincial:{anchor:'end',align:'end',offset:4},
+  // نمودار برنامه تجمعی کل اعتبار
+  chartFundingNeed:{anchor:'end',align:'top',offset:5},
+  // نمودار پیشرفت تجمعی فیزیکی
+  chartPhysicalProgress:{anchor:'end',align:'top',offset:5},
+  // نمودار منابع حساب ۱۰۰
+  chartAccount100:{anchor:'end',align:'top',offset:5},
+  // نمودار کمک‌های نقدی استانی
+  chartCashDonations:{anchor:'end',align:'end',offset:4},
+  // نمودار کمک‌های غیرنقدی استانی
+  chartNoncashDonations:{anchor:'end',align:'end',offset:4},
+  // نمودار توزیع تسهیلات تکمیلی مهر ایران
+  chartLoanAllocation:{anchor:'end',align:'end',offset:5},
+  // نمودار مراحل تفاهم‌نامه‌ها
+  chartMouStages:{anchor:'end',align:'end',offset:4},
+  // نمودار منابع مالی تفاهم‌نامه‌ها
+  chartMouFunding:{anchor:'end',align:'end',offset:4},
+  // نمودار مطالبات خیرین
+  chartClaims:{anchor:'end',align:'end',offset:5},
+  // نمودار سرفصل منابع بلاعوض
+  chartGrantSources:{anchor:'end',align:'end',offset:5}
+};
+function labelsPlugin(id,formatter){return {color:'#405766',font:{family:FONT,size:10,weight:'700'},formatter:formatter||((v)=>v?faNum(v):''),display:(ctx)=>{const v=ctx.dataset.data[ctx.dataIndex];return v!==null&&v!==undefined&&Number(v)!==0;},clamp:true,clip:false,...LABEL_LAYOUTS[id]};}
+function baseOptions(id,extra={}){return {responsive:true,maintainAspectRatio:false,animation:{duration:650},layout:{padding:{top:12,right:10,left:8,bottom:4}},plugins:{legend:{position:'bottom',rtl:true,labels:{font:{family:FONT,size:10},color:'#637784'}},tooltip:{rtl:true,titleFont:{family:FONT},bodyFont:{family:FONT},callbacks:{label:(ctx)=>`${ctx.dataset.label||ctx.label}: ${faNum(ctx.parsed?.x??ctx.parsed?.y??ctx.raw,2)}`}},datalabels:labelsPlugin(id)},...extra};}
+function axisTicks(){return {font:{family:FONT,size:10},color:'#7c8c95',callback:(v)=>faNum(v)};}
+function makeBar(id,labels,datasets,opts={}){const horizontal=opts.indexAxis==='y';new Chart(document.getElementById(id),{type:'bar',data:{labels,datasets:datasets.map((d,i)=>({backgroundColor:d.color||palette[i%palette.length],borderRadius:6,borderSkipped:false,maxBarThickness:horizontal?19:32,...d}))},options:{...baseOptions(id),indexAxis:horizontal?'y':'x',scales:{x:{beginAtZero:true,stacked:!!opts.stacked,grid:{color:'#edf1f3'},ticks:axisTicks()},y:{beginAtZero:true,stacked:!!opts.stacked,grid:{display:false},ticks:{font:{family:FONT,size:horizontal?9:10},color:'#607581',autoSkip:false}}},...opts.options}});}
+function makeLine(id,labels,datasets,formatter){new Chart(document.getElementById(id),{type:'line',data:{labels,datasets:datasets.map((d,i)=>({borderColor:d.color||palette[i],backgroundColor:d.fill?`${d.color||palette[i]}22`:'transparent',tension:.32,pointRadius:4,pointHoverRadius:6,borderWidth:2,fill:!!d.fill,...d}))},options:{...baseOptions(id),plugins:{...baseOptions(id).plugins,datalabels:labelsPlugin(id,formatter)},scales:{x:{grid:{display:false},ticks:{font:{family:FONT,size:10}}},y:{beginAtZero:true,grid:{color:'#edf1f3'},ticks:{...axisTicks(),callback:formatter||((v)=>faNum(v))}}}}});}
+function makeDoughnut(id,labels,values,formatter){new Chart(document.getElementById(id),{type:'doughnut',data:{labels,datasets:[{data:values,backgroundColor:palette.slice(0,values.length),borderColor:'#fff',borderWidth:3,hoverOffset:6}]},options:{...baseOptions(id),cutout:'62%',plugins:{...baseOptions(id).plugins,legend:{position:'bottom',rtl:true,labels:{font:{family:FONT,size:11},padding:17}},datalabels:labelsPlugin(id,formatter||((v)=>faNum(v)))} }});}
+
+makeDoughnut('chartRuralUrban',['روستایی','شهری'],[78834,33174],v=>faNum(v));
+makeDoughnut('chartTarget',['عملکرد ثبت‌شده','فاصله تا هدف'],[112008,17992],v=>faNum(v));
+makeDoughnut('chartConstructionType',DATA.constructionType.labels,DATA.constructionType.values.map(v=>v*100),v=>pct(v));
+makeBar('chartNationalStages',['معرفی به بانک','عقد قرارداد','پی‌کنی','فونداسیون','اسکلت','سقف','سفت‌کاری'],[{label:'تعداد واحد',data:[100168,61694,102501,63675,51270,44311,35180],color:'#0c827b'}],{indexAxis:'y'});
+let programChart;
+function drawProgramChart(list){if(programChart)programChart.destroy();programChart=new Chart(document.getElementById('chartProgramUnits'),{type:'bar',data:{labels:list.map(x=>x.name),datasets:[{label:'روستایی',data:list.map(x=>x.type==='روستایی'?x.units:null),backgroundColor:'#25865d',borderRadius:5},{label:'شهری',data:list.map(x=>x.type==='شهری'?x.units:null),backgroundColor:'#4d83b8',borderRadius:5}]},options:{...baseOptions('chartProgramUnits'),indexAxis:'y',scales:{x:{beginAtZero:true,grid:{color:'#edf1f3'},ticks:axisTicks()},y:{grid:{display:false},ticks:{font:{family:FONT,size:9},autoSkip:false}}}}});}
+drawProgramChart(DATA.programs);
+document.getElementById('programSearch').addEventListener('input',e=>{const q=e.target.value.trim();drawProgramChart(DATA.programs.filter(x=>x.name.includes(q)||x.type.includes(q)));});
+makeBar('chartActiveProvince',DATA.activeProvince.labels,[{label:'واحد در دست اجرا',data:DATA.activeProvince.values,color:'#0c827b'}],{indexAxis:'y'});
+makeBar('chartLand50k',DATA.land50k.labels,[{label:'تعداد واحد هدف',data:DATA.land50k.values,color:'#4d83b8'}],{indexAxis:'y'});
+makeBar('chartLandProvince',DATA.land.labels,[{label:'سهمیه کل',data:DATA.land.quota,color:'#d4ad61'},{label:'واحد داخل حریم',data:DATA.land.inside,color:'#0c827b'},{label:'واحد خارج حریم',data:DATA.land.outside,color:'#4d83b8'}],{indexAxis:'y'});
+makeBar('chartLandAchievement',DATA.land.labels,[{label:'درصد تحقق',data:DATA.land.achievement,color:'#25865d'}],{indexAxis:'y',options:{scales:{x:{beginAtZero:true,grid:{color:'#edf1f3'},ticks:{...axisTicks(),callback:v=>pct(v)}},y:{grid:{display:false},ticks:{font:{family:FONT,size:9},autoSkip:false}}},plugins:{...baseOptions('chartLandAchievement').plugins,datalabels:labelsPlugin('chartLandAchievement',v=>pct(v))}}});
+makeBar('chartLandPipeline',['برنامه تأمین زمین','شناسایی و تخصیص','صورت‌جلسه تحویل','پروانه ساختمانی','شروع عملیات اجرایی','قرارداد واگذاری'],[{label:'تعداد واحد',data:[132000,92000,27000,12650,10725,3352],color:'#0c827b'}],{indexAxis:'y'});
+makeBar('chartBanks',DATA.banks.map(x=>x.name),[{label:'معرفی به بانک',data:DATA.banks.map(x=>x.introduced),color:'#0c827b'},{label:'قرارداد منعقدشده',data:DATA.banks.map(x=>x.contracted),color:'#d4ad61'}],{indexAxis:'y'});
+makeBar('chartGrantProvince',DATA.grantProvince.labels,[{label:'مبلغ تخصیص‌یافته',data:DATA.grantProvince.values,color:'#4d83b8'}],{indexAxis:'y'});
+makeBar('chartAccountBalance',DATA.accountAvailable.labels,[{label:'مبلغ قابل برداشت',data:DATA.accountAvailable.values,color:'#25865d'},{label:'کمبود حساب',data:DATA.accountShortage.values,color:'#c95b5b'}],{indexAxis:'y'});
+makeBar('chartGovernmentProvincial',DATA.governmentProvincial.labels,[{label:'برنامه',data:DATA.governmentProvincial.program,color:'#d4ad61'},{label:'مصوب',data:DATA.governmentProvincial.approved,color:'#4d83b8'},{label:'تخصیص',data:DATA.governmentProvincial.allocated,color:'#25865d'}],{indexAxis:'y'});
+makeBar('chartSocialProvincial',DATA.socialProvincial.labels,[{label:'برنامه',data:DATA.socialProvincial.program,color:'#d4ad61'},{label:'مصوب',data:DATA.socialProvincial.approved,color:'#4d83b8'},{label:'تخصیص',data:DATA.socialProvincial.allocated,color:'#25865d'}],{indexAxis:'y'});
+makeLine('chartFundingNeed',DATA.financialNeed.labels,[{label:'برنامه تجمعی اعتبار مورد نیاز',data:DATA.financialNeed.values,color:'#0c827b',fill:true}],v=>faNum(v));
+makeLine('chartPhysicalProgress',DATA.physicalProgress.labels,[{label:'پیشرفت تجمعی فیزیکی',data:DATA.physicalProgress.values.map(v=>v*100),color:'#25865d',fill:true}],v=>pct(v));
+makeLine('chartAccount100',DATA.account100Need.labels,[{label:'نیاز تجمعی حساب ۱۰۰',data:DATA.account100Need.values,color:'#d4ad61'},{label:'تخصیص تجمعی ثبت‌شده',data:[0,156.8,396.95,558.65,1124.55,null,null,null,null,null],color:'#0c827b'}],v=>faNum(v));
+makeBar('chartCashDonations',DATA.cashDonations.labels,[{label:'برنامه ۷ ماهه',data:DATA.cashDonations.plan,color:'#d4ad61'},{label:'عملکرد ۷ ماهه',data:DATA.cashDonations.actual,color:'#0c827b'}],{indexAxis:'y'});
+makeBar('chartNoncashDonations',DATA.noncashDonations.labels,[{label:'برنامه ۷ ماهه',data:DATA.noncashDonations.plan,color:'#d4ad61'},{label:'عملکرد ۷ ماهه',data:DATA.noncashDonations.actual,color:'#25865d'}],{indexAxis:'y'});
+makeBar('chartLoanAllocation',DATA.loanAlloc.labels,[{label:'اعتبار تخصیصی',data:DATA.loanAlloc.values,color:'#4d83b8'}],{indexAxis:'y'});
+const mouLabels=['معرفی به بانک','عقد قرارداد','پی‌کنی','فونداسیون','اسکلت','سقف','مرحله نهایی'];
+makeBar('chartMouStages',mouLabels,[
+ {label:'کمیته امداد روستایی ۸هزار',data:[7501,7224,7497,7317,7191,null,6764],color:'#0c827b'},
+ {label:'کمیته امداد شهری ۳۰هزار',data:[1630,1538,1834,1719,1605,null,1497],color:'#d4ad61'},
+ {label:'بهزیستی شهری',data:[1322,1199,1285,1248,1137,1062,962],color:'#4d83b8'},
+ {label:'بهزیستی روستایی',data:[1741,1669,1695,1674,1532,1532,1451],color:'#25865d'}
+],{indexAxis:'x'});
+makeBar('chartMouFunding',['کمیته امداد روستایی ۸هزار','کمیته امداد شهری ۳۰هزار','کمیته امداد بنیادساخت ۶هزار','بهزیستی ۸هزار'],[
+ {label:'اعتبار مورد نیاز',data:[12780,3805,4350,5750],color:'#d4ad61'},
+ {label:'تأمین‌شده توسط نهاد',data:[9851,2409,0,730],color:'#25865d'},
+ {label:'مانده تعهد نهاد',data:[2929,1396,4350,5020],color:'#c95b5b'}
+],{indexAxis:'y'});
+makeBar('chartClaims',['واریزی نقدی خیرین','واریزی به استان‌ها','مانده نقدی خیرین','تعهد بنیاد','واریزی بنیاد به استان‌ها','مانده تعهد بنیاد'],[{label:'میلیارد ریال',data:[708,326,382,540,101,439],color:'#0c827b'}],{indexAxis:'y'});
+makeBar('chartGrantSources',['نیم درصد فروش زمین','عواید قیر یارانه‌دار','سهم حساب ۱۰۰ شرکت‌ها','یک برابر آورده خیرین','مانده تفاهم‌نامه سازمان برنامه','نیم درصد سود بانک‌ها','موافقت‌نامه روستایی ۱۴۰۴','موافقت‌نامه شهری ۱۴۰۴','مصالح'],[{label:'میلیارد تومان',data:[177,300,1069,321,120,3.3,195,173,27],color:'#4d83b8'}],{indexAxis:'y'});
+
+// جدول برنامه‌ها و بانک‌ها؛ برچسب سلول‌ها در موبایل برای حذف اسکرول افقی
+const programBody=document.querySelector('#programTable tbody');
+programBody.innerHTML=DATA.programs.map(x=>`<tr><td data-label="نوع"><span class="type-tag ${x.type==='روستایی'?'rural':'urban'}">${x.type}</span></td><td data-label="عنوان برنامه">${x.name}</td><td data-label="تعداد واحد" class="num">${faNum(x.units)}</td><td data-label="سهم از کل" class="num">${pct(x.units/112008*100)}</td></tr>`).join('');
+const bankBody=document.querySelector('#bankTable tbody');
+bankBody.innerHTML=DATA.banks.map(x=>`<tr><td data-label="بانک">${x.name}</td><td data-label="سهمیه اختصاصی" class="num">${faNum(x.quota)}</td><td data-label="ابلاغ‌شده" class="num">${faNum(x.announced)}</td><td data-label="معرفی به بانک" class="num">${faNum(x.introduced)} (${x.introducedPct})</td><td data-label="قرارداد" class="num">${faNum(x.contracted)} (${x.contractPct})</td><td data-label="جذب (میلیارد ریال)" class="num">${faNum(x.absorption)}</td></tr>`).join('');
+
+// نمودار مطالبات: ستون‌های مانده در کنار جریان واریزی برای تفکیک وضعیت
+</script>
+</body>
+</html>
