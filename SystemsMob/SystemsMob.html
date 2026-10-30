@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102a43">
+  <title>داشبورد مدیریتی فناوری اطلاعات | بنیاد مسکن</title>
+
+  <!-- فونت وزیرمتن؛ در شبکه داخلی می‌توانید نشانی فایل محلی فونت را جایگزین کنید. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- آیکون‌ها -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- کتابخانه نمودارها و برچسب داده -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+
+  <style>
+    :root{
+      --navy:#102a43;
+      --navy-2:#173f5f;
+      --blue:#246b91;
+      --teal:#159a91;
+      --teal-soft:#e5f5f2;
+      --gold:#e4ad4c;
+      --gold-soft:#fff5df;
+      --red:#c85b63;
+      --red-soft:#fff0f0;
+      --purple:#7666a8;
+      --purple-soft:#f0edfa;
+      --ink:#203447;
+      --muted:#718096;
+      --line:#e7edf2;
+      --surface:#ffffff;
+      --bg:#f3f6f9;
+      --shadow:0 12px 34px rgba(16,42,67,.07);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:"Vazirmatn",Tahoma,sans-serif;
+      overflow-x:hidden;
+      line-height:1.75;
+    }
+    button,input,select{font:inherit}
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1320px,calc(100% - 40px));margin-inline:auto}
+    .hero{
+      position:relative;overflow:hidden;color:#fff;
+      background:
+        radial-gradient(circle at 10% 15%,rgba(21,154,145,.34),transparent 27%),
+        radial-gradient(circle at 88% 90%,rgba(228,173,76,.20),transparent 26%),
+        linear-gradient(125deg,#0c2238 0%,#123b59 58%,#14566a 100%);
+      padding:38px 0 34px;
+      isolation:isolate;
+    }
+    .hero:before,.hero:after{
+      content:"";position:absolute;border:1px solid rgba(255,255,255,.09);
+      border-radius:50%;z-index:-1;pointer-events:none
+    }
+    .hero:before{width:440px;height:440px;left:-140px;top:-250px;box-shadow:0 0 0 35px rgba(255,255,255,.018),0 0 0 75px rgba(255,255,255,.015)}
+    .hero:after{width:330px;height:330px;right:-130px;bottom:-230px;box-shadow:0 0 0 28px rgba(255,255,255,.025),0 0 0 62px rgba(255,255,255,.018)}
+    .hero-top{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:26px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand-mark{
+      width:48px;height:48px;border-radius:15px;display:grid;place-items:center;
+      background:linear-gradient(145deg,rgba(255,255,255,.22),rgba(255,255,255,.08));
+      border:1px solid rgba(255,255,255,.22);font-size:22px;color:#d7f4ef
+    }
+    .brand small{display:block;color:#d2e9d0;font-size:17px;letter-spacing:.1px;font-weight:800}
+    .brand strong{font-size:11px;font-weight:600;color:#b9d0dc}
+    .hero-kicker{font-size:12px;color:#b6d3df;letter-spacing:.4px}
+    .hero-main{display:grid;grid-template-columns:1.55fr .8fr;gap:30px;align-items:center}
+    .hero h1{font-size:clamp(23px,2.8vw,36px);line-height:1.5;margin:0 0 10px;font-weight:900;letter-spacing:-.6px;color:#c5e6bd}
+    .hero-desc{color:#d0e0e8;font-size:14px;max-width:740px;margin:0}
+    .hero-tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px}
+    .capsule{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.23);background:rgba(255,255,255,.10);
+      color:#f4fbff;font-size:12px;font-weight:600;backdrop-filter:blur(8px)
+    }
+    .capsule i{color:#9ce2d8}
+    .capsule.link{background:#e6b85d;color:#263b4b;border-color:#f0cc82;transition:.2s}
+    .capsule.link i{color:#263b4b}
+    .capsule.link:hover{transform:translateY(-2px);background:#f1c978}
+    .hero-side{
+      justify-self:end;width:min(100%,290px);padding:20px;border:1px solid rgba(255,255,255,.16);
+      border-radius:22px;background:rgba(255,255,255,.075);backdrop-filter:blur(10px)
+    }
+    .hero-side .side-icon{font-size:26px;color:#9ce2d8;margin-bottom:10px}
+    .hero-side strong{display:block;font-size:28px;line-height:1.3}
+    .hero-side span{font-size:12px;color:#c4d8e2}
+    .hero-side .mini-line{height:5px;border-radius:99px;background:rgba(255,255,255,.15);margin-top:15px;overflow:hidden}
+    .hero-side .mini-line b{display:block;height:100%;width:74.3%;border-radius:99px;background:linear-gradient(90deg,#e4ad4c,#56c9b5)}
+    main{padding:28px 0 52px}
+    .section{margin-top:30px}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:15px}
+    .section-title{display:flex;align-items:center;gap:10px;margin:0;font-size:18px;font-weight:850;color:var(--navy)}
+    .section-title .section-icon{
+      width:34px;height:34px;border-radius:11px;display:grid;place-items:center;
+      background:#e7f0f5;color:var(--blue);font-size:14px
+    }
+    .section-sub{font-size:11px;color:var(--muted);margin:3px 0 0}
+    .section-note{font-size:11px;color:var(--muted)}
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+    .kpi{
+      position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--line);
+      border-radius:17px;padding:17px 18px;box-shadow:0 5px 18px rgba(16,42,67,.035);min-width:0
+    }
+    .kpi:after{content:"";position:absolute;width:90px;height:90px;border-radius:50%;left:-35px;bottom:-52px;background:var(--tint, #eaf3f7);opacity:.75}
+    .kpi-top{display:flex;align-items:center;justify-content:space-between;gap:8px;position:relative;z-index:1}
+    .kpi-label{font-size:12px;color:#63778a;font-weight:600}
+    .kpi-icon{width:35px;height:35px;border-radius:12px;display:grid;place-items:center;background:var(--tint,#eaf3f7);color:var(--tone,var(--blue));font-size:15px;flex:0 0 auto}
+    .kpi-value{font-size:29px;font-weight:900;color:var(--navy);line-height:1.25;margin-top:10px;position:relative;z-index:1}
+    .kpi-foot{font-size:10px;color:#8291a0;margin-top:4px;position:relative;z-index:1}
+    .insight-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+    .insight{
+      background:#fff;border:1px solid var(--line);border-radius:17px;padding:17px 18px;min-width:0;
+      display:flex;gap:12px;align-items:flex-start;box-shadow:0 5px 18px rgba(16,42,67,.03)
+    }
+    .insight-icon{width:38px;height:38px;flex:0 0 auto;border-radius:13px;display:grid;place-items:center;background:var(--tint);color:var(--tone)}
+    .insight strong{display:block;font-size:13px;color:var(--navy);margin-bottom:4px}
+    .insight p{font-size:11px;color:#6f8090;margin:0;line-height:1.8}
+    .chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .chart-card{
+      background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 14px;
+      box-shadow:var(--shadow);min-width:0;overflow:hidden
+    }
+    .chart-card.wide{grid-column:1/-1}
+    .chart-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+    .chart-title{font-size:14px;font-weight:800;color:var(--navy);margin:0}
+    .chart-caption{font-size:10px;color:#8a98a6;margin-top:3px}
+    .chart-badge{font-size:10px;border-radius:999px;padding:4px 9px;background:#f0f5f8;color:#627789;white-space:nowrap}
+    .chart-wrap{height:290px;max-width:100%;position:relative}
+    .chart-wrap.tall{height:350px}
+    .chart-wrap canvas{max-width:100%!important}
+    .chart-footnote{font-size:10px;color:#8a98a6;margin:8px 0 0}
+    .analysis-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .analysis-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px;min-width:0border-right:2px solid #159a91;}
+    .analysis-card h3{margin:0 0 10px;font-size:14px;color:var(--navy);display:flex;align-items:center;gap:8px}
+    .analysis-card h3 i{color:var(--teal)}
+    .analysis-card p{margin:0;color:#647789;font-size:12px;line-height:2}
+    .analysis-card ul{padding:0 18px 0 0;margin:8px 0 0;color:#647789;font-size:11px;line-height:2}
+    .analysis-card li{padding-right:2px;margin:3px 0}
+    .action-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .action-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:17px;min-width:0}
+    .action-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
+    .action-head strong{font-size:13px;color:var(--navy)}
+    .action-type{font-size:10px;border-radius:99px;padding:4px 9px;background:#e9f5f2;color:#16877f;white-space:nowrap}
+    .action-type.decision{background:#fff4df;color:#986a19}
+    .action-list{display:grid;gap:9px}
+    .action-line{padding:10px 12px;border-radius:12px;background:#f7f9fb;border-right:3px solid #b5d9d4}
+    .action-line.decision{border-right-color:#e5bf70}
+    .action-line small{display:block;font-size:10px;color:#8a98a6;margin-bottom:3px}
+    .action-line p{font-size:11px;line-height:1.9;margin:0;color:#52687a;overflow-wrap:anywhere}
+    .dept-table-wrap{background:#fff;border:1px solid var(--line);border-radius:17px;overflow:hidden;box-shadow:var(--shadow)}
+    .dept-table{width:100%;border-collapse:collapse;font-size:11px}
+    .dept-table th{background:#f4f8fa;color:#5e7283;font-weight:700;text-align:right;padding:12px 14px;white-space:nowrap}
+    .dept-table td{padding:12px 14px;border-top:1px solid #edf1f4;color:#526779}
+    .dept-table tbody tr{border-top:2px solid #159a91}
+    .dept-table tr:hover td{background:#fbfcfd}
+    .num-cell{font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+    .mini-bar{height:6px;width:78px;border-radius:99px;background:#edf2f5;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:7px}
+    .mini-bar b{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1aa193,#74cdbd)}
+    .toolbar{
+      display:grid;grid-template-columns:minmax(180px,1.5fr) minmax(150px,.8fr) minmax(190px,1fr);
+      gap:10px;margin-bottom:14px
+    }
+    .control{position:relative}
+    .control i{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:#91a0ad;font-size:12px;pointer-events:none}
+    .control input,.control select{
+      width:100%;min-width:0;border:1px solid #dfe7ed;background:#fff;border-radius:12px;
+      padding:10px 36px 10px 12px;outline:none;color:#3c5265;font-size:11px
+    }
+    .control input:focus,.control select:focus{border-color:#65bdb2;box-shadow:0 0 0 3px rgba(21,154,145,.10)}
+    .results-count{font-size:10px;color:#8393a0;margin-bottom:10px}
+    .systems-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .system-card{
+      background:#fff;border:1px solid var(--line);border-right:2px solid #159a91;border-radius:16px;padding:15px;min-width:0;
+      transition:.18s;box-shadow:0 4px 15px rgba(16,42,67,.025)
+    }
+    .system-card:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(16,42,67,.08);border-color:#d3e1e9}
+    .system-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+    .system-name{font-size:12px;font-weight:800;color:var(--navy);line-height:1.8;margin:0;overflow-wrap:anywhere}
+    .system-dept{font-size:10px;color:#8997a4;margin-top:3px;line-height:1.6}
+    .status{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:99px;font-size:10px;font-weight:700;white-space:nowrap;flex:0 0 auto}
+    .status.operational{background:#e8f6f0;color:#17805b}
+    .status.developing{background:#fff4df;color:#a26c13}
+    .status.static{background:#edf0f4;color:#657586}
+    .status.stop{background:#fff0f0;color:#bb4f58}
+    .system-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+    .meta-chip{font-size:10px;padding:4px 8px;border-radius:8px;background:#f5f8fa;color:#657a8b}
+    .meta-chip i{margin-left:4px;color:#8aa0ae}
+    .system-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:13px;padding-top:11px;border-top:1px solid #eef2f5}
+    .system-bottom small{font-size:10px;color:#8997a4}
+    .detail-btn{
+      border:0;border-radius:9px;background:#eaf3f6;color:#25627e;padding:6px 10px;
+      font-size:10px;font-weight:700;cursor:pointer;transition:.2s
+    }
+    .detail-btn:hover{background:#dcecf1}
+    .empty-state{padding:28px;text-align:center;color:#8a98a6;background:#fff;border-radius:16px;border:1px dashed #d8e2e8;font-size:12px;grid-column:1/-1}
+    .source-note{
+      background:#f8fafb;border:1px dashed #cbd8e1;border-radius:15px;padding:15px 17px;
+      font-size:10px;color:#718393;line-height:2
+    }
+    .source-note strong{color:#415b6e}
+    .footer{padding:20px 0 30px;color:#8a98a6;font-size:10px;text-align:center}
+    .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(8,27,43,.58);z-index:1000;padding:18px;align-items:center;justify-content:center}
+    .modal-backdrop.show{display:flex}
+    .modal{
+      width:min(760px,100%);max-height:min(88vh,900px);overflow:auto;background:#fff;border-radius:20px;
+      box-shadow:0 25px 80px rgba(0,0,0,.25);padding:22px
+    }
+    .modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid #edf1f4;padding-bottom:13px;margin-bottom:14px}
+    .modal-head h2{font-size:17px;color:var(--navy);margin:0;line-height:1.7}
+    .close-btn{border:0;background:#f1f4f6;color:#52687a;width:34px;height:34px;border-radius:10px;cursor:pointer;flex:0 0 auto}
+    .modal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .detail-box{background:#f7f9fb;border-radius:12px;padding:12px;min-width:0}
+    .detail-box.full{grid-column:1/-1}
+    .detail-box small{display:block;font-size:10px;color:#8a98a6;margin-bottom:4px}
+    .detail-box p{margin:0;font-size:11px;color:#52687a;line-height:1.9;white-space:pre-line;overflow-wrap:anywhere}
+    .detail-box ul{margin:4px 0 0;padding-right:18px;font-size:11px;color:#52687a;line-height:2}
+    .modal-section-title{font-size:12px;color:var(--navy);font-weight:800;margin:16px 0 8px}
+    .print-btn{
+      position:fixed;left:20px;bottom:20px;z-index:30;border:0;border-radius:50px;padding:11px 16px;
+      background:var(--navy);color:#fff;box-shadow:0 8px 24px rgba(16,42,67,.22);font-size:11px;cursor:pointer
+    }
+    .print-btn i{margin-left:6px}
+    @media(max-width:1000px){
+      .kpi-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+      .insight-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .hero-main{grid-template-columns:1fr .65fr}
+    }
+    @media(max-width:760px){
+      .container{width:min(100% - 28px,640px)}
+      .hero{padding:25px 0 25px}
+      .hero-top{margin-bottom:18px}
+      .hero-main{grid-template-columns:1fr}
+      .hero-side{display:none}
+      .hero-desc{font-size:12px}
+      .hero-tags{margin-top:16px}
+      .capsule{font-size:10px;padding:7px 11px}
+      main{padding-top:20px}
+      .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+      .kpi{padding:13px}
+      .kpi-value{font-size:25px}
+      .chart-grid{grid-template-columns:1fr;gap:12px}
+      .chart-card.wide{grid-column:auto}
+      .chart-card{padding:15px}
+      .chart-wrap{height:270px}
+      .chart-wrap.tall{height:310px}
+      .analysis-grid,.action-grid{grid-template-columns:1fr}
+      .systems-grid{grid-template-columns:1fr}
+      .toolbar{grid-template-columns:1fr}
+      .section{margin-top:24px}
+      .section-title{font-size:16px}
+      .dept-table-wrap{overflow:visible}
+      .dept-table,.dept-table tbody,.dept-table tr,.dept-table td{display:block;width:100%}
+      .dept-table thead{display:none}
+      .dept-table tr{padding:10px 13px;border-top:1px solid #edf1f4}
+      .dept-table td{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border:0;text-align:left}
+      .dept-table td:first-child{display:block;text-align:right;font-weight:800;color:var(--navy);padding-bottom:7px}
+      .dept-table td:before{content:attr(data-label);color:#8997a4;text-align:right;font-weight:500}
+      .mini-bar{width:58px}
+      .print-btn{left:12px;bottom:12px;padding:9px 13px}
+    }
+    @media(max-width:420px){
+      .container{width:calc(100% - 22px)}
+      .brand strong{font-size:10px}
+      .brand small{font-size:15px}
+      .hero h1{font-size:23px}
+      .hero-tags{gap:6px}
+      .capsule{font-size:9px}
+      .kpi-label{font-size:10px}
+      .kpi-icon{width:30px;height:30px}
+      .kpi-value{font-size:23px}
+      .insight-grid{grid-template-columns:1fr}
+      .chart-wrap{height:250px}
+      .chart-wrap.tall{height:290px}
+      .modal{padding:16px}
+      .modal-grid{grid-template-columns:1fr}
+      .detail-box.full{grid-column:auto}
+    }
+    @media print{
+      body{background:#fff}
+      .hero{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+      .print-btn,.toolbar,.detail-btn,.modal-backdrop{display:none!important}
+      .container{width:100%}
+      .chart-card,.kpi,.insight,.analysis-card,.action-card,.system-card{break-inside:avoid;box-shadow:none}
+      .systems-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .section{break-inside:avoid}
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <div class="hero-top">
+        <div class="brand">
+          <div class="brand-mark"><i class="fa-solid fa-network-wired"></i></div>
+          <div>
+            <strong>بنیاد مسکن انقلاب اسلامی</strong>
+            <small>سامانه هوشمند مدیریتی ریاست</small>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="hero-main">
+        <div>
+          <h1>پایش وضعیت سامانه‌های بنیاد مسکن</h1>
+          <div class="hero-tags">
+            <span class="capsule"><i class="fa-regular fa-calendar"></i> تاریخ گزارش: ۱۴۰۵/۰۸/۰۸</span>
+            <a class="capsule link" href="./Fava.pdf" target="_blank" rel="noopener"><i class="fa-regular fa-file-pdf"></i> جزئیات گزارش</a>
+            <span class="capsule"><i class="fa-solid fa-layer-group"></i> ۳۵ سامانه پایش‌شده</span>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="side-icon"><i class="fa-solid fa-chart-line"></i></div>
+          <strong id="heroOperationalRate">۷۴٪</strong>
+          <span>سهم سامانه‌های در وضعیت بهره‌برداری</span>
+          <div class="mini-line"><b></b></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section" style="margin-top:0">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title"><span class="section-icon"><i class="fa-solid fa-gauge-high"></i></span> نمای کلان مدیریتی</h2>
+          <p class="section-sub">شاخص‌های اصلی استخراج‌شده از چک‌لیست پایش سامانه‌ها</p>
+        </div>
+        <span class="section-note">مبنای وضعیت: ۱۴۰۵/۰۴/۱۵</span>
+      </div>
+      <div class="kpi-grid" id="kpiGrid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title"><span class="section-icon"><i class="fa-solid fa-lightbulb"></i></span> جمع‌بندی تحلیلی</h2>
+          <p class="section-sub">برداشت‌های کلیدی برای تصمیم‌گیری و پیگیری مدیریتی</p>
+        </div>
+      </div>
+      <div class="insight-grid" id="insightGrid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title"><span class="section-icon"><i class="fa-solid fa-chart-pie"></i></span> داشبورد وضعیت سامانه‌ها</h2>
+          <p class="section-sub">ترکیب وضعیت جاری، توزیع حوزه‌ای و تغییر نسبت به وضعیت مبنا</p>
+        </div>
+      </div>
+      <div class="chart-grid">
+        <article class="chart-card">
+          <div class="chart-title-row">
+            <div><h3 class="chart-title">ترکیب وضعیت جاری سامانه‌ها</h3><div class="chart-caption">تعداد و سهم هر وضعیت از کل سامانه‌ها</div></div>
+            <span class="chart-badge">۳۵ سامانه</span>
+          </div>
+          <div class="chart-wrap"><canvas id="statusChart"></canvas></div>
+          <p class="chart-footnote">وضعیت‌ها مطابق مقادیر ثبت‌شده در فایل منبع نمایش داده شده‌اند.</p>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-title-row">
+            <div><h3 class="chart-title">مقایسه وضعیت مبنا و وضعیت جاری</h3><div class="chart-caption">تعداد سامانه‌ها در هر طبقه وضعیت</div></div>
+            <span class="chart-badge">مقایسه دو مقطع</span>
+          </div>
+          <div class="chart-wrap"><canvas id="baselineChart"></canvas></div>
+          <p class="chart-footnote">وضعیت مبنا مربوط به ۱۴۰۵/۰۴/۱۵ است؛ تاریخ جاری در فرم منبع برای اغلب سامانه‌ها درج نشده است.</p>
+        </article>
+
+        <article class="chart-card wide">
+          <div class="chart-title-row">
+            <div><h3 class="chart-title">وضعیت سامانه‌ها به تفکیک حوزه سازمانی</h3><div class="chart-caption">ترکیب عملیاتی، در حال توسعه، ایستا و متوقف در هر حوزه</div></div>
+            <span class="chart-badge">نمای مقایسه‌ای</span>
+          </div>
+          <div class="chart-wrap tall"><canvas id="deptStatusChart"></canvas></div>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-title-row">
+            <div><h3 class="chart-title">اقدامات ثبت‌شده به تفکیک حوزه</h3><div class="chart-caption">تفکیک اقدامات انجام‌شده فاوا و بهره‌بردار</div></div>
+            <span class="chart-badge">۸۹ اقدام</span>
+          </div>
+          <div class="chart-wrap tall"><canvas id="activityChart"></canvas></div>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-title-row">
+            <div><h3 class="chart-title">سامانه‌های دارای بیشترین چالش علامت‌گذاری‌شده</h3><div class="chart-caption">مقایسه تعداد موارد فنی و عملیاتی ثبت‌شده</div></div>
+            <span class="chart-badge">۱۴ سامانه دارای علامت</span>
+          </div>
+          <div class="chart-wrap tall"><canvas id="challengeSystemChart"></canvas></div>
+          <p class="chart-footnote">فایل منبع عنوان گزینه‌های چک‌لیست را ارائه نمی‌کند؛ بنابراین نمودار، تعداد تیک‌ها را نشان می‌دهد نه نوع چالش را.</p>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-title-row">
+            <div><h3 class="chart-title">چالش‌های ثبت‌شده در حوزه‌های سازمانی</h3><div class="chart-caption">تعداد تیک‌های فنی و عملیاتی به تفکیک حوزه</div></div>
+            <span class="chart-badge">۴۵ مورد علامت‌گذاری</span>
+          </div>
+          <div class="chart-wrap tall"><canvas id="challengeDeptChart"></canvas></div>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-title-row">
+            <div><h3 class="chart-title">تغییر وضعیت نسبت به مقطع مبنا</h3><div class="chart-caption">تفکیک سامانه‌های بدون تغییر و دارای تغییر وضعیت</div></div>
+            <span class="chart-badge">۳۱ بدون تغییر</span>
+          </div>
+          <div class="chart-wrap"><canvas id="changeChart"></canvas></div>
+          <p class="chart-footnote">دو تغییر به وضعیت عملیاتی و دو تغییر به وضعیت پایین‌تر در طبقه‌بندی فعلی مشاهده می‌شود.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title"><span class="section-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></span> تحلیل مدیریتی و نکات قابل پیگیری</h2>
+          <p class="section-sub">نکات استخراج‌شده از وضعیت‌ها، خلاصه‌ها و شرح اقدامات سامانه‌ها</p>
+        </div>
+      </div>
+      <div class="analysis-grid" id="analysisGrid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title"><span class="section-icon"><i class="fa-solid fa-list-check"></i></span> اقدامات بعدی و تصمیمات موردنیاز</h2>
+          <p class="section-sub">مواردی که در فرم پایش برای فاوا، بهره‌بردار یا سطح مدیریت ثبت شده‌اند</p>
+        </div>
+      </div>
+      <div class="action-grid" id="actionGrid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title"><span class="section-icon"><i class="fa-solid fa-building-user"></i></span> عملکرد حوزه‌های سازمانی</h2>
+          <p class="section-sub">مقایسه تعداد سامانه‌ها، وضعیت جاری، چالش‌ها و اقدامات ثبت‌شده</p>
+        </div>
+      </div>
+      <div class="dept-table-wrap">
+        <table class="dept-table">
+          <thead><tr>
+            <th>حوزه سازمانی</th><th>کل سامانه‌ها</th><th>عملیاتی</th><th>در حال توسعه</th><th>ایستا / متوقف</th><th>چالش‌ها</th><th>اقدامات انجام‌شده</th>
+          </tr></thead>
+          <tbody id="deptTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title"><span class="section-icon"><i class="fa-solid fa-server"></i></span> فهرست سامانه‌ها و جزئیات پایش</h2>
+          <p class="section-sub">جست‌وجو، فیلتر و مشاهده اطلاعات هر یک از ۳۵ سامانه</p>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="control"><i class="fa-solid fa-magnifying-glass"></i><input id="searchInput" type="search" placeholder="جست‌وجوی نام سامانه یا بهره‌بردار..."></div>
+        <div class="control"><i class="fa-solid fa-filter"></i><select id="statusFilter"><option value="all">همه وضعیت‌ها</option><option value="operational">در حال بهره‌برداری</option><option value="developing">در حال توسعه</option><option value="static">ایستا</option><option value="stop">متوقف</option></select></div>
+        <div class="control"><i class="fa-solid fa-building"></i><select id="deptFilter"><option value="all">همه حوزه‌های سازمانی</option></select></div>
+      </div>
+      <div class="results-count" id="resultsCount"></div>
+      <div class="systems-grid" id="systemsGrid"></div>
+    </section>
+
+    <section class="section">
+      <div class="source-note">
+        <strong>ملاحظات داده و روش محاسبه:</strong>
+        این داشبورد بر اساس فایل <strong>SystemsData.Json</strong> تهیه شده است.
+        وضعیت مبنا در فایل ۱۴۰۵/۰۴/۱۵ درج شده و تاریخ گزارش در بنر مطابق درخواست ۱۴۰۵/۰۸/۰۸ است.
+        تعداد اقدامات از ردیف‌های دارای متن در بخش‌های «اقدامات انجام‌شده فاوا» و «اقدامات انجام‌شده بهره‌بردار» محاسبه شده است.
+        تعداد چالش‌ها صرفاً شمارش گزینه‌های تیک‌خورده در آرایه‌های چالش فنی و عملیاتی است؛ عنوان گزینه‌های چک‌لیست در فایل داده وجود ندارد.
+        همچنین فیلد تاریخ آخرین وضعیت جاری فقط برای یک سامانه تکمیل شده است؛ بنابراین نمودارهای مقایسه‌ای، روند زمانی ماهانه محسوب نمی‌شوند.
+        برای نمایش جزئیات گزارش، فایل <strong>Fava.pdf</strong> باید در کنار همین فایل HTML قرار گیرد.
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    بنیاد مسکن انقلاب اسلامی · گزارش تحلیلی واحد فناوری اطلاعات · تاریخ گزارش ۱۴۰۵/۰۸/۰۸
+  </footer>
+
+  <button class="print-btn" onclick="window.print()"><i class="fa-solid fa-print"></i> چاپ گزارش</button>
+
+  <div class="modal-backdrop" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="modalTitle">جزئیات سامانه</h2>
+        <button class="close-btn" onclick="closeModal()" aria-label="بستن"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const SYSTEMS = [{"id":"S01","dept":"حوزه ریاست","deptIndex":0,"title":"سامانه اتوماسیون اداری چارگون","owner":"بنیاد مسکن","operator":"کل سازمان","baselineStatus":"operational","baselineNote":"مراحل پایانی مهاجرت به سیستم جدید","currentStatus":"operational","currentStatusDate":"","operationDate":"1405/06/30","techStatus":"کلیه تمهیدات و ملاحظات فنی و امنیتی انجام و به صورت مستمر در حال رصد می باشد.","opStatus":"پیاده سازی در 24 استان و دفتر مرکزی پیاده سازی شده است و  در حال بهره برداری می باشد. ","summary":"از نظر فنی و تکنیکال کلیه اقدامات تا تاریخ 22 مهرماه در دفتر مرکزی و استان های پیاده سازی شده، وضعیت پایدار و در حال استقرار 7 استان باقی مانده می باشیم.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":"کاربران نیاز به دسترسی به موارد قبلی مانند پرینت نامه ها، دسترسی به ویرایش نامه ها و...داشتند"},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"تحلیل آخرین وضعیت اتوماسیون های چارگون در استان ها . انتقال سرورها جهت کانورت و یکپارچه سازی به دفتر مرکزی","date":"1405/05/01","result":"استقرار در مرکز داده"},{"text":"کانورت اطلاعات 6 ماهه  صورت گرفت","date":"","result":""},{"text":"پیاده سازی ساختار کل کشور و استانداردسازی","date":"","result":""},{"text":"در حال پیاده سازی داشبورد بی آی","date":"","result":""},{"text":"در حال پیاده سازی اپلیکیشن موبایلی مدیران","date":"","result":""},{"text":"در حال پیاده سازی مدیریت جلسات","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"یکپارچه سازی و پیاده سازی در 7 استان باقی مانده","itNextDate":"1405/08/06","opNext":"","opNextDate":"1405/08/06","decision":"ابلاغ سیاست ها و دستور العمل های مکاتبات مطابق با آخرین ملاحظات"},{"id":"S02","dept":"حوزه ریاست","deptIndex":0,"title":"سامانه اتوماسیون اداری همکاران)","owner":"بنیاد مسکن","operator":"بنیاد مسکن","baselineStatus":"developing","baselineNote":"تاریخ بهره‌برداری: ۱۴۰۵/۰۴/۰۱","currentStatus":"stop","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"","techChallenges":[{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S03","dept":"حوزه ریاست","deptIndex":0,"title":"سایت اینترنتی بنیاد مسکن و استان‌ها","owner":"بنیاد مسکن","operator":"اداره کل روابط عمومی","baselineStatus":"operational","baselineNote":"","currentStatus":"static","currentStatusDate":"1405/06/30","operationDate":"","techStatus":"","opStatus":"","summary":"","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S04","dept":"حوزه ریاست","deptIndex":0,"title":"سایت جدید بنیاد مسکن و استان‌ها","owner":"بنیاد مسکن","operator":"اداره کل روابط عمومی","baselineStatus":"developing","baselineNote":"تاریخ بهره‌برداری: ۱۴۰۵/۰۶","currentStatus":"developing","currentStatusDate":"","operationDate":"1405/06/30","techStatus":"وب سایت ستاد مرکزی بنیاد مسکن: مطابق با معماری تایید شده پیاده سازی و مورد بهره برداری قرار گرفت\nوب سایت استان ها: در انتظار دریافت معماری موردنیاز به صورت یکپارچه از طرف بهره بردار می باشیم\nدر خصوص ملاحظات امنیتی اقدامات لازم در راستای پیاده سازی در بستر شبکه توزیع محتوا انجام شده است","opStatus":"وضعیت ورود اطلاعات در ستاد مرکزی توسط بهره بردار در حال انجام است انتظار می رود با بهره گیری کامل از قابلیت های وب سایت انتظارات موردنیاز سازمان براورده شود","summary":"در انتظار دریافت معماری موردنیاز پیاده سازی وب سایت های استان از طرف بهره بردار","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"تحلیل و بررسی معماری سیستم","date":"","result":""},{"text":"تهیه معماری موردنیاز سازمان","date":"","result":""},{"text":"اجرای معماری موردنیاز سازمان","date":"","result":""},{"text":"تهیه بستر زیرساختی متناسب با نیاز","date":"","result":""},{"text":"پیاده سازی نهایی","date":"","result":""}],"opDone":[{"text":"تهیه معماری موردنیاز سازمان","date":"","result":""},{"text":"اجرای معماری موردنیاز سازمان","date":"","result":""},{"text":"پیاده سازی نهایی","date":"","result":""},{"text":"تهیه، تولید و انتشار محتوای موردنیاز","date":"","result":""}],"itNext":"درانتظار بازخوردهای رسمی از سوی بهره بردار و همچنین تهیه و ارسال معماری وب سایت های استان ها","itNextDate":"1405/06/30","opNext":"","opNextDate":"","decision":"تسریع در بهره برداری کامل وب سایت، تسریع در پیاده سازی سایر ماژول ها، تسریع در تهیه معماری وب سایت استان ها."},{"id":"S05","dept":"حوزه ریاست","deptIndex":0,"title":"سامانه ارتباط مردم و دولت (سامد)","owner":"نهاد ریاست حمهوری","operator":"بنیاد مسکن","baselineStatus":"operational","baselineNote":"دارای کاربران ستاد مرکزی و استانها","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"این سامانه از مجموعه سامانه های دفتر فناوری نمیباشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S06","dept":"حوزه ریاست","deptIndex":0,"title":"سامانه یکپارچه مراسلات الکترونیکی دولت (سیماد)","owner":"نهاد ریاست حمهوری","operator":"بنیاد مسکن","baselineStatus":"operational","baselineNote":"مکاتبات ستاد مرکزی","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"این سامانه از مجموعه سامانه های دفتر فناوری نمیباشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S07","dept":"حوزه ریاست","deptIndex":0,"title":"سامانه رسیدگی به شکایات (136)","owner":"سازمان بازرسی کل کشور","operator":"بنیاد مسکن","baselineStatus":"operational","baselineNote":"سازمان بازرسی کل کشور","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"این سامانه از مجموعه سامانه های دفتر فناوری نمیباشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S08","dept":"حوزه ریاست","deptIndex":0,"title":"سامانه مدیریت جلسات مجازی","owner":"بنیاد مسکن","operator":"کل سازمان","baselineStatus":"operational","baselineNote":"ستاد مرکزی - بنیاد استانها","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"خدمت به صورت اشتراکی از شرکت مشاور دریافت می گردد. زیرساخت لازم در اختیار جلسات مطابق با نیاز قرار می گیرد. پشتیبانی مستمر توسط تیم پشتیبانی واحد فاوا و مشاور صورت می گیرد.","opStatus":"در حال بهره برداری در ستاد مرکزی و استان ها","summary":"","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"تامین زیرساخت و اینترنت موردنیاز و همچنین بستر شبکه داخلی","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":"تهیه زیرساخت سمعی و بصری مناسب، ایجاد و رسمیت واحد متولی در مدیریت جلسات (به استثنا امور مرتبط با واحد فاوا)، پیشنهاد تهیه و بهره برداری از یک محصول استاندارد در سازمان"},{"id":"S09","dept":"حوزه ریاست","deptIndex":0,"title":"بنیاد مهربانی","owner":"بنیاد مسکن","operator":"دفتر حساب ۱۰۰","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":" مطابق با معماری تایید شده پیاده سازی و مورد بهره برداری قرار گرفت\n","opStatus":"","summary":"مطابق با معماری تایید شده پیاده سازی و در  دو مرحله انطباق پذیری با نیازمندی های بنیاد موردبازبینی قرار گرفت. در حال حاضر سامانه فاقد قرارداد می باشد. ","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"مطالعه نیازمندی های سازمان صورت گرفت ","date":"","result":""},{"text":"سند محصول و معماری سیستم توسط مشاور ذی صلاح انجام و توسعه آن صورت پذیرفت","date":"","result":""},{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"تکمیل سامانه در حوزه سرویس ها","itNextDate":"","opNext":"نهایی کردن فرایند، بروز بودن و بروزرسانی اطلاعات، پایش مستمر، بهره گیری از قابلیت ها","opNextDate":"","decision":"ابلاغ رسمی متولی اصلی سامانه، دستور بهره برداری کامل"},{"id":"S10","dept":"حوزه ریاست","deptIndex":0,"title":"سامانه تخصصی حساب ۱۰۰ امام (ره)","owner":"بنیاد مسکن","operator":"دفتر حساب ۱۰۰","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"پیاده سازی سامانه در ستاد مرکزی و استان ها به صورت یکپارچه صورت پذیرفته است. در مرحله تکمیل اطلاعات و گستره بهره برداری در واحد بهره بردار می باشد.","opStatus":"در ستاد مرکزی و استان ها بهره برداری صورت پذیرفته است. ","summary":"در مرحله تکمیل اطلاعات و گستره بهره برداری در واحد بهره بردار می باشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"بررسی . احصا نیازمندی های واحد بهره بردار","date":"","result":""},{"text":"تحلیل و تهیه معماری توسط مشاور ذی صلاح","date":"","result":""},{"text":"آماده سازی زیرساخت","date":"","result":""},{"text":"پیاده سازی و تحویل و آموزش","date":"","result":""},{"text":"پشتیبانی زیرساختی، فنی و نرم افزاری","date":"","result":""}],"opDone":[{"text":"ورود اطلاعات گذشته","date":"","result":""},{"text":"پالایش و رفع ایرادات","date":"","result":""},{"text":"آموزش مستمر به کاربران استان ها","date":"","result":""},{"text":"گسترش بهره برداری","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S11","dept":"حوزه ریاست","deptIndex":0,"title":"سامانه ADLIRAN","owner":"قوه قضائیه","operator":"اداره کل حقوقی","baselineStatus":"static","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"این سامانه در حوزه سرویس دهی می باشد و سرویس موردنیاز در زیرساخت بنیاد مسکن جهت بهره برداری در سامانه حقوقی پیاده سازی شده است.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"تهیه زیرساخت متناسب","date":"","result":""},{"text":"تست بهره گیری و قابلیت ها","date":"","result":""},{"text":"اتصال به سامانه حقوقی","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S12","dept":"حوزه ریاست","deptIndex":0,"title":"سامانه دسترسی آزاد به اطلاعات (IranFoia)","owner":"وزارت فرهنگ و ارشاد اسلامی","operator":"اداره کل حقوقی","baselineStatus":"static","baselineNote":"","currentStatus":"static","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"این سامانه از مجموعه سامانه های دفتر فناوری نمیباشد. و اداره کل حقوقی از این سامانه بهره برداری می نماید.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S13","dept":"معاونت پشتیبانی و توسعه منابع انسانی","deptIndex":1,"title":"سامانه ERP منابع انسانی","owner":"بنیاد مسکن","operator":"اداره کل امور اداری","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"پیاده سازی سامانه در ستاد مرکزی و استان ها به صورت یکپارچه صورت پذیرفته است. ","opStatus":"در ستاد مرکزی و استان ها در حال بهره برداری می باشد.","summary":"نیاز به بازنگری با توجه به وجود چالش در بعضی از فرایندهای موجود","techChallenges":[{"checked":true,"detail":"عدم پایبندی پیمانکار به توسعه سامانه"},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"ایجاد زیرساخت های موردنیاز","date":"","result":""},{"text":"کانورت اولیه دیتا منابع انسانی","date":"","result":""},{"text":"استقرار و آموزش","date":"","result":""},{"text":"توسعه گزارشات موردنیاز واحد","date":"","result":""}],"opDone":[{"text":"اصلاح داده ها","date":"","result":""},{"text":"اعلام فرایندهای موردنیاز در سامانه","date":"","result":""},{"text":"اعلام گزارشات موردنیاز","date":"","result":""}],"itNext":"تکمیل فرایندهای ارزشیابی، کارانه، اضافه کار برای استان ها","itNextDate":"","opNext":"اعلام نظر در تکمیل فرایندهای ارزشیابی، کارانه، اضافه کار برای استان ها","opNextDate":"","decision":""},{"id":"S14","dept":"معاونت پشتیبانی و توسعه منابع انسانی","deptIndex":1,"title":"سامانه ERP مالی","owner":"بنیاد مسکن","operator":"اداره کل مالی","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"پیاده سازی سامانه در ستاد مرکزی و استان ها به صورت یکپارچه صورت پذیرفته است. ","opStatus":"در ستاد مرکزی و استان ها ماژول های جبران خدمات، دریافت و پرداخت (خزانه داری)، اموال ودارایی های ثابت، انبار و لجستیک در حال استفاده می باشد.","summary":"ساختار حساب ها و کلیه فرایندهای حسابداری و کدینگ مورد استفاده در کلیه اقلام در سطح کشور یکسان سازی صورت گرفته است. این اقدامات در راستای عملیاتی شدن erp مالی سازمانی صورت گرفته است. همچنین بهره برداری از ماژول انبار نیازمند پیگیری و بهره برداری کامل می باشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":"سرعت ثبت داده ها در سامانه پایین می باشد\nبا توجه به نیاز سازمانی و اهمیت توسعه موردنیاز در زمان بهره برداری در خصوص فرایندهای باقی مانده بهره بردار و همزمانی با استقرار، نیاز به صورت ERA پیاده سازی شد که مستلزم نگاشت سیستمی می یاشد."}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":"\n"},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":"عدم پایبندی پیمانکار به زمانبندی اجرایی تحویل بخش های مختلف سامانه\nعدم تطابق محصول تحویلی با موارد اعلامی پیمانکار در جلسات بررسی محصول\nعدم پایداری نرم افزار در بروزرسانی هایی که صورت میگیرد.\n\n"}],"itDone":[{"text":"ایجاد زیرساخت های موردنیاز","date":"","result":""},{"text":"استقرار و آموزش","date":"","result":""},{"text":"ورود اطلاعات پایه کلیه ماژول ها","date":"","result":""},{"text":"توسعه گزارشات موردنیاز واحد","date":"","result":""}],"opDone":[{"text":"اعلام فرایندهای موردنیاز در سامانه به پیمانکار","date":"","result":""},{"text":"بررسی سند محصول و تحلیل میزان انطباق فرایندهای سازمانی با قابلیت های محصول","date":"","result":""},{"text":"پیاده سازی و بهره برداری پایلوت و سپس سراسری و پس از آن \nتهیه سند افتتاحیه جهت ورود داده سال های گذشته قبل از استقرار توسط کاربران ستاد\n","date":"","result":""},{"text":"ویرایش سند افتتاحیه با توجه به ساختار جدید راهکاران توسط کاربران ستاد","date":"","result":""},{"text":"اعلام گزارشات موردنیاز","date":"","result":""}],"itNext":"اقدامات بعدی در حوزه سرویس دهی شامل اتصال وب سرویسی:\nسامانه جامع پرداخت\nسامانه امور قراردادها و پیمان ها","itNextDate":"","opNext":"اتصال سامانه مالی به سامانه جامع پرداخت بنیاد مسکن\nتبدیل فرایندهای تعریف شده در ERA به نگاشت سیستمی در محصول\n","opNextDate":"","decision":""},{"id":"S15","dept":"معاونت پشتیبانی و توسعه منابع انسانی","deptIndex":1,"title":"سامانه ERP ذیحسابی","owner":"بنیاد مسکن","operator":"اداره کل ذیحسابی","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"1403/02/01","techStatus":"پیاده سازی سامانه در ستاد مرکزی و استان ها به صورت یکپارچه صورت پذیرفته است. ","opStatus":"در ستاد مرکزی و استان ها در حال استفاده می باشد.","summary":"","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":"سرعت ثبت داده ها در سامانه پایین می باشد\nمشکل شبکه مبین نت در اتصال کاربران"}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":"شرکت پیمانکار نسبت به ایجاد فرایندهای مربوط به تعهدات و برگشت تعهدات اقدام ننموده است"},{"checked":false,"detail":""},{"checked":true,"detail":"برای مثال اسناد خزانه اسلامی"},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":"پشتیبانی از سمت واحد پیمانکار پاسخگوی نیارمندی حوزه نمی باشد"},{"checked":true,"detail":"عدم طراحی فرم های گزارشات سالانه بودجه ای و گزارشات صورت های مالی توسط پیمانکار\nعدم توسعه برخی از فرایندهای موردنیاز حوزه توسط پیمانکار برای مثال در حوزه قراردادها و تضامین\nعدم تحلیل و کشف نیازمندی های حوزه توسط پیمانکار به صورت مناسب\nطولانی بودن زمان توسعه در برخی از فرایندهای درخواستی حوزه\nعدم پایداری نرم افزار در بروزرسانی هایی که صورت میگیرد."}],"itDone":[{"text":"ایجاد زیرساخت های موردنیاز","date":"","result":""},{"text":"استقرار و آموزش","date":"","result":""},{"text":"توسعه گزارشات موردنیاز واحد","date":"","result":""}],"opDone":[{"text":"اعلام فرایندهای موردنیاز در سامانه","date":"","result":""},{"text":"اعلام فرمت گزارشات موردنیاز","date":"","result":""},{"text":"ورود داده به سامانه توسط کاربران ستاد و استان","date":"","result":""},{"text":"اصلاح داده توسط کاربران ستاد و استان","date":"","result":""},{"text":"بررسی و تست فرایندهای پیاده سازی شده توسط کاربران ستاد و دریافت بازخورد استان ها","date":"","result":""}],"itNext":"اقدامات بعدی در حوزه سرویس دهی شامل اتصال وب سرویسی:\nسامانه CPMS (مدیریت کنترل پروژه) \nسامانه امور قراردادها و پیمان ها","itNextDate":"","opNext":"در انتظار دریافت توسعه فرایندها و فرمت گزارشات درخواستی از واحد پیمانکار","opNextDate":"","decision":""},{"id":"S16","dept":"معاونت پشتیبانی و توسعه منابع انسانی","deptIndex":1,"title":"ردیاب ناوگان ماشین‌آلات","owner":"بنیاد مسکن","operator":"پشتیبانی امور اجرایی","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"در بنیاد استان ها و ستاد مرکزی در حال بهره برداری میباشد . با توجه به نیازمندی واحد بهره بردار در طی زمان توسعه داده میشود.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S17","dept":"معاونت پشتیبانی و توسعه منابع انسانی","deptIndex":1,"title":"رفاهی","owner":"بنیاد مسکن","operator":"اداره کل امور اداری","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"پیاده سازی سامانه در ستاد مرکزی و استان ها به صورت یکپارچه صورت پذیرفته است. ","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S18","dept":"معاونت برنامه‌ریزی","deptIndex":2,"title":"سامانه احراز هویت یکپارچه (SSO)","owner":"بنیاد مسکن","operator":"کلیه سامانه‌های بنیاد","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"پیاده سازی صورت پذیرفته است . دربخشی از سامانه های بنیاد مسکن  مانند پایش، بهسازی ، راهبر   و سامانه تخصصی حساب  صد حضرت امام ره و غیره  ورود از طریق SSO صورت گرفته است. در ارتباط با سایر سامانه ها درحال امکان سنجی جهت توسعه میباشد.","opStatus":"","summary":"","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"تهیه ویو از اطلاعات پرسنلی بنیاد مسکن و ارائه به شرکت مشاور.","date":"","result":""},{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S19","dept":"معاونت برنامه‌ریزی","deptIndex":2,"title":"پنجره واحد خدمات الکترونیک","owner":"بنیاد مسکن","operator":"کلیه سامانه‌های بنیاد","baselineStatus":"developing","baselineNote":"تاریخ بهره‌برداری: ۱۴۰۵/۰۴/۱۳","currentStatus":"developing","currentStatusDate":"","operationDate":"","techStatus":"اماده جهت اجرا بصورت پایلوت در دو شهرستان منتخب استان گلستان. ","opStatus":"","summary":"","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"فراهم سازی بستر ارتباط با شبکه دولت","date":"","result":""},{"text":"تهیه و ازئه سرویس های مورد نیاز از سازمان های مرتبط.","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S20","dept":"معاونت برنامه‌ریزی","deptIndex":2,"title":"سامانه یکپارچه نقشه و داده‌های مکانی","owner":"بنیاد مسکن","operator":"حوزه‌های نیازمند به نقشه","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"در حال بهره برداری در ستاد مزکزی و بنیاد کل استان ها میباشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S21","dept":"معاونت برنامه‌ریزی","deptIndex":2,"title":"سامانه آماری رصد","owner":"بنیاد مسکن","operator":"کلیه سامانه‌های بنیاد","baselineStatus":"operational","baselineNote":"آماده دریافت نیازمندی‌ها جهت توسعه","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"اتصال و واکشی داده از سامانه های بنیاد مسکن مانند پایش بهسازی راهبر پرسنلی و سایر سامانه ها.\nپیاده سازی امکان ورود داده از طریق روش های دیگر مانند فرم ورود اطلاعات.\nدرخواست دریافت شاخص های کلیدی عملکرد از  دفاتر حوزه ها .","opStatus":"","summary":"","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S22","dept":"معاونت برنامه‌ریزی","deptIndex":2,"title":"آرشیو الکترونیک اسناد","owner":"بنیاد مسکن","operator":"حوزه‌های نیازمند به آرشیو","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"در حال بهره برداری در ستاد مزکزی و بنیاد کل استان ها میباشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S23","dept":"معاونت برنامه‌ریزی","deptIndex":2,"title":"سامانه جامع پرداخت","owner":"بنیاد مسکن","operator":"کلیه فرآیندهای پرداخت","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"در حال بهره برداری در ستاد مزکزی و بنیاد کل استان ها میباشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S24","dept":"معاونت برنامه‌ریزی","deptIndex":2,"title":"سامانه مرورگر امن","owner":"بنیاد مسکن","operator":"دفتر مرکزی بنیاد","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"در حال بهره برداری در ستاد مزکزی و بنیاد کل استان ها میباشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S25","dept":"معاونت برنامه‌ریزی","deptIndex":2,"title":"شبکه اجتماعی و ایمیل سازمانی","owner":"بنیاد مسکن","operator":"کل سازمان","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"در حال بهره برداری در ستاد مزکزی و بنیاد کل استان ها میباشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S26","dept":"معاونت توسعه و عمران روستایی","deptIndex":3,"title":"سامانه جامع عمران روستایی","owner":"بنیاد مسکن","operator":"کل معاونت","baselineStatus":"developing","baselineNote":"تاریخ بهره‌برداری: ۱۴۰۵/۰۶/۰۱","currentStatus":"developing","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"بخش های مشاورین و پروژه ها و تهیه طرح هادی در  استان های  مازندران اصفهان، خوستان، خراسان رضوی، تهران، اذربایجان شرقی، بصورت  پایلوت اجرا شده است \nدفاتر مربوطه در حال ثبت اطلاعات پایه در سامانه و  انجام تست های مربوطه و ارائه بازخورد به شرکت مشاور جهت رفع اشکالات میباشند.\nکانورت دیتا از سامانه سماع توسط شرکت مشاور در حال انجام است ","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S27","dept":"معاونت توسعه و عمران روستایی","deptIndex":3,"title":"ساخت و ساز روستایی راهبر","owner":"بنیاد مسکن","operator":"دفتر امور فنی طرح‌ها","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"در فاز توسعه و پشتیبانی نیازمندی های دفتر امور فنی طرح ها پس از تحلیل و تایید از سمت واحد فناوری در دست اقدامات شرکت مشاور ذی صلاح جهت پیاده سازی قرار می گیرد. با توجه به ماهیت وظایف دفتر و نیاز به ارائه گزارشات به سازمانی های بیرونی و نهادها و ارتباط با سامانه های خارجی جهت استعلامات و... نیازمندی های توسعه پس از تایید دفتر فناوری در اقدامات اجرایی شرکت مشاور ذی صلاح قرار می گیرد","opStatus":"در حال استفاده در ستاد مرکزی و استان ها","summary":"در حال بهره برداری و توسعه با توجه به نیازمندی های اعلامی از سوی دفتر امور فنی طرح ها","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"تحلیل نیازمندی های دفاتر","date":"","result":""},{"text":"تهیه بستر پیاده سازی و اعلام به شرکت مشاور ذی صلاح","date":"","result":""},{"text":"پیاده سازی توسط شرکت ذی صلاح و تست آن","date":"","result":""},{"text":"تحویل سامانه به دفاتر","date":"","result":""},{"text":"ادامه خدمات پشتیبانی به دفاتر توسط شرکت مشاور ذی صلاح","date":"","result":""}],"opDone":[{"text":"اعلام نیازمندی ها و فرایند کاری موردنیاز در دفاتر","date":"","result":""},{"text":"ورود اطلاعات به سامانه","date":"","result":""},{"text":"ارائه پیشنهادات جهت بهینه سازی ","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S28","dept":"معاونت توسعه و عمران روستایی","deptIndex":3,"title":"خطایاب طرح‌ها","owner":"بنیاد مسکن","operator":"دفتر امور فنی طرح‌ها","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"در حال بهره برداری در ستاد مزکزی و بنیاد کل استان ها میباشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S29","dept":"معاونت توسعه و عمران روستایی","deptIndex":3,"title":"مدیریت و کنترل اجرای پروژه (پی‌وب)","owner":"بنیاد مسکن","operator":"دفتر امور اجرایی","baselineStatus":"developing","baselineNote":"تاریخ بهره‌برداری: ۱۴۰۵/۰۴/۰۱","currentStatus":"developing","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"درحال سفارشی سازی با توجه به نیازمندی بهره برداران محترم میباشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S30","dept":"معاونت توسعه و عمران روستایی","deptIndex":3,"title":"سماع","owner":"بنیاد مسکن","operator":"دفتر برنامه‌ریزی / زمین","baselineStatus":"static","baselineNote":"","currentStatus":"static","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"با اجرایی شدن سامانه جامع عمران روستایی و انتقال داده ها بصورت کامل از بهره برداری خارج میشود.\nدرحال حاضر  درحال استفاده و در وضعیت عدم توسعه نیازمندی جدید میباشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S31","dept":"معاونت توسعه و عمران روستایی","deptIndex":3,"title":"مدیریت انتخاب مشاوران (سیما)","owner":"بنیاد مسکن","operator":"دفتر امور فنی طرح‌ها","baselineStatus":"static","baselineNote":"","currentStatus":"static","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"با اجرایی شدن سامانه جامع عمران روستایی و انتقال داده ها بصورت کامل از بهره برداری خارج میشود.\nدرحال حاضر  درحال استفاده و در وضعیت عدم توسعه نیازمندی جدید میباشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S32","dept":"معاونت توسعه و عمران روستایی","deptIndex":3,"title":"مدیریت توزیع و مصرف قیر","owner":"بنیاد مسکن","operator":"دفتر امور اجرایی","baselineStatus":"static","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"","opStatus":"","summary":"با اجرایی شدن سامانه جامع عمران روستایی و انتقال داده ها بصورت کامل از بهره برداری خارج میشود.\nدرحال حاضر  درحال استفاده و در وضعیت عدم توسعه نیازمندی جدید میباشد.","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"","date":"","result":""}],"opDone":[{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S33","dept":"معاونت امور بازسازی و مسکن روستایی","deptIndex":4,"title":"سامانه بهسازی مسکن روستایی","owner":"بنیاد مسکن","operator":"مسکن روستایی","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"در فاز توسعه و پشتیبانی نیازمندی های دفتر مسکن روستایی پس از تحلیل و تایید از سمت واحد فناوری در دست اقدامات شرکت مشاور ذی صلاح قرار جهت پیاده سازی قرار می گیرد. با توجه به ماهیت وظایف دفتر و نیاز به ارائه گزارشات به سازمانی های بیرونی و نهادها (تفاهم نامه ها، تسهیلات و...) و ارتباط با سامانه های خارجی جهت استعلامات و... نیازمندی های توسعه پس از تایید دفتر فناوری در اقدامات اجرایی شرکت مشاور ذی صلاح قرار می گیرد","opStatus":"در حال بهره برداری در ستاد مرکزی  و استان ها ","summary":"در حال بهره برداری و توسعه با توجه به نیازمندی های اعلامی از سوی دفتر مسکن روستایی","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"تحلیل نیازمندی های دفاتر","date":"","result":""},{"text":"تهیه بستر پیاده سازی و اعلام به شرکت مشاور ذی صلاح","date":"","result":""},{"text":"پیاده سازی توسط شرکت ذی صلاح و تست آن","date":"","result":""},{"text":"تحویل سامانه به دفاتر","date":"","result":""},{"text":"ادامه خدمات پشتیبانی به دفاتر توسط شرکت مشاور ذی صلاح","date":"","result":""}],"opDone":[{"text":"اعلام نیازمندی ها و فرایند کاری موردنیاز در دفاتر","date":"","result":""},{"text":"ورود اطلاعات به سامانه","date":"","result":""},{"text":"ارائه پیشنهادات جهت بهینه سازی ","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S34","dept":"معاونت امور بازسازی و مسکن روستایی","deptIndex":4,"title":"سامانه نظام فنی روستایی","owner":"بنیاد مسکن","operator":"نظارت و ارزیابی","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"در فاز توسعه و پشتیبانی نیازمندی های دفاتر مسکن روستایی و نظارت و ارزیابی پس از تحلیل و تایید از سمت واحد فناوری در دست اقدامات شرکت مشاور ذی صلاح جهت پیاده سازی قرار می گیرد. با توجه به ماهیت وظایف دفتر و نیاز به ارائه گزارشات به سازمانی های بیرونی و نهادها، ارتباط با سامانه های خارجی جهت استعلامات و... نیازمندی های توسعه پس از تایید دفتر فناوری در اقدامات اجرایی شرکت مشاور ذی صلاح قرار می گیرد","opStatus":"در حال بهره برداری در ستاد مرکزی  و استان ها و همچنین ناظران نظام فنی روستایی","summary":"در حال بهره برداری و توسعه با توجه به نیازمندی های اعلامی از سوی دفتر مسکن روستایی و نظارت و ارزیابی","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"تحلیل نیازمندی های دفاتر","date":"","result":""},{"text":"تهیه بستر پیاده سازی و اعلام به شرکت مشاور ذی صلاح","date":"","result":""},{"text":"پیاده سازی توسط شرکت ذی صلاح و تست آن","date":"","result":""},{"text":"تحویل سامانه به دفاتر","date":"","result":""},{"text":"ادامه خدمات پشتیبانی به دفاتر توسط شرکت مشاور ذی صلاح","date":"","result":""}],"opDone":[{"text":"اعلام نیازمندی ها و فرایند کاری موردنیاز در دفاتر","date":"","result":""},{"text":"ورود اطلاعات به سامانه","date":"","result":""},{"text":"ارائه پیشنهادات جهت بهینه سازی ","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""},{"id":"S35","dept":"معاونت امور بازسازی و مسکن روستایی","deptIndex":4,"title":"پایش عملکرد بازسازی و ساماندهی","owner":"بنیاد مسکن","operator":"بازسازی / ساماندهی","baselineStatus":"operational","baselineNote":"","currentStatus":"operational","currentStatusDate":"","operationDate":"","techStatus":"در فاز توسعه و پشتیبانی نیازمندی های دو دفتر ساماندهی و بازسازی پس از تحلیل و تایید از سمت واحد فناوری در دست اقدامات شرکت مشاور ذی صلاح جهت پیاده سازی قرار می گیرد. با توجه به ماهیت وظایف دفتر بازسازی و با جنگ های اخیر توسعه های درخواستی این دفتر با اولویت بالا اجرای و پیاده سازی شده است. همچنین با توجه به ماهیت وظایف دفتر و نیاز به ارائه گزارشات به سازمانی های بیرونی و نهادها، ارتباط با سامانه های خارجی جهت استعلامات و... نیازمندی های توسعه پس از تایید دفتر فناوری در اقدامات اجرایی شرکت مشاور ذی صلاح قرار می گیرد","opStatus":"در حال بهره برداری در ستاد مرکزی و استان ها","summary":"در حال بهره برداری و توسعه با توجه به نیازمندی های اعلامی از سوی دفاتر بازسازی و ساماندهی","techChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":true,"detail":"با توجه به ماهیت وظایف دفاتر و با رخداد حوادث خاص، ارتباط با سازمان های بیرونی بنیاد و ارائه گزارشات خاص به آن ها نیازمند توسعه و تغییرات در طی زمان می باشد"},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"opChallenges":[{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""},{"checked":false,"detail":""}],"itDone":[{"text":"تحلیل نیازمندی های دفاتر","date":"","result":""},{"text":"تهیه بستر پیاده سازی و اعلام به شرکت مشاور ذی صلاح","date":"","result":""},{"text":"پیاده سازی توسط شرکت ذی صلاح و تست آن","date":"","result":""},{"text":"تحویل سامانه به دفاتر","date":"","result":""},{"text":"ادامه خدمات پشتیبانی به دفاتر توسط شرکت مشاور ذی صلاح","date":"","result":""}],"opDone":[{"text":"اعلام نیازمندی ها و فرایند کاری موردنیاز در دفاتر","date":"","result":""},{"text":"ورود اطلاعات به سامانه","date":"","result":""},{"text":"ارائه پیشنهادات جهت بهینه سازی ","date":"","result":""},{"text":"","date":"","result":""}],"itNext":"","itNextDate":"","opNext":"","opNextDate":"","decision":""}];
+
+    const STATUS = {
+      operational: {label:"در حال بهره‌برداری", color:"#159a78", icon:"fa-circle-check"},
+      developing: {label:"در حال توسعه", color:"#e0a43d", icon:"fa-code"},
+      static: {label:"ایستا", color:"#8997a5", icon:"fa-pause-circle"},
+      stop: {label:"متوقف", color:"#c85b63", icon:"fa-circle-stop"}
+    };
+    const DEPT_ORDER = [...new Set(SYSTEMS.map(s => s.dept))];
+    const DEPT_SHORT = {
+      "حوزه ریاست":"حوزه ریاست",
+      "معاونت پشتیبانی و توسعه منابع انسانی":"پشتیبانی و منابع انسانی",
+      "معاونت برنامه‌ریزی":"برنامه‌ریزی",
+      "معاونت توسعه و عمران روستایی":"توسعه و عمران روستایی",
+      "معاونت امور بازسازی و مسکن روستایی":"بازسازی و مسکن روستایی"
+    };
+    const STATUS_ORDER = ["operational","developing","static","stop"];
+    const fa = n => Number(n).toLocaleString("fa-IR");
+    const clean = v => (v || "").toString().trim();
+    const displayTitle = s => clean(s.title).replace(/\)$/, "");
+    const countBy = (arr, fn) => arr.filter(fn).length;
+    const countChecked = (arr=[]) => arr.filter(x => x && x.checked).length;
+    const countTexts = (arr=[]) => arr.filter(x => clean(x.text)).length;
+    const stats = {
+      total: SYSTEMS.length,
+      status: Object.fromEntries(STATUS_ORDER.map(k => [k, countBy(SYSTEMS, s => s.currentStatus === k)])),
+      baseline: Object.fromEntries(STATUS_ORDER.map(k => [k, countBy(SYSTEMS, s => s.baselineStatus === k)])),
+      techFlags: SYSTEMS.reduce((a,s)=>a+countChecked(s.techChallenges),0),
+      opFlags: SYSTEMS.reduce((a,s)=>a+countChecked(s.opChallenges),0),
+      systemsWithFlags: countBy(SYSTEMS,s=>countChecked(s.techChallenges)+countChecked(s.opChallenges)>0),
+      itDone: SYSTEMS.reduce((a,s)=>a+countTexts(s.itDone),0),
+      opDone: SYSTEMS.reduce((a,s)=>a+countTexts(s.opDone),0),
+      itNext: countBy(SYSTEMS,s=>clean(s.itNext)),
+      opNext: countBy(SYSTEMS,s=>clean(s.opNext)),
+      decisions: countBy(SYSTEMS,s=>clean(s.decision)),
+      changed: countBy(SYSTEMS,s=>s.currentStatus!==s.baselineStatus),
+      currentStatusDate: countBy(SYSTEMS,s=>clean(s.currentStatusDate))
+    };
+    stats.doneTotal = stats.itDone + stats.opDone;
+    stats.flagsTotal = stats.techFlags + stats.opFlags;
+    stats.nextTotal = stats.itNext + stats.opNext;
+    stats.activeRate = stats.status.operational / stats.total * 100;
+
+    const deptStats = DEPT_ORDER.map(dept => {
+      const rows = SYSTEMS.filter(s=>s.dept===dept);
+      return {
+        dept, short:DEPT_SHORT[dept] || dept, total:rows.length,
+        status:Object.fromEntries(STATUS_ORDER.map(k=>[k,countBy(rows,s=>s.currentStatus===k)])),
+        tech:rows.reduce((a,s)=>a+countChecked(s.techChallenges),0),
+        op:rows.reduce((a,s)=>a+countChecked(s.opChallenges),0),
+        it:rows.reduce((a,s)=>a+countTexts(s.itDone),0),
+        ops:rows.reduce((a,s)=>a+countTexts(s.opDone),0)
+      };
+    });
+
+    const changedGroups = {
+      unchanged: countBy(SYSTEMS,s=>s.currentStatus===s.baselineStatus),
+      improved: countBy(SYSTEMS,s=>s.baselineStatus==="static" && s.currentStatus==="operational"),
+      declined: countBy(SYSTEMS,s=>(s.baselineStatus==="operational" && s.currentStatus==="static") || (s.baselineStatus==="developing" && s.currentStatus==="stop"))
+    };
+
+    function renderKPIs(){
+      const items = [
+        ["کل سامانه‌های پایش‌شده",stats.total,"fa-server","#eaf3f7","#246b91","در ۵ حوزه سازمانی"],
+        ["در حال بهره‌برداری",stats.status.operational,"fa-circle-check","#e5f5ef","#159a78",`${fa(stats.activeRate.toFixed(1))}٪ از کل سامانه‌ها`],
+        ["در حال توسعه",stats.status.developing,"fa-code","#fff5df","#c38a29","نیازمند تکمیل و استقرار"],
+        ["ایستا",stats.status.static,"fa-pause-circle","#edf0f4","#718096","بدون توسعه فعال در وضعیت جاری"],
+        ["متوقف",stats.status.stop,"fa-circle-stop","#fff0f0","#c85b63","نیازمند تعیین تکلیف"],
+        ["اقدامات انجام‌شده",stats.doneTotal,"fa-list-check","#eaf2fb","#4779b4",`${fa(stats.itDone)} فاوا · ${fa(stats.opDone)} بهره‌بردار`],
+        ["چالش‌های علامت‌گذاری‌شده",stats.flagsTotal,"fa-triangle-exclamation","#fff5e8","#c58b35",`${fa(stats.techFlags)} فنی · ${fa(stats.opFlags)} عملیاتی`],
+        ["تصمیمات مدیریتی ثبت‌شده",stats.decisions,"fa-gavel","#f0edfa","#7666a8","در ۴ سامانه"]
+      ];
+      document.getElementById("kpiGrid").innerHTML = items.map(x=>`
+        <article class="kpi" style="--tint:${x[3]};--tone:${x[4]}">
+          <div class="kpi-top"><span class="kpi-label">${x[0]}</span><span class="kpi-icon"><i class="fa-solid ${x[2]}"></i></span></div>
+          <div class="kpi-value">${fa(x[1])}</div><div class="kpi-foot">${x[5]}</div>
+        </article>`).join("");
+      document.getElementById("heroOperationalRate").textContent = `${fa(stats.activeRate.toFixed(1))}٪`;
+    }
+
+    function renderInsights(){
+      const items = [
+        {icon:"fa-chart-line",tone:"#159a78",tint:"#e5f5ef",title:`${fa(stats.activeRate.toFixed(1))}٪ سامانه‌ها عملیاتی‌اند`,
+          text:`${fa(stats.status.operational)} سامانه از ${fa(stats.total)} سامانه در وضعیت بهره‌برداری ثبت شده‌اند؛ با این حال ۹ سامانه در وضعیت توسعه، ایستا یا توقف قرار دارند.`},
+        {icon:"fa-arrows-rotate",tone:"#4779b4",tint:"#eaf2fb",title:`${fa(stats.changed)} تغییر وضعیت نسبت به مبنا`,
+          text:`${fa(changedGroups.unchanged)} سامانه بدون تغییر مانده‌اند؛ ${fa(changedGroups.improved)} مورد به وضعیت عملیاتی و ${fa(changedGroups.declined)} مورد به وضعیت پایین‌تر منتقل شده‌اند.`},
+        {icon:"fa-triangle-exclamation",tone:"#c58b35",tint:"#fff5e8",title:`تمرکز چالش‌ها در ${fa(stats.systemsWithFlags)} سامانه`,
+          text:`از مجموع ${fa(stats.flagsTotal)} علامت ثبت‌شده، ${fa(stats.techFlags)} مورد فنی و ${fa(stats.opFlags)} مورد عملیاتی است. بیشترین تراکم در سامانه‌های ERP مالی و ذیحسابی دیده می‌شود.`},
+        {icon:"fa-clipboard-check",tone:"#7666a8",tint:"#f0edfa",title:`${fa(stats.nextTotal)} محور اقدام بعدی ثبت شده`,
+          text:`${fa(stats.itNext)} اقدام در حوزه فاوا و ${fa(stats.opNext)} اقدام در حوزه بهره‌بردار ثبت شده است؛ همچنین ${fa(stats.decisions)} تصمیم مدیریتی در فرم درج شده است.`}
+      ];
+      document.getElementById("insightGrid").innerHTML = items.map(x=>`
+        <article class="insight"><span class="insight-icon" style="--tone:${x.tone};--tint:${x.tint}"><i class="fa-solid ${x.icon}"></i></span>
+          <div><strong>${x.title}</strong><p>${x.text}</p></div></article>`).join("");
+    }
+
+    // ==========================================================
+    // تنظیم مستقل محل قرارگیری Data Label هر نمودار
+    // برای تغییر فاصله، align یا anchor هر نمودار فقط مقدار همان
+    // کلید را تغییر دهید؛ تنظیمات نمودارهای دیگر مستقل می‌مانند.
+    // anchor: start | center | end
+    // align: start | center | end
+    // offset: فاصله بر حسب پیکسل
+    // ==========================================================
+    const LABEL_POSITIONS = {
+      // نمودار ۱: برچسب‌های داخل حلقه نمودار وضعیت جاری
+      statusChart: {anchor:"center", align:"center", offset:0, color:"#ffffff"},
+      // نمودار ۲: برچسب‌های مقایسه وضعیت مبنا و جاری
+      baselineChart: {anchor:"end", align:"end", offset:4, color:"#40566a"},
+      // نمودار ۳: برچسب‌های نمودار انباشته وضعیت به تفکیک حوزه
+      deptStatusChart: {anchor:"center", align:"center", offset:0, color:"#ffffff"},
+      // نمودار ۴: برچسب‌های اقدامات انجام‌شده به تفکیک حوزه
+      activityChart: {anchor:"end", align:"end", offset:4, color:"#40566a"},
+      // نمودار ۵: برچسب‌های چالش سامانه‌ها
+      challengeSystemChart: {anchor:"end", align:"end", offset:4, color:"#40566a"},
+      // نمودار ۶: برچسب‌های چالش‌ها به تفکیک حوزه
+      challengeDeptChart: {anchor:"center", align:"center", offset:0, color:"#ffffff"},
+      // نمودار ۷: برچسب‌های تغییر وضعیت نسبت به مبنا
+      changeChart: {anchor:"center", align:"center", offset:0, color:"#ffffff"}
+    };
+
+    Chart.register(ChartDataLabels);
+    Chart.defaults.font.family = "Vazirmatn, Tahoma, sans-serif";
+    Chart.defaults.color = "#6f8090";
+    Chart.defaults.plugins.legend.labels.usePointStyle = true;
+    Chart.defaults.plugins.legend.labels.boxWidth = 8;
+    Chart.defaults.plugins.legend.labels.boxHeight = 8;
+    Chart.defaults.plugins.legend.labels.padding = 16;
+    Chart.defaults.plugins.tooltip.rtl = true;
+    Chart.defaults.plugins.tooltip.titleFont = {family:"Vazirmatn",weight:"700"};
+    Chart.defaults.plugins.tooltip.bodyFont = {family:"Vazirmatn"};
+    Chart.defaults.plugins.datalabels = {font:{family:"Vazirmatn",weight:"700",size:10},formatter:(v)=>v?fa(v):""};
+
+    function labelOptions(key, formatter){
+      const p = LABEL_POSITIONS[key];
+      return {anchor:p.anchor,align:p.align,offset:p.offset,color:p.color,
+        font:{family:"Vazirmatn",weight:"800",size:10},
+        formatter:formatter || ((v)=>v ? fa(v) : ""),
+        display:(ctx)=>ctx.dataset.data[ctx.dataIndex] !== 0
+      };
+    }
+    function chartBase(){
+      return {responsive:true,maintainAspectRatio:false,animation:{duration:500},
+        layout:{padding:{top:12,right:8,bottom:5,left:8}},
+        plugins:{legend:{position:"bottom",rtl:true,labels:{font:{family:"Vazirmatn",size:10}}},
+          tooltip:{rtl:true,displayColors:true},
+          datalabels:{display:false}}};
+    }
+    function renderCharts(){
+      const statusLabels = STATUS_ORDER.map(k=>STATUS[k].label);
+      const statusValues = STATUS_ORDER.map(k=>stats.status[k]);
+      const statusColors = STATUS_ORDER.map(k=>STATUS[k].color);
+
+      new Chart(document.getElementById("statusChart"),{
+        type:"doughnut",
+        data:{labels:statusLabels,datasets:[{data:statusValues,backgroundColor:statusColors,borderColor:"#fff",borderWidth:4,hoverOffset:7}]},
+        options:{...chartBase(),cutout:"66%",plugins:{...chartBase().plugins,
+          legend:{position:"bottom",rtl:true,labels:{font:{family:"Vazirmatn",size:10}}},
+          datalabels:labelOptions("statusChart",(v,ctx)=>`${fa(v)}\n${fa((v/stats.total*100).toFixed(0))}٪`) }},
+        plugins:[{id:"centerText",afterDraw(chart){
+          const {ctx,chartArea:{left,right,top,bottom}}=chart;
+          const x=(left+right)/2,y=(top+bottom)/2;
+          ctx.save();ctx.textAlign="center";ctx.textBaseline="middle";
+          ctx.fillStyle="#8a98a6";ctx.font='500 11px Vazirmatn';ctx.fillText("کل سامانه‌ها",x,y-13);
+          ctx.fillStyle="#102a43";ctx.font='900 27px Vazirmatn';ctx.fillText(fa(stats.total),x,y+17);ctx.restore();
+        }}]
+      });
+
+      new Chart(document.getElementById("baselineChart"),{
+        type:"bar",
+        data:{labels:statusLabels,datasets:[
+          {label:"وضعیت مبنا",data:STATUS_ORDER.map(k=>stats.baseline[k]),backgroundColor:"#a8bac8",borderRadius:7,maxBarThickness:24},
+          {label:"وضعیت جاری",data:statusValues,backgroundColor:"#159a91",borderRadius:7,maxBarThickness:24}
+        ]},
+        options:{...chartBase(),scales:{x:{grid:{display:false},ticks:{font:{size:10}}},
+          y:{beginAtZero:true,ticks:{precision:0,font:{size:10}},grid:{color:"#edf1f4"}}},
+          plugins:{...chartBase().plugins,legend:{position:"bottom",rtl:true},
+            datalabels:labelOptions("baselineChart")}}
+      });
+
+      new Chart(document.getElementById("deptStatusChart"),{
+        type:"bar",
+        data:{labels:deptStats.map(d=>d.short),datasets:[
+          {label:"عملیاتی",data:deptStats.map(d=>d.status.operational),backgroundColor:"#159a78",borderRadius:4},
+          {label:"در حال توسعه",data:deptStats.map(d=>d.status.developing),backgroundColor:"#e4ad4c",borderRadius:4},
+          {label:"ایستا",data:deptStats.map(d=>d.status.static),backgroundColor:"#91a0ae",borderRadius:4},
+          {label:"متوقف",data:deptStats.map(d=>d.status.stop),backgroundColor:"#c85b63",borderRadius:4}
+        ]},
+        options:{...chartBase(),indexAxis:"y",scales:{x:{stacked:true,beginAtZero:true,ticks:{precision:0},grid:{color:"#edf1f4"}},
+          y:{stacked:true,grid:{display:false},ticks:{font:{size:10}}}},
+          plugins:{...chartBase().plugins,legend:{position:"bottom",rtl:true},
+            datalabels:labelOptions("deptStatusChart")}}
+      });
+
+      new Chart(document.getElementById("activityChart"),{
+        type:"bar",
+        data:{labels:deptStats.map(d=>d.short),datasets:[
+          {label:"اقدامات فاوا",data:deptStats.map(d=>d.it),backgroundColor:"#2e789e",borderRadius:5},
+          {label:"اقدامات بهره‌بردار",data:deptStats.map(d=>d.ops),backgroundColor:"#1aa18f",borderRadius:5}
+        ]},
+        options:{...chartBase(),indexAxis:"y",scales:{x:{beginAtZero:true,stacked:true,ticks:{precision:0},grid:{color:"#edf1f4"}},
+          y:{stacked:true,grid:{display:false},ticks:{font:{size:10}}}},
+          plugins:{...chartBase().plugins,legend:{position:"bottom",rtl:true},
+            datalabels:labelOptions("activityChart")}}
+      });
+
+      const challengeRows = SYSTEMS.map(s=>({name:displayTitle(s),tech:countChecked(s.techChallenges),op:countChecked(s.opChallenges),total:countChecked(s.techChallenges)+countChecked(s.opChallenges)}))
+        .filter(s=>s.total>0).sort((a,b)=>b.total-a.total).slice(0,9).reverse();
+      new Chart(document.getElementById("challengeSystemChart"),{
+        type:"bar",
+        data:{labels:challengeRows.map(s=>s.name.length>26?s.name.slice(0,25)+"…":s.name),datasets:[
+          {label:"فنی",data:challengeRows.map(s=>s.tech),backgroundColor:"#4779b4",borderRadius:4},
+          {label:"عملیاتی",data:challengeRows.map(s=>s.op),backgroundColor:"#e4ad4c",borderRadius:4}
+        ]},
+        options:{...chartBase(),indexAxis:"y",scales:{x:{beginAtZero:true,stacked:true,ticks:{precision:0},grid:{color:"#edf1f4"}},
+          y:{stacked:true,grid:{display:false},ticks:{font:{size:9}}}},
+          plugins:{...chartBase().plugins,legend:{position:"bottom",rtl:true},
+            datalabels:labelOptions("challengeSystemChart")}}
+      });
+
+      new Chart(document.getElementById("challengeDeptChart"),{
+        type:"bar",
+        data:{labels:deptStats.map(d=>d.short),datasets:[
+          {label:"چالش فنی",data:deptStats.map(d=>d.tech),backgroundColor:"#4779b4",borderRadius:4},
+          {label:"چالش عملیاتی",data:deptStats.map(d=>d.op),backgroundColor:"#e4ad4c",borderRadius:4}
+        ]},
+        options:{...chartBase(),indexAxis:"y",scales:{x:{beginAtZero:true,stacked:true,ticks:{precision:0},grid:{color:"#edf1f4"}},
+          y:{stacked:true,grid:{display:false},ticks:{font:{size:9}}}},
+          plugins:{...chartBase().plugins,legend:{position:"bottom",rtl:true},
+            datalabels:labelOptions("challengeDeptChart")}}
+      });
+
+      new Chart(document.getElementById("changeChart"),{
+        type:"doughnut",
+        data:{labels:["بدون تغییر","بهبود به وضعیت عملیاتی","افت وضعیت"],datasets:[{data:[changedGroups.unchanged,changedGroups.improved,changedGroups.declined],
+          backgroundColor:["#91a0ae","#159a78","#c85b63"],borderColor:"#fff",borderWidth:4,hoverOffset:6}]},
+        options:{...chartBase(),cutout:"60%",plugins:{...chartBase().plugins,legend:{position:"bottom",rtl:true},
+          datalabels:labelOptions("changeChart")}}
+      });
+    }
+
+    function renderAnalysis(){
+      const topChallenges = SYSTEMS.map(s=>({name:displayTitle(s),total:countChecked(s.techChallenges)+countChecked(s.opChallenges)}))
+        .filter(x=>x.total>0).sort((a,b)=>b.total-a.total).slice(0,4);
+      const topText = topChallenges.map(x=>`${x.name} (${fa(x.total)} مورد)`).join("، ");
+      const items = [
+        {icon:"fa-triangle-exclamation",title:"سامانه‌های نیازمند تعیین تکلیف",body:
+          `یک سامانه در وضعیت توقف قرار دارد: «سامانه اتوماسیون اداری همکاران». همچنین ۴ سامانه ایستا ثبت شده‌اند که لازم است نسبت آن‌ها با سامانه‌های جایگزین و برنامه استمرار خدمت روشن شود.`},
+        {icon:"fa-code-branch",title:"پروژه‌های در حال توسعه",body:
+          `چهار سامانه در وضعیت توسعه قرار دارند. در سامانه جامع عمران روستایی، اجرای پایلوت در چند استان و ورود داده‌های پایه گزارش شده؛ در پنجره واحد خدمات الکترونیک نیز آمادگی پایلوت در دو شهرستان منتخب گلستان درج شده است.`},
+        {icon:"fa-shield-halved",title:"تمرکز چالش‌های فنی و عملیاتی",body:
+          `بیشترین تعداد علامت چالش مربوط به ${topText} است. در ERP مالی و ذیحسابی، شرح‌های متنی به موضوعاتی مانند سرعت ثبت داده، توسعه فرایندها، پایداری نرم‌افزار و پاسخ‌گویی پیمانکار اشاره می‌کنند.`},
+        {icon:"fa-diagram-project",title:"وابستگی‌های بین‌سامانه‌ای و یکپارچگی",body:
+          `در اقدامات بعدی ERP مالی و ذیحسابی، اتصال وب‌سرویسی به سامانه جامع پرداخت، CPMS و سامانه امور قراردادها مطرح شده است. تکمیل این اتصال‌ها می‌تواند محور مهم پیگیری بین‌واحدی باشد.`},
+        {icon:"fa-globe",title:"تکمیل استقرار وب‌سایت‌ها",body:
+          `وب‌سایت مرکزی جدید پیاده‌سازی و بهره‌برداری شده؛ اما برای وب‌سایت استان‌ها، دریافت معماری یکپارچه از بهره‌بردار و بازخورد رسمی همچنان در فهرست پیگیری‌ها قرار دارد.`},
+        {icon:"fa-users-gear",title:"نیاز به تعیین متولی و حکمرانی سامانه",body:
+          `برای بنیاد مهربانی، ابلاغ رسمی متولی اصلی، نهایی‌سازی فرایندها و بهره‌برداری کامل به‌عنوان تصمیم و اقدام بعدی ثبت شده است. در خلاصه وضعیت همین سامانه، نبود قرارداد نیز ذکر شده است. برای مدیریت جلسات مجازی نیز تعیین واحد متولی و استانداردسازی محصول پیشنهاد شده است.`},
+        {icon:"fa-network-wired",title:"تکمیل پوشش سراسری اتوماسیون چارگون",body:
+          `طبق گزارش سامانه چارگون، استقرار در دفتر مرکزی و ۲۴ استان انجام شده و استقرار در ۷ استان باقی‌مانده در برنامه اقدام بعدی قرار دارد. ابلاغ سیاست‌ها و دستورالعمل‌های مکاتبات نیز به‌عنوان تصمیم مدیریتی ثبت شده است.`}
+      ];
+      document.getElementById("analysisGrid").innerHTML = items.map(x=>`
+        <article class="analysis-card"><h3><i class="fa-solid ${x.icon}"></i>${x.title}</h3><p>${x.body}</p></article>`).join("");
+    }
+
+    function renderActions(){
+      const cards = [];
+      SYSTEMS.forEach(s=>{
+        const lines=[];
+        if(clean(s.itNext)) lines.push({label:"اقدام بعدی واحد فاوا",text:s.itNext,type:"action"});
+        if(clean(s.opNext)) lines.push({label:"اقدام بعدی بهره‌بردار",text:s.opNext,type:"action"});
+        if(clean(s.decision)) lines.push({label:"تصمیم / حمایت مدیریتی موردنیاز",text:s.decision,type:"decision"});
+        if(lines.length) cards.push({system:displayTitle(s),lines});
+      });
+      document.getElementById("actionGrid").innerHTML = cards.map(c=>`
+        <article class="action-card">
+          <div class="action-head"><strong>${c.system}</strong><span class="action-type">${fa(c.lines.length)} محور پیگیری</span></div>
+          <div class="action-list">${c.lines.map(l=>`
+            <div class="action-line ${l.type==="decision"?"decision":""}">
+              <small>${l.label}</small><p>${l.text.replace(/\n/g,"<br>")}</p>
+            </div>`).join("")}</div>
+        </article>`).join("");
+    }
+
+    function renderDeptTable(){
+      document.getElementById("deptTableBody").innerHTML = deptStats.map(d=>{
+        const flags=d.tech+d.op, done=d.it+d.ops, pct=d.total?d.status.operational/d.total*100:0;
+        return `<tr>
+          <td data-label="حوزه سازمانی">${d.dept}</td>
+          <td data-label="کل سامانه‌ها" class="num-cell">${fa(d.total)}</td>
+          <td data-label="عملیاتی"><span class="mini-bar"><b style="width:${pct}%"></b></span><span class="num-cell">${fa(d.status.operational)}</span></td>
+          <td data-label="در حال توسعه" class="num-cell">${fa(d.status.developing)}</td>
+          <td data-label="ایستا / متوقف" class="num-cell">${fa(d.status.static+d.status.stop)}</td>
+          <td data-label="چالش‌ها" class="num-cell">${fa(flags)} <small style="font-weight:400;color:#8a98a6">(${fa(d.tech)} فنی / ${fa(d.op)} عملیاتی)</small></td>
+          <td data-label="اقدامات انجام‌شده" class="num-cell">${fa(done)} <small style="font-weight:400;color:#8a98a6">(${fa(d.it)} فاوا / ${fa(d.ops)} بهره‌بردار)</small></td>
+        </tr>`;
+      }).join("");
+    }
+
+    function renderFilters(){
+      const sel=document.getElementById("deptFilter");
+      DEPT_ORDER.forEach(d=>{const o=document.createElement("option");o.value=d;o.textContent=d;sel.appendChild(o)});
+      document.getElementById("searchInput").addEventListener("input",renderSystems);
+      document.getElementById("statusFilter").addEventListener("change",renderSystems);
+      sel.addEventListener("change",renderSystems);
+    }
+
+    function renderSystems(){
+      const q=clean(document.getElementById("searchInput").value).toLowerCase();
+      const st=document.getElementById("statusFilter").value;
+      const dp=document.getElementById("deptFilter").value;
+      const rows=SYSTEMS.filter(s=>{
+        const hay=[s.title,s.dept,s.operator,s.owner,s.summary].join(" ").toLowerCase();
+        return (!q||hay.includes(q))&&(st==="all"||s.currentStatus===st)&&(dp==="all"||s.dept===dp);
+      });
+      document.getElementById("resultsCount").textContent=`نمایش ${fa(rows.length)} مورد از ${fa(SYSTEMS.length)} سامانه`;
+      document.getElementById("systemsGrid").innerHTML=rows.length?rows.map(s=>{
+        const t=countChecked(s.techChallenges),o=countChecked(s.opChallenges),done=countTexts(s.itDone)+countTexts(s.opDone);
+        const status=STATUS[s.currentStatus]||{label:"نامشخص",icon:"fa-circle-question"};
+        return `<article class="system-card">
+          <div class="system-card-top">
+            <div style="min-width:0"><h3 class="system-name">${displayTitle(s)}</h3><div class="system-dept">${s.dept}</div></div>
+            <span class="status ${s.currentStatus}"><i class="fa-solid ${status.icon}"></i>${status.label}</span>
+          </div>
+          <div class="system-meta">
+            <span class="meta-chip"><i class="fa-solid fa-screwdriver-wrench"></i> ${fa(t)} چالش فنی</span>
+            <span class="meta-chip"><i class="fa-solid fa-clipboard-check"></i> ${fa(o)} چالش عملیاتی</span>
+            <span class="meta-chip"><i class="fa-solid fa-list-check"></i> ${fa(done)} اقدام انجام‌شده</span>
+          </div>
+          <div class="system-bottom"><small>بهره‌بردار: ${s.operator||"ثبت نشده"}</small><button class="detail-btn" onclick="openDetails('${s.id}')">مشاهده جزئیات <i class="fa-solid fa-arrow-left"></i></button></div>
+        </article>`;
+      }).join(""):`<div class="empty-state"><i class="fa-regular fa-folder-open"></i><br>سامانه‌ای با این مشخصات پیدا نشد.</div>`;
+    }
+
+    function listHtml(arr){
+      const items=(arr||[]).filter(x=>clean(x.text));
+      return items.length?`<ul>${items.map(x=>`<li>${clean(x.text)}${clean(x.date)?` <small>(${x.date})</small>`:""}</li>`).join("")}</ul>`:`<p>موردی در فایل منبع ثبت نشده است.</p>`;
+    }
+    function detailBox(label,value,full=false){
+      return `<div class="detail-box ${full?"full":""}"><small>${label}</small><p>${clean(value)||"در فایل منبع ثبت نشده است."}</p></div>`;
+    }
+    function openDetails(id){
+      const s=SYSTEMS.find(x=>x.id===id);if(!s)return;
+      const st=STATUS[s.currentStatus]||{label:"نامشخص"};
+      document.getElementById("modalTitle").textContent=displayTitle(s);
+      const cTech=countChecked(s.techChallenges),cOp=countChecked(s.opChallenges);
+      document.getElementById("modalContent").innerHTML=`
+        <div class="modal-grid">
+          ${detailBox("وضعیت جاری",st.label)}
+          ${detailBox("وضعیت مبنا",STATUS[s.baselineStatus]?.label||s.baselineStatus)}
+          ${detailBox("مالک سامانه",s.owner)}
+          ${detailBox("واحد بهره‌بردار",s.operator)}
+          ${detailBox("چالش‌های علامت‌گذاری‌شده",`${fa(cTech)} فنی و ${fa(cOp)} عملیاتی`)}
+          ${detailBox("تاریخ بهره‌برداری",s.operationDate)}
+          ${detailBox("خلاصه وضعیت",s.summary,true)}
+          ${detailBox("وضعیت فنی",s.techStatus,true)}
+          ${detailBox("وضعیت بهره‌برداری",s.opStatus,true)}
+        </div>
+        <h3 class="modal-section-title">اقدامات انجام‌شده واحد فاوا</h3>${listHtml(s.itDone)}
+        <h3 class="modal-section-title">اقدامات انجام‌شده بهره‌بردار</h3>${listHtml(s.opDone)}
+        <h3 class="modal-section-title">اقدامات بعدی و تصمیمات</h3>
+        <div class="modal-grid">
+          ${detailBox("اقدام بعدی فاوا",s.itNext,true)}
+          ${detailBox("اقدام بعدی بهره‌بردار",s.opNext,true)}
+          ${detailBox("تصمیم مدیریتی موردنیاز",s.decision,true)}
+        </div>`;
+      document.getElementById("detailModal").classList.add("show");
+      document.body.style.overflow="hidden";
+    }
+    function closeModal(){
+      document.getElementById("detailModal").classList.remove("show");
+      document.body.style.overflow="";
+    }
+    document.getElementById("detailModal").addEventListener("click",e=>{if(e.target.id==="detailModal")closeModal()});
+    document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+
+    renderKPIs();
+    renderInsights();
+    renderCharts();
+    renderAnalysis();
+    renderActions();
+    renderDeptTable();
+    renderFilters();
+    renderSystems();
+  </script>
+</body>
+</html>
