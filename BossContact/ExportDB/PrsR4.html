@@ -171,16 +171,34 @@
             background: #f9fafb; direction: rtl;
         }
         .modal-footer-button {
-            width: 90px; box-sizing: border-box; padding: 8px 4px; text-align: center; white-space: nowrap;
-            border-radius: 8px; font-size: 13px; font-weight: 700;
-            transition: background .2s ease, border-color .2s ease, color .2s ease;
+            width: 90px; min-height: 38px; box-sizing: border-box;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+            padding: 8px 4px; text-align: center; white-space: nowrap;
+            border-width: 1px; border-style: solid; border-radius: 9px;
+            font-size: 13px; font-weight: 800; cursor: pointer;
+            box-shadow: 0 2px 4px rgba(15, 23, 42, .08), inset 0 1px 0 rgba(255,255,255,.75);
+            transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
         }
-        .modal-refer-button { border: 1px solid #bfdbfe; background: #eff6ff; color: #1d4ed8; }
-        .modal-refer-button:hover { background: #dbeafe; }
-        .modal-closeout-button { border: 1px solid #a7f3d0; background: #ecfdf5; color: #047857; }
-        .modal-closeout-button:hover { background: #d1fae5; }
-        .modal-response-button { border: 1px solid #ddd6fe; background: #f5f3ff; color: #6d28d9; }
-        .modal-response-button:hover { background: #ede9fe; }
+        .modal-footer-button i { font-size: 12px; transition: transform .18s ease; }
+        .modal-footer-button:hover { transform: translateY(-2px); box-shadow: 0 6px 13px rgba(15, 23, 42, .13), inset 0 1px 0 rgba(255,255,255,.8); }
+        .modal-footer-button:hover i { transform: scale(1.12); }
+        .modal-footer-button:active { transform: translateY(0); box-shadow: 0 1px 3px rgba(15, 23, 42, .1); }
+        .modal-footer-button:focus-visible { outline: 3px solid rgba(59, 130, 246, .28); outline-offset: 2px; }
+        .modal-refer-button {
+            border-color: #93c5fd; background: linear-gradient(145deg, #eff6ff, #dbeafe); color: #1d4ed8;
+            box-shadow: 0 2px 0 #bfdbfe, 0 4px 8px rgba(37, 99, 235, .10), inset 0 1px 0 rgba(255,255,255,.9);
+        }
+        .modal-refer-button:hover { border-color: #60a5fa; background: linear-gradient(145deg, #dbeafe, #bfdbfe); }
+        .modal-closeout-button {
+            border-color: #86efac; background: linear-gradient(145deg, #ecfdf5, #d1fae5); color: #047857;
+            box-shadow: 0 2px 0 #a7f3d0, 0 4px 8px rgba(5, 150, 105, .10), inset 0 1px 0 rgba(255,255,255,.9);
+        }
+        .modal-closeout-button:hover { border-color: #4ade80; background: linear-gradient(145deg, #d1fae5, #a7f3d0); }
+        .modal-response-button {
+            border-color: #c4b5fd; background: linear-gradient(145deg, #f5f3ff, #ede9fe); color: #6d28d9;
+            box-shadow: 0 2px 0 #ddd6fe, 0 4px 8px rgba(109, 40, 217, .10), inset 0 1px 0 rgba(255,255,255,.9);
+        }
+        .modal-response-button:hover { border-color: #a78bfa; background: linear-gradient(145deg, #ede9fe, #ddd6fe); }
 
         /* Referral / response popup: each part can be styled independently */
         .referral-modal-overlay { position: fixed; inset: 0; z-index: 70; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(15, 23, 42, .58); backdrop-filter: blur(5px); }
@@ -203,8 +221,12 @@
         .action-toast { position: fixed; z-index: 12000; right: 20px; bottom: 20px; max-width: min(460px, calc(100vw - 40px)); padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 12px; background: #fff; color: #1f2937; box-shadow: 0 12px 35px rgba(15, 23, 42, .18); font-size: 13px; line-height: 1.8; }
         .action-toast.success { border-color: #a7f3d0; background: #ecfdf5; color: #065f46; }
         .action-toast.error { border-color: #fecaca; background: #fef2f2; color: #991b1b; }
-        .modal-dismiss-button { margin-right: auto; border: 1px solid #e5e7eb; background: #e5e7eb; color: #374151; }
-        .modal-dismiss-button:hover { background: #d1d5db; }
+        .modal-dismiss-button {
+            margin-right: auto; border-color: #cbd5e1;
+            background: linear-gradient(145deg, #ffffff, #e2e8f0); color: #334155;
+            box-shadow: 0 2px 0 #cbd5e1, 0 4px 8px rgba(51, 65, 85, .09), inset 0 1px 0 rgba(255,255,255,.95);
+        }
+        .modal-dismiss-button:hover { border-color: #94a3b8; background: linear-gradient(145deg, #f1f5f9, #cbd5e1); }
 
         @media (max-width: 480px) {
             .modal-body { padding: 12px; }
@@ -420,10 +442,10 @@
             </div>
             <!-- Modal Footer -->
             <div class="modal-footer">
-                <button type="button" onclick="openTextEntryModal('Response')" class="modal-footer-button modal-response-button">پاسخ</button>
-                <button type="button" onclick="openTextEntryModal('Referral')" class="modal-footer-button modal-refer-button">ارجاع</button>
-                <button type="button" onclick="handleCloseRequest()" class="modal-footer-button modal-closeout-button">اختتام</button>
-                <button type="button" onclick="closeModal()" class="modal-footer-button modal-dismiss-button">بستن</button>
+                <button type="button" onclick="openTextEntryModal('Response')" class="modal-footer-button modal-response-button"><i class="fa-solid fa-reply"></i><span>پاسخ</span></button>
+                <button type="button" onclick="openTextEntryModal('Referral')" class="modal-footer-button modal-refer-button"><i class="fa-solid fa-share-from-square"></i><span>ارجاع</span></button>
+                <button type="button" onclick="handleCloseRequest()" class="modal-footer-button modal-closeout-button"><i class="fa-solid fa-circle-check"></i><span>اختتام</span></button>
+                <button type="button" onclick="closeModal()" class="modal-footer-button modal-dismiss-button"><i class="fa-solid fa-xmark"></i><span>بستن</span></button>
             </div>
         </div>
     </div>
