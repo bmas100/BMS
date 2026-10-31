@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>سامانه هوشمند مدیریتی ریاست</title>
+
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-Variable-font-face.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- ================= PWA ================= -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#071233">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="سامانه هوشمند مدیریتی ریاست">
+<link rel="apple-touch-icon" href="BonyadLogo.png">
+
+<style>
+:root{
+  --bg:#eef1f8; --bg2:#f7f8fc;
+  --surface:rgba(255,255,255,.72); --surface-solid:#ffffff;
+  --stroke:rgba(20,40,100,.09);
+  --ink:#0b1738; --ink2:#5d6b8a;
+  --navy:#071233; --navy2:#0e2160; --blue:#2f5bff;
+  --gold:#d9b25f; --gold2:#f4dc9b; --gold3:#a67c2a;
+  --shadow:0 12px 30px -16px rgba(15,35,100,.35);
+  --shadow-lg:0 26px 50px -22px rgba(10,25,90,.55);
+  --gap:11px;
+}
+[data-theme="dark"]{
+  --bg:#050a1a; --bg2:#08112b;
+  --surface:rgba(255,255,255,.055); --surface-solid:#0e1836;
+  --stroke:rgba(255,255,255,.09);
+  --ink:#eef2ff; --ink2:#95a4cc;
+  --shadow:0 12px 30px -16px rgba(0,0,0,.8);
+  --shadow-lg:0 26px 50px -22px rgba(0,0,0,.9);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0;padding:0;background:var(--bg);color:var(--ink);
+  font-family:'Vazirmatn',Tahoma,sans-serif;touch-action:manipulation;transition:background .4s,color .4s}
+body{overflow:hidden}
+a{text-decoration:none;color:inherit}
+
+/* ===== پس‌زمینه ===== */
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;
+  background:radial-gradient(120% 55% at 50% -8%,rgba(60,100,255,.22),transparent 62%),linear-gradient(180deg,var(--bg2),var(--bg))}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);will-change:transform}
+.o1{width:60vw;height:60vw;max-width:420px;max-height:420px;background:#5b86ff;top:-14vw;right:-16vw;opacity:.35;animation:f1 24s ease-in-out infinite alternate}
+.o2{width:50vw;height:50vw;max-width:360px;max-height:360px;background:#a78bfa;top:48%;left:-22vw;opacity:.25;animation:f2 28s ease-in-out infinite alternate}
+.o3{width:44vw;height:44vw;max-width:320px;max-height:320px;background:#e8c36a;bottom:-12vw;right:-8vw;opacity:.22;animation:f3 32s ease-in-out infinite alternate}
+[data-theme="dark"] .o1{opacity:.2}[data-theme="dark"] .o2{opacity:.14}[data-theme="dark"] .o3{opacity:.1}
+@keyframes f1{to{transform:translate(-12vw,12vh) scale(1.2)}}
+@keyframes f2{to{transform:translate(16vw,-10vh) scale(1.15)}}
+@keyframes f3{to{transform:translate(-14vw,-12vh) scale(1.25)}}
+.bg::after{content:'';position:absolute;inset:0;
+  background-image:radial-gradient(rgba(60,90,160,.13) 1px,transparent 1px);background-size:22px 22px;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 15%,#000 10%,transparent 70%);mask-image:radial-gradient(ellipse at 50% 15%,#000 10%,transparent 70%)}
+
+.shell{position:relative;z-index:1;height:100dvh;display:flex;flex-direction:column;
+  padding:max(10px,env(safe-area-inset-top)) 12px 0;gap:10px}
+
+/* ===== هدر ===== */
+.hero{flex:0 0 auto;position:relative;border-radius:30px;padding:16px 14px 14px;color:#fff;overflow:hidden;
+  background:
+    radial-gradient(70% 120% at 100% 0%,rgba(217,178,95,.28),transparent 55%),
+    radial-gradient(80% 130% at 0% 100%,rgba(90,120,255,.45),transparent 55%),
+    linear-gradient(140deg,#050d29,#0e2160 58%,#1a3ac4);
+  background-size:100% 100%,100% 100%,200% 200%;
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:var(--shadow-lg),inset 0 1px 0 rgba(255,255,255,.28);
+  animation:rise .8s cubic-bezier(.2,.8,.2,1) both,hflow 14s ease-in-out infinite alternate}
+@keyframes hflow{0%{background-position:0 0,0 0,0% 50%}100%{background-position:0 0,0 0,100% 50%}}
+@keyframes rise{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+/* الگوی اسلیمی ظریف */
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.14;
+  background-image:
+   radial-gradient(circle at 50% 50%,transparent 38%,#fff 39%,#fff 40%,transparent 41%),
+   radial-gradient(circle at 0 0,transparent 38%,#fff 39%,#fff 40%,transparent 41%),
+   radial-gradient(circle at 100% 0,transparent 38%,#fff 39%,#fff 40%,transparent 41%),
+   radial-gradient(circle at 0 100%,transparent 38%,#fff 39%,#fff 40%,transparent 41%),
+   radial-gradient(circle at 100% 100%,transparent 38%,#fff 39%,#fff 40%,transparent 41%);
+  background-size:34px 34px;
+  -webkit-mask-image:linear-gradient(200deg,#000,transparent 70%);mask-image:linear-gradient(200deg,#000,transparent 70%)}
+.hero::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.16) 50%,transparent 65%);
+  transform:translateX(-120%);animation:shine 11s ease-in-out infinite}
+@keyframes shine{0%,15%{transform:translateX(-120%)}55%,100%{transform:translateX(120%)}}
+.gold-line{position:absolute;top:0;left:12%;right:12%;height:2px;z-index:2;
+  background:linear-gradient(90deg,transparent,var(--gold2),var(--gold),var(--gold2),transparent)}
+
+.fx{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.fx span{position:absolute;bottom:-30px;left:var(--l);width:var(--s);height:var(--s);border-radius:50%;
+  background:rgba(255,255,255,.1);border:1px solid rgba(244,220,155,.35);animation:bub var(--d) linear infinite;animation-delay:var(--dl)}
+@keyframes bub{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:1}100%{transform:translateY(-190px) scale(1.15);opacity:0}}
+
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:10px;position:relative;z-index:1}
+.avatar{position:relative;flex:0 0 auto;width:clamp(58px,15vw,74px);aspect-ratio:1;border-radius:50%;padding:3px;
+  background:conic-gradient(from 0deg,var(--gold),#fff6d8,var(--gold3),var(--gold2),var(--gold));animation:spin 10s linear infinite;
+  box-shadow:0 0 24px rgba(217,178,95,.5)}
+.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;background:#fff;
+  border:3px solid #0a1a52;animation:spin 10s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.titles{flex:1 1 auto;min-width:0;text-align:center}
+.org{font-size:clamp(.62rem,2.6vw,.76rem);font-weight:700;color:var(--gold2);letter-spacing:.3px}
+.title{margin:3px 0 7px;font-weight:900;line-height:1.7;font-size:clamp(.84rem,4vw,1.14rem);color:#fff;
+  text-shadow:0 2px 14px rgba(0,0,0,.35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chips{display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;font-size:.58rem;font-weight:700;
+  padding:3px 10px;border-radius:999px;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.26);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.8)}70%{box-shadow:0 0 0 7px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.theme-btn{border:1px solid rgba(255,255,255,.3);cursor:pointer;width:26px;height:26px;border-radius:50%;color:var(--gold2);font-size:.72rem;
+  background:rgba(255,255,255,.14);display:inline-flex;align-items:center;justify-content:center;padding:0;transition:transform .2s}
+.theme-btn:active{transform:scale(.85) rotate(20deg)}
+
+.hero-bottom{position:relative;z-index:1;margin-top:13px;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:9px 13px;border-radius:18px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.greet{font-size:.8rem;font-weight:800;line-height:1.5}
+.greet small{display:block;font-size:.6rem;font-weight:500;color:#cfdcff}
+.dtbox{text-align:left;direction:ltr;line-height:1.35}
+.dtbox b{display:block;font-size:.92rem;font-weight:900;letter-spacing:.6px;font-variant-numeric:tabular-nums;color:#fff}
+.dtbox span{font-size:.62rem;font-weight:700;color:var(--gold2);letter-spacing:.4px}
+
+/* ===== ناوبری بخش‌ها ===== */
+.nav{flex:0 0 auto;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin:0 -12px;padding:2px 12px;
+  animation:rise .8s .12s cubic-bezier(.2,.8,.2,1) both}
+.nav::-webkit-scrollbar{display:none}
+.nav button{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--stroke);cursor:pointer;
+  font-family:inherit;font-size:.68rem;font-weight:700;color:var(--ink2);padding:7px 13px;border-radius:999px;
+  background:var(--surface);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all .25s}
+.nav button i{font-size:.7rem}
+.nav button.on{color:#fff;border-color:transparent;background:linear-gradient(135deg,var(--c1),var(--c2));
+  box-shadow:0 8px 16px -8px var(--c1)}
+.nav button:active{transform:scale(.94)}
+
+/* ===== محتوا ===== */
+.scroller{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;margin:0 -12px;padding:2px 12px 16px;scrollbar-width:none;scroll-behavior:smooth;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 8px,#000 calc(100% - 20px),transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 8px,#000 calc(100% - 20px),transparent 100%)}
+.scroller::-webkit-scrollbar{display:none}
+
+.section{margin-bottom:8px;scroll-margin-top:4px}
+.sec-head{display:flex;align-items:center;gap:9px;margin:16px 3px 11px}
+.sec-ic{width:30px;height:30px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.8rem;
+  background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 8px 14px -6px var(--c1)}
+.sec-title{font-size:.9rem;font-weight:900;color:var(--ink)}
+.sec-line{flex:1;height:1px;background:linear-gradient(90deg,var(--stroke),transparent);margin:0 4px}
+[dir=rtl] .sec-line{background:linear-gradient(270deg,var(--stroke),transparent)}
+.sec-count{font-size:.58rem;font-weight:800;color:var(--ink2);padding:3px 10px;border-radius:999px;
+  background:var(--surface);border:1px solid var(--stroke)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+
+.card{--h:215;--mx:50%;--my:0%;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  gap:10px;padding:16px 4px 12px;min-height:108px;text-align:center;border-radius:22px;
+  background:var(--surface);border:1px solid var(--stroke);box-shadow:var(--shadow);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  opacity:0;animation:pop .6s cubic-bezier(.2,.9,.25,1.15) forwards;animation-delay:calc(var(--i)*35ms + 200ms);
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .3s;cursor:pointer}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.92)}to{opacity:1;transform:none}}
+.card::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(130px circle at var(--mx) var(--my),hsl(var(--h) 100% 60%/.2),transparent 65%)}
+.card::after{content:'';position:absolute;bottom:0;left:24%;right:24%;height:3px;border-radius:3px 3px 0 0;
+  background:linear-gradient(90deg,transparent,hsl(var(--h) 90% 58%),transparent);opacity:.0;transition:opacity .3s}
+.card:hover,.card:focus-visible{transform:translateY(-4px);outline:none;border-color:hsl(var(--h) 90% 60%/.5);
+  box-shadow:0 20px 32px -16px hsl(var(--h) 90% 50%/.55)}
+.card:hover::before,.card:active::before{opacity:1}
+.card:hover::after{opacity:1}
+.card:active{transform:scale(.94)}
+
+.icon{position:relative;width:50px;height:50px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(145deg,hsl(var(--h) 92% 64%),hsl(calc(var(--h) + 40) 88% 46%));
+  box-shadow:0 12px 20px -8px hsl(var(--h) 92% 48%/.75),inset 0 1px 0 rgba(255,255,255,.6),inset 0 -6px 10px -6px rgba(0,0,0,.25);
+  animation:bob 5s ease-in-out infinite;animation-delay:calc(var(--i)*160ms)}
+.icon::after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(160deg,rgba(255,255,255,.5),transparent 52%)}
+.icon i{position:relative;z-index:1;font-size:1.2rem;color:#fff;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.card p{margin:0;font-size:.68rem;font-weight:700;line-height:1.55;color:var(--ink);padding:0 4px}
+
+.badge{position:absolute;top:8px;left:8px;font-size:.5rem;font-weight:800;padding:2px 7px;border-radius:999px;color:#fff;
+  background:linear-gradient(135deg,#f59e0b,#ef4444);box-shadow:0 4px 10px -3px rgba(239,68,68,.6)}
+.card.soon{filter:saturate(.5)}
+.card.soon .icon{animation:none}
+.card .blade{position:absolute;top:-45%;left:-70%;width:30%;height:200%;pointer-events:none;z-index:2;transform:rotate(22deg);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);animation:blade 24s ease-in-out infinite;animation-delay:calc(var(--i)*600ms)}
+[data-theme="dark"] .card .blade{background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)}
+@keyframes blade{0%{left:-70%}14%{left:130%}100%{left:130%}}
+
+/* دسترسی اخیر - کارت افقی */
+.recent .grid{display:flex;gap:var(--gap);overflow-x:auto;scrollbar-width:none;margin:0 -12px;padding:2px 12px 6px}
+.recent .grid::-webkit-scrollbar{display:none}
+.recent .card{flex:0 0 auto;flex-direction:row;min-height:0;padding:9px 12px 9px 16px;gap:10px;border-radius:18px}
+.recent .icon{width:36px;height:36px;border-radius:13px;animation:none}
+.recent .icon i{font-size:.9rem}
+.recent .card p{white-space:nowrap;padding:0}
+.recent .card::after{display:none}
+
+.empty{display:none;text-align:center;color:var(--ink2);font-size:.82rem;padding:34px 0}
+.empty i{display:block;font-size:1.8rem;margin-bottom:8px;opacity:.6}
+
+/* ===== دَک پایین ===== */
+.footer{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 0 max(6px,env(safe-area-inset-bottom))}
+.dock{width:100%;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:24px;color:#fff;
+  background:linear-gradient(140deg,#050d29,#0e2160 60%,#1a3ac4);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 16px 30px -14px rgba(10,25,100,.8),inset 0 1px 0 rgba(255,255,255,.25)}
+.dock .d-date{flex:0 0 auto;font-size:.76rem;font-weight:900;direction:ltr;letter-spacing:.5px;color:var(--gold2);padding:0 4px;font-variant-numeric:tabular-nums}
+.dock .d-time{flex:0 0 auto;font-size:.76rem;font-weight:900;direction:ltr;letter-spacing:.5px;padding:0 4px;font-variant-numeric:tabular-nums}
+.hs{position:relative;flex:1 1 auto;min-width:0;display:block}
+.hs input{width:100%;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.16);color:#fff;border-radius:16px;
+  padding:8px 32px 8px 10px;font-family:inherit;font-size:.76rem;font-weight:600;outline:none;transition:background .25s,box-shadow .25s}
+.hs input::placeholder{color:#d5e0ff}
+.hs input:focus{background:#fff;color:#0b1738;box-shadow:0 0 0 4px rgba(217,178,95,.35)}
+.hs input:focus::placeholder{color:#7b8aae}
+.hs i{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#fff;font-size:.78rem;pointer-events:none}
+.hs:focus-within i{color:var(--navy2)}
+.footer-img{display:block;width:260px;max-width:80%;max-height:26px;object-fit:contain;opacity:.85}
+[data-theme="dark"] .footer-img{filter:brightness(1.6) contrast(.9)}
+
+/* ===== پاپ‌آپ ===== */
+.popup-overlay{position:fixed;inset:0;z-index:1000;background:rgba(5,10,35,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s,visibility .3s}
+.popup-overlay.active{opacity:1;visibility:visible;pointer-events:auto}
+.popup-content{position:fixed;z-index:1001;left:50%;bottom:0;width:100%;max-width:480px;transform:translate(-50%,105%);
+  padding:10px 18px max(20px,env(safe-area-inset-bottom));border-radius:34px 34px 0 0;
+  background:linear-gradient(180deg,var(--surface-solid),var(--bg));border:1px solid var(--stroke);border-bottom:none;
+  box-shadow:0 -24px 60px rgba(5,10,35,.45);transition:transform .5s cubic-bezier(.2,.9,.25,1.05);max-height:85dvh;overflow-y:auto}
+.popup-content.active{transform:translate(-50%,0)}
+.popup-content::before{content:'';position:absolute;top:0;left:18%;right:18%;height:3px;background:linear-gradient(90deg,transparent,var(--gold),var(--blue),transparent)}
+.grabber{width:46px;height:5px;border-radius:5px;background:var(--ink2);opacity:.35;margin:4px auto 12px}
+.popup-title{text-align:center;margin-bottom:14px;font-size:1.02rem;font-weight:900;line-height:1.7;color:var(--ink)}
+.popup-title::after{content:'';display:block;width:46px;height:3px;margin:6px auto 0;border-radius:3px;background:linear-gradient(90deg,var(--gold3),var(--gold2))}
+.popup-body{display:flex;flex-direction:column;gap:9px}
+.popup-btn{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:19px;background:var(--surface);border:1px solid var(--stroke);
+  font-weight:700;font-size:.84rem;color:var(--ink);box-shadow:var(--shadow);opacity:0;transform:translateY(12px);
+  animation:pop2 .5s cubic-bezier(.2,.9,.25,1.1) forwards;animation-delay:calc(var(--k)*60ms + 150ms);transition:background .2s,transform .15s,border-color .2s}
+@keyframes pop2{to{opacity:1;transform:none}}
+.popup-btn .num{flex:0 0 auto;width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--navy2),var(--blue));box-shadow:0 6px 12px -4px rgba(47,91,255,.6)}
+.popup-btn .label{flex:1;line-height:1.55}
+.popup-btn i{color:var(--gold3);font-size:.74rem}
+.popup-btn:hover{border-color:rgba(217,178,95,.7)}
+.popup-btn:active{transform:scale(.97)}
+.popup-btn.disabled{opacity:.5!important}
+.close-popup-btn{margin-top:14px;width:100%;padding:13px;border:none;color:#fff;background:linear-gradient(90deg,var(--navy),var(--navy2) 60%,#1a3ac4);border-radius:17px;
+  font-family:inherit;font-weight:800;font-size:.88rem;cursor:pointer;box-shadow:0 12px 22px -10px rgba(14,33,96,.8);transition:transform .15s,filter .2s}
+.close-popup-btn:active{transform:scale(.97);filter:brightness(1.1)}
+
+.toast{position:fixed;left:50%;bottom:max(80px,env(safe-area-inset-bottom));transform:translate(-50%,20px);z-index:2000;
+  background:var(--ink);color:var(--bg);font-size:.76rem;font-weight:700;padding:10px 18px;border-radius:999px;opacity:0;pointer-events:none;
+  transition:opacity .3s,transform .3s;box-shadow:0 12px 24px -8px rgba(0,0,0,.5)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:360px){.dock .d-date,.dock .d-time{font-size:.68rem}.icon{width:44px;height:44px}}
+@media (min-width:600px){.shell{max-width:680px;margin:0 auto}.grid{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:900px){.shell{max-width:820px}.grid{grid-template-columns:repeat(5,1fr)}}
+@media (orientation:landscape) and (max-height:600px){
+  html,body{overflow:auto!important}
+  .shell{height:auto!important;min-height:100vh}
+  .scroller{overflow:visible;-webkit-mask-image:none;mask-image:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+  .card,.popup-btn{opacity:1}
+}
+</style>
+</head>
+<body>
+
+<div class="bg"><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span></div>
+
+<!-- پاپ‌آپ -->
+<div id="popup-overlay" class="popup-overlay" onclick="closePopup()"></div>
+<div id="popup-content" class="popup-content" role="dialog" aria-modal="true">
+  <div class="grabber"></div>
+  <div id="popup-title" class="popup-title"></div>
+  <div id="popup-body" class="popup-body"></div>
+  <button class="close-popup-btn" onclick="closePopup()">بستن</button>
+</div>
+
+<div class="toast" id="toast">این بخش به‌زودی فعال می‌شود</div>
+
+<div class="shell">
+
+  <header class="hero">
+    <span class="gold-line"></span>
+    <div class="fx">
+      <span style="--s:14px;--l:8%;--d:9s;--dl:0s"></span>
+      <span style="--s:22px;--l:24%;--d:12s;--dl:2s"></span>
+      <span style="--s:10px;--l:40%;--d:8s;--dl:4s"></span>
+      <span style="--s:18px;--l:58%;--d:11s;--dl:1s"></span>
+      <span style="--s:12px;--l:72%;--d:10s;--dl:3s"></span>
+      <span style="--s:24px;--l:86%;--d:13s;--dl:5s"></span>
+    </div>
+    <div class="hero-top">
+      <div class="avatar"><img src="BonyadLogo.png" alt="لوگو بنیاد"></div>
+      <div class="titles">
+        <div class="org">بنیاد مسکن انقلاب اسلامی</div>
+        <div class="title">سامانه هوشمند مدیریتی ریاست</div>
+        <div class="chips">
+          <span class="chip">اداره کل حوزه ریاست</span>
+          <span class="chip"><span class="dot"></span>نسخه 3.0</span>
+          <button class="theme-btn" id="theme-btn" aria-label="تغییر تم"><i class="fa-solid fa-moon"></i></button>
+        </div>
+      </div>
+      <div class="avatar"><img src="./UserPic/Boss.png" alt="ریاست بنیاد" id="user-avatar" onerror="this.onerror=null; this.src='./UserPic/Boss.png';"></div>
+    </div>
+
+    <div class="hero-bottom">
+      <div class="greet"><span id="greet-text">سلام</span><small id="greet-sub">به سامانه هوشمند مدیریتی خوش آمدید</small></div>
+      <div class="dtbox"><b id="today-time">—</b><span id="today-date">—</span></div>
+    </div>
+
+    <script>
+      (function() {
+        const params = new URLSearchParams(window.location.search);
+        const userCode = params.get("u");
+        if (userCode) { localStorage.setItem("UserCode", userCode); }
+        const finalCode = localStorage.getItem("UserCode");
+        if (finalCode && finalCode !== "Unknown") {
+          document.getElementById('user-avatar').src = './UserPic/' + finalCode + '.jpg';
+        }
+      })();
+    </script>
+  </header>
+
+  <nav class="nav" id="nav" aria-label="بخش‌ها"></nav>
+
+  <div class="scroller" id="scroller">
+    <div id="sections"></div>
+    <div class="empty" id="empty"><i class="fa-regular fa-face-frown"></i>موردی پیدا نشد</div>
+  </div>
+
+  <div class="footer">
+    <div class="dock">
+      <span class="d-date" id="dock-date">—</span>
+      <label class="hs"><i class="fa-solid fa-magnifying-glass"></i><input id="search-input" type="search" placeholder="جستجو در سامانه..." autocomplete="off" aria-label="جستجو"></label>
+      <span class="d-time" id="dock-time">—</span>
+    </div>
+  </div>
+
+  <!-- کنترل کش و آپدیت خودکار -->
+  <script>
+    let refreshing = false;
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('sw.js').then(function(registration) {
+          registration.update();
+        }).catch(function(err) { console.log('ServiceWorker registration failed: ', err); });
+      });
+      navigator.serviceWorker.addEventListener('controllerchange', function() {
+        if (!refreshing) { window.location.reload(); refreshing = true; }
+      });
+    }
+  </script>
+</div>
+
+<script>
+// ================= داده‌های پاپ‌آپ‌ها =================
+const popupsData = {
+  evaluation: { title: "ارزیابی عملکرد", buttons: [
+    { text: "ستاد مرکزی", link: "../../EvaluationMob/EvaHeadquarters.html" },
+    { text: "بنیاد مسکن استان‌ها", link: "../../EvaluationMob/EvaluationMob.html" },
+    { text: "شرکتهای تابعه", link: "../../SubsidiariesMob/SubsidiariesMob.html" },
+    { text: "شاخص‌های عملکرد", link: "../../EvaluationMob/KPIs.html" } ] },
+  evaluation_Mng: { title: "ارزیابی مدیران", buttons: [
+    { text: "ارزیابی مدیران ستادی", link: "../../EvaluationMob/EvaHeadquarters.html" },
+    { text: "ارزیابی مدیران عامل و هیئت‌مدیره شرکت‌ها", link: "#" },
+    { text: "ارزیابی مدیران کل استان‌ها", link: "../../EvaluationMob/ProvincialManagers/EvaDash.html" },
+    { text: "ارزیابی مدیران شعب", link: "#" },
+    { text: "شاخص‌های عملکرد", link: "../../EvaluationMob/KPI_ProvManager.html" } ] },
+  provinces: { title: "امور استان‌ها", buttons: [
+    { text: "سفرهای استانی", link: "../../ProvincesMob/Provincal_Visits.html" },
+    { text: "سفرهای منطقه‌ای", link: "../../ProvincesMob/Provincal_Region.html" } ] },
+  subsidiaries: { title: "شرکت‌های تابعه", buttons: [
+    { text: "عملکرد اجرایی", link: "../../SubsidiariesMob/SubOperational.html" },
+    { text: "عملکرد مالی و بودجه", link: "../../SubsidiariesMob/SubFinancial.html" } ] },
+  legal: { title: "حقوقی و املاک", buttons: [
+    { text: "امور اراضی و املاک", link: "../../LegalMob/Land_Affairs.html" },
+    { text: "امور حقوقی و قضائی", link: "../../LegalMob/Legal_Affairs.html" } ] },
+  Hesab100: { title: "حساب 100 امام (ره) - انجمن خیرین مسکن ساز", buttons: [
+    { text: "حساب 100 امام (ره)", link: "../../Hesab100/Hesab100.html" },
+    { text: "انجمن خیرین مسکن ساز", link: "../../Hesab100/Khayerin.html" } ] },
+  BossContact: { title: "ارتباط با ریاست", buttons: [
+    { text: "ارتباط با کارکنان", link: "../../PRS/PRS.pdf" },
+    { text: "ارتباطات مردمی", link: "../../BossContact/PublicRelations.html" },
+    { text: "ارتباطات پارلمانی و دولتی", link: "#" },
+    { text: "ارتباط با سایر سازمانها و نهادها", link: "#" } ] }
+};
+
+// ================= بخش‌ها و کارت‌ها =================
+const sections = [
+  { id:"gov", title: "حاکمیت و نظارت", icon:"fa-landmark-flag", c1: "#3b82f6", c2: "#8b5cf6", items: [
+    { t: "شورای مرکزی", ic: "fa-sitemap", h: 215, link: "../../CentralCouncilMob/CentralCouncil.html" },
+    { t: "شورای معاونین", ic: "fa-people-group", h: 245, link: "../../DeputiesCouncil/DeputiesCouncil.html"  },
+    { t: "ارزیابی عملکرد", ic: "fa-chart-line", h: 190, popup: "evaluation" },
+    { t: "ارزیابی مدیران", ic: "fa-user-tie", h: 290, popup: "evaluation_Mng" },
+    { t: "شرکت‌های تابعه", ic: "fa-building", h: 265, popup: "subsidiaries" },
+    { t: "امور استان‌ها", ic: "fa-map-location-dot", h: 160, popup: "provinces" }
+  ]},
+  { id:"media", title: "ارتباطات و رسانه", icon:"fa-comments", c1: "#f59e0b", c2: "#ef4444", items: [
+    { t: "ارتباط کارکنان با ریاست", ic: "fa-user-tie", h: 110, link: "../../BossContact/ExportDB/PrsReport_Exp.html" },
+    { t: "ارتباطات مردمی", ic: "fa-users", h: 175, link: "../../BossContact/PublicRelations.html" },
+    { t: "امور مجلس", ic: "fa-landmark", h: 320, link: "../../Parliament/Parliament.html" },
+    { t: "رسانه‌های خبری", ic: "fa-globe", h: 200, link: "../../NewsMedia/NewsMedia.html" }
+  ]},
+  { id:"housing", title: "عمران و مسکن", icon:"fa-house-chimney", c1: "#10b981", c2: "#06b6d4", items: [
+    { t: "مسکن شهری", ic: "fa-city", h: 250, link: "../../UrbanHousing/UrbanHousing.html" },
+    { t: "سکونتگاه‌های ناکارآمد", ic: "fa-house-crack", h: 355, link: "../../Inefficient/Inefficient.html" },
+    { t: "منظومه روستایی", ic: "fa-house-circle-check", h: 175 , link: "../../RuralDevelopment/TarheManzume/TarheManzume.html" },
+    { t: "طرح‌های هادی", ic: "fa-road", h: 50 , link: "../../RuralDevelopment/TarheHadi/TarheHadi.html"},
+    { t: "امور زمین", ic: "fa-map", h: 95 , link: "../../RuralDevelopment/LandSale/LandSale.html"},
+    { t: "بازسازی جنگ رمضان", ic: "fa-person-digging", h: 8, link: "https://bmas100.github.io/War/WarReportShora.html" },
+    { t: "خانه امید", ic: "fa-house-chimney-window", h: 335, link: "../../HopeHouseMob/HopeHouse.html" },
+    { t: "خدمات فنی", ic: "fa-file-signature", h: 20, link: "../../RuralDevelopment/TechnicalServices/TechnicalServices.html" },
+    { t: "خیرین و حساب 100", ic: "fa-hand-holding-dollar", h: 45, popup: "Hesab100" }
+  ]},
+  { id:"support", title: "پشتیبانی و منابع", icon:"fa-gears", c1: "#6366f1", c2: "#06b6d4", items: [
+    { t: "اداری و پشتیبانی", ic: "fa-users-gear", h: 140, link: "../../HrmMob/HrmMob.html" },
+    { t: "حقوقی و املاک", ic: "fa-scale-balanced", h: 38, popup: "legal" },
+    { t: "بودجه و اعتبارات", ic: "fa-coins", h: 120 },
+    { t: "ماشین آلات", ic: "fa-truck-moving", h: 28, link: "../../Machinery/Machinery.html" },
+    { t: "سامانه‌ها و زیرساخت", ic: "fa-server", h: 230, link: "../../SystemsMob/SystemsMob.html" }
+  ]}
+];
+
+const faDigits = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+let cardIndex = 0;
+
+// ---------- دسترسی اخیر ----------
+const RKEY = 'recentCards';
+function getRecent() { try { return JSON.parse(localStorage.getItem(RKEY) || '[]'); } catch (e) { return []; } }
+function pushRecent(title) {
+  try {
+    let r = getRecent().filter(t => t !== title);
+    r.unshift(title);
+    localStorage.setItem(RKEY, JSON.stringify(r.slice(0, 5)));
+  } catch (e) {}
+}
+const allItems = sections.flatMap(s => s.items);
+
+// ---------- ساخت کارت ----------
+function makeCard(it, recent) {
+  const a = document.createElement('a');
+  const soon = !it.link && !it.popup;
+  a.className = 'card' + (soon ? ' soon' : '');
+  a.style.cssText = `--i:${recent ? 0 : cardIndex++};--h:${it.h}`;
+  a.href = it.link || '#';
+  if (it.link) a.target = '_blank';
+  a.innerHTML = `${recent ? '' : '<span class="blade"></span>'}${soon ? '<span class="badge">به‌زودی</span>' : ''}
+    <div class="icon"><i class="fa-solid ${it.ic}"></i></div><p>${it.t}</p>`;
+  if (it.popup) a.addEventListener('click', e => { e.preventDefault(); pushRecent(it.t); openPopup(it.popup); });
+  else if (soon) a.addEventListener('click', e => { e.preventDefault(); showToast(); });
+  else a.addEventListener('click', () => pushRecent(it.t));
+  const move = e => {
+    const r = a.getBoundingClientRect();
+    const p = e.touches ? e.touches[0] : e;
+    a.style.setProperty('--mx', (p.clientX - r.left) + 'px');
+    a.style.setProperty('--my', (p.clientY - r.top) + 'px');
+  };
+  a.addEventListener('pointermove', move);
+  a.addEventListener('touchstart', move, { passive: true });
+  return a;
+}
+
+// ---------- رندر ----------
+(function() {
+  const root = document.getElementById('sections');
+  const nav = document.getElementById('nav');
+
+  // اخیر
+  const rec = getRecent().map(t => allItems.find(i => i.t === t)).filter(Boolean);
+  if (rec.length) {
+    const s = document.createElement('section');
+    s.className = 'section recent';
+    s.id = 'sec-recent';
+    s.innerHTML = `<div class="sec-head" style="--c1:#d9b25f;--c2:#a67c2a">
+      <span class="sec-ic"><i class="fa-solid fa-clock-rotate-left"></i></span><span class="sec-title">دسترسی اخیر</span><span class="sec-line"></span></div>
+      <div class="grid"></div>`;
+    const g = s.querySelector('.grid');
+    rec.forEach(it => g.appendChild(makeCard(it, true)));
+    root.appendChild(s);
+  }
+
+  sections.forEach(sec => {
+    const s = document.createElement('section');
+    s.className = 'section main';
+    s.id = 'sec-' + sec.id;
+    s.innerHTML = `<div class="sec-head" style="--c1:${sec.c1};--c2:${sec.c2}">
+        <span class="sec-ic"><i class="fa-solid ${sec.icon}"></i></span><span class="sec-title">${sec.title}</span>
+        <span class="sec-line"></span><span class="sec-count">${faDigits(sec.items.length)} بخش</span></div>
+      <div class="grid"></div>`;
+    const grid = s.querySelector('.grid');
+    sec.items.forEach(it => grid.appendChild(makeCard(it, false)));
+    root.appendChild(s);
+
+    const b = document.createElement('button');
+    b.dataset.target = s.id;
+    b.style.cssText = `--c1:${sec.c1};--c2:${sec.c2}`;
+    b.innerHTML = `<i class="fa-solid ${sec.icon}"></i>${sec.title}`;
+    b.addEventListener('click', () => {
+      document.getElementById('scroller').scrollTo({ top: s.offsetTop - 6, behavior: 'smooth' });
+    });
+    nav.appendChild(b);
+  });
+
+  // هایلایت تب فعال هنگام اسکرول
+  const sc = document.getElementById('scroller');
+  const btns = [...nav.querySelectorAll('button')];
+  function spy() {
+    const mains = [...document.querySelectorAll('.section.main')].filter(x => x.style.display !== 'none');
+    let cur = mains[0];
+    mains.forEach(m => { if (m.offsetTop - 40 <= sc.scrollTop) cur = m; });
+    if (sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 4) cur = mains[mains.length - 1];
+    btns.forEach(b => {
+      const on = cur && b.dataset.target === cur.id;
+      b.classList.toggle('on', on);
+      if (on) { const nb = nav.getBoundingClientRect(), bb = b.getBoundingClientRect();
+        if (bb.left < nb.left || bb.right > nb.right) b.scrollIntoView({ inline: 'center', block: 'nearest' }); }
+    });
+  }
+  sc.addEventListener('scroll', spy, { passive: true });
+  spy();
+})();
+
+// ================= پاپ‌آپ =================
+function openPopup(key) {
+  const data = popupsData[key];
+  if (!data) return;
+  document.getElementById('popup-title').innerText = data.title;
+  const body = document.getElementById('popup-body');
+  body.innerHTML = '';
+  data.buttons.forEach((btn, idx) => {
+    const a = document.createElement('a');
+    a.href = btn.link; a.target = "_blank";
+    a.className = "popup-btn" + (btn.link === "#" ? " disabled" : "");
+    a.style.setProperty('--k', idx);
+    a.innerHTML = `<span class="num">${faDigits(idx + 1)}</span><span class="label">${btn.text}</span><i class="fa-solid fa-chevron-left"></i>`;
+    if (btn.link === "#") a.addEventListener('click', e => { e.preventDefault(); showToast(); });
+    body.appendChild(a);
+  });
+  document.getElementById('popup-overlay').classList.add('active');
+  document.getElementById('popup-content').classList.add('active');
+}
+function closePopup() {
+  document.getElementById('popup-overlay').classList.remove('active');
+  document.getElementById('popup-content').classList.remove('active');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
+
+let toastTimer;
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show'); clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// بستن پاپ‌آپ با کشیدن به پایین
+(function() {
+  const sheet = document.getElementById('popup-content');
+  let startY = null, dy = 0;
+  sheet.addEventListener('touchstart', e => { if (sheet.scrollTop <= 0) startY = e.touches[0].clientY; }, { passive: true });
+  sheet.addEventListener('touchmove', e => {
+    if (startY === null) return;
+    dy = Math.max(0, e.touches[0].clientY - startY);
+    sheet.style.transition = 'none';
+    sheet.style.transform = `translate(-50%, ${dy}px)`;
+  }, { passive: true });
+  sheet.addEventListener('touchend', () => {
+    if (startY === null) return;
+    sheet.style.transition = ''; sheet.style.transform = '';
+    if (dy > 110) closePopup();
+    startY = null; dy = 0;
+  });
+})();
+
+// جستجو
+(function() {
+  const input = document.getElementById('search-input');
+  const secs = [...document.querySelectorAll('.section.main')];
+  const recent = document.getElementById('sec-recent');
+  const nav = document.getElementById('nav');
+  const empty = document.getElementById('empty');
+  const norm = s => s.replace(/[يى]/g, 'ی').replace(/ك/g, 'ک').replace(/\u200c/g, ' ').trim();
+  input.addEventListener('input', () => {
+    const q = norm(input.value);
+    let shown = 0;
+    secs.forEach(sec => {
+      let n = 0;
+      sec.querySelectorAll('.card').forEach(c => {
+        const ok = !q || norm(c.textContent).includes(q);
+        c.style.display = ok ? '' : 'none';
+        if (ok) n++;
+      });
+      sec.style.display = n ? '' : 'none';
+      shown += n;
+    });
+    if (recent) recent.style.display = q ? 'none' : '';
+    nav.style.display = q ? 'none' : '';
+    empty.style.display = shown ? 'none' : 'block';
+  });
+})();
+
+// تاریخ، ساعت و خوش‌آمدگویی
+(function() {
+  const els = {
+    d: [document.getElementById('today-date'), document.getElementById('dock-date')],
+    t: [document.getElementById('today-time'), document.getElementById('dock-time')]
+  };
+  const gt = document.getElementById('greet-text');
+  const wdFmt = new Intl.DateTimeFormat('fa-IR-u-ca-persian', { weekday: 'long' });
+  function tick() {
+    const now = new Date();
+    try {
+      const f = new Intl.DateTimeFormat('fa-IR-u-ca-persian-nu-latn', { year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(now);
+      const g = t => f.find(p => p.type === t).value;
+      const date = g('year') + '/' + g('month') + '/' + g('day');
+      const time = new Intl.DateTimeFormat('fa-IR-u-nu-latn', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
+      els.d[0].textContent = wdFmt.format(now) + ' ' + date;
+      els.d[1].textContent = date;
+      els.t.forEach(e => e.textContent = time);
+    } catch (e) { els.d.forEach(x => x.textContent = now.toLocaleDateString('fa-IR')); }
+    const h = now.getHours();
+    gt.textContent = h < 5 ? 'شب بخیر' : h < 12 ? 'صبح بخیر' : h < 17 ? 'ظهر بخیر' : h < 20 ? 'عصر بخیر' : 'شب بخیر';
+  }
+  tick(); setInterval(tick, 1000);
+})();
+
+// تم روشن/تیره
+(function() {
+  const root = document.documentElement;
+  const btn = document.getElementById('theme-btn');
+  const icon = btn.querySelector('i');
+  function apply(t) {
+    root.setAttribute('data-theme', t);
+    icon.className = t === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    const m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute('content', t === 'dark' ? '#050a1a' : '#071233');
+  }
+  let saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  apply(saved || 'light');
+  btn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    apply(next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+})();
+</script>
+
+<script src="tracker.js?v=128"></script>
+
+</body>
+</html>
